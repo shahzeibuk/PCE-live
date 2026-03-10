@@ -15,6 +15,8 @@ import { Services } from './collections/Services'
 import { News } from './collections/News'
 import { Gallery } from './collections/Gallery'
 import { ContactSubmissions } from './collections/ContactSubmissions'
+import { Partners } from './collections/Partners'
+import { Testimonials } from './collections/Testimonials'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
@@ -82,6 +84,8 @@ export default buildConfig({
     News,
     Gallery,
     ContactSubmissions,
+    Partners,
+    Testimonials,
   ],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],

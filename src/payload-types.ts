@@ -78,6 +78,8 @@ export interface Config {
     news: News;
     gallery: Gallery;
     'contact-submissions': ContactSubmission;
+    partners: Partner;
+    testimonials: Testimonial;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -106,6 +108,8 @@ export interface Config {
     news: NewsSelect<false> | NewsSelect<true>;
     gallery: GallerySelect<false> | GallerySelect<true>;
     'contact-submissions': ContactSubmissionsSelect<false> | ContactSubmissionsSelect<true>;
+    partners: PartnersSelect<false> | PartnersSelect<true>;
+    testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -832,7 +836,9 @@ export interface Service {
   title: string;
   slug: string;
   hero_image?: (number | null) | Media;
+  icon?: (number | null) | Media;
   description?: string | null;
+  short_description?: string | null;
   content?: {
     root: {
       type: string;
@@ -848,6 +854,20 @@ export interface Service {
     };
     [k: string]: unknown;
   } | null;
+  process_steps?:
+    | {
+        step?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  benefits?:
+    | {
+        benefit?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  cta_text?: string | null;
+  cta_link?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -901,6 +921,31 @@ export interface ContactSubmission {
   phone?: string | null;
   message: string;
   submitted_at?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "partners".
+ */
+export interface Partner {
+  id: number;
+  name: string;
+  logo: number | Media;
+  website?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials".
+ */
+export interface Testimonial {
+  id: number;
+  name: string;
+  position?: string | null;
+  testimonial: string;
+  photo?: (number | null) | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -1137,6 +1182,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'contact-submissions';
         value: number | ContactSubmission;
+      } | null)
+    | ({
+        relationTo: 'partners';
+        value: number | Partner;
+      } | null)
+    | ({
+        relationTo: 'testimonials';
+        value: number | Testimonial;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1538,8 +1591,24 @@ export interface ServicesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   hero_image?: T;
+  icon?: T;
   description?: T;
+  short_description?: T;
   content?: T;
+  process_steps?:
+    | T
+    | {
+        step?: T;
+        id?: T;
+      };
+  benefits?:
+    | T
+    | {
+        benefit?: T;
+        id?: T;
+      };
+  cta_text?: T;
+  cta_link?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1576,6 +1645,29 @@ export interface ContactSubmissionsSelect<T extends boolean = true> {
   phone?: T;
   message?: T;
   submitted_at?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "partners_select".
+ */
+export interface PartnersSelect<T extends boolean = true> {
+  name?: T;
+  logo?: T;
+  website?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials_select".
+ */
+export interface TestimonialsSelect<T extends boolean = true> {
+  name?: T;
+  position?: T;
+  testimonial?: T;
+  photo?: T;
   updatedAt?: T;
   createdAt?: T;
 }
