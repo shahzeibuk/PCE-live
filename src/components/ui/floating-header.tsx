@@ -21,16 +21,14 @@ export function FloatingHeader({ data }: { data: HeaderType }) {
 	return (
 		<header
 			className={cn(
-				'sticky top-5 z-50',
-				'mx-auto w-full max-w-4xl rounded-xl border shadow-lg',
-				'bg-background/95 supports-[backdrop-filter]:bg-background/80 backdrop-blur-lg',
-                'container'
+				'sticky top-0 z-50 w-full border-b shadow-sm',
+				'bg-background/95 supports-[backdrop-filter]:bg-background/80 backdrop-blur-lg'
 			)}
 		>
 			<nav className="mx-auto flex items-center justify-between p-2">
-				<Link href="/" className="hover:bg-accent flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 duration-100">
-					<Logo loading="eager" priority="high" className="size-8 invert dark:invert-0" />
-					<p className="font-sans text-lg font-bold tracking-tight">PCE</p>
+				<Link href="/" className="hover:bg-accent flex cursor-pointer items-center gap-2 rounded-md py-1 duration-100">
+					<Logo loading="eager" priority="high" className="h-10 sm:h-12 w-auto" />
+					<p className="font-sans text-xl font-bold tracking-tight text-[#099546] hidden sm:block">PCE</p>
 				</Link>
                 
 				<div className="hidden items-center gap-1 lg:flex">

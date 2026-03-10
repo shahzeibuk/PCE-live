@@ -85,15 +85,15 @@ export async function Footer() {
           {/* Bottom Bar: Contact Info and CMS Links */}
           <div className="mt-12 pt-8 border-t border-white/20 flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex flex-col sm:flex-row gap-6 text-sm items-center">
-              <a href="tel:080013537" className="flex items-center gap-2 hover:text-[#80E143] transition-colors"><Phone className="h-4 w-4" /> Toll Free: 080013537</a>
-              <a href="mailto:info@pakistancurrency.com" className="flex items-center gap-2 hover:text-[#80E143] transition-colors"><Mail className="h-4 w-4" /> info@pakistancurrency.com</a>
-              <a href="https://wa.me/923046668810" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-[#80E143] transition-colors"><MessageCircle className="h-4 w-4" /> +92 304 6668810</a>
+              <a href="tel:080013537" className="flex items-center gap-2 hover:text-[#099546] transition-colors"><Phone className="h-4 w-4" /> Toll Free: 080013537</a>
+              <a href="mailto:info@pakistancurrency.com" className="flex items-center gap-2 hover:text-[#099546] transition-colors"><Mail className="h-4 w-4" /> info@pakistancurrency.com</a>
+              <a href="https://wa.me/923046668810" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-[#099546] transition-colors"><MessageCircle className="h-4 w-4" /> +92 304 6668810</a>
             </div>
             
             <div className="flex items-center gap-4">
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#80E143] transition-colors"><Twitter className="h-5 w-5 fill-current" /></a>
-              <a href="https://pk.linkedin.com/company/pakistan-currency-exchange-pvt-ltd" target="_blank" rel="noopener noreferrer" className="hover:text-[#80E143] transition-colors"><Linkedin className="h-5 w-5 fill-current" /></a>
-              <a href="https://www.facebook.com/pkcurrency/" target="_blank" rel="noopener noreferrer" className="hover:text-[#80E143] transition-colors"><Facebook className="h-5 w-5 fill-current" /></a>
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#099546] transition-colors"><Twitter className="h-5 w-5 fill-current" /></a>
+              <a href="https://pk.linkedin.com/company/pakistan-currency-exchange-pvt-ltd" target="_blank" rel="noopener noreferrer" className="hover:text-[#099546] transition-colors"><Linkedin className="h-5 w-5 fill-current" /></a>
+              <a href="https://www.facebook.com/pkcurrency/" target="_blank" rel="noopener noreferrer" className="hover:text-[#099546] transition-colors"><Facebook className="h-5 w-5 fill-current" /></a>
               <ThemeSelector />
             </div>
           </div>

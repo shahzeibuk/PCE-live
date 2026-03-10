@@ -10,7 +10,7 @@ export default function MissionVisionPage() {
       <h1 className="text-4xl font-bold mb-8 text-[#0a8258]">Mission & Vision</h1>
       
       <div className="prose prose-lg dark:prose-invert space-y-8">
-        <div className="p-8 bg-gray-50 dark:bg-card border-l-4 border-l-[#80E143] rounded-r-lg shadow-sm">
+        <div className="p-8 bg-gray-50 dark:bg-card border-l-4 border-l-[#099546] rounded-r-lg shadow-sm">
           <p className="text-xl font-medium leading-relaxed italic">
             "We pledge to provide effortless procedures and authentic services with the touch of accuracy, security, reliability, loyalty, and most importantly, convenience to our customers."
           </p>

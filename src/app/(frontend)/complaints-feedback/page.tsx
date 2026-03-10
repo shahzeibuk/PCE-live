@@ -35,7 +35,7 @@ export default function ComplaintsFeedbackPage() {
               <div className="text-center py-12">
                 <h3 className="text-2xl font-bold text-primary mb-4">Thank You!</h3>
                 <p className="text-gray-600 dark:text-gray-300">Your feedback has been submitted successfully to our customer representatives.</p>
-                <Button onClick={() => setIsSubmitted(false)} className="mt-6 bg-[#80E143] text-primary-foreground hover:bg-[#80E143]/90">
+                <Button onClick={() => setIsSubmitted(false)} className="mt-6 bg-[#099546] text-primary-foreground hover:bg-[#099546]/90">
                   Submit Another
                 </Button>
               </div>
@@ -89,7 +89,7 @@ export default function ComplaintsFeedbackPage() {
                   <Textarea id="comments" required rows={5} placeholder="Please provide details..." />
                 </div>
 
-                <Button type="submit" className="w-full bg-[#80E143] text-primary-foreground hover:bg-[#80E143]/90">
+                <Button type="submit" className="w-full bg-[#099546] text-primary-foreground hover:bg-[#099546]/90">
                   Submit Feedback
                 </Button>
               </form>
