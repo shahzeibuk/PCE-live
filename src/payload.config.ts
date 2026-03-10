@@ -24,6 +24,7 @@ import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
 import { seedHandler } from './endpoints/seed'
 import { seedNavHandler } from './endpoints/seedNav'
+import { seedBranches } from './scripts/seed_branches'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -123,6 +124,18 @@ export default buildConfig({
       path: '/seed-nav',
       method: 'get',
       handler: seedNavHandler,
+    },
+    {
+      path: '/seed-branches',
+      method: 'get',
+      handler: async (req: PayloadRequest) => {
+        try {
+          await seedBranches(req.payload)
+          return Response.json({ message: 'Branches seeded successfully' })
+        } catch (error: any) {
+          return Response.json({ error: error.message }, { status: 500 })
+        }
+      },
     },
   ],
 })
