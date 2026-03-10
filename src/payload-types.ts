@@ -931,7 +931,7 @@ export interface ContactSubmission {
 export interface Partner {
   id: number;
   name: string;
-  logo: number | Media;
+  logo?: (number | null) | Media;
   website?: string | null;
   updatedAt: string;
   createdAt: string;

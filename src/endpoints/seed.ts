@@ -187,6 +187,31 @@ export const seedHandler: PayloadHandler = async (req) => {
       }
     })
 
+    // 8. Footer
+    await payload.updateGlobal({
+      slug: 'footer',
+      data: {
+        columns: [
+          {
+            label: 'Quick Links',
+            navItems: [
+              { link: { type: 'custom', url: '/', label: 'Home' } },
+              { link: { type: 'custom', url: '/about', label: 'About Us' } },
+              { link: { type: 'custom', url: '/services', label: 'Services' } },
+            ],
+          },
+          {
+            label: 'Support',
+            navItems: [
+              { link: { type: 'custom', url: '/branches', label: 'Branches' } },
+              { link: { type: 'custom', url: '/contact', label: 'Contact Us' } },
+              { link: { type: 'custom', url: '/currency-rates', label: 'Live Rates' } },
+            ],
+          },
+        ],
+      },
+    })
+
     return Response.json({ message: 'Seeding completed successfully!' })
   } catch (err: any) {
     return Response.json({ error: err.message }, { status: 500 })
