@@ -14,10 +14,10 @@ import configPromise from '@/payload.config'
 
 export const CurrencyTable = async () => {
   const payload = await getPayload({ config: configPromise })
-  const { docs: rates } = await payload.find({
+  const { docs: rates } = (await payload.find({
     collection: 'currency-rates',
     sort: 'currency_name',
-  })
+  })) as any
 
   return (
     <Card className="w-full">
@@ -36,7 +36,7 @@ export const CurrencyTable = async () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {rates.map((rate) => (
+            {rates.map((rate: any) => (
               <TableRow key={rate.id}>
                 <TableCell className="font-medium">{rate.currency_name}</TableCell>
                 <TableCell>{rate.currency_code}</TableCell>

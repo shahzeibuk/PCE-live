@@ -9,11 +9,19 @@ import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
+import { CurrencyRates } from './collections/CurrencyRates'
+import { Branches } from './collections/Branches'
+import { Services } from './collections/Services'
+import { News } from './collections/News'
+import { Gallery } from './collections/Gallery'
+import { ContactSubmissions } from './collections/ContactSubmissions'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
+import { seedHandler } from './endpoints/seed'
+import { seedNavHandler } from './endpoints/seedNav'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -62,7 +70,19 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URL || '',
     },
   }),
-  collections: [Pages, Posts, Media, Categories, Users],
+  collections: [
+    Pages,
+    Posts,
+    Media,
+    Categories,
+    Users,
+    CurrencyRates,
+    Branches,
+    Services,
+    News,
+    Gallery,
+    ContactSubmissions,
+  ],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins,
@@ -89,4 +109,16 @@ export default buildConfig({
     },
     tasks: [],
   },
+  endpoints: [
+    {
+      path: '/seed',
+      method: 'get',
+      handler: seedHandler,
+    },
+    {
+      path: '/seed-nav',
+      method: 'get',
+      handler: seedNavHandler,
+    },
+  ],
 })
