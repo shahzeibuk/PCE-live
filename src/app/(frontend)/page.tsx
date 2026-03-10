@@ -200,19 +200,19 @@ export default async function HomePage() {
           </div>
           
           <div className="space-y-8">
-            <h2 className="text-4xl font-bold tracking-tight leading-tight">Pakistan Currency Exchange: Your Partner in Global Wealth</h2>
+            <h2 className="text-4xl font-bold tracking-tight leading-tight">Pakistan Currency Exchange: A Legacy of Trust Since 1992</h2>
             <p className="text-xl text-muted-foreground leading-relaxed">
-              Founded in 2003, we have grown from a local exchange house to a nationwide provider of financial services, 
-              connecting thousands of families and businesses across the world.
+              Serving the nation for over three decades, Pakistan Currency Exchange (Pvt) Ltd provides safe, secure, 
+              and reliable money transfer services. Explore our network of over 130 locations ensuring your convenience is always prioritized.
             </p>
             <div className="grid grid-cols-2 gap-8 pt-4">
               <div>
-                <div className="text-3xl font-bold text-primary mb-1">50+</div>
+                <div className="text-3xl font-bold text-[#0a8258] mb-1">130+</div>
                 <p className="text-sm text-muted-foreground">Branches Nationwide</p>
               </div>
               <div>
-                <div className="text-3xl font-bold text-primary mb-1">1M+</div>
-                <p className="text-sm text-muted-foreground">Successful Transfers</p>
+                <div className="text-3xl font-bold text-[#0a8258] mb-1">200+</div>
+                <p className="text-sm text-muted-foreground">Global Destinations</p>
               </div>
             </div>
             <Button asChild size="lg" className="rounded-full px-8">
@@ -269,24 +269,7 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* 7. Partners Grid */}
-      {partners.length > 0 && (
-        <section className="py-20 bg-white dark:bg-slate-900 border-y">
-          <div className="container px-4">
-            <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
-               {partners.map((p: any) => (
-                 <div key={p.id} className="h-12 w-auto flex items-center justify-center">
-                    {p.logo ? (
-                      <Media resource={p.logo} className="h-full w-auto object-contain" />
-                    ) : (
-                      <span className="font-bold text-slate-400">{p.name}</span>
-                    )}
-                 </div>
-               ))}
-            </div>
-          </div>
-        </section>
-      )}
+      {/* 7. Partners Grid (Removed: Now globally integrated in Footer via PartnersCarousel) */}
 
       {/* 8. Latest News */}
       {news.length > 0 && (
