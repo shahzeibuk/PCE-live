@@ -1,0 +1,550 @@
+# Product Requirements Document (PRD)
+
+## Pakistan Currency Exchange Website
+
+**Tech Stack:** Next.js + Payload CMS + shadcn/ui
+**Purpose:** Corporate website with dynamic currency rates, service pages, branch locator, and CMS-managed content.
+
+---
+
+# 1. Overview
+
+## Objective
+
+Build a modern, fast, and secure corporate website for a currency exchange company using:
+
+* **Frontend:** Next.js (App Router)
+* **Backend/CMS:** Payload CMS
+* **UI System:** shadcn/ui
+* **Database:** PostgreSQL (recommended with Payload)
+* **Hosting:** Vercel / AWS / DigitalOcean
+
+The website should allow **admins to manage all content from the CMS** while providing visitors with real-time currency information, service information, and branch locations.
+
+---
+
+# 2. Core Goals
+
+1. Corporate presence
+2. Display live currency exchange rates
+3. Showcase services
+4. Provide branch locator
+5. Allow easy CMS content updates
+6. SEO optimized
+7. Fast performance
+8. Mobile responsive
+
+---
+
+# 3. User Roles
+
+## 1. Admin
+
+Full CMS access.
+
+Permissions:
+
+* Manage currency rates
+* Manage branches
+* Manage blog/news
+* Manage gallery
+* Edit static pages
+* Manage services
+
+## 2. Website Visitor
+
+Public user.
+
+Capabilities:
+
+* View currency rates
+* Convert currencies
+* Browse services
+* Read blog/news
+* Locate branches
+* Contact company
+
+---
+
+# 4. Tech Architecture
+
+## Frontend
+
+Next.js 14+ (App Router)
+
+Structure:
+
+```
+/app
+  /about
+  /services
+  /blog
+  /news
+  /branches
+  /contact
+  /currency-rates
+/components
+/lib
+```
+
+## UI Library
+
+shadcn/ui components:
+
+Required components:
+
+* Button
+* Card
+* Table
+* Dialog
+* Input
+* Select
+* Tabs
+* Accordion
+* Sheet
+* Dropdown
+* Navigation Menu
+* Toast
+
+## CMS
+
+Payload CMS
+
+CMS responsibilities:
+
+* Content management
+* Currency rate management
+* Branch database
+* Blog/news system
+* Media uploads
+* Admin authentication
+
+---
+
+# 5. Website Sitemap
+
+```
+Home
+About
+  Profile
+  Partners
+
+Services
+  Currency Exchange
+  Remittance
+  Western Union
+  Demand Draft
+  Telegraphic Transfer
+  RIA Money Transfer
+  MoneyGram
+
+Branches
+  Branch Locator
+  Branch List
+
+Media
+  Blog
+  News
+  Gallery
+
+Contact
+Privacy Policy
+Terms & Conditions
+```
+
+---
+
+# 6. Page Requirements
+
+## 6.1 Home Page
+
+Sections:
+
+1. Hero Section
+2. Live Currency Rates Table
+3. Currency Converter
+4. Services Overview
+5. Company Introduction
+6. Testimonials
+7. Partners
+8. Latest News
+9. Branch CTA
+10. Footer
+
+Components:
+
+* shadcn Table
+* Cards
+* Tabs
+* Buttons
+
+---
+
+## 6.2 About Page
+
+Content blocks:
+
+* Company history
+* Mission
+* Vision
+* Regulatory information
+* Partner companies
+
+Managed via CMS.
+
+---
+
+## 6.3 Services Pages
+
+Each service should have its own page.
+
+Example:
+
+```
+/services/currency-exchange
+/services/remittance
+/services/western-union
+```
+
+Page structure:
+
+* Hero
+* Description
+* Process
+* Benefits
+* CTA
+
+CMS editable.
+
+---
+
+## 6.4 Currency Rates Page
+
+Features:
+
+* Table of currencies
+* Buying rate
+* Selling rate
+* Last updated time
+
+Example table:
+
+| Currency | Buy | Sell |
+| -------- | --- | ---- |
+| USD      | 278 | 280  |
+| EUR      | 298 | 302  |
+| GBP      | 345 | 350  |
+
+Admin can update rates from CMS.
+
+---
+
+## 6.5 Currency Converter
+
+Simple calculator.
+
+Inputs:
+
+* From Currency
+* To Currency
+* Amount
+
+Output:
+
+Converted amount.
+
+Rates fetched from CMS.
+
+---
+
+## 6.6 Branch Locator
+
+Features:
+
+* List of branches
+* Search by city
+* Map integration (optional)
+
+Branch card contains:
+
+* Branch name
+* Address
+* Phone
+* City
+* Map link
+
+---
+
+## 6.7 Blog
+
+Standard CMS blog.
+
+Fields:
+
+* Title
+* Slug
+* Author
+* Cover Image
+* Content (rich text)
+* Published date
+
+Pages:
+
+```
+/blog
+/blog/[slug]
+```
+
+---
+
+## 6.8 News
+
+Similar to blog but categorized as announcements.
+
+---
+
+## 6.9 Gallery
+
+Grid layout.
+
+Fields:
+
+* Image
+* Title
+* Description
+
+---
+
+## 6.10 Contact Page
+
+Fields:
+
+* Name
+* Email
+* Phone
+* Message
+
+Submissions stored in CMS.
+
+Optional:
+
+* Send email notification.
+
+---
+
+# 7. Payload CMS Collections
+
+## CurrencyRates
+
+Fields:
+
+```
+currency_name
+currency_code
+buy_rate
+sell_rate
+last_updated
+```
+
+---
+
+## Branches
+
+Fields:
+
+```
+branch_name
+city
+address
+phone
+email
+google_map_link
+```
+
+---
+
+## Services
+
+Fields:
+
+```
+title
+slug
+hero_image
+description
+content
+```
+
+---
+
+## BlogPosts
+
+Fields:
+
+```
+title
+slug
+author
+cover_image
+content
+published_date
+```
+
+---
+
+## News
+
+Fields:
+
+```
+title
+slug
+content
+published_date
+```
+
+---
+
+## Gallery
+
+Fields:
+
+```
+image
+title
+description
+```
+
+---
+
+## ContactSubmissions
+
+Fields:
+
+```
+name
+email
+phone
+message
+submitted_at
+```
+
+---
+
+# 8. Components List (shadcn)
+
+Reusable components:
+
+```
+Navbar
+Footer
+HeroSection
+CurrencyTable
+CurrencyConverter
+ServiceCard
+BlogCard
+BranchCard
+GalleryGrid
+ContactForm
+SearchInput
+Pagination
+```
+
+---
+
+# 9. SEO Requirements
+
+Each page should support:
+
+```
+meta_title
+meta_description
+open_graph_image
+canonical_url
+```
+
+Next.js metadata API.
+
+---
+
+# 10. Performance Requirements
+
+* Lighthouse score 90+
+* Core Web Vitals optimized
+* Image optimization
+* Static generation where possible
+* ISR for currency rates
+
+---
+
+# 11. Security
+
+* Payload admin authentication
+* Rate update permissions restricted
+* Input validation
+* Spam protection on contact form
+
+---
+
+# 12. Deployment
+
+Recommended architecture:
+
+Frontend
+
+```
+Vercel
+```
+
+CMS
+
+```
+Node server
+DigitalOcean / AWS
+```
+
+Database
+
+```
+PostgreSQL
+```
+
+---
+
+# 13. Future Enhancements
+
+Possible upgrades:
+
+* Live currency API
+* Branch map visualization
+* Online remittance requests
+* Admin analytics dashboard
+* Multi-language support
+* Mobile app integration
+
+---
+
+# 14. Deliverables
+
+Developer must deliver:
+
+1. Next.js frontend
+2. Payload CMS backend
+3. Admin dashboard
+4. Fully responsive UI
+5. Production deployment
+6. Documentation
+
+---
+
+# 15. Success Criteria
+
+Project considered successful if:
+
+* All pages render correctly
+* CMS controls all dynamic content
+* Currency rates update instantly
+* Branch locator works
+* Website loads under 2 seconds
+* Mobile responsive
+* SEO optimized
