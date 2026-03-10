@@ -217,3 +217,8 @@ export const seedHandler: PayloadHandler = async (req) => {
     return Response.json({ error: err.message }, { status: 500 })
   }
 }
+
+export const seed = async ({ payload, req }: any) => {
+  req.payload = payload;
+  return seedHandler(req as any);
+}
