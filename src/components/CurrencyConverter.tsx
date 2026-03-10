@@ -106,14 +106,14 @@ export const CurrencyConverter = ({ rates }: { rates: Rate[] }) => {
         </div>
 
         {/* Info Banner */}
-        <div className="flex items-center gap-3 p-3 bg-blue-50/50 rounded-xl border border-blue-100/50">
+        {/* <div className="flex items-center gap-3 p-3 bg-blue-50/50 rounded-xl border border-blue-100/50">
             <div className="bg-blue-100 p-1 rounded-full">
                 <Info className="size-4 text-blue-600" />
             </div>
             <p className="text-xs font-medium text-blue-800">
                 Sending over 25,000 USD or equivalent? <span className="underline cursor-pointer font-bold">We'll discount our fee</span>
             </p>
-        </div>
+        </div> */}
 
         {/* Recipient Gets Section */}
         <div className="relative space-y-1">
@@ -146,7 +146,7 @@ export const CurrencyConverter = ({ rates }: { rates: Rate[] }) => {
                 </div>
             </div>
 
-            <div className="flex items-center justify-between">
+            {/* <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     <div className="size-10 rounded-full border border-gray-100 flex items-center justify-center bg-white shadow-sm">
                         <Lock className="size-5 text-gray-900" />
@@ -160,13 +160,12 @@ export const CurrencyConverter = ({ rates }: { rates: Rate[] }) => {
                     <span>8.59 {fromCurrency}</span>
                     <ChevronRight className="size-4" />
                 </div>
-            </div>
+            </div> */}
         </div>
 
         {/* CTA Button */}
         <Button 
-          className="w-full h-16 rounded-full text-xl font-bold text-gray-900 hover:opacity-90 transition-opacity"
-          style={{ backgroundColor: '#80E143' }}
+          className="w-full h-16 rounded-full text-xl font-bold transition-opacity"
         >
           Send money
         </Button>

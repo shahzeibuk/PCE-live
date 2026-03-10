@@ -78,12 +78,16 @@ export default async function HomePage() {
               Pakistan's premier currency exchange and remittance services. Get competitive market rates with zero hidden charges.
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
-              <Button asChild size="lg" className="h-14 px-8 text-lg rounded-full">
+              <Button 
+                asChild 
+                size="lg" 
+                className="h-14 px-8 text-lg rounded-full font-bold transition-opacity" 
+              >
                 <Link href="/currency-rates">
                   View Live Rates <ArrowRight className="ml-2 w-5 h-5" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="h-14 px-8 text-lg rounded-full backdrop-blur-sm bg-white/5 border-white/20">
+              <Button asChild variant="outline" size="lg" className="h-14 px-8 text-lg rounded-full backdrop-blur-sm bg-white/5 border-white/20 hover:bg-white hover:text-slate-900 transition-all">
                 <Link href="/branches">Find Nearby Branch</Link>
               </Button>
             </div>
@@ -336,10 +340,14 @@ export default async function HomePage() {
            </div>
            
            <div className="relative z-10 flex flex-col sm:flex-row gap-4">
-              <Button asChild size="lg" variant="secondary" className="h-16 px-10 text-lg rounded-full shadow-2xl">
+              <Button 
+                asChild 
+                size="lg" 
+                className="h-16 px-10 text-lg rounded-full shadow-2xl font-bold transition-opacity"
+              >
                  <Link href="/branches">Locate Branch</Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="h-16 px-10 text-lg rounded-full bg-white/10 border-white/30 text-white hover:bg-white hover:text-primary transition-all">
+              <Button asChild size="lg" variant="outline" className="h-16 px-10 text-lg rounded-full bg-white/10 border-white/30 text-white hover:bg-white hover:text-slate-900 transition-all">
                  <Link href="/contact">Get in Touch</Link>
               </Button>
            </div>

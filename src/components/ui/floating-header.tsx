@@ -13,7 +13,10 @@ import Link from 'next/link';
 export function FloatingHeader({ data }: { data: HeaderType }) {
 	const [open, setOpen] = React.useState(false);
 
-	const navItems = data?.navItems || [];
+	const navItems = (data?.navItems || []).filter(item => 
+        item.link.label.toLowerCase() !== 'contact' && 
+        item.link.label.toLowerCase() !== 'contact us'
+    );
 
 	return (
 		<header
@@ -42,7 +45,9 @@ export function FloatingHeader({ data }: { data: HeaderType }) {
 				</div>
 
 				<div className="flex items-center gap-2">
-					<Button size="sm" className="hidden sm:flex rounded-full px-5">Download App</Button>
+					<Button asChild size="sm" className="hidden sm:flex rounded-full px-5 font-bold">
+                        <Link href="/contact">Contact Us</Link>
+                    </Button>
 					<Sheet open={open} onOpenChange={setOpen}>
 						<Button
 							size="icon"
