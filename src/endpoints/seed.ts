@@ -4,6 +4,16 @@ export const seedHandler: PayloadHandler = async (req) => {
   const payload = req.payload as any
 
   try {
+    // Delete existing to avoid unique constraint errors on re-run
+    await payload.delete({
+      collection: 'pages',
+      where: {
+        slug: {
+          equals: 'about',
+        },
+      },
+    })
+
     // Create About Page
     await payload.create({
       collection: 'pages',
@@ -54,6 +64,14 @@ export const seedHandler: PayloadHandler = async (req) => {
     })
 
     // Create Sample Branches
+    // Delete existing first
+    await payload.delete({
+        collection: 'branches',
+        where: {
+            id: { exists: true }
+        }
+    })
+
     const branches = [
       {
         branch_name: 'I.I. Chundrigar Road Branch',
@@ -89,6 +107,14 @@ export const seedHandler: PayloadHandler = async (req) => {
     }
 
     // Create Sample Currency Rates
+    // Delete existing first
+    await payload.delete({
+        collection: 'currency-rates',
+        where: {
+            id: { exists: true }
+        }
+    })
+
     const rates = [
       { currency_name: 'US Dollar', currency_code: 'USD', buy_rate: 278.50, sell_rate: 281.00 },
       { currency_name: 'Euro', currency_code: 'EUR', buy_rate: 302.20, sell_rate: 305.50 },
@@ -105,6 +131,14 @@ export const seedHandler: PayloadHandler = async (req) => {
     }
 
     // Create Sample Services
+    // Delete existing first
+    await payload.delete({
+        collection: 'services',
+        where: {
+            id: { exists: true }
+        }
+    })
+
     const services = [
       { title: 'Currency Exchange', slug: 'currency-exchange', description: 'Buy and sell foreign currencies at competitive market rates.' },
       { title: 'Foreign Remittance', slug: 'remittance', description: 'Send money to your loved ones globally with ease and security.' },

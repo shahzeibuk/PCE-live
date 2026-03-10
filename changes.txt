@@ -1,0 +1,841 @@
+Below is a **detailed page-by-page specification** you can give directly to developers.
+It expands the PRD into **clear UI sections, CMS fields, components, and API usage** for **Next.js + Payload CMS + shadcn/ui**.
+
+---
+
+# Website Page Specifications
+
+**Project:** Pakistan Currency Exchange Website
+**Frontend:** Next.js (App Router)
+**CMS:** Payload CMS
+**UI:** shadcn/ui
+
+---
+
+# 1. Home Page
+
+Route:
+
+```
+/
+```
+
+## Purpose
+
+Landing page providing **quick overview of services, currency rates, and company credibility**.
+
+---
+
+## Sections
+
+### 1. Hero Section
+
+Purpose: Immediate branding.
+
+Content:
+
+* Heading
+* Subheading
+* CTA button
+* Background image
+
+Example:
+
+```
+Heading: Trusted Currency Exchange in Pakistan
+Subheading: Competitive exchange rates and reliable remittance services
+CTA: View Rates
+```
+
+CMS Fields:
+
+```
+hero_title
+hero_description
+hero_image
+hero_cta_text
+hero_cta_link
+```
+
+Components:
+
+```
+HeroSection
+Button
+Container
+```
+
+---
+
+### 2. Live Currency Rates
+
+Purpose:
+Display latest exchange rates.
+
+Layout:
+Table.
+
+Columns:
+
+| Currency | Code | Buy Rate | Sell Rate |
+| -------- | ---- | -------- | --------- |
+
+Components:
+
+```
+Table
+Badge
+```
+
+Data Source:
+Payload CMS → `currencyRates`
+
+Refresh Strategy:
+
+* ISR every 60 seconds
+
+---
+
+### 3. Currency Converter
+
+Inputs:
+
+* Amount
+* From Currency
+* To Currency
+
+Output:
+Converted amount.
+
+Example:
+
+```
+100 USD → 27,800 PKR
+```
+
+Components:
+
+```
+Input
+Select
+Button
+Card
+```
+
+Logic:
+Use currency rates stored in CMS.
+
+---
+
+### 4. Services Overview
+
+Grid layout.
+
+Services:
+
+* Currency Exchange
+* Remittance
+* Western Union
+* MoneyGram
+* Demand Draft
+* Telegraphic Transfer
+
+Each card includes:
+
+* icon
+* title
+* short description
+* link
+
+Components:
+
+```
+Card
+Grid
+Button
+```
+
+Data Source:
+Payload → `services`
+
+---
+
+### 5. Company Overview
+
+Content:
+
+```
+About Pakistan Currency Exchange
+
+Founded in 2003, Pakistan Currency Exchange provides
+secure and reliable foreign exchange services.
+```
+
+CMS Fields:
+
+```
+about_title
+about_content
+about_image
+```
+
+Components:
+
+```
+TwoColumnLayout
+Image
+Text
+```
+
+---
+
+### 6. Testimonials
+
+Layout:
+Slider.
+
+Fields:
+
+```
+name
+position
+testimonial
+photo
+```
+
+Components:
+
+```
+Carousel
+Card
+Avatar
+```
+
+---
+
+### 7. Partners
+
+Display partner logos.
+
+Examples:
+
+* Western Union
+* RIA
+* MoneyGram
+
+Components:
+
+```
+LogoGrid
+```
+
+CMS Collection:
+
+```
+partners
+```
+
+Fields:
+
+```
+name
+logo
+website
+```
+
+---
+
+### 8. Latest News
+
+Latest 3 posts.
+
+Layout:
+Cards.
+
+Fields:
+
+* title
+* date
+* excerpt
+* image
+
+Components:
+
+```
+Card
+Badge
+```
+
+Source:
+`news` collection.
+
+---
+
+### 9. Branch CTA
+
+Simple CTA section.
+
+```
+Find Our Branch Near You
+[View Branches]
+```
+
+Components:
+
+```
+CTASection
+Button
+```
+
+---
+
+### 10. Footer
+
+Sections:
+
+```
+Company
+Services
+Branches
+Contact
+Social Links
+```
+
+Components:
+
+```
+Footer
+NavigationMenu
+```
+
+---
+
+# 2. About Page
+
+Route
+
+```
+/about
+```
+
+---
+
+## Sections
+
+### Company Profile
+
+Content:
+
+* history
+* mission
+* vision
+
+CMS Fields:
+
+```
+profile_title
+profile_content
+mission
+vision
+```
+
+---
+
+### Regulatory Information
+
+Example:
+
+```
+Licensed by State Bank of Pakistan.
+```
+
+Fields:
+
+```
+regulatory_info
+license_number
+```
+
+---
+
+### Timeline (Optional)
+
+Example:
+
+```
+2003 – Company founded
+2010 – Expanded branches
+2020 – Remittance services added
+```
+
+Components:
+
+```
+Timeline
+```
+
+---
+
+# 3. Services Pages
+
+Routes:
+
+```
+/services
+/services/[slug]
+```
+
+Example:
+
+```
+/services/currency-exchange
+/services/remittance
+```
+
+---
+
+## Services Listing Page
+
+Grid of all services.
+
+Components:
+
+```
+ServiceCard
+Grid
+```
+
+Fields:
+
+```
+title
+icon
+short_description
+slug
+```
+
+---
+
+## Individual Service Page
+
+Sections:
+
+### Hero
+
+Title + Image.
+
+### Description
+
+Detailed explanation.
+
+### Process
+
+Example:
+
+```
+1 Bring ID
+2 Visit branch
+3 Exchange currency
+```
+
+### Benefits
+
+Example:
+
+```
+✔ Best rates
+✔ Fast transactions
+✔ Secure
+```
+
+### CTA
+
+```
+Visit nearest branch
+```
+
+CMS Fields:
+
+```
+title
+slug
+hero_image
+description
+process_steps
+benefits
+cta_text
+cta_link
+```
+
+---
+
+# 4. Currency Rates Page
+
+Route
+
+```
+/currency-rates
+```
+
+---
+
+## Layout
+
+Table.
+
+Columns:
+
+```
+Currency Name
+Code
+Buy Rate
+Sell Rate
+Last Updated
+```
+
+Components:
+
+```
+Table
+Badge
+SearchInput
+```
+
+Features:
+
+* search currency
+* filter currency
+
+Source:
+`currencyRates`
+
+---
+
+# 5. Branch Locator
+
+Route
+
+```
+/branches
+```
+
+---
+
+## Branch List
+
+Grid layout.
+
+Card fields:
+
+```
+branch_name
+city
+address
+phone
+email
+map_link
+```
+
+Components:
+
+```
+BranchCard
+Grid
+```
+
+---
+
+## Search Feature
+
+Filter by:
+
+```
+city
+area
+```
+
+Components:
+
+```
+Select
+Input
+```
+
+---
+
+# 6. Blog Page
+
+Route
+
+```
+/blog
+/blog/[slug]
+```
+
+---
+
+## Blog Listing
+
+Card layout.
+
+Fields:
+
+```
+title
+cover_image
+excerpt
+author
+date
+```
+
+Components:
+
+```
+Card
+Pagination
+```
+
+---
+
+## Blog Detail Page
+
+Sections:
+
+```
+Title
+Author
+Date
+Cover Image
+Article Content
+Related Posts
+```
+
+Components:
+
+```
+RichText
+Image
+Badge
+```
+
+---
+
+# 7. News Page
+
+Route
+
+```
+/news
+/news/[slug]
+```
+
+Similar to blog but simplified.
+
+Fields:
+
+```
+title
+content
+published_date
+```
+
+---
+
+# 8. Gallery Page
+
+Route
+
+```
+/gallery
+```
+
+Layout:
+
+Grid.
+
+Components:
+
+```
+ImageGrid
+Dialog (lightbox)
+```
+
+Fields:
+
+```
+image
+title
+description
+```
+
+---
+
+# 9. Contact Page
+
+Route
+
+```
+/contact
+```
+
+---
+
+## Contact Info Section
+
+Display:
+
+```
+address
+phone
+email
+office hours
+```
+
+---
+
+## Contact Form
+
+Fields:
+
+```
+name
+email
+phone
+message
+```
+
+Submit action:
+
+```
+save to CMS
+send email notification
+```
+
+Components:
+
+```
+Input
+Textarea
+Button
+Form
+```
+
+---
+
+# 10. Privacy Policy
+
+Route
+
+```
+/privacy-policy
+```
+
+Simple CMS rich text page.
+
+---
+
+# 11. Terms & Conditions
+
+Route
+
+```
+/terms
+```
+
+CMS rich text.
+
+---
+
+# 12. Global Components
+
+Used across pages.
+
+---
+
+## Navbar
+
+Items:
+
+```
+Home
+About
+Services
+Currency Rates
+Branches
+Blog
+News
+Contact
+```
+
+Components:
+
+```
+NavigationMenu
+Sheet (mobile menu)
+```
+
+---
+
+## Footer
+
+Sections:
+
+```
+Company
+Services
+Branches
+Contact
+Social
+```
+
+---
+
+# CMS Collections Summary
+
+```
+currencyRates
+branches
+services
+blogPosts
+news
+gallery
+partners
+testimonials
+contactSubmissions
+pages
+```
+
+---
+
+# Recommended Folder Structure
+
+Next.js
+
+```
+app
+  page.tsx
+  about
+  services
+  blog
+  news
+  branches
+  contact
+components
+  ui
+  layout
+  sections
+lib
+  api
+  utils
+```
+
+---
+
+If you want, I can also give you **one more extremely valuable thing for developers**:
+
+1️⃣ **Complete Payload CMS schema code**
+2️⃣ **Next.js + Payload folder architecture**
+3️⃣ **Exact shadcn components list (50+ components)**
+4️⃣ **Full database design**
+
+This will make the dev team **build the entire website in 2–3 days instead of 2 weeks.**

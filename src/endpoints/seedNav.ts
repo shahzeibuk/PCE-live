@@ -3,21 +3,36 @@ import { PayloadHandler } from 'payload'
 export const seedNavHandler: PayloadHandler = async (req) => {
   const payload = req.payload as any
 
+  console.log('Seeding navigation...')
   try {
-    await payload.updateGlobal({
+    // Find About page ID
+    const { docs: pages } = await payload.find({
+      collection: 'pages',
+      where: {
+        slug: {
+          equals: 'about',
+        },
+      },
+    })
+
+    const aboutPage = pages[0]
+
+    const result = await payload.updateGlobal({
       slug: 'header',
       data: {
         navItems: [
-          {
-            link: {
-              type: 'reference',
-              reference: {
-                relationTo: 'pages',
-                value: 'about', // Note: This might need the ID, but slug often works in newer Payload versions if configured
+          ...(aboutPage ? [
+            {
+              link: {
+                type: 'reference',
+                reference: {
+                  relationTo: 'pages',
+                  value: aboutPage.id,
+                },
+                label: 'About Us',
               },
-              label: 'About Us',
-            },
-          },
+            }
+          ] : []),
           {
             link: {
               type: 'custom',
@@ -42,9 +57,11 @@ export const seedNavHandler: PayloadHandler = async (req) => {
         ],
       },
     })
+    console.log('Navigation seeding result:', JSON.stringify(result, null, 2))
 
-    return Response.json({ message: 'Navigation seeding completed successfully!' })
+    return Response.json({ message: 'Navigation seeding completed successfully!', result })
   } catch (err: any) {
+    console.error('Navigation seeding error:', err)
     return Response.json({ error: err.message }, { status: 500 })
   }
 }
