@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -11,6 +12,7 @@ import {
   Zap, 
   Info,
   ChevronRight,
+  RefreshCw,
   ArrowUpDown
 } from 'lucide-react'
 import { cn } from '@/utilities/ui'
@@ -40,6 +42,8 @@ export const CurrencyConverter = ({ rates }: { rates: Rate[] }) => {
   const [fromCurrency, setFromCurrency] = useState<string>('USD')
   const [toCurrency, setToCurrency] = useState<string>('PKR')
   const [receiveAmount, setReceiveAmount] = useState<string>('')
+  const [isSyncing, setIsSyncing] = useState<boolean>(false)
+  const router = useRouter()
 
   // Current rate display
   const currentRate = rates.find(r => r.currency_code === (fromCurrency === 'PKR' ? toCurrency : fromCurrency))
@@ -78,13 +82,34 @@ export const CurrencyConverter = ({ rates }: { rates: Rate[] }) => {
     <Card className="w-full max-w-[480px] mx-auto bg-card border shadow-sm rounded-3xl overflow-hidden">
       <CardContent className="p-8 space-y-6">
         
-        {/* Rate Pill */}
-        <div className="flex justify-center">
+        {/* Rate Pill & Sync */}
+        <div className="flex justify-center items-center gap-2">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-gray-100 rounded-full text-sm font-semibold text-gray-700">
                 <Lock className="size-3 text-gray-400" />
                 <span>1 {fromCurrency} = {rateValue.toFixed(3)} {toCurrency}</span>
                 <ChevronRight className="size-4 text-gray-400" />
             </div>
+            
+            <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={async () => {
+                    setIsSyncing(true)
+                    try {
+                        await fetch('/api/currency-rates/sync', { method: 'POST' })
+                        router.refresh()
+                    } catch (e) {
+                         console.error(e)
+                    } finally {
+                        setIsSyncing(false)
+                    }
+                }}
+                disabled={isSyncing}
+                title="Sync Live Exchange Rates"
+                className="rounded-full size-8 p-0 bg-gray-100 hover:bg-gray-200 text-gray-700"
+            >
+                <RefreshCw className={cn("size-4", isSyncing && "animate-spin")} />
+            </Button>
         </div>
 
         {/* You Send Section */}

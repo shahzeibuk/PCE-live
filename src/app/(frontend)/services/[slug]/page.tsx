@@ -42,7 +42,7 @@ export default async function ServicePage({ params }: { params: { slug: string }
     <div className="bg-slate-50 dark:bg-slate-900/20 min-h-screen pb-24">
       {/* Premium Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-white dark:bg-slate-950 border-b">
-        <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30 dark:opacity-10" />
+        <div className="absolute inset-0 z-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[16px_16px] opacity-20 mask-[radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] dark:opacity-10" />
         <div className="container relative z-10 px-4">
           <div className="max-w-4xl">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-bold mb-6">
@@ -65,7 +65,7 @@ export default async function ServicePage({ params }: { params: { slug: string }
           
           {/* Main Image if available */}
           {service.hero_image && (
-            <div className="relative aspect-[21/9] rounded-3xl overflow-hidden shadow-sm border bg-white">
+            <div className="relative aspect-[21/9] rounded-3xl overflow-hidden mb-12 shadow-md border bg-white">
               <Media resource={service.hero_image} fill className="object-cover" />
             </div>
           )}
