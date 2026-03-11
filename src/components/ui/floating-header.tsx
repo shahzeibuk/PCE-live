@@ -26,7 +26,7 @@ export function FloatingHeader({ data }: { data: HeaderType }) {
 			)}
 		>
 			<nav className="mx-auto flex items-center justify-between p-2">
-				<Link href="/" className="hover:bg-accent/50 flex cursor-pointer items-center gap-2 rounded-xl py-1 px-2 duration-100">
+				<Link href="/" className="flex cursor-pointer items-center gap-2 rounded-lg py-1 px-2 transition-colors">
 					<Logo loading="eager" priority="high" className="h-10 sm:h-12 w-auto" />
 				</Link>
                 
@@ -44,19 +44,19 @@ export function FloatingHeader({ data }: { data: HeaderType }) {
                     <div className="relative group/nav cursor-pointer text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-primary transition-colors py-4 flex items-center gap-1">
                         Company
                         <ChevronDown className="w-4 h-4 ml-0.5 opacity-50 group-hover/nav:rotate-180 transition-transform duration-200" />
-                        <div className="absolute top-full left-1/2 -translate-x-1/2 w-64 rounded-2xl border bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl shadow-2xl opacity-0 invisible group-hover/nav:opacity-100 group-hover/nav:visible transition-all duration-200 p-2 grid gap-0.5 transform origin-top group-hover/nav:translate-y-0 translate-y-2 pointer-events-none group-hover/nav:pointer-events-auto">
+                        <div className="absolute top-full left-1/2 -translate-x-1/2 w-64 rounded-xl border bg-white dark:bg-slate-950 shadow-lg opacity-0 invisible group-hover/nav:opacity-100 group-hover/nav:visible transition-all duration-200 p-2 grid gap-0.5 transform origin-top group-hover/nav:translate-y-0 translate-y-1 pointer-events-none group-hover/nav:pointer-events-auto">
                             <p className="px-3 py-2 text-xs font-bold uppercase tracking-widest text-[#099546] mb-1">About Us</p>
-                            <Link href="/about" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-xl transition-colors font-medium">Company Profile</Link>
-                            <Link href="/mission-vision" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-xl transition-colors font-medium">Mission & Vision</Link>
-                            <Link href="/careers" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-xl transition-colors font-medium">Careers</Link>
-                            <Link href="/partners-associates" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-xl transition-colors font-medium">Partners & Associates</Link>
-                            <Link href="/complaints-feedback" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-xl transition-colors font-medium">Complaints & Feedback</Link>
+                            <Link href="/about" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-md transition-colors font-medium">Company Profile</Link>
+                            <Link href="/mission-vision" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-md transition-colors font-medium">Mission & Vision</Link>
+                            <Link href="/careers" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-md transition-colors font-medium">Careers</Link>
+                            <Link href="/partners-associates" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-md transition-colors font-medium">Partners & Associates</Link>
+                            <Link href="/complaints-feedback" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-md transition-colors font-medium">Complaints & Feedback</Link>
                             
                             <div className="h-px bg-slate-200 dark:bg-slate-800 my-2 mx-2" />
                             
                             <p className="px-3 py-1 text-xs font-bold uppercase tracking-widest text-muted-foreground mb-1">Legal</p>
-                            <Link href="/terms" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-xl transition-colors font-medium">Terms & Conditions</Link>
-                            <Link href="/privacy" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-xl transition-colors font-medium">Privacy Policy</Link>
+                            <Link href="/terms" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-md transition-colors font-medium">Terms & Conditions</Link>
+                            <Link href="/privacy" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-md transition-colors font-medium">Privacy Policy</Link>
                         </div>
                     </div>
 				</div>

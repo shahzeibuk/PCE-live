@@ -45,7 +45,7 @@ export default async function ServicePage({ params }: { params: { slug: string }
         <div className="absolute inset-0 z-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[16px_16px] opacity-20 mask-[radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] dark:opacity-10" />
         <div className="container relative z-10 px-4">
           <div className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-bold mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 text-xs font-bold uppercase tracking-widest mb-6">
               Our Services
             </div>
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6 text-slate-900 dark:text-white leading-tight">
@@ -65,13 +65,13 @@ export default async function ServicePage({ params }: { params: { slug: string }
           
           {/* Main Image if available */}
           {service.hero_image && (
-            <div className="relative aspect-[21/9] rounded-3xl overflow-hidden mb-12 shadow-md border bg-white">
+            <div className="relative aspect-21/9 rounded-xl overflow-hidden mb-12 shadow-sm border bg-white">
               <Media resource={service.hero_image} fill className="object-cover" />
             </div>
           )}
 
           {/* Description / Rich Text Content */}
-          <section className="bg-white dark:bg-slate-900 rounded-3xl p-8 md:p-12 border shadow-sm">
+          <section className="bg-white dark:bg-slate-950 rounded-xl p-6 md:p-10 border shadow-sm">
             <h2 className="text-3xl font-bold mb-8 text-slate-900 dark:text-white">Overview</h2>
             {/* The prose prose-lg class handles the lexical rich text clean formatting */}
             <div className="prose prose-lg prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-a:text-primary hover:prose-a:text-primary/80">
@@ -81,7 +81,7 @@ export default async function ServicePage({ params }: { params: { slug: string }
 
           {/* Process Steps */}
           {service.process_steps && service.process_steps.length > 0 && (
-            <section className="bg-white dark:bg-slate-900 rounded-3xl p-8 md:p-12 border shadow-sm">
+            <section className="bg-white dark:bg-slate-950 rounded-xl p-6 md:p-10 border shadow-sm">
               <h2 className="text-3xl font-bold mb-10 text-slate-900 dark:text-white">How It Works</h2>
               <div className="relative border-l-2 border-slate-200 dark:border-slate-800 ml-6 space-y-12">
                 {service.process_steps.map((item: any, index: number) => (
@@ -101,7 +101,7 @@ export default async function ServicePage({ params }: { params: { slug: string }
         {/* Right Column: Sidebar */}
         <div className="lg:col-span-4 space-y-8">
           {/* Features/Trust Sidebar Box */}
-          <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 border shadow-sm">
+          <div className="bg-white dark:bg-slate-950 rounded-xl p-6 border shadow-sm">
             <h3 className="text-xl font-bold mb-6 text-slate-900 dark:text-white">Why Choose Us</h3>
             <div className="space-y-6">
               <div className="flex gap-4 items-start">
@@ -136,7 +136,7 @@ export default async function ServicePage({ params }: { params: { slug: string }
 
           {/* Benefits */}
           {service.benefits && service.benefits.length > 0 && (
-            <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 border shadow-sm">
+            <div className="bg-white dark:bg-slate-950 rounded-xl p-6 border shadow-sm">
               <h3 className="text-xl font-bold mb-6 text-slate-900 dark:text-white">Key Benefits</h3>
               <ul className="space-y-4">
                 {service.benefits.map((item: any, index: number) => (
@@ -150,16 +150,16 @@ export default async function ServicePage({ params }: { params: { slug: string }
           )}
 
           {/* Sticky CTA */}
-          <div className="sticky top-28 bg-primary text-primary-foreground rounded-3xl p-8 shadow-xl text-center">
+          <div className="sticky top-28 bg-primary text-primary-foreground rounded-xl p-8 shadow-lg text-center">
             <h3 className="text-2xl font-bold mb-4">Ready to get started?</h3>
             <p className="mb-8 text-primary-foreground/90 leading-relaxed">Visit any of our branches or contact us for more information on {service.title}.</p>
             <div className="space-y-3">
-              <Button asChild size="lg" variant="secondary" className="w-full rounded-xl h-14 font-bold text-lg shadow-sm">
+              <Button asChild size="lg" variant="secondary" className="w-full rounded-lg h-14 font-bold text-lg shadow-sm">
                 <Link href={service.cta_link || '/contact'}>
                   {service.cta_text || 'Contact Us Now'}
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="w-full rounded-xl h-14 font-bold text-lg bg-transparent border-white/30 text-white hover:bg-white hover:text-primary transition-colors">
+              <Button asChild size="lg" variant="outline" className="w-full rounded-lg h-14 font-bold text-lg bg-transparent border-white/30 text-white hover:bg-white hover:text-primary transition-colors">
                 <Link href="/branches">
                   Find a Branch
                 </Link>

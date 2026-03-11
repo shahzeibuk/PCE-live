@@ -87,7 +87,7 @@ export default async function HomePage() {
                   View Live Rates <ArrowRight className="ml-2 w-5 h-5" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="h-14 px-8 text-lg rounded-full backdrop-blur-sm bg-white/5 border-white/20 hover:bg-white hover:text-slate-900 transition-all">
+              <Button asChild variant="outline" size="lg" className="h-14 px-8 text-lg rounded-full bg-white text-slate-900 hover:bg-slate-100 hover:text-slate-900 border-none transition-all font-bold shadow-lg">
                 <Link href="/branches">Find Nearby Branch</Link>
               </Button>
             </div>
@@ -325,7 +325,7 @@ export default async function HomePage() {
               >
                  <Link href="/branches">Locate Branch</Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="h-16 px-10 text-lg rounded-full bg-white/10 border-white/30 text-white hover:bg-white hover:text-slate-900 transition-all">
+              <Button asChild size="lg" variant="outline" className="h-16 px-10 text-lg rounded-full bg-white text-primary border-none hover:bg-slate-100 transition-all shadow-lg font-bold shadow-black/10">
                  <Link href="/contact">Get in Touch</Link>
               </Button>
            </div>

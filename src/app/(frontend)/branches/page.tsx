@@ -24,20 +24,18 @@ export default async function BranchesPage() {
       {/* Hero Section */}
       <section className="relative bg-primary text-primary-foreground py-24 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(#ffffff33_1px,transparent_1px)] [background-size:20px_20px] opacity-20" />
-        <div className="container relative z-10 px-4 text-center">
-          <div className="w-20 h-20 bg-white/10 backdrop-blur-md rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-xl border border-white/20">
-            <MapPinned className="w-10 h-10 text-white" />
-          </div>
-          <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6">Find a Branch Near You</h1>
-          <p className="text-xl md:text-2xl text-primary-foreground/90 max-w-2xl mx-auto leading-relaxed">
+        <div className="container relative z-10 px-4">
+          <MapPinned className="w-12 h-12 text-white/80 mb-6" />
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">Find a Branch Near You</h1>
+          <p className="text-lg md:text-xl text-primary-foreground/90 max-w-2xl leading-relaxed">
             With a growing network of over 130+ branches nationwide, seamless currency exchange is always just around the corner.
           </p>
         </div>
       </section>
 
       {/* Locator Tool */}
-      <section className="container px-4 -mt-12 relative z-20">
-        <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-xl border p-8 md:p-12 min-h-[500px]">
+      <section className="container px-4 -mt-8 relative z-20">
+        <div className="bg-white dark:bg-slate-900 rounded-lg shadow-md border p-6 md:p-8 min-h-[500px]">
            <BranchLocator branches={branches} />
         </div>
       </section>
