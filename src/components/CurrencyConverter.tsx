@@ -75,7 +75,7 @@ export const CurrencyConverter = ({ rates }: { rates: Rate[] }) => {
   }
 
   return (
-    <Card className="w-full max-w-[480px] mx-auto bg-white border-0 shadow-[0_20px_50px_rgba(0,0,0,0.1)] rounded-[32px] overflow-hidden">
+    <Card className="w-full max-w-[480px] mx-auto bg-card border shadow-sm rounded-3xl overflow-hidden">
       <CardContent className="p-8 space-y-6">
         
         {/* Rate Pill */}

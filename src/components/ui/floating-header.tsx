@@ -21,9 +21,8 @@ export function FloatingHeader({ data }: { data: HeaderType }) {
 	return (
 		<header
 			className={cn(
-				'fixed top-5 left-0 right-0 z-50',
-				'mx-auto w-[95%] max-w-5xl rounded-2xl border border-white/20 dark:border-white/10 shadow-2xl shadow-black/5',
-				'bg-white/90 dark:bg-black/60 supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-black/50 backdrop-blur-2xl'
+				'fixed top-0 left-0 right-0 z-50 w-full border-b',
+				'bg-white dark:bg-slate-950'
 			)}
 		>
 			<nav className="mx-auto flex items-center justify-between p-2">
@@ -76,7 +75,7 @@ export function FloatingHeader({ data }: { data: HeaderType }) {
 							<MenuIcon className="size-4" />
 						</Button>
 						<SheetContent
-							className="bg-background/95 supports-[backdrop-filter]:bg-background/80 gap-0 backdrop-blur-lg border-r"
+							className="bg-white dark:bg-slate-950 gap-0 border-r"
 							showClose={true}
 							side="left"
 						>

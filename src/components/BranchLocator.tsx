@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { MapPin, Phone, Building2 } from 'lucide-react'
+import Link from 'next/link'
 import {
   Select,
   SelectContent,
@@ -48,35 +49,37 @@ export function BranchLocator({ branches }: { branches: any[] }) {
       {/* Branches Grid */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 pt-8">
         {filteredBranches.map((branch, i) => (
-          <Card key={branch.id || i} className="overflow-hidden border-2 hover:border-primary/50 transition-all hover:shadow-xl group">
-            <CardContent className="p-0">
-              <div className="bg-primary/5 p-6 border-b flex items-start gap-4">
-                <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-xl flex items-center justify-center shadow-sm shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
-                  <Building2 className="w-6 h-6" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg mb-1 line-clamp-2">{branch.name}</h3>
-                  <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-white dark:bg-slate-800">
-                    {branch.city}
+          <Link href={`/branches/${branch.id}`} key={branch.id || i} className="group block">
+            <Card className="overflow-hidden border-2 group-hover:border-primary/50 transition-all group-hover:shadow-xl h-full flex flex-col">
+              <CardContent className="p-0 flex-1 flex flex-col">
+                <div className="bg-primary/5 p-6 border-b flex items-start gap-4">
+                  <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-xl flex items-center justify-center shadow-sm shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
+                    <Building2 className="w-6 h-6" />
                   </div>
-                </div>
-              </div>
-              
-              <div className="p-6 space-y-4 bg-white dark:bg-slate-900">
-                <div className="flex gap-3 text-slate-600 dark:text-slate-300">
-                  <MapPin className="w-5 h-5 shrink-0 text-primary mt-0.5" />
-                  <p className="text-sm leading-relaxed">{branch.address}</p>
+                  <div>
+                    <h3 className="font-bold text-lg mb-1 line-clamp-2 group-hover:text-primary transition-colors">{branch.branch_name}</h3>
+                    <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-white dark:bg-slate-800 text-muted-foreground group-hover:border-primary/30">
+                      {branch.city}
+                    </div>
+                  </div>
                 </div>
                 
-                {branch.phone && (
+                <div className="p-6 space-y-4 bg-white dark:bg-slate-900 flex-1">
                   <div className="flex gap-3 text-slate-600 dark:text-slate-300">
-                    <Phone className="w-5 h-5 shrink-0 text-primary mt-0.5" />
-                    <p className="text-sm font-medium">{branch.phone}</p>
+                    <MapPin className="w-5 h-5 shrink-0 text-primary mt-0.5" />
+                    <p className="text-sm leading-relaxed">{branch.address}</p>
                   </div>
-                )}
-              </div>
-            </CardContent>
-          </Card>
+                  
+                  {branch.phone && (
+                    <div className="flex gap-3 text-slate-600 dark:text-slate-300">
+                      <Phone className="w-5 h-5 shrink-0 text-primary mt-0.5" />
+                      <p className="text-sm font-medium">{branch.phone}</p>
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
         ))}
         
         {filteredBranches.length === 0 && (

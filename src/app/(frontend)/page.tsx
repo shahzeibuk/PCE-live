@@ -95,12 +95,7 @@ export default async function HomePage() {
 
           <div className="hidden lg:block animate-in fade-in zoom-in duration-1000 delay-300">
              <div className="relative">
-                <div className="absolute -inset-4 bg-primary/20 rounded-3xl blur-3xl" />
-                <div className="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-2 shadow-2xl overflow-hidden">
-                    <div className="bg-slate-900/50 p-6">
-                       <CurrencyConverter rates={converterRates} />
-                    </div>
-                </div>
+                <CurrencyConverter rates={converterRates} />
              </div>
           </div>
         </div>
