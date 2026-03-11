@@ -5,6 +5,12 @@ import { useRouter } from 'next/navigation'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@/components/ui/select"
 import { 
   ChevronDown, 
   ArrowRight, 
@@ -116,11 +122,30 @@ export const CurrencyConverter = ({ rates }: { rates: Rate[] }) => {
         <div className="relative space-y-1">
           <label className="text-sm font-semibold text-gray-500 ml-1">You send exactly</label>
           <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3 px-3 py-2 bg-gray-50 rounded-2xl hover:bg-gray-100 transition-colors cursor-pointer group">
-              <span className="text-2xl">{FLAG_MAP[fromCurrency] || '🏳️'}</span>
-              <span className="text-xl font-bold">{fromCurrency}</span>
-              <ChevronDown className="size-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
-            </div>
+            <Select 
+              value={fromCurrency} 
+              onValueChange={(val) => {
+                if (val === toCurrency) setToCurrency(fromCurrency)
+                setFromCurrency(val)
+              }}
+            >
+              <SelectTrigger className="w-fit h-auto flex items-center gap-2 px-3 py-2 bg-gray-50 rounded-2xl hover:bg-gray-100 transition-colors cursor-pointer group border-0 ring-0 focus:ring-0 shadow-none">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">{FLAG_MAP[fromCurrency] || '🏳️'}</span>
+                  <span className="text-xl font-bold">{fromCurrency}</span>
+                </div>
+              </SelectTrigger>
+              <SelectContent className="rounded-2xl max-h-[300px] z-50">
+                {Array.from(new Set(['PKR', ...rates.map(r => r.currency_code)])).sort().map(code => (
+                  <SelectItem key={code} value={code} className="font-semibold text-lg py-2 cursor-pointer rounded-xl">
+                    <div className="flex items-center gap-3">
+                       <span className="text-2xl">{FLAG_MAP[code] || '🏳️'}</span>
+                       <span>{code}</span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
             <input
               type="text"
               value={sendAmount}
@@ -144,11 +169,30 @@ export const CurrencyConverter = ({ rates }: { rates: Rate[] }) => {
         <div className="relative space-y-1">
           <label className="text-sm font-semibold text-gray-500 ml-1">Recipient gets</label>
           <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3 px-3 py-2 bg-gray-50 rounded-2xl hover:bg-gray-100 transition-colors cursor-pointer group">
-              <span className="text-2xl">{FLAG_MAP[toCurrency] || '🏳️'}</span>
-              <span className="text-xl font-bold">{toCurrency}</span>
-              <ChevronDown className="size-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
-            </div>
+            <Select 
+              value={toCurrency} 
+              onValueChange={(val) => {
+                if (val === fromCurrency) setFromCurrency(toCurrency)
+                setToCurrency(val)
+              }}
+            >
+              <SelectTrigger className="w-fit h-auto flex items-center gap-2 px-3 py-2 bg-gray-50 rounded-2xl hover:bg-gray-100 transition-colors cursor-pointer group border-0 ring-0 focus:ring-0 shadow-none">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">{FLAG_MAP[toCurrency] || '🏳️'}</span>
+                  <span className="text-xl font-bold">{toCurrency}</span>
+                </div>
+              </SelectTrigger>
+              <SelectContent className="rounded-2xl max-h-[300px] z-50">
+                {Array.from(new Set(['PKR', ...rates.map(r => r.currency_code)])).sort().map(code => (
+                  <SelectItem key={code} value={code} className="font-semibold text-lg py-2 cursor-pointer rounded-xl">
+                    <div className="flex items-center gap-3">
+                       <span className="text-2xl">{FLAG_MAP[code] || '🏳️'}</span>
+                       <span>{code}</span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
             <div className="text-right text-4xl font-black tracking-tighter text-gray-900">
                 {receiveAmount}
             </div>

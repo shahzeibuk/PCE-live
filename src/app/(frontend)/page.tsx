@@ -65,7 +65,7 @@ export default async function HomePage() {
               src="/isb.jpg"
               alt="Faisal Mosque Islamabad Pakistan"
               fill
-              className="object-cover object-center opacity-7`0 mix-blend-luminosity"
+              className="object-cover object-center opacity-70 mix-blend-luminosity"
               priority
            />
            <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent z-10" />
@@ -73,9 +73,8 @@ export default async function HomePage() {
         
         <div className="container relative z-10 px-4 grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8 animate-in fade-in slide-in-from-left duration-1000">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary-foreground text-sm font-medium">
-              <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
-              Trusted since 2003
+            <div className="inline-flex items-center px-3 py-1 bg-white/10 border border-white/10 rounded-sm text-slate-200 text-xs font-bold uppercase tracking-widest">
+              Trusted Since 2003
             </div>
             <h1 className="text-5xl lg:text-7xl font-bold tracking-tight !leading-tight uppercase">
               Fast, Secure & <span className="text-primary italic">Best Rates</span>
@@ -189,9 +188,7 @@ export default async function HomePage() {
           <div className="relative group">
             <div className="absolute -inset-4 bg-primary/10 rounded-3xl blur-2xl group-hover:bg-primary/20 transition-colors" />
             <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl border-8 border-white dark:border-slate-800">
-               <div className="w-full h-full bg-slate-200 animate-pulse flex items-center justify-center">
-                  <span className="text-slate-400 font-bold italic text-3xl">PCE Excellence</span>
-               </div>
+               <Image src="/bg_1.jpg" alt="Pakistan Currency Exchange Legacy" fill className="object-cover" />
             </div>
             {/* Stats Badge */}
             <div className="absolute -bottom-8 -right-8 bg-primary text-primary-foreground p-8 rounded-3xl shadow-2xl hidden md:block">
@@ -241,7 +238,7 @@ export default async function HomePage() {
                         <CardContent className="flex flex-col items-center text-center p-6">
                            <div className="mb-8 relative">
                              <Avatar className="w-24 h-24 border-4 border-white shadow-xl">
-                               <AvatarImage src={t.photo?.url} alt={t.name} />
+                               <AvatarImage src={t.photo?.url || `https://i.pravatar.cc/150?u=${t.id}`} alt={t.name} />
                                <AvatarFallback className="bg-primary/10 text-primary text-xl font-bold">
                                  {t.name.substring(0, 2).toUpperCase()}
                                </AvatarFallback>
@@ -288,10 +285,12 @@ export default async function HomePage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {news.map((item: any) => (
               <Link key={item.id} href={`/news/${item.slug}`} className="group space-y-5">
-                 <div className="aspect-video rounded-3xl overflow-hidden bg-muted transition-transform duration-500 group-hover:scale-[1.02]">
-                    <div className="w-full h-full bg-slate-200 flex items-center justify-center text-slate-400 italic">
-                      No Image available
-                    </div>
+                 <div className="relative aspect-video rounded-3xl overflow-hidden bg-muted transition-transform duration-500 group-hover:scale-[1.02]">
+                    {item.hero_image?.url || item.image?.url ? (
+                        <Image src={item.hero_image?.url || item.image?.url} alt={item.title} fill className="object-cover" />
+                    ) : (
+                        <Image src={`https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?q=80&w=800&auto=format&fit=crop`} alt="Finance News" fill className="object-cover opacity-80" />
+                    )}
                  </div>
                  <div className="space-y-3">
                     <div className="text-sm font-bold text-primary">
@@ -327,11 +326,12 @@ export default async function HomePage() {
               <Button 
                 asChild 
                 size="lg" 
-                className="h-16 px-10 text-lg rounded-full shadow-2xl font-bold transition-opacity"
+                variant="secondary"
+                className="h-16 px-10 text-lg rounded-xl font-bold transition-all shadow-none hover:bg-slate-100 text-slate-900 bg-white"
               >
                  <Link href="/branches">Locate Branch</Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="h-16 px-10 text-lg rounded-full bg-white text-primary border-none hover:bg-slate-100 transition-all shadow-lg font-bold shadow-black/10">
+              <Button asChild size="lg" variant="outline" className="h-16 px-10 text-lg rounded-xl bg-transparent border-white/30 text-white hover:bg-white hover:text-primary transition-all shadow-none font-bold">
                  <Link href="/contact">Get in Touch</Link>
               </Button>
            </div>
