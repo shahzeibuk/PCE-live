@@ -8,7 +8,6 @@ import {
 import {
   JSXConvertersFunction,
   LinkJSXConverter,
-  RichText as ConvertRichText,
 } from '@payloadcms/richtext-lexical/react'
 
 import { CodeBlock, CodeBlockProps } from '@/blocks/Code/Component'
@@ -21,6 +20,7 @@ import type {
 import { BannerBlock } from '@/blocks/Banner/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { cn } from '@/utilities/ui'
+import CoreRichText from './Core'
 
 type NodeTypes =
   | DefaultNodeTypes
@@ -35,7 +35,7 @@ const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
   return relationTo === 'posts' ? `/posts/${slug}` : `/${slug}`
 }
 
-const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({
+export const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({
   ...defaultConverters,
   ...LinkJSXConverter({ internalDocToHref }),
   blocks: {
@@ -62,20 +62,5 @@ type Props = {
 } & React.HTMLAttributes<HTMLDivElement>
 
 export default function RichText(props: Props) {
-  const { className, enableProse = true, enableGutter = true, ...rest } = props
-  return (
-    <ConvertRichText
-      converters={jsxConverters}
-      className={cn(
-        'payload-richtext',
-        {
-          container: enableGutter,
-          'max-w-none': !enableGutter,
-          'mx-auto prose md:prose-md dark:prose-invert': enableProse,
-        },
-        className,
-      )}
-      {...rest}
-    />
-  )
+  return <CoreRichText {...props} converters={jsxConverters} />
 }

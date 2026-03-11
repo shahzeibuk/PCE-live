@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react';
-import { ChevronDown, MenuIcon } from 'lucide-react';
+import { ChevronDown, MenuIcon, Phone, Facebook, Linkedin } from 'lucide-react';
 import { Sheet, SheetContent, SheetFooter } from '@/components/ui/sheet';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { cn } from '@/utilities/ui';
@@ -25,6 +25,27 @@ export function FloatingHeader({ data }: { data: HeaderType }) {
 				'bg-white dark:bg-slate-950'
 			)}
 		>
+			<div className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200/50 dark:border-slate-800/50">
+				<div className="mx-auto flex h-10 items-center justify-between px-4">
+					<div className="flex items-center gap-4">
+						<div className="flex items-center gap-1.5 text-xs font-bold text-slate-600 dark:text-slate-400">
+							<Phone className="h-3 w-3 text-[#099546]" />
+							<span>Toll Free: 0800-13537</span>
+						</div>
+					</div>
+					<div className="flex items-center gap-4">
+						<a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-[#099546] transition-colors">
+							<Facebook className="h-4 w-4" />
+						</a>
+						<a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-[#099546] transition-colors">
+							<Linkedin className="h-4 w-4" />
+						</a>
+						<div className="h-4 w-px bg-slate-200 dark:bg-slate-800 mx-1" />
+						<Link href="/contact" className="text-xs font-bold text-[#099546] hover:underline">Support</Link>
+					</div>
+				</div>
+			</div>
+
 			<nav className="mx-auto flex items-center justify-between p-2">
 				<Link href="/" className="flex cursor-pointer items-center gap-2 rounded-lg py-1 px-2 transition-colors">
 					<Logo loading="eager" priority="high" className="h-10 sm:h-12 w-auto" />
@@ -40,23 +61,32 @@ export function FloatingHeader({ data }: { data: HeaderType }) {
 						/>
 					))}
 
-                    {/* Footer Links Dropdown */}
+                    {/* Services Dropdown */}
+                    <div className="relative group/nav cursor-pointer text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-primary transition-colors hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md px-4 py-2 flex items-center gap-1">
+                        Services
+                        <ChevronDown className="w-4 h-4 ml-0.5 opacity-50 group-hover/nav:rotate-180 transition-transform duration-200" />
+                        <div className="absolute top-full left-1/2 -translate-x-1/2 w-64 rounded-xl border bg-white dark:bg-slate-950 shadow-lg opacity-0 invisible group-hover/nav:opacity-100 group-hover/nav:visible transition-all duration-200 p-2 grid gap-0.5 transform origin-top group-hover/nav:translate-y-0 translate-y-1 pointer-events-none group-hover/nav:pointer-events-auto">
+                            <p className="px-3 py-2 text-xs font-bold uppercase tracking-widest text-[#099546] mb-1">Our Solutions</p>
+                            <Link href="/services/western-union" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-md transition-colors font-medium">Western Union</Link>
+                            <Link href="/services/moneygram" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-md transition-colors font-medium">MoneyGram</Link>
+                            <Link href="/services/ria" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-md transition-colors font-medium">RIA Money Transfer</Link>
+                            <Link href="/services/currency-exchange" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-md transition-colors font-medium">Currency Exchange</Link>
+                            <Link href="/services/telegraphic-transfer" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-md transition-colors font-medium">Telegraphic Transfer</Link>
+                            <Link href="/services/demand-draft" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-md transition-colors font-medium">Demand Draft</Link>
+                        </div>
+                    </div>
+
+                    {/* Company Dropdown */}
                     <div className="relative group/nav cursor-pointer text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-primary transition-colors hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md px-4 py-2 flex items-center gap-1">
                         Company
                         <ChevronDown className="w-4 h-4 ml-0.5 opacity-50 group-hover/nav:rotate-180 transition-transform duration-200" />
                         <div className="absolute top-full left-1/2 -translate-x-1/2 w-64 rounded-xl border bg-white dark:bg-slate-950 shadow-lg opacity-0 invisible group-hover/nav:opacity-100 group-hover/nav:visible transition-all duration-200 p-2 grid gap-0.5 transform origin-top group-hover/nav:translate-y-0 translate-y-1 pointer-events-none group-hover/nav:pointer-events-auto">
-                            <p className="px-3 py-2 text-xs font-bold uppercase tracking-widest text-[#099546] mb-1">About Us</p>
+                            <p className="px-3 py-2 text-xs font-bold uppercase tracking-widest text-[#099546] mb-1">Legacy & Trust</p>
                             <Link href="/about" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-md transition-colors font-medium">Company Profile</Link>
                             <Link href="/mission-vision" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-md transition-colors font-medium">Mission & Vision</Link>
                             <Link href="/careers" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-md transition-colors font-medium">Careers</Link>
                             <Link href="/partners-associates" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-md transition-colors font-medium">Partners & Associates</Link>
                             <Link href="/complaints-feedback" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-md transition-colors font-medium">Complaints & Feedback</Link>
-                            
-                            <div className="h-px bg-slate-200 dark:bg-slate-800 my-2 mx-2" />
-                            
-                            <p className="px-3 py-1 text-xs font-bold uppercase tracking-widest text-muted-foreground mb-1">Legal</p>
-                            <Link href="/terms" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-md transition-colors font-medium">Terms & Conditions</Link>
-                            <Link href="/privacy" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-md transition-colors font-medium">Privacy Policy</Link>
                         </div>
                     </div>
 				</div>
@@ -92,14 +122,23 @@ export function FloatingHeader({ data }: { data: HeaderType }) {
 								))}
                                 
                                 <div className="h-px bg-slate-200 dark:bg-slate-800 my-2" />
+                                <p className="text-xs font-bold uppercase tracking-widest text-[#099546] mb-2 mt-4">Services</p>
+                                <Link href="/services/western-union" onClick={() => setOpen(false)} className="block py-3 text-lg font-medium hover:text-primary transition-colors">Western Union</Link>
+                                <Link href="/services/moneygram" onClick={() => setOpen(false)} className="block py-3 text-lg font-medium hover:text-primary transition-colors">MoneyGram</Link>
+                                <Link href="/services/ria" onClick={() => setOpen(false)} className="block py-3 text-lg font-medium hover:text-primary transition-colors">RIA Money Transfer</Link>
+                                <Link href="/services/currency-exchange" onClick={() => setOpen(false)} className="block py-3 text-lg font-medium hover:text-primary transition-colors">Currency Exchange</Link>
+                                <Link href="/services/telegraphic-transfer" onClick={() => setOpen(false)} className="block py-3 text-lg font-medium hover:text-primary transition-colors">Telegraphic Transfer</Link>
+                                <Link href="/services/demand-draft" onClick={() => setOpen(false)} className="block py-3 text-lg font-medium hover:text-primary transition-colors">Demand Draft</Link>
+
+                                <div className="h-px bg-slate-200 dark:bg-slate-800 my-2" />
                                 <p className="text-xs font-bold uppercase tracking-widest text-[#099546] mb-2 mt-4">Company</p>
                                 <Link href="/about" onClick={() => setOpen(false)} className="block py-3 text-lg font-medium hover:text-primary transition-colors">Company Profile</Link>
                                 <Link href="/mission-vision" onClick={() => setOpen(false)} className="block py-3 text-lg font-medium hover:text-primary transition-colors">Mission & Vision</Link>
                                 <Link href="/careers" onClick={() => setOpen(false)} className="block py-3 text-lg font-medium hover:text-primary transition-colors">Careers</Link>
                                 <Link href="/partners-associates" onClick={() => setOpen(false)} className="block py-3 text-lg font-medium hover:text-primary transition-colors">Partners & Associates</Link>
-                                <Link href="/complaints-feedback" onClick={() => setOpen(false)} className="block py-3 text-lg font-medium hover:text-primary transition-colors">Complaints & Feedback</Link>
-                                <Link href="/terms" onClick={() => setOpen(false)} className="block py-3 text-lg font-medium hover:text-primary transition-colors text-muted-foreground">Terms & Conditions</Link>
-                                <Link href="/privacy" onClick={() => setOpen(false)} className="block py-3 text-lg font-medium hover:text-primary transition-colors text-muted-foreground">Privacy Policy</Link>
+                                <Link href="/complaints-feedback" onClick={() => setOpen(false)} className="block py-3 text-lg font-medium hover:text-primary transition-colors text-muted-foreground border-t pt-4 mt-4">Complaints & Feedback</Link>
+                                <Link href="/terms" onClick={() => setOpen(false)} className="block py-3 text-sm font-medium hover:text-primary transition-colors text-muted-foreground">Terms & Conditions</Link>
+                                <Link href="/privacy" onClick={() => setOpen(false)} className="block py-3 text-sm font-medium hover:text-primary transition-colors text-muted-foreground">Privacy Policy</Link>
 							</div>
 							<SheetFooter className="p-6">
 								<Button variant="outline" className="w-full rounded-xl">Sign In</Button>

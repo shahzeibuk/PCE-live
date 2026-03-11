@@ -34,15 +34,15 @@ export async function Footer() {
               </div>
             </div>
 
-            {/* About Us */}
+            {/* Company */}
             <div className="flex flex-col gap-4">
-              <h3 className="font-bold text-lg uppercase tracking-wide">About Us</h3>
+              <h3 className="font-bold text-lg uppercase tracking-wide">Company</h3>
               <nav className="flex flex-col gap-2 text-sm">
-                <Link href="/about" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Profile</Link>
+                <Link href="/about" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Company Profile</Link>
+                <Link href="/mission-vision" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Mission & Vision</Link>
+                <Link href="/careers" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Careers</Link>
                 <Link href="/partners-associates" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Partners & Associates</Link>
-                <Link href="/contact" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Contact Us</Link>
-                <Link href="/terms" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Terms & Condition</Link>
-                <Link href="/privacy" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Privacy Policy</Link>
+                <Link href="/complaints-feedback" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Complaints & Feedback</Link>
               </nav>
             </div>
 
@@ -70,13 +70,13 @@ export async function Footer() {
               </nav>
             </div>
 
-            {/* Social Links */}
+            {/* Legal */}
             <div className="flex flex-col gap-4">
-              <h3 className="font-bold text-lg uppercase tracking-wide">Follow Us</h3>
+              <h3 className="font-bold text-lg uppercase tracking-wide">Legal</h3>
               <nav className="flex flex-col gap-2 text-sm">
-                <Link href="https://www.facebook.com/pkcurrency/" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2">
-                  <span className="text-xs">›</span> Pakistan Currency Exchange
-                </Link>
+                <Link href="/terms" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Terms & Conditions</Link>
+                <Link href="/privacy" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Privacy Policy</Link>
+                <Link href="/kyc" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> KYC & Compliance</Link>
               </nav>
             </div>
           </div>
