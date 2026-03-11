@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react';
-import { Grid2x2PlusIcon, MenuIcon } from 'lucide-react';
+import { ChevronDown, MenuIcon } from 'lucide-react';
 import { Sheet, SheetContent, SheetFooter } from '@/components/ui/sheet';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { cn } from '@/utilities/ui';
@@ -21,25 +21,45 @@ export function FloatingHeader({ data }: { data: HeaderType }) {
 	return (
 		<header
 			className={cn(
-				'sticky top-0 z-50 w-full border-b shadow-sm',
-				'bg-background/95 supports-[backdrop-filter]:bg-background/80 backdrop-blur-lg'
+				'fixed top-5 left-0 right-0 z-50',
+				'mx-auto w-[95%] max-w-5xl rounded-2xl border border-white/20 dark:border-white/10 shadow-2xl shadow-black/5',
+				'bg-white/90 dark:bg-black/60 supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-black/50 backdrop-blur-2xl'
 			)}
 		>
 			<nav className="mx-auto flex items-center justify-between p-2">
-				<Link href="/" className="hover:bg-accent flex cursor-pointer items-center gap-2 rounded-md py-1 duration-100">
+				<Link href="/" className="hover:bg-accent/50 flex cursor-pointer items-center gap-2 rounded-xl py-1 px-2 duration-100">
 					<Logo loading="eager" priority="high" className="h-10 sm:h-12 w-auto" />
-					<p className="font-sans text-xl font-bold tracking-tight text-[#099546] hidden sm:block">PCE</p>
 				</Link>
                 
-				<div className="hidden items-center gap-1 lg:flex">
+				<div className="hidden items-center gap-6 lg:flex">
 					{navItems.map(({ link }, i) => (
 						<CMSLink
 							key={i}
 							{...link}
 							appearance="ghost"
-                            className="text-sm font-medium"
+                            className="text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-primary transition-colors px-0 py-0"
 						/>
 					))}
+
+                    {/* Footer Links Dropdown */}
+                    <div className="relative group/nav cursor-pointer text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-primary transition-colors py-4 flex items-center gap-1">
+                        Company
+                        <ChevronDown className="w-4 h-4 ml-0.5 opacity-50 group-hover/nav:rotate-180 transition-transform duration-200" />
+                        <div className="absolute top-full left-1/2 -translate-x-1/2 w-64 rounded-2xl border bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl shadow-2xl opacity-0 invisible group-hover/nav:opacity-100 group-hover/nav:visible transition-all duration-200 p-2 grid gap-0.5 transform origin-top group-hover/nav:translate-y-0 translate-y-2 pointer-events-none group-hover/nav:pointer-events-auto">
+                            <p className="px-3 py-2 text-xs font-bold uppercase tracking-widest text-[#099546] mb-1">About Us</p>
+                            <Link href="/about" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-xl transition-colors font-medium">Company Profile</Link>
+                            <Link href="/mission-vision" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-xl transition-colors font-medium">Mission & Vision</Link>
+                            <Link href="/careers" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-xl transition-colors font-medium">Careers</Link>
+                            <Link href="/partners-associates" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-xl transition-colors font-medium">Partners & Associates</Link>
+                            <Link href="/complaints-feedback" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-xl transition-colors font-medium">Complaints & Feedback</Link>
+                            
+                            <div className="h-px bg-slate-200 dark:bg-slate-800 my-2 mx-2" />
+                            
+                            <p className="px-3 py-1 text-xs font-bold uppercase tracking-widest text-muted-foreground mb-1">Legal</p>
+                            <Link href="/terms" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-xl transition-colors font-medium">Terms & Conditions</Link>
+                            <Link href="/privacy" className="block px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary rounded-xl transition-colors font-medium">Privacy Policy</Link>
+                        </div>
+                    </div>
 				</div>
 
 				<div className="flex items-center gap-2">
@@ -71,6 +91,16 @@ export function FloatingHeader({ data }: { data: HeaderType }) {
                                         onClick={() => setOpen(false)}
                                     />
 								))}
+                                
+                                <div className="h-px bg-slate-200 dark:bg-slate-800 my-2" />
+                                <p className="text-xs font-bold uppercase tracking-widest text-[#099546] mb-2 mt-4">Company</p>
+                                <Link href="/about" onClick={() => setOpen(false)} className="block py-3 text-lg font-medium hover:text-primary transition-colors">Company Profile</Link>
+                                <Link href="/mission-vision" onClick={() => setOpen(false)} className="block py-3 text-lg font-medium hover:text-primary transition-colors">Mission & Vision</Link>
+                                <Link href="/careers" onClick={() => setOpen(false)} className="block py-3 text-lg font-medium hover:text-primary transition-colors">Careers</Link>
+                                <Link href="/partners-associates" onClick={() => setOpen(false)} className="block py-3 text-lg font-medium hover:text-primary transition-colors">Partners & Associates</Link>
+                                <Link href="/complaints-feedback" onClick={() => setOpen(false)} className="block py-3 text-lg font-medium hover:text-primary transition-colors">Complaints & Feedback</Link>
+                                <Link href="/terms" onClick={() => setOpen(false)} className="block py-3 text-lg font-medium hover:text-primary transition-colors text-muted-foreground">Terms & Conditions</Link>
+                                <Link href="/privacy" onClick={() => setOpen(false)} className="block py-3 text-lg font-medium hover:text-primary transition-colors text-muted-foreground">Privacy Policy</Link>
 							</div>
 							<SheetFooter className="p-6">
 								<Button variant="outline" className="w-full rounded-xl">Sign In</Button>
