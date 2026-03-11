@@ -59,16 +59,16 @@ export default async function HomePage() {
   return (
     <div className="flex flex-col gap-0">
       {/* 1. Hero Section */}
-      <section className="relative min-h-[85vh] flex items-center bg-slate-900 text-white py-20 overflow-hidden">
+      <section className="relative min-h-[85vh] flex items-center bg-black text-white py-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
            <Image 
-              src="https://images.unsplash.com/photo-1596740615469-8ceac028cabd?q=80&w=2670&auto=format&fit=crop"
+              src="/isb.jpg"
               alt="Faisal Mosque Islamabad Pakistan"
               fill
               className="object-cover object-center opacity-40 mix-blend-luminosity"
               priority
            />
-           <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/90 to-transparent z-10" />
+           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent z-10" />
         </div>
         
         <div className="container relative z-10 px-4 grid lg:grid-cols-2 gap-12 items-center">
