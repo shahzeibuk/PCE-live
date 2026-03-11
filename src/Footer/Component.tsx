@@ -19,8 +19,7 @@ export async function Footer() {
       {/* Partners section sits right above the footer */}
       <PartnersCarousel />
       
-      <footer className="mt-auto bg-[#0a8258] dark:bg-card text-white overflow-hidden relative">
-        <div className="absolute inset-0 bg-linear-to-r from-transparent to-[#106b99] opacity-80 pointer-events-none" />
+      <footer className="mt-auto bg-[#099546] dark:bg-card text-white overflow-hidden relative">
         
         <div className="container py-12 gap-8 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
