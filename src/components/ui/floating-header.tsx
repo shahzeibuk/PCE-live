@@ -30,18 +30,18 @@ export function FloatingHeader({ data }: { data: HeaderType }) {
 					<Logo loading="eager" priority="high" className="h-10 sm:h-12 w-auto" />
 				</Link>
                 
-				<div className="hidden items-center gap-6 lg:flex">
+				<div className="hidden items-center gap-2 lg:flex">
 					{navItems.map(({ link }, i) => (
 						<CMSLink
 							key={i}
 							{...link}
 							appearance="ghost"
-                            className="text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-primary transition-colors px-0 py-0"
+                            className="text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-primary transition-colors hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md px-4 py-2"
 						/>
 					))}
 
                     {/* Footer Links Dropdown */}
-                    <div className="relative group/nav cursor-pointer text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-primary transition-colors py-4 flex items-center gap-1">
+                    <div className="relative group/nav cursor-pointer text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-primary transition-colors hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md px-4 py-2 flex items-center gap-1">
                         Company
                         <ChevronDown className="w-4 h-4 ml-0.5 opacity-50 group-hover/nav:rotate-180 transition-transform duration-200" />
                         <div className="absolute top-full left-1/2 -translate-x-1/2 w-64 rounded-xl border bg-white dark:bg-slate-950 shadow-lg opacity-0 invisible group-hover/nav:opacity-100 group-hover/nav:visible transition-all duration-200 p-2 grid gap-0.5 transform origin-top group-hover/nav:translate-y-0 translate-y-1 pointer-events-none group-hover/nav:pointer-events-auto">
