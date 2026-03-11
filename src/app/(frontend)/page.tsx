@@ -65,7 +65,7 @@ export default async function HomePage() {
               src="/isb.jpg"
               alt="Faisal Mosque Islamabad Pakistan"
               fill
-              className="object-cover object-center opacity-40 mix-blend-luminosity"
+              className="object-cover object-center opacity-7`0 mix-blend-luminosity"
               priority
            />
            <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent z-10" />
