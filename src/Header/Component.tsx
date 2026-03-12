@@ -1,7 +1,6 @@
 import React from 'react'
 
-const Header = () => {
-  return <div className="fixed top-0 left-0 right-0 h-10 bg-red-500 z-50">STATIC HEADER DEFAULT</div>
+export default function GlobalHeader() {
+  console.log('GlobalHeader rendering...')
+  return <div className="fixed top-0 left-0 right-0 h-10 bg-red-500 z-50">STATIC GLOBAL HEADER FUNCTION</div>
 }
-
-export default Header
