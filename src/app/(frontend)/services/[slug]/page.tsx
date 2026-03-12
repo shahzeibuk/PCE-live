@@ -47,7 +47,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
       <section className="relative h-[60vh] min-h-[400px] flex items-center mb-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Media resource={service.hero_image} className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-[2px]" />
+          <div className="absolute inset-0 bg-slate-900/70" />
         </div>
 
         <div className="container relative z-10 text-white">

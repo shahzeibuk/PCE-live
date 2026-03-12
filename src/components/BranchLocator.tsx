@@ -26,7 +26,7 @@ export function BranchLocator({ branches }: { branches: any[] }) {
   }, [branches, selectedCity])
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
+    <div className="space-y-8">
       {/* City Selector */}
       <div className="max-w-sm relative z-20">
         <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2">

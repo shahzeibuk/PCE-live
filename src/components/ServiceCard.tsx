@@ -14,14 +14,13 @@ interface ServiceProps {
 
 export const ServiceCard = ({ title, description, slug, hero_image }: ServiceProps) => {
   return (
-    <Card className="group flex flex-col h-full overflow-hidden border transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:border-primary/20 bg-white dark:bg-slate-950 rounded-2xl">
+    <Card className="group flex flex-col h-full overflow-hidden border border-slate-200 dark:border-slate-800 hover:border-primary/40 transition-colors bg-white dark:bg-slate-950 rounded-lg">
       {hero_image && (
         <div className="relative aspect-video w-full overflow-hidden">
           <Media 
             resource={hero_image} 
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+            className="w-full h-full object-cover" 
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         </div>
       )}
       <CardHeader className="pb-4">

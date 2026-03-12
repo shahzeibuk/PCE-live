@@ -41,7 +41,7 @@ export function PartnersCarousel() {
                 key={index} 
                 className="flex-[0_0_50%] min-w-0 pl-4 sm:flex-[0_0_33%] md:flex-[0_0_25%] lg:flex-[0_0_20%]"
               >
-                <div className="flex items-center justify-center h-24 p-4 grayscale transition-all duration-300 hover:grayscale-0 hover:scale-110">
+                <div className="flex items-center justify-center h-24 p-4 grayscale hover:grayscale-0 transition-colors duration-200">
                   <Image
                     src={partner.src}
                     alt={partner.name}

@@ -72,7 +72,7 @@ export default async function HomePage() {
         </div>
         
         <div className="container relative z-10 px-4 grid lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-8 animate-in fade-in slide-in-from-left duration-1000">
+          <div className="space-y-8">
             <div className="inline-flex items-center px-3 py-1 bg-white/10 border border-white/10 rounded-sm text-slate-200 text-xs font-bold uppercase tracking-widest">
               Trusted Since 2003
             </div>
@@ -92,13 +92,13 @@ export default async function HomePage() {
                   View Live Rates <ArrowRight className="ml-2 w-5 h-5" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="h-14 px-8 text-lg rounded-full bg-white text-slate-900 hover:bg-slate-100 hover:text-slate-900 border-none transition-all font-bold shadow-lg">
+              <Button asChild variant="outline" size="lg" className="h-14 px-8 text-lg rounded-full bg-white text-slate-900 hover:bg-slate-100 hover:text-slate-900 border border-white/30 transition-colors font-bold">
                 <Link href="/branches">Find Nearby Branch</Link>
               </Button>
             </div>
           </div>
 
-          <div className="hidden lg:block animate-in fade-in zoom-in duration-1000 delay-300">
+          <div className="hidden lg:block">
              <div className="relative">
                 <CurrencyConverter rates={converterRates} />
              </div>
@@ -185,13 +185,12 @@ export default async function HomePage() {
       {/* 5. Company Overview (About CTA) */}
       <section className="py-24 container px-4">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div className="relative group">
-            <div className="absolute -inset-4 bg-primary/10 rounded-3xl blur-2xl group-hover:bg-primary/20 transition-colors" />
-            <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl border-8 border-white dark:border-slate-800">
+          <div className="relative">
+            <div className="relative aspect-video rounded-lg overflow-hidden border border-slate-200 dark:border-slate-800">
                <Image src="/bg_1.jpg" alt="Pakistan Currency Exchange Legacy" fill className="object-cover" />
             </div>
             {/* Stats Badge */}
-            <div className="absolute -bottom-8 -right-8 bg-primary text-primary-foreground p-8 rounded-3xl shadow-2xl hidden md:block">
+            <div className="absolute -bottom-8 -right-8 bg-primary text-primary-foreground p-8 rounded-lg hidden md:block border border-slate-200/50 dark:border-slate-700/50">
                <div className="text-4xl font-bold mb-1">20+</div>
                <div className="text-sm font-medium opacity-90">Years of Experience</div>
             </div>
@@ -237,13 +236,13 @@ export default async function HomePage() {
                       <Card className="border-none bg-transparent shadow-none">
                         <CardContent className="flex flex-col items-center text-center p-6">
                            <div className="mb-8 relative">
-                             <Avatar className="w-24 h-24 border-4 border-white shadow-xl">
+                             <Avatar className="w-24 h-24 border-2 border-slate-200 dark:border-slate-700">
                                <AvatarImage src={t.photo?.url || `https://i.pravatar.cc/150?u=${t.id}`} alt={t.name} />
                                <AvatarFallback className="bg-primary/10 text-primary text-xl font-bold">
                                  {t.name.substring(0, 2).toUpperCase()}
                                </AvatarFallback>
                              </Avatar>
-                             <div className="absolute -bottom-2 -right-2 bg-primary text-primary-foreground p-2 rounded-full shadow-lg">
+                             <div className="absolute -bottom-2 -right-2 bg-primary text-primary-foreground p-2 rounded-full">
                                 <ShieldCheck className="w-4 h-4" />
                              </div>
                            </div>
@@ -285,7 +284,7 @@ export default async function HomePage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {news.map((item: any) => (
               <Link key={item.id} href={`/news/${item.slug}`} className="group space-y-5">
-                 <div className="relative aspect-video rounded-3xl overflow-hidden bg-muted transition-transform duration-500 group-hover:scale-[1.02]">
+                 <div className="relative aspect-video rounded-lg overflow-hidden bg-muted border border-slate-200 dark:border-slate-800">
                     {item.hero_image?.url || item.image?.url ? (
                         <Image src={item.hero_image?.url || item.image?.url} alt={item.title} fill className="object-cover" />
                     ) : (
@@ -311,18 +310,15 @@ export default async function HomePage() {
 
       {/* 9. Branch CTA */}
       <section className="py-12 container px-4 mb-24">
-        <div className="bg-primary rounded-[3rem] p-12 lg:p-20 flex flex-col lg:flex-row gap-12 items-center text-center lg:text-left overflow-hidden relative">
-           <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-32 -mt-32 blur-3xl" />
-           <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary-foreground/10 rounded-full -ml-32 -mb-32 blur-3xl" />
-           
-           <div className="space-y-6 relative z-10 flex-1">
+        <div className="bg-primary rounded-2xl p-12 lg:p-20 flex flex-col lg:flex-row gap-12 items-center text-center lg:text-left">
+           <div className="space-y-6 flex-1">
               <h2 className="text-4xl lg:text-5xl font-bold text-primary-foreground tracking-tight">Visit a branch near you today.</h2>
               <p className="text-xl text-primary-foreground/80 max-w-xl">
                  Our professional staff is ready to assist you with all your currency needs across 50+ locations in Pakistan.
               </p>
            </div>
            
-           <div className="relative z-10 flex flex-col sm:flex-row gap-4">
+           <div className="flex flex-col sm:flex-row gap-4">
               <Button 
                 asChild 
                 size="lg" 

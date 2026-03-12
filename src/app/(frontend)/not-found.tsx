@@ -9,8 +9,8 @@ export default function NotFound() {
         <div className="relative">
           <h1 className="text-[12rem] font-black text-slate-100 dark:text-slate-900 leading-none">404</h1>
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="bg-primary/10 p-6 rounded-full backdrop-blur-sm">
-                <Search className="w-16 h-16 text-primary animate-bounce shadow-2xl" />
+            <div className="bg-slate-100 dark:bg-slate-800 p-6 rounded-full">
+                <Search className="w-16 h-16 text-slate-400 dark:text-slate-500" />
             </div>
           </div>
         </div>
