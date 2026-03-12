@@ -38,7 +38,6 @@ const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
 export const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({
   ...defaultConverters,
   ...LinkJSXConverter({ internalDocToHref }),
-  /*
   blocks: {
     banner: ({ node }) => <BannerBlock className="col-start-2 mb-4" {...node.fields} />,
     mediaBlock: ({ node }) => (
@@ -54,7 +53,6 @@ export const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConvert
     code: ({ node }) => <CodeBlock className="col-start-2" {...node.fields} />,
     cta: ({ node }) => <CallToActionBlock {...node.fields} />,
   },
-  */
 })
 
 type Props = {
