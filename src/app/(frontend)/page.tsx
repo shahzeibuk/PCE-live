@@ -146,10 +146,10 @@ export default async function HomePage() {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.filter(Boolean).map((service: any) => (
+            {services.filter((s: any) => s?.slug).map((service: any, i: number) => (
               <ServiceCard 
-                key={service.id}
-                title={service.title}
+                key={service.id ?? i}
+                title={service.title ?? ''}
                 description={service.short_description || service.description}
                 slug={service.slug}
                 hero_image={service.hero_image}
@@ -276,13 +276,13 @@ export default async function HomePage() {
                  </div>
                  <div className="space-y-3">
                     <div className="text-sm font-bold text-primary">
-                       {new Date(item.published_date).toLocaleDateString('en-PK', { month: 'short', day: 'numeric', year: 'numeric' })}
+                       {item?.published_date ? new Date(item.published_date).toLocaleDateString('en-PK', { month: 'short', day: 'numeric', year: 'numeric' }) : ''}
                     </div>
                     <h3 className="text-2xl font-bold group-hover:text-primary transition-colors leading-snug">
-                       {item.title}
+                       {item?.title}
                     </h3>
                     <p className="text-muted-foreground line-clamp-2">
-                       {item.description || "Read our latest announcement regarding market developments and company services..."}
+                       {item?.description || "Read our latest announcement regarding market developments and company services..."}
                     </p>
                  </div>
               </Link>
