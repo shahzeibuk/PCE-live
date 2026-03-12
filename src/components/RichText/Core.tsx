@@ -1,5 +1,6 @@
 import React from 'react'
 import { cn } from '@/utilities/ui'
+import Link from 'next/link'
 
 export type CoreRichTextProps = {
   data: any
@@ -53,12 +54,32 @@ export default function CoreRichText(props: CoreRichTextProps) {
             {node.children?.map(renderNode)}
           </li>
         )
+      case 'autolink':
+      case 'link':
+        const isExternal = node.fields?.newTab
+        const href = node.fields?.url || '#'
+        return (
+          <Link 
+            key={index} 
+            href={href} 
+            target={isExternal ? '_blank' : undefined}
+            rel={isExternal ? 'noopener noreferrer' : undefined}
+            className="text-primary underline hover:no-underline"
+          >
+            {node.children?.map(renderNode)}
+          </Link>
+        )
       case 'block':
-        // Handle blocks if needed, but for debug we skip
+        // Handle blocks if needed, for now we skip to avoid circular dependencies
         return null
       default:
         if (node.children) {
-          return <div key={index}>{node.children.map(renderNode)}</div>
+          const NodeTag = node.type === 'quote' ? 'blockquote' : 'div'
+          return (
+            <NodeTag key={index} className={node.type}>
+              {node.children.map(renderNode)}
+            </NodeTag>
+          )
         }
         return null
     }
