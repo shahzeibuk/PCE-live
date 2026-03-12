@@ -265,8 +265,8 @@ export default async function HomePage() {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {news.filter(Boolean).map((item: any, i: number) => (
-              <Link key={item?.id ?? i} href={`/news/${item?.slug}`} className="group space-y-5">
+            {news.filter((item: any) => item?.slug).map((item: any, i: number) => (
+              <Link key={item.id ?? i} href={`/news/${item.slug}`} className="group space-y-5">
                  <div className="relative aspect-video rounded-lg overflow-hidden bg-muted border border-slate-200 dark:border-slate-800">
                     {item?.hero_image?.url || item?.image?.url ? (
                         <Image src={item?.hero_image?.url || item?.image?.url} alt={item?.title} fill className="object-cover" />
