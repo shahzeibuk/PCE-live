@@ -67,24 +67,21 @@ export const FloatingHeader = ({ data }: { data: Header | null }) => {
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full',
-        scrolled ? 'bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800' : 'bg-transparent'
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800'
       )}
     >
       {/* Top Utility Bar */}
-      <div
-        className={cn(
-          'hidden md:block border-b transition-all duration-300 overflow-hidden',
-          scrolled ? 'h-0 border-transparent' : 'h-10 bg-slate-50 dark:bg-slate-900/50'
-        )}
-      >
-        <div className="container mx-auto h-full px-4 sm:px-6 flex justify-between items-center text-[10px] uppercase tracking-widest font-bold text-slate-500">
+      <div className="hidden md:block border-b border-slate-200 dark:border-slate-800 h-10 bg-slate-50 dark:bg-slate-900/80">
+        <div className="container mx-auto h-full px-4 sm:px-6 flex justify-between items-center text-[10px] uppercase tracking-widest font-bold text-slate-600 dark:text-slate-400">
           <div className="flex items-center gap-4 sm:gap-6">
-            <div className="flex items-center gap-2">
+            <a
+              href="tel:080013537"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-primary/50 transition-colors"
+            >
               <Phone className="h-3 w-3 text-primary shrink-0" />
               <span>0800-13537</span>
-            </div>
-            <div className="flex items-center gap-2 border-l pl-4 sm:pl-6">
+            </a>
+            <div className="flex items-center gap-2 border-l border-slate-200 dark:border-slate-700 pl-4 sm:pl-6">
               <Clock className="h-3 w-3 text-primary shrink-0" />
               <span className="hidden sm:inline">Mon - Sat: 9:00 AM - 6:00 PM</span>
               <span className="sm:hidden">9AM - 6PM</span>
