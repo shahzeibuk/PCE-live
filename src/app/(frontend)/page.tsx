@@ -20,35 +20,18 @@ import Image from 'next/image'
 
 export default async function HomePage() {
   const payload = await getPayload({ config: configPromise })
-  
-  const { docs: rates } = (await payload.find({
-    collection: 'currency-rates',
-    sort: 'currency_name',
-    limit: 100,
-  })) as any
 
-  const { docs: services } = (await payload.find({
-    collection: 'services',
-    limit: 6,
-  })) as any
+  const ratesResult = await payload.find({ collection: 'currency-rates', sort: 'currency_name', limit: 100 }).catch(() => ({ docs: [] }))
+  const servicesResult = await payload.find({ collection: 'services', limit: 6 }).catch(() => ({ docs: [] }))
+  const testimonialsResult = await payload.find({ collection: 'testimonials', limit: 10 }).catch(() => ({ docs: [] }))
+  const newsResult = await payload.find({ collection: 'news', limit: 3, sort: '-published_date' }).catch(() => ({ docs: [] }))
 
-  const { docs: testimonials } = (await payload.find({
-    collection: 'testimonials',
-    limit: 10,
-  })) as any
+  const rates = (ratesResult?.docs ?? []) as any[]
+  const services = (servicesResult?.docs ?? []) as any[]
+  const testimonials = (testimonialsResult?.docs ?? []) as any[]
+  const news = (newsResult?.docs ?? []) as any[]
 
-  const { docs: partners } = (await payload.find({
-    collection: 'partners',
-    limit: 12,
-  })) as any
-
-  const { docs: news } = (await payload.find({
-    collection: 'news',
-    limit: 3,
-    sort: '-published_date',
-  })) as any
-
-  const converterRates = rates.map((r: any) => ({
+  const converterRates = rates.filter(Boolean).map((r: any) => ({
     id: r.id,
     currency_name: r.currency_name,
     currency_code: r.currency_code,
@@ -163,7 +146,7 @@ export default async function HomePage() {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service: any) => (
+            {services.filter(Boolean).map((service: any) => (
               <ServiceCard 
                 key={service.id}
                 title={service.title}
@@ -231,26 +214,26 @@ export default async function HomePage() {
             <div className="max-w-4xl mx-auto">
               <Carousel className="w-full">
                 <CarouselContent>
-                  {testimonials.map((t: any) => (
-                    <CarouselItem key={t.id}>
+                  {testimonials.filter(Boolean).map((t: any, i: number) => (
+                    <CarouselItem key={t?.id ?? i}>
                       <Card className="border-none bg-transparent shadow-none">
                         <CardContent className="flex flex-col items-center text-center p-6">
                            <div className="mb-8 relative">
                              <Avatar className="w-24 h-24 border-2 border-slate-200 dark:border-slate-700">
-                               <AvatarImage src={t.photo?.url || `https://i.pravatar.cc/150?u=${t.id}`} alt={t.name} />
+                               <AvatarImage src={t?.photo?.url || `https://i.pravatar.cc/150?u=${t?.id ?? i}`} alt={t?.name} />
                                <AvatarFallback className="bg-primary/10 text-primary text-xl font-bold">
-                                 {t.name.substring(0, 2).toUpperCase()}
+                                 {(t?.name ?? '??').substring(0, 2).toUpperCase()}
                                </AvatarFallback>
                              </Avatar>
                              <div className="absolute -bottom-2 -right-2 bg-primary text-primary-foreground p-2 rounded-full">
                                 <ShieldCheck className="w-4 h-4" />
                              </div>
                            </div>
-                           <blockquote className="text-2xl italic text-slate-700 dark:text-slate-300 mb-8 leading-relaxed">
-                             "{t.testimonial}"
+                             <blockquote className="text-2xl italic text-slate-700 dark:text-slate-300 mb-8 leading-relaxed">
+                             "{t?.testimonial}"
                            </blockquote>
-                           <h4 className="font-bold text-xl">{t.name}</h4>
-                           <p className="text-muted-foreground">{t.position}</p>
+                           <h4 className="font-bold text-xl">{t?.name}</h4>
+                           <p className="text-muted-foreground">{t?.position}</p>
                         </CardContent>
                       </Card>
                     </CarouselItem>
@@ -282,11 +265,11 @@ export default async function HomePage() {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {news.map((item: any) => (
-              <Link key={item.id} href={`/news/${item.slug}`} className="group space-y-5">
+            {news.filter(Boolean).map((item: any, i: number) => (
+              <Link key={item?.id ?? i} href={`/news/${item?.slug}`} className="group space-y-5">
                  <div className="relative aspect-video rounded-lg overflow-hidden bg-muted border border-slate-200 dark:border-slate-800">
-                    {item.hero_image?.url || item.image?.url ? (
-                        <Image src={item.hero_image?.url || item.image?.url} alt={item.title} fill className="object-cover" />
+                    {item?.hero_image?.url || item?.image?.url ? (
+                        <Image src={item?.hero_image?.url || item?.image?.url} alt={item?.title} fill className="object-cover" />
                     ) : (
                         <Image src={`https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?q=80&w=800&auto=format&fit=crop`} alt="Finance News" fill className="object-cover opacity-80" />
                     )}
