@@ -1,11 +1,7 @@
-import { getCachedGlobal } from '@/utilities/getGlobals'
 import React from 'react'
 
-import type { Header as HeaderType } from '@/payload-types'
-import { FloatingHeader } from '@/components/ui/floating-header'
-
-export async function Header() {
-  const headerData: HeaderType = await getCachedGlobal('header', 1)()
-
-  return <FloatingHeader data={headerData} />
+const Header = () => {
+  return <div className="fixed top-0 left-0 right-0 h-10 bg-red-500 z-50">STATIC HEADER DEFAULT</div>
 }
+
+export default Header
