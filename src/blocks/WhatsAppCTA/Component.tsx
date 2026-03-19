@@ -6,23 +6,33 @@ export type WhatsAppCTAProps = {
   body?: string
   buttonText?: string
   phoneNumber?: string
+  disableInnerContainer?: boolean
 }
 
-export const WhatsAppCTABlock: React.FC<WhatsAppCTAProps> = ({ title, body, buttonText, phoneNumber }) => {
+export const WhatsAppCTABlock: React.FC<WhatsAppCTAProps> = ({ 
+  title, 
+  body, 
+  buttonText, 
+  phoneNumber,
+  disableInnerContainer = false
+}) => {
+  const containerClasses = disableInnerContainer ? "" : "container py-24"
   return (
-    <div className="container py-24">
-      <div className="relative flex items-center justify-center mb-16">
-        <div className="absolute inset-0 flex items-center" aria-hidden="true">
-          <div className="w-full border-t border-border/80"></div>
+    <div className={containerClasses}>
+      {!disableInnerContainer && (
+        <div className="relative flex items-center justify-center mb-16">
+          <div className="absolute inset-0 flex items-center" aria-hidden="true">
+            <div className="w-full border-t border-border/80"></div>
+          </div>
+          <div className="relative bg-background px-8">
+            <h2 className="text-3xl md:text-5xl font-black text-primary uppercase tracking-tighter">
+              {title || 'Contact Us on WhatsApp'}
+            </h2>
+          </div>
         </div>
-        <div className="relative bg-background px-8">
-          <h2 className="text-3xl md:text-5xl font-black text-primary uppercase tracking-tighter">
-            {title || 'Contact Us on WhatsApp'}
-          </h2>
-        </div>
-      </div>
+      )}
 
-      <div className="max-w-4xl mx-auto bg-gradient-to-br from-[#25D366]/10 to-transparent p-12 rounded-[2.5rem] border border-[#25D366]/20 text-center shadow-2xl shadow-[#25D366]/5 relative group overflow-hidden">
+      <div className={`max-w-4xl mx-auto bg-linear-to-br from-[#25D366]/10 to-transparent p-12 rounded-4xl border border-[#25D366]/20 text-center shadow-2xl shadow-[#25D366]/5 relative group overflow-hidden ${disableInnerContainer ? "container" : ""}`}>
         <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#25D366]/10 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-1000" aria-hidden="true" />
         <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-[#25D366]/10 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-1000" aria-hidden="true" />
         
@@ -32,7 +42,7 @@ export const WhatsAppCTABlock: React.FC<WhatsAppCTAProps> = ({ title, body, butt
           </div>
           
           <h3 className="text-3xl md:text-4xl font-black text-foreground mb-4 tracking-tighter">
-            Need the Best Exchange Rates?
+            {title || 'Need the Best Exchange Rates?'}
           </h3>
           
           <p className="text-muted-foreground text-xl font-medium mb-12 max-w-2xl mx-auto leading-relaxed">

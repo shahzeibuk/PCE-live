@@ -5,16 +5,26 @@ import type { CurrencyRate } from '@/payload-types'
 
 export type LiveExchangeRatesProps = {
   title?: string
+  rates?: CurrencyRate[]
+  disableInnerContainer?: boolean
 }
 
-export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({ title }) => {
-  const payload = await getPayload({ config: configPromise })
+export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({ 
+  title, 
+  rates: providedRates,
+  disableInnerContainer = false
+}) => {
+  let rates = providedRates
 
-  const { docs: rates } = await payload.find({
-    collection: 'currency-rates',
-    limit: 10,
-    sort: 'currency_name',
-  })
+  if (!rates) {
+    const payload = await getPayload({ config: configPromise })
+    const result = await payload.find({
+      collection: 'currency-rates',
+      limit: 10,
+      sort: 'currency_name',
+    })
+    rates = result.docs as unknown as CurrencyRate[]
+  }
 
   // Basic flag mapping based on currency code
   const flags: Record<string, string> = {
@@ -29,12 +39,16 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
     CNY: '🇨🇳',
   }
 
+  const containerClasses = disableInnerContainer ? "" : "container py-16"
+
   return (
-    <div className="container py-16">
-      <div className="max-w-4xl mx-auto text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">{title || 'Live Exchange Rates'}</h2>
-        <div className="w-24 h-1 bg-primary/20 mx-auto rounded-full" />
-      </div>
+    <div className={containerClasses}>
+      {!disableInnerContainer && (
+        <div className="max-w-4xl mx-auto text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">{title || 'Live Exchange Rates'}</h2>
+          <div className="w-24 h-1 bg-primary/20 mx-auto rounded-full" />
+        </div>
+      )}
 
       <div className="max-w-3xl mx-auto">
         <div className="overflow-hidden rounded-2xl border border-border shadow-xl bg-card">
@@ -47,7 +61,7 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
               </tr>
             </thead>
             <tbody>
-              {rates.map((rate: CurrencyRate) => (
+              {rates && rates.map((rate: CurrencyRate) => (
                 <tr key={rate.id} className="border-t border-border/60 hover:bg-muted/30 transition-all group">
                   <td className="p-5 flex items-center gap-4">
                     <span className="text-3xl filter grayscale group-hover:grayscale-0 transition-all duration-300">
@@ -73,19 +87,21 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
             </tbody>
           </table>
         </div>
-        <div className="text-center mt-10">
-          <button className="inline-flex items-center justify-center bg-primary text-primary-foreground px-8 py-4 rounded-full font-bold text-lg hover:bg-primary/90 hover:scale-105 transition-all shadow-lg active:scale-95 group">
-            View Full Forex Rates
-            <svg 
-              className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="right" />
-            </svg>
-          </button>
-        </div>
+        {!disableInnerContainer && (
+          <div className="text-center mt-10">
+            <button className="inline-flex items-center justify-center bg-primary text-primary-foreground px-8 py-4 rounded-full font-bold text-lg hover:bg-primary/90 hover:scale-105 transition-all shadow-lg active:scale-95 group">
+              View Full Forex Rates
+              <svg 
+                className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+        )}
       </div>
     </div>
   )

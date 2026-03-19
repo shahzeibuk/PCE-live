@@ -1,37 +1,56 @@
-import { CurrencyTable } from '@/components/CurrencyTable'
-import { CurrencyConverter } from '@/components/CurrencyConverter'
-import { ServiceCard } from '@/components/ServiceCard'
 import { getPayload } from 'payload'
 import configPromise from '@/payload.config'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import { Media } from '@/components/Media'
 import { ArrowRight, ShieldCheck, Globe, CreditCard } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Image from 'next/image'
+
+// Premium Blocks
+import { LiveExchangeRatesBlock } from '@/blocks/LiveExchangeRates/Component'
+import { CurrencyConverterBlock } from '@/blocks/CurrencyConverter/Component'
+import { ServicesGridBlock } from '@/blocks/ServicesGrid/Component'
+import { WhatsAppCTABlock } from '@/blocks/WhatsAppCTA/Component'
+
+// Sample Data for Hybrid Rendering
+const SAMPLE_RATES = [
+  { id: 1, currency_name: 'US Dollar', currency_code: 'USD', buy_rate: 277.5, sell_rate: 280.2 },
+  { id: 2, currency_name: 'Euro', currency_code: 'EUR', buy_rate: 302.1, sell_rate: 305.4 },
+  { id: 3, currency_name: 'British Pound', currency_code: 'GBP', buy_rate: 352.4, sell_rate: 356.8 },
+  { id: 4, currency_name: 'Saudi Riyal', currency_code: 'SAR', buy_rate: 73.8, sell_rate: 74.5 },
+  { id: 5, currency_name: 'UAE Dirham', currency_code: 'AED', buy_rate: 75.4, sell_rate: 76.2 },
+]
+
+const SAMPLE_SERVICES = [
+  { id: 1, title: 'Currency Exchange', slug: 'currency-exchange', description: 'Institutional and retail foreign exchange at best market rates.' },
+  { id: 2, title: 'Money Transfer', slug: 'money-transfer', description: 'Fast and secure worldwide remittances through trusted partners.' },
+  { id: 3, title: 'Utility Bill Payment', slug: 'utility-bills', description: 'Convenient payment of all local utility bills at any branch.' },
+]
 
 export default async function HomePage() {
   const payload = await getPayload({ config: configPromise })
 
-  const ratesResult = await payload.find({ collection: 'currency-rates', sort: 'currency_name', limit: 100 }).catch(() => ({ docs: [] }))
-  const servicesResult = await payload.find({ collection: 'services', limit: 6 }).catch(() => ({ docs: [] }))
-  const testimonialsResult = await payload.find({ collection: 'testimonials', limit: 10 }).catch(() => ({ docs: [] }))
-  const newsResult = await payload.find({ collection: 'news', limit: 3, sort: '-published_date' }).catch(() => ({ docs: [] }))
+  let rates = SAMPLE_RATES
+  let services = SAMPLE_SERVICES
+  let testimonials = []
+  let news = []
 
-  const rates = (ratesResult?.docs ?? []) as any[]
-  const services = (servicesResult?.docs ?? []) as any[]
-  const testimonials = (testimonialsResult?.docs ?? []) as any[]
-  const news = (newsResult?.docs ?? []) as any[]
+  try {
+    const ratesResult = await payload.find({ collection: 'currency-rates', sort: 'currency_name', limit: 5 })
+    if (ratesResult.docs.length > 0) rates = ratesResult.docs as any[]
 
-  const converterRates = rates.filter(Boolean).map((r: any) => ({
+    const servicesResult = await payload.find({ collection: 'services', limit: 6 })
+    if (servicesResult.docs.length > 0) services = servicesResult.docs as any[]
+
+    const testimonialsResult = await payload.find({ collection: 'testimonials', limit: 10 })
+    testimonials = testimonialsResult.docs as any[]
+
+    const newsResult = await payload.find({ collection: 'news', limit: 3, sort: '-published_date' })
+    news = newsResult.docs as any[]
+  } catch (err) {
+    console.error('Home Page Data Fetch Error (using fallback):', err)
+  }
+
+  const converterRates = rates.map((r: any) => ({
     id: r.id,
     currency_name: r.currency_name,
     currency_code: r.currency_code,
@@ -40,282 +59,148 @@ export default async function HomePage() {
   }))
 
   return (
-    <div className="flex flex-col gap-0">
-      {/* 1. Hero Section */}
-      <section className="relative min-h-[85vh] flex items-center bg-black text-white py-20 overflow-hidden">
+    <div className="flex flex-col gap-0 overflow-x-hidden">
+      {/* 1. Hero Section with Integrated Converter */}
+      <section className="relative min-h-[90vh] flex items-center bg-black text-white py-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
            <Image 
               src="/isb.jpg"
-              alt="Faisal Mosque Islamabad Pakistan"
+              alt="Faisal Mosque Islamabad"
               fill
-              className="object-cover object-center opacity-70 mix-blend-luminosity"
+              className="object-cover object-center opacity-70 mix-blend-luminosity scale-105 transition-transform duration-[10s] hover:scale-100"
               priority
            />
-           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent z-10" />
+           <div className="absolute inset-0 bg-linear-to-r from-black via-black/90 to-transparent z-10" />
         </div>
         
-        <div className="container relative z-10 px-4 grid lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-8">
-            <div className="inline-flex items-center px-3 py-1 bg-white/10 border border-white/10 rounded-sm text-slate-200 text-xs font-bold uppercase tracking-widest">
+        <div className="container relative z-10 px-4 grid lg:grid-cols-2 gap-16 items-center">
+          <div className="space-y-10">
+            <div className="inline-flex items-center px-4 py-1.5 bg-white/10 border border-white/10 rounded-full text-primary text-xs font-bold uppercase tracking-widest backdrop-blur-md">
+              <span className="relative flex h-2 w-2 mr-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+              </span>
               Trusted Since 2003
             </div>
-            <h1 className="text-5xl lg:text-7xl font-bold tracking-tight !leading-tight uppercase">
-              Fast, Secure & <span className="text-primary italic">Best Rates</span>
+            <h1 className="text-6xl lg:text-8xl font-bold tracking-tight leading-[1.1]! uppercase">
+              Fast, Secure & <br /><span className="text-primary italic">Best Rates</span>
             </h1>
-            <p className="text-xl text-slate-300 max-w-lg leading-relaxed">
+            <p className="text-xl text-slate-300 max-w-lg leading-relaxed font-medium">
               Pakistan's premier currency exchange and remittance services. Get competitive market rates with zero hidden charges.
             </p>
-            <div className="flex flex-wrap gap-4 pt-4">
+            <div className="flex flex-wrap gap-6 pt-4">
               <Button 
                 asChild 
                 size="lg" 
-                className="h-14 px-8 text-lg rounded-full font-bold transition-opacity" 
+                className="h-16 px-10 text-lg rounded-full font-bold transition-all hover:scale-105 active:scale-95 shadow-xl shadow-primary/20" 
               >
                 <Link href="/currency-rates">
                   View Live Rates <ArrowRight className="ml-2 w-5 h-5" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="h-14 px-8 text-lg rounded-full bg-white text-slate-900 hover:bg-slate-100 hover:text-slate-900 border border-white/30 transition-colors font-bold">
-                <Link href="/branches">Find Nearby Branch</Link>
+              <Button asChild variant="outline" size="lg" className="h-16 px-10 text-lg rounded-full bg-white/5 border-white/20 text-white hover:bg-white hover:text-black transition-all font-bold backdrop-blur-sm">
+                <Link href="/branches">Find Branch</Link>
               </Button>
             </div>
           </div>
 
-          <div className="hidden lg:block">
-             <div className="relative">
-                <CurrencyConverter rates={converterRates} />
-             </div>
+          <div className="hidden lg:block relative group">
+             <div className="absolute -inset-1 bg-linear-to-r from-primary/50 to-emerald-500/50 rounded-4xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
+             <CurrencyConverterBlock rates={converterRates} disableInnerContainer />
           </div>
         </div>
       </section>
 
-      {/* 2. Rates & Quick Converter (Mobile/Tablet and Highlight) */}
-      <section className="py-24 container px-4">
-        <div className="grid lg:grid-cols-3 gap-12 items-start">
-          <div className="lg:col-span-2 space-y-8">
-            <div className="flex justify-between items-end">
-              <div>
-                <h2 className="text-3xl font-bold mb-2">Live Market Rates</h2>
-                <p className="text-muted-foreground">Updated in real-time based on interbank movements</p>
+      {/* 2. Live Rates Section */}
+      <section className="py-32 relative overflow-hidden bg-white dark:bg-slate-950">
+        <div className="container px-4 relative z-10">
+           <div className="flex flex-col lg:flex-row justify-between items-end gap-8 mb-20">
+              <div className="max-w-2xl space-y-4">
+                 <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">Real-Time Foreign Exchange</h2>
+                 <p className="text-xl text-slate-500 dark:text-slate-400 font-medium">Updated every minute based on interbank and open market movements.</p>
               </div>
-              <Button asChild variant="link" className="p-0 h-auto font-bold text-primary">
-                <Link href="/currency-rates" className="flex items-center gap-1">
-                   Full List <ArrowRight className="w-4 h-4" />
-                </Link>
+              <Button asChild variant="link" className="text-primary font-bold text-lg p-0 hover:no-underline flex items-center group">
+                 <Link href="/currency-rates" className="flex items-center">
+                    Full Market Analysis <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                 </Link>
               </Button>
-            </div>
-            <div className="bg-card border rounded-3xl shadow-sm overflow-hidden">
-              <CurrencyTable />
-            </div>
-          </div>
-          <div className="lg:hidden">
-              <CurrencyConverter rates={converterRates} />
-          </div>
-          
-          <div className="space-y-8">
-             <h2 className="text-3xl font-bold mb-2">Why Choose Us?</h2>
-             <div className="space-y-6">
-                {[
-                  { icon: ShieldCheck, title: "100% Secure", desc: "Regulated by the State Bank of Pakistan with strict compliance." },
-                  { icon: Globe, title: "Global Network", desc: "Partnered with Western Union, RIA, and MoneyGram for global reach." },
-                  { icon: CreditCard, title: "Best Rates", desc: "Competitive buy and sell rates with no hidden processing fees." }
-                ].map((item, i) => (
-                  <div key={i} className="flex gap-4 p-6 rounded-2xl border bg-card/50 hover:bg-card transition-colors">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
-                      <item.icon className="w-6 h-6" />
+           </div>
+           
+           <div className="grid lg:grid-cols-12 gap-16 items-start">
+              <div className="lg:col-span-8">
+                 <LiveExchangeRatesBlock rates={rates as any} disableInnerContainer />
+              </div>
+              
+              <div className="lg:col-span-4 space-y-10">
+                 <div className="p-10 rounded-4xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 space-y-8 shadow-sm">
+                    <h3 className="text-2xl font-bold dark:text-white">Why Exchange With Us?</h3>
+                    <div className="space-y-8">
+                       {[
+                         { icon: ShieldCheck, title: "SBP Regulated", desc: "Full compliance with State Bank of Pakistan regulations." },
+                         { icon: Globe, title: "Global Reach", desc: "Partnered with Western Union, RIA & MoneyGram." },
+                         { icon: CreditCard, title: "No Hidden Fees", desc: "The rate you see is the rate you get. Transparent and fair." }
+                       ].map((item, i) => (
+                         <div key={i} className="flex gap-6 group">
+                           <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
+                             <item.icon className="w-7 h-7" />
+                           </div>
+                           <div>
+                             <h4 className="font-bold text-lg mb-1 dark:text-white">{item.title}</h4>
+                             <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-sm">{item.desc}</p>
+                           </div>
+                         </div>
+                       ))}
                     </div>
-                    <div>
-                      <h3 className="font-bold text-lg mb-1">{item.title}</h3>
-                      <p className="text-muted-foreground text-sm leading-relaxed">{item.desc}</p>
-                    </div>
-                  </div>
-                ))}
-             </div>
-          </div>
+                 </div>
+              </div>
+           </div>
         </div>
       </section>
 
       {/* 4. Services Grid */}
-      <section className="py-24 bg-slate-50 dark:bg-slate-900/20">
-        <div className="container px-4">
-          <div className="text-center mb-16 space-y-4">
-            <h2 className="text-4xl font-bold tracking-tight">Financial Solutions Tailored For You</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              From global remittances to local currency exchange, we provide professional services for every need.
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.filter((s: any) => s?.slug).map((service: any, i: number) => (
-              <ServiceCard 
-                key={service.id ?? i}
-                title={service.title ?? ''}
-                description={service.short_description || service.description}
-                slug={service.slug}
-                hero_image={service.hero_image}
-              />
-            ))}
-          </div>
-          
-          <div className="mt-16 text-center">
-            <Button asChild variant="outline" size="lg" className="rounded-full">
-              <Link href="/services">Discover All Services</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+      <ServicesGridBlock services={services as any} disableInnerContainer />
 
       {/* 5. Company Overview (About CTA) */}
-      <section className="py-24 container px-4">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div className="relative">
-            <div className="relative aspect-video rounded-lg overflow-hidden border border-slate-200 dark:border-slate-800">
-               <Image src="/bg_1.jpg" alt="Pakistan Currency Exchange Legacy" fill className="object-cover" />
-            </div>
-            {/* Stats Badge */}
-            <div className="absolute -bottom-8 -right-8 bg-primary text-primary-foreground p-8 rounded-lg hidden md:block border border-slate-200/50 dark:border-slate-700/50">
-               <div className="text-4xl font-bold mb-1">20+</div>
-               <div className="text-sm font-medium opacity-90">Years of Experience</div>
+      <section className="py-32 container px-4">
+        <div className="grid lg:grid-cols-2 gap-20 items-center">
+          <div className="relative group">
+            <div className="absolute -inset-4 bg-linear-to-tr from-primary/20 to-emerald-500/20 rounded-4xl blur-2xl opacity-0 group-hover:opacity-100 transition duration-1000"></div>
+            <div className="relative aspect-4/3 rounded-4xl overflow-hidden shadow-2xl">
+               <Image src="/bg_1.jpg" alt="Legacy of Trust" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+               <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
+               <div className="absolute bottom-10 left-10 text-white space-y-2">
+                  <div className="text-5xl font-bold">1992</div>
+                  <div className="text-lg font-medium opacity-90 uppercase tracking-widest">Est. Foundation</div>
+               </div>
             </div>
           </div>
           
-          <div className="space-y-8">
-            <h2 className="text-4xl font-bold tracking-tight leading-tight">Pakistan Currency Exchange: A Legacy of Trust Since 1992</h2>
-            <p className="text-xl text-muted-foreground leading-relaxed">
+          <div className="space-y-10">
+            <div className="inline-block px-4 py-1 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-500 font-bold text-xs uppercase tracking-widest">Our Legacy</div>
+            <h2 className="text-5xl font-bold tracking-tight leading-tight text-slate-900 dark:text-white">Pakistan Currency Exchange: A Legacy of Trust Since 1992</h2>
+            <p className="text-xl text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
               Serving the nation for over three decades, Pakistan Currency Exchange (Pvt) Ltd provides safe, secure, 
-              and reliable money transfer services. Explore our network of over 130 locations ensuring your convenience is always prioritized.
+              and reliable money transfer services. Explore our network of over 130 locations across Pakistan.
             </p>
-            <div className="grid grid-cols-2 gap-8 pt-4">
-              <div>
-                <div className="text-3xl font-bold text-[#0a8258] mb-1">130+</div>
-                <p className="text-sm text-muted-foreground">Branches Nationwide</p>
+            <div className="grid grid-cols-2 gap-12 pt-4">
+              <div className="space-y-2">
+                <div className="text-5xl font-bold text-primary">130+</div>
+                <p className="text-sm font-bold text-slate-400 uppercase tracking-wider">Branches Nationwide</p>
               </div>
-              <div>
-                <div className="text-3xl font-bold text-[#0a8258] mb-1">200+</div>
-                <p className="text-sm text-muted-foreground">Global Destinations</p>
+              <div className="space-y-2">
+                <div className="text-5xl font-bold text-primary">200+</div>
+                <p className="text-sm font-bold text-slate-400 uppercase tracking-wider">Global Destinations</p>
               </div>
             </div>
-            <Button asChild size="lg" className="rounded-full px-8">
-              <Link href="/about">Our Story</Link>
+            <Button asChild size="lg" className="h-16 px-10 text-lg rounded-full font-bold shadow-xl shadow-primary/20">
+              <Link href="/about">Read Our Story</Link>
             </Button>
           </div>
         </div>
       </section>
 
-      {/* 6. Testimonials Slider */}
-      {testimonials.length > 0 && (
-        <section className="py-24 bg-primary/5">
-          <div className="container px-4">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold mb-4">What Our Clients Say</h2>
-              <p className="text-muted-foreground">Your trust is our greatest achievement.</p>
-            </div>
-            
-            <div className="max-w-4xl mx-auto">
-              <Carousel className="w-full">
-                <CarouselContent>
-                  {testimonials.filter(Boolean).map((t: any, i: number) => (
-                    <CarouselItem key={t?.id ?? i}>
-                      <Card className="border-none bg-transparent shadow-none">
-                        <CardContent className="flex flex-col items-center text-center p-6">
-                           <div className="mb-8 relative">
-                             <Avatar className="w-24 h-24 border-2 border-slate-200 dark:border-slate-700">
-                               <AvatarImage src={t?.photo?.url || `https://i.pravatar.cc/150?u=${t?.id ?? i}`} alt={t?.name} />
-                               <AvatarFallback className="bg-primary/10 text-primary text-xl font-bold">
-                                 {(t?.name ?? '??').substring(0, 2).toUpperCase()}
-                               </AvatarFallback>
-                             </Avatar>
-                             <div className="absolute -bottom-2 -right-2 bg-primary text-primary-foreground p-2 rounded-full">
-                                <ShieldCheck className="w-4 h-4" />
-                             </div>
-                           </div>
-                             <blockquote className="text-2xl italic text-slate-700 dark:text-slate-300 mb-8 leading-relaxed">
-                             "{t?.testimonial}"
-                           </blockquote>
-                           <h4 className="font-bold text-xl">{t?.name}</h4>
-                           <p className="text-muted-foreground">{t?.position}</p>
-                        </CardContent>
-                      </Card>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <div className="flex justify-center gap-4 mt-8">
-                  <CarouselPrevious className="static translate-y-0" />
-                  <CarouselNext className="static translate-y-0" />
-                </div>
-              </Carousel>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* 7. Partners Grid (Removed: Now globally integrated in Footer via PartnersCarousel) */}
-
-      {/* 8. Latest News */}
-      {news.length > 0 && (
-        <section className="py-24 container px-4">
-          <div className="flex justify-between items-end mb-16">
-            <div>
-              <h2 className="text-4xl font-bold">Latest Updates</h2>
-              <p className="text-muted-foreground mt-2">Market insights and company announcements.</p>
-            </div>
-            <Button asChild variant="outline" className="rounded-full px-6">
-               <Link href="/news">View All News</Link>
-            </Button>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {news.filter((item: any) => item?.slug).map((item: any, i: number) => (
-              <Link key={item.id ?? i} href={`/news/${item.slug}`} className="group space-y-5">
-                 <div className="relative aspect-video rounded-lg overflow-hidden bg-muted border border-slate-200 dark:border-slate-800">
-                    {item?.hero_image?.url || item?.image?.url ? (
-                        <Image src={item?.hero_image?.url || item?.image?.url} alt={item?.title} fill className="object-cover" />
-                    ) : (
-                        <Image src={`https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?q=80&w=800&auto=format&fit=crop`} alt="Finance News" fill className="object-cover opacity-80" />
-                    )}
-                 </div>
-                 <div className="space-y-3">
-                    <div className="text-sm font-bold text-primary">
-                       {item?.published_date ? new Date(item.published_date).toLocaleDateString('en-PK', { month: 'short', day: 'numeric', year: 'numeric' }) : ''}
-                    </div>
-                    <h3 className="text-2xl font-bold group-hover:text-primary transition-colors leading-snug">
-                       {item?.title}
-                    </h3>
-                    <p className="text-muted-foreground line-clamp-2">
-                       {item?.description || "Read our latest announcement regarding market developments and company services..."}
-                    </p>
-                 </div>
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* 9. Branch CTA */}
-      <section className="py-12 container px-4 mb-24">
-        <div className="bg-primary rounded-2xl p-12 lg:p-20 flex flex-col lg:flex-row gap-12 items-center text-center lg:text-left">
-           <div className="space-y-6 flex-1">
-              <h2 className="text-4xl lg:text-5xl font-bold text-primary-foreground tracking-tight">Visit a branch near you today.</h2>
-              <p className="text-xl text-primary-foreground/80 max-w-xl">
-                 Our professional staff is ready to assist you with all your currency needs across 50+ locations in Pakistan.
-              </p>
-           </div>
-           
-           <div className="flex flex-col sm:flex-row gap-4">
-              <Button 
-                asChild 
-                size="lg" 
-                variant="secondary"
-                className="h-16 px-10 text-lg rounded-xl font-bold transition-all shadow-none hover:bg-slate-100 text-slate-900 bg-white"
-              >
-                 <Link href="/branches">Locate Branch</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="h-16 px-10 text-lg rounded-xl bg-transparent border-white/30 text-white hover:bg-white hover:text-primary transition-all shadow-none font-bold">
-                 <Link href="/contact">Get in Touch</Link>
-              </Button>
-           </div>
-        </div>
-      </section>
+      {/* 8. WhatsApp Support Block */}
+      <WhatsAppCTABlock disableInnerContainer />
 
     </div>
   )

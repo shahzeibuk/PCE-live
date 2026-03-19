@@ -7,27 +7,32 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
 export async function generateStaticParams() {
-  const payload = await getPayload({ config: configPromise })
-  const { docs: branches } = await payload.find({
-    collection: 'branches',
-    limit: 1000,
-  })
+  try {
+    const payload = await getPayload({ config: configPromise })
+    const { docs: branches } = await payload.find({
+      collection: 'branches',
+      limit: 1000,
+    })
 
-  return branches.map((branch) => ({
-    id: String(branch.id),
-  }))
+    return branches.map((branch) => ({
+      id: String(branch.id),
+    }))
+  } catch (error) {
+    console.error('Error generating static params for branches:', error)
+    return []
+  }
 }
 
 export default async function BranchPage({ params }: { params: { id: string } }) {
-  const payload = await getPayload({ config: configPromise })
-
-  let branch
+  let branch = null
   try {
+    const payload = await getPayload({ config: configPromise })
     branch = await payload.findByID({
       collection: 'branches',
       id: params.id,
     })
   } catch (e) {
+    console.error(`Error fetching branch by ID ${params.id}:`, e)
     return notFound()
   }
 

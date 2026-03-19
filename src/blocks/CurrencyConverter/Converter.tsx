@@ -103,7 +103,7 @@ export const Converter = ({ rates }: { rates: CurrencyRate[] }) => {
         </div>
       </div>
 
-      <div className="mt-12 p-8 bg-gradient-to-br from-primary/10 to-transparent rounded-2xl border border-primary/20 text-center shadow-inner">
+      <div className="mt-12 p-8 bg-linear-to-br from-primary/10 to-transparent rounded-2xl border border-primary/20 text-center shadow-inner">
         <p className="text-muted-foreground font-bold tracking-tighter uppercase mb-2">{amount} {from} converts to</p>
         <div className="flex flex-col items-center">
             <h3 className="text-5xl md:text-7xl font-black text-primary tracking-tighter transition-all hover:scale-105">

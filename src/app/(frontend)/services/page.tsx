@@ -4,12 +4,18 @@ import configPromise from '@/payload.config'
 import { ServiceCard } from '@/components/ServiceCard'
 
 export default async function ServicesPage() {
-  const payload = await getPayload({ config: configPromise })
-  const { docs: services } = (await payload.find({
-    collection: 'services',
-    sort: 'title',
-    limit: 100,
-  })) as any
+  let services: any[] = []
+  try {
+    const payload = await getPayload({ config: configPromise })
+    const result = await payload.find({
+      collection: 'services',
+      sort: 'title',
+      limit: 100,
+    })
+    services = result.docs
+  } catch (error) {
+    console.error('Error fetching services:', error)
+  }
 
   return (
     <div className="pb-24">

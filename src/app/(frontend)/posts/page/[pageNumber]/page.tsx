@@ -25,13 +25,19 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   if (!Number.isInteger(sanitizedPageNumber)) notFound()
 
-  const posts = await payload.find({
-    collection: 'posts',
-    depth: 1,
-    limit: 12,
-    page: sanitizedPageNumber,
-    overrideAccess: false,
-  })
+  let posts: any = { docs: [], totalDocs: 0, page: 1, totalPages: 1 }
+
+  try {
+    posts = await payload.find({
+      collection: 'posts',
+      depth: 1,
+      limit: 12,
+      page: sanitizedPageNumber,
+      overrideAccess: false,
+    })
+  } catch (err) {
+    console.error('Failed to fetch posts:', err)
+  }
 
   return (
     <div className="pt-24 pb-24">
@@ -71,10 +77,17 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
-  const { totalDocs } = await payload.count({
-    collection: 'posts',
-    overrideAccess: false,
-  })
+  let totalDocs = 0
+
+  try {
+    const result = await payload.count({
+      collection: 'posts',
+      overrideAccess: false,
+    })
+    totalDocs = result.totalDocs
+  } catch (err) {
+    console.error('Failed to count posts for static params:', err)
+  }
 
   const totalPages = Math.ceil(totalDocs / 10)
 

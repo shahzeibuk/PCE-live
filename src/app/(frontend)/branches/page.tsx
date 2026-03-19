@@ -11,13 +11,18 @@ export const metadata: Metadata = {
 }
 
 export default async function BranchesPage() {
-  const payload = await getPayload({ config: configPromise })
-  
-  const { docs: branches } = (await payload.find({
-    collection: 'branches',
-    limit: 500, // Fetch all branches
-    sort: 'city',
-  })) as any
+  let branches: any[] = []
+  try {
+    const payload = await getPayload({ config: configPromise })
+    const result = await payload.find({
+      collection: 'branches',
+      limit: 500, // Fetch all branches
+      sort: 'city',
+    })
+    branches = result.docs
+  } catch (error) {
+    console.error('Error fetching branches:', error)
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900/20 pb-24">

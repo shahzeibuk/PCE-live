@@ -6,31 +6,45 @@ import type { Service } from '@/payload-types'
 
 export type ServicesGridProps = {
   title?: string
+  services?: any[]
+  disableInnerContainer?: boolean
 }
 
-export const ServicesGridBlock: React.FC<ServicesGridProps> = async ({ title }) => {
-  const payload = await getPayload({ config: configPromise })
+export const ServicesGridBlock: React.FC<ServicesGridProps> = async ({ 
+  title, 
+  services: providedServices,
+  disableInnerContainer = false
+}) => {
+  let services = providedServices
 
-  const { docs: services } = await payload.find({
-    collection: 'services',
-    limit: 4,
-  })
+  if (!services) {
+    const payload = await getPayload({ config: configPromise })
+    const result = await payload.find({
+      collection: 'services',
+      limit: 4,
+    })
+    services = result.docs
+  }
+
+  const containerClasses = disableInnerContainer ? "" : "container py-24"
 
   return (
-    <div className="container py-24">
-      <div className="relative flex items-center justify-center mb-16">
-        <div className="absolute inset-0 flex items-center" aria-hidden="true">
-          <div className="w-full border-t border-border/80"></div>
+    <div className={containerClasses}>
+      {!disableInnerContainer && (
+        <div className="relative flex items-center justify-center mb-16">
+          <div className="absolute inset-0 flex items-center" aria-hidden="true">
+            <div className="w-full border-t border-border/80"></div>
+          </div>
+          <div className="relative bg-background px-8">
+            <h2 className="text-3xl md:text-5xl font-black text-primary uppercase tracking-tighter">
+              {title || 'Our Services'}
+            </h2>
+          </div>
         </div>
-        <div className="relative bg-background px-8">
-          <h2 className="text-3xl md:text-5xl font-black text-primary uppercase tracking-tighter">
-            {title || 'Our Services'}
-          </h2>
-        </div>
-      </div>
+      )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-        {services.map((service: Service) => (
+      <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 ${disableInnerContainer ? "container" : ""}`}>
+        {services && services.map((service: any) => (
           <div 
             key={service.id} 
             className="group relative bg-card p-10 rounded-3xl border border-border/60 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(9,149,70,0.15)] hover:-translate-y-3 hover:border-primary/20 overflow-hidden"
@@ -59,20 +73,22 @@ export const ServicesGridBlock: React.FC<ServicesGridProps> = async ({ title }) 
         ))}
       </div>
 
-      <div className="text-center mt-20">
-        <button className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-12 py-5 rounded-2xl font-black text-xl shadow-2xl hover:shadow-primary/30 hover:-translate-y-1 transition-all active:scale-95 uppercase tracking-tighter shadow-primary/20 group">
-          Find Nearest Branch
-          <svg 
-            className="w-6 h-6 group-hover:translate-x-1 transition-transform" 
-            fill="none" 
-            viewBox="0 0 24 24" 
-            stroke="currentColor"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
-        </button>
-      </div>
+      {!disableInnerContainer && (
+        <div className="text-center mt-20">
+          <button className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-12 py-5 rounded-2xl font-black text-xl shadow-2xl hover:shadow-primary/30 hover:-translate-y-1 transition-all active:scale-95 uppercase tracking-tighter shadow-primary/20 group">
+            Find Nearest Branch
+            <svg 
+              className="w-6 h-6 group-hover:translate-x-1 transition-transform" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </button>
+        </div>
+      )}
     </div>
   )
 }

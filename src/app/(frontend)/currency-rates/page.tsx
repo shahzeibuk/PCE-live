@@ -5,12 +5,19 @@ import { getPayload } from 'payload'
 import configPromise from '@/payload.config'
 
 export default async function RatesPage() {
-  const payload = await getPayload({ config: configPromise })
-  const { docs: rates } = (await payload.find({
-    collection: 'currency-rates',
-    sort: 'currency_name',
-    limit: 100,
-  })) as any
+  let rates: any[] = []
+  try {
+    const payload = await getPayload({ config: configPromise })
+    const result = await payload.find({
+      collection: 'currency-rates',
+      sort: 'currency_name',
+      limit: 100,
+      pagination: false,
+    })
+    rates = result.docs
+  } catch (error) {
+    console.error('Error fetching currency rates:', error)
+  }
 
   const converterRates = rates.map((r: any) => ({
     id: r.id,

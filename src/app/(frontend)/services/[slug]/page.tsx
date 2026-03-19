@@ -9,34 +9,43 @@ import Link from 'next/link'
 import { CheckCircle2, ArrowRight, ShieldCheck, Clock, HeadphonesIcon } from 'lucide-react'
 
 export async function generateStaticParams() {
-  const payload = await getPayload({ config: configPromise })
-  const services = await payload.find({
-    collection: 'services',
-    limit: 100,
-    select: {
-      slug: true,
-    },
-  })
+  try {
+    const payload = await getPayload({ config: configPromise })
+    const services = await payload.find({
+      collection: 'services',
+      limit: 100,
+      select: {
+        slug: true,
+      },
+    })
 
-  return services.docs.map(({ slug }) => ({
-    slug,
-  }))
+    return services.docs.map(({ slug }) => ({
+      slug,
+    }))
+  } catch (error) {
+    console.error('Error generating static params for services:', error)
+    return []
+  }
 }
 
 export default async function ServicePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const payload = await getPayload({ config: configPromise })
+  let service = null
 
-  const { docs } = await payload.find({
-    collection: 'services',
-    where: {
-      slug: {
-        equals: slug,
+  try {
+    const payload = await getPayload({ config: configPromise })
+    const { docs } = await payload.find({
+      collection: 'services',
+      where: {
+        slug: {
+          equals: slug,
+        },
       },
-    },
-  })
-
-  const service = docs[0] as any
+    })
+    service = docs[0]
+  } catch (error) {
+    console.error(`Error fetching service by slug ${slug}:`, error)
+  }
 
   if (!service) {
     return notFound()

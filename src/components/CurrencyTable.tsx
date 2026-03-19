@@ -17,11 +17,18 @@ const FLAG_MAP: Record<string, string> = {
 }
 
 export const CurrencyTable = async () => {
-  const payload = await getPayload({ config: configPromise })
-  const { docs: rates } = (await payload.find({
-    collection: 'currency-rates',
-    sort: 'currency_name',
-  })) as any
+  let rates: any[] = []
+  try {
+    const payload = await getPayload({ config: configPromise })
+    const result = await payload.find({
+      collection: 'currency-rates',
+      sort: 'currency_name',
+      pagination: false,
+    })
+    rates = result.docs
+  } catch (error) {
+    console.error('Error fetching currency rates in CurrencyTable:', error)
+  }
 
   return (
     <div className="w-full space-y-4">

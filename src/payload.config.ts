@@ -29,7 +29,20 @@ import { seedBranches } from './scripts/seed_branches'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+import { up as initializeSchema } from './migrations/20260319_013549_init_collections'
+
 export default buildConfig({
+  onInit: async (payload) => {
+    if (process.env.PAYLOAD_SEED === 'true' || process.env.NODE_ENV === 'development') {
+        payload.logger.info('ONINIT: Running schema initialization from migration...');
+        try {
+            await initializeSchema({ db: payload.db as any, payload, req: {} as any })
+            payload.logger.info('ONINIT: Schema initialization complete.');
+        } catch (e: any) {
+            payload.logger.error(`ONINIT ERROR: ${e.message}`);
+        }
+    }
+  },
   admin: {
     components: {
       graphics: {
