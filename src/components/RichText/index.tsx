@@ -3,7 +3,7 @@ import React from 'react'
 import CoreRichText from './Core'
 
 type Props = {
-  data: DefaultTypedEditorState
+  data: DefaultTypedEditorState | null | undefined
   enableGutter?: boolean
   enableProse?: boolean
 } & React.HTMLAttributes<HTMLDivElement>
