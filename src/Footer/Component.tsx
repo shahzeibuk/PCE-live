@@ -12,7 +12,6 @@ import { Facebook, Linkedin, Twitter, Mail, Phone, MessageCircle } from 'lucide-
 
 export async function Footer() {
   const footerData: Footer = await getCachedGlobal('footer', 1)()
-  const navItems = footerData?.navItems || []
 
   return (
     <>
@@ -34,51 +33,24 @@ export async function Footer() {
               </div>
             </div>
 
-            {/* Company */}
-            <div className="flex flex-col gap-4">
-              <h3 className="font-bold text-lg uppercase tracking-wide">Company</h3>
-              <nav className="flex flex-col gap-2 text-sm">
-                <Link href="/about" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Company Profile</Link>
-                <Link href="/mission-vision" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Mission & Vision</Link>
-                <Link href="/careers" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Careers</Link>
-                <Link href="/partners-associates" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Partners & Associates</Link>
-                <Link href="/complaints-feedback" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Complaints & Feedback</Link>
-              </nav>
-            </div>
-
-            {/* Product & Services */}
-            <div className="flex flex-col gap-4">
-              <h3 className="font-bold text-lg uppercase tracking-wide">Product & Services</h3>
-              <nav className="flex flex-col gap-2 text-sm">
-                <Link href="/services/currency-exchange" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Currency Exchange</Link>
-                <Link href="/services/remittance" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Remittance</Link>
-                <Link href="/services/western-union" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Western-union</Link>
-                <Link href="/services/demand-draft" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Demand-draft</Link>
-                <Link href="/services/telegraphic-transfer" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Telegraphic Transfer</Link>
-                <Link href="/services/ria" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> RIA</Link>
-                <Link href="/services/moneygram" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Money Gram</Link>
-              </nav>
-            </div>
-
-            {/* Media Center */}
-            <div className="flex flex-col gap-4">
-              <h3 className="font-bold text-lg uppercase tracking-wide">Media Center</h3>
-              <nav className="flex flex-col gap-2 text-sm">
-                <Link href="/gallery" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Gallery</Link>
-                <Link href="/posts" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Blog</Link>
-                <Link href="/news" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> News</Link>
-              </nav>
-            </div>
-
-            {/* Legal */}
-            <div className="flex flex-col gap-4">
-              <h3 className="font-bold text-lg uppercase tracking-wide">Legal</h3>
-              <nav className="flex flex-col gap-2 text-sm">
-                <Link href="/terms" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Terms & Conditions</Link>
-                <Link href="/privacy" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Privacy Policy</Link>
-                <Link href="/kyc" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> KYC & Compliance</Link>
-              </nav>
-            </div>
+            {footerData?.groups?.map((group, i) => (
+              <div key={i} className="flex flex-col gap-4">
+                <h3 className="font-bold text-lg uppercase tracking-wide">{group.label}</h3>
+                <nav className="flex flex-col gap-2 text-sm text-white/90">
+                  {group.navItems?.map((item, j) => (
+                    <CMSLink
+                      key={j}
+                      {...item.link}
+                      label={null}
+                      className="hover:text-white transition-colors flex items-center gap-2"
+                    >
+                      <span className="text-xs opacity-70">›</span>
+                      <span>{item.link.label}</span>
+                    </CMSLink>
+                  ))}
+                </nav>
+              </div>
+            ))}
           </div>
 
           {/* Bottom Bar: Contact Info and CMS Links */}

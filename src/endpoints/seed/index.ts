@@ -1,11 +1,7 @@
 import type { CollectionSlug, GlobalSlug, Payload, PayloadRequest, File } from 'payload'
-
 import { contactForm as contactFormData } from './contact-form'
 import { contact as contactPageData } from './contact-page'
 import { home } from './home'
-import { image1 } from './image-1'
-import { image2 } from './image-2'
-import { imageHero1 } from './image-hero-1'
 import { post1 } from './post-1'
 import { post2 } from './post-2'
 import { post3 } from './post-3'
@@ -15,6 +11,9 @@ const collections: CollectionSlug[] = [
   'media',
   'pages',
   'posts',
+  'news',
+  'gallery',
+  'services',
   'forms',
   'form-submissions',
   'search',
@@ -22,12 +21,6 @@ const collections: CollectionSlug[] = [
 
 const globals: GlobalSlug[] = ['header', 'footer']
 
-const categories = ['Technology', 'News', 'Finance', 'Design', 'Software', 'Engineering']
-
-// Next.js revalidation errors are normal when seeding the database without a server running
-// i.e. running `yarn seed` locally instead of using the admin UI within an active app
-// The app is not running to revalidate the pages and so the API routes are not available
-// These error messages can be ignored: `Error hitting revalidate route for...`
 export const seed = async ({
   payload,
   req,
@@ -37,20 +30,13 @@ export const seed = async ({
 }): Promise<void> => {
   payload.logger.info('Seeding database...')
 
-  // we need to clear the media directory before seeding
-  // as well as the collections and globals
-  // this is because while `yarn seed` drops the database
-  // the custom `/api/seed` endpoint does not
   payload.logger.info(`— Clearing collections and globals...`)
 
-  // clear the database
   await Promise.all(
     globals.map((global) =>
       payload.updateGlobal({
         slug: global,
-        data: {
-          navItems: [],
-        },
+        data: {},
         depth: 0,
         context: {
           disableRevalidate: true,
@@ -84,113 +70,73 @@ export const seed = async ({
   payload.logger.info(`— Seeding media...`)
 
   const [image1Buffer, image2Buffer, image3Buffer, hero1Buffer] = await Promise.all([
-    fetchFileByURL(
-      'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post1.webp',
-    ),
-    fetchFileByURL(
-      'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post2.webp',
-    ),
-    fetchFileByURL(
-      'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post3.webp',
-    ),
-    fetchFileByURL(
-      'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-hero1.webp',
-    ),
+    fetchFileByURL('https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post1.webp'),
+    fetchFileByURL('https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post2.webp'),
+    fetchFileByURL('https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post3.webp'),
+    fetchFileByURL('https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-hero1.webp'),
   ])
 
-  const [demoAuthor, image1Doc, image2Doc, image3Doc, imageHomeDoc] = await Promise.all([
-    payload.create({
-      collection: 'users',
-      data: {
-        name: 'Demo Author',
-        email: 'demo-author@example.com',
-        password: 'password',
-      },
-    }),
-    payload.create({
-      collection: 'media',
-      data: image1,
-      file: image1Buffer,
-    }),
-    payload.create({
-      collection: 'media',
-      data: image2,
-      file: image2Buffer,
-    }),
-    payload.create({
-      collection: 'media',
-      data: image2,
-      file: image3Buffer,
-    }),
-    payload.create({
-      collection: 'media',
-      data: imageHero1,
-      file: hero1Buffer,
-    }),
-    categories.map((category) =>
-      payload.create({
-        collection: 'categories',
-        data: {
-          title: category,
-          slug: category,
-        },
-      }),
-    ),
+  const [image1Doc, image2Doc, image3Doc, imageHomeDoc] = await Promise.all([
+    payload.create({ collection: 'media', data: { alt: 'Image 1' }, file: image1Buffer }),
+    payload.create({ collection: 'media', data: { alt: 'Image 2' }, file: image2Buffer }),
+    payload.create({ collection: 'media', data: { alt: 'Image 3' }, file: image3Buffer }),
+    payload.create({ collection: 'media', data: { alt: 'Home Image' }, file: hero1Buffer }),
   ])
+
+  payload.logger.info(`— Seeding categories...`)
+
+  const categoryDocs = await Promise.all(
+    ['Technology', 'News', 'Finance', 'Design', 'Software', 'Engineering'].map((category) =>
+      payload.create({ collection: 'categories', data: { title: category } }),
+    ),
+  )
 
   payload.logger.info(`— Seeding posts...`)
 
-  // Do not create posts with `Promise.all` because we want the posts to be created in order
-  // This way we can sort them by `createdAt` or `publishedAt` and they will be in the expected order
-  const post1Doc = await payload.create({
-    collection: 'posts',
-    depth: 0,
-    context: {
-      disableRevalidate: true,
-    },
-    data: post1({ heroImage: image1Doc, blockImage: image2Doc, author: demoAuthor }),
-  })
+  const [post1Doc, post2Doc, post3Doc] = await Promise.all([
+    payload.create({ collection: 'posts', data: post1({ categories: [categoryDocs[0].id], image: image1Doc.id, author: '' }) }),
+    payload.create({ collection: 'posts', data: post2({ categories: [categoryDocs[1].id, categoryDocs[2].id], image: image2Doc.id, author: '' }) }),
+    payload.create({ collection: 'posts', data: post3({ categories: [categoryDocs[0].id, categoryDocs[2].id], image: image3Doc.id, author: '' }) }),
+  ])
 
-  const post2Doc = await payload.create({
-    collection: 'posts',
-    depth: 0,
-    context: {
-      disableRevalidate: true,
-    },
-    data: post2({ heroImage: image2Doc, blockImage: image3Doc, author: demoAuthor }),
-  })
+  payload.logger.info(`— Seeding services...`)
 
-  const post3Doc = await payload.create({
-    collection: 'posts',
-    depth: 0,
-    context: {
-      disableRevalidate: true,
-    },
-    data: post3({ heroImage: image3Doc, blockImage: image1Doc, author: demoAuthor }),
-  })
+  const serviceItems = [
+    { title: 'Currency Exchange', slug: 'currency-exchange' },
+    { title: 'Remittance', slug: 'remittance' },
+    { title: 'Western Union', slug: 'western-union' },
+    { title: 'Demand Draft', slug: 'demand-draft' },
+    { title: 'Telegraphic Transfer', slug: 'telegraphic-transfer' },
+    { title: 'RIA', slug: 'ria' },
+    { title: 'Money Gram', slug: 'moneygram' },
+  ]
 
-  // update each post with related posts
-  await payload.update({
-    id: post1Doc.id,
-    collection: 'posts',
-    data: {
-      relatedPosts: [post2Doc.id, post3Doc.id],
-    },
-  })
-  await payload.update({
-    id: post2Doc.id,
-    collection: 'posts',
-    data: {
-      relatedPosts: [post1Doc.id, post3Doc.id],
-    },
-  })
-  await payload.update({
-    id: post3Doc.id,
-    collection: 'posts',
-    data: {
-      relatedPosts: [post1Doc.id, post2Doc.id],
-    },
-  })
+  const serviceDocs = await Promise.all(
+    serviceItems.map((item) =>
+      payload.create({
+        collection: 'services',
+        data: {
+          title: item.title,
+          slug: item.slug,
+          description: `Our professional ${item.title} services ensure secure and efficient transactions.`,
+        },
+      }),
+    )
+  )
+
+  payload.logger.info(`— Seeding news...`)
+
+  const newsDocs = await Promise.all([
+    payload.create({ collection: 'news', data: { title: 'New Branch Opening', slug: 'new-branch-opening', published_date: new Date().toISOString() } }),
+    payload.create({ collection: 'news', data: { title: 'Q1 Financial Report', slug: 'q1-financial-report', published_date: new Date().toISOString() } }),
+  ])
+
+  payload.logger.info(`— Seeding gallery...`)
+
+  await Promise.all([
+    payload.create({ collection: 'gallery', data: { title: 'Head Office', image: image1Doc.id, description: 'Our main office in Karachi' } }),
+    payload.create({ collection: 'gallery', data: { title: 'Annual Team Meet', image: image2Doc.id, description: 'Celebrating our team' } }),
+  ])
 
   payload.logger.info(`— Seeding contact form...`)
 
@@ -202,7 +148,7 @@ export const seed = async ({
 
   payload.logger.info(`— Seeding pages...`)
 
-  const [_, contactPage] = await Promise.all([
+  const [homePage, contactPage] = await Promise.all([
     payload.create({
       collection: 'pages',
       depth: 0,
@@ -216,7 +162,7 @@ export const seed = async ({
   ])
 
   payload.logger.info(`— Seeding additional pages...`)
-  const additionalPages = [
+  const additionalPagesInfo = [
     { title: 'Company Profile', slug: 'about' },
     { title: 'Mission & Vision', slug: 'mission-vision' },
     { title: 'Careers', slug: 'careers' },
@@ -225,67 +171,54 @@ export const seed = async ({
     { title: 'Terms & Conditions', slug: 'terms' },
     { title: 'Privacy Policy', slug: 'privacy' },
     { title: 'KYC & Compliance', slug: 'kyc' },
+    { title: 'News', slug: 'news', relationTo: 'news' },
+    { title: 'Gallery', slug: 'gallery', relationTo: 'gallery' },
   ]
 
-  await Promise.all(
-    additionalPages.map((page) =>
+  const additionalPageDocs = await Promise.all(
+    additionalPagesInfo.map((page) =>
       payload.create({
         collection: 'pages',
         data: {
           title: page.title,
           slug: page.slug,
           _status: 'published',
-          hero: {
-            type: 'none',
-          },
-          layout: [
+          hero: { type: 'none' },
+          layout: page.relationTo ? [
+            {
+              blockType: 'archive',
+              populateBy: 'collection',
+              relationTo: page.relationTo as any,
+              limit: 12,
+            }
+          ] : [
             {
               blockType: 'content',
-              columns: [
-                {
-                  size: 'full',
-                  richText: {
-                    root: {
-                      type: 'root',
-                      direction: 'ltr',
-                      format: '',
-                      indent: 0,
-                      version: 1,
-                      children: [
-                        {
-                          type: 'heading',
-                          tag: 'h1',
-                          direction: 'ltr',
-                          format: '',
-                          indent: 0,
-                          version: 1,
-                          children: [{ type: 'text', text: page.title, version: 1 }],
-                        },
-                        {
-                          type: 'paragraph',
-                          direction: 'ltr',
-                          format: '',
-                          indent: 0,
-                          version: 1,
-                          children: [
-                            {
-                              type: 'text',
-                              text: `This is the ${page.title} page. Content coming soon.`,
-                              version: 1,
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                  },
-                },
-              ],
-            },
+              columns: [{
+                size: 'full',
+                richText: {
+                  root: {
+                    type: 'root',
+                    direction: 'ltr',
+                    format: '',
+                    indent: 0,
+                    version: 1,
+                    children: [
+                      { type: 'heading', tag: 'h1', direction: 'ltr', format: '', indent: 0, version: 1, children: [{ type: 'text', text: page.title, version: 1 }] },
+                      { type: 'paragraph', direction: 'ltr', format: '', indent: 0, version: 1, children: [{ type: 'text', text: `This is the ${page.title} page. Content coming soon.`, version: 1 }] }
+                    ]
+                  }
+                }
+              }]
+            }
           ],
         },
       }),
     ),
   )
+
+  const allPages = [homePage, contactPage, ...additionalPageDocs]
+  const getPageId = (slug: string) => allPages.find(p => p.slug === slug)?.id
 
   payload.logger.info(`— Seeding globals...`)
 
@@ -294,52 +227,49 @@ export const seed = async ({
       slug: 'header',
       data: {
         navItems: [
-          {
-            link: {
-              type: 'custom',
-              label: 'Posts',
-              url: '/posts',
-            },
-          },
-          {
-            link: {
-              type: 'reference',
-              label: 'Contact',
-              reference: {
-                relationTo: 'pages',
-                value: contactPage.id,
-              },
-            },
-          },
+          { link: { type: 'reference', label: 'Home', reference: { relationTo: 'pages', value: homePage.id } } },
+          { link: { type: 'reference', label: 'About', reference: { relationTo: 'pages', value: getPageId('about') } } },
+          { link: { type: 'custom', label: 'Services', url: '/services' } },
+          { link: { type: 'reference', label: 'News', reference: { relationTo: 'pages', value: getPageId('news') } } },
+          { link: { type: 'reference', label: 'Contact', reference: { relationTo: 'pages', value: contactPage.id } } },
         ],
       },
     }),
     payload.updateGlobal({
       slug: 'footer',
       data: {
-        navItems: [
+        groups: [
           {
-            link: {
-              type: 'custom',
-              label: 'Admin',
-              url: '/admin',
-            },
+            label: 'Company',
+            navItems: [
+              { link: { type: 'reference', label: 'Company Profile', reference: { relationTo: 'pages', value: getPageId('about') } } },
+              { link: { type: 'reference', label: 'Mission & Vision', reference: { relationTo: 'pages', value: getPageId('mission-vision') } } },
+              { link: { type: 'reference', label: 'Careers', reference: { relationTo: 'pages', value: getPageId('careers') } } },
+              { link: { type: 'reference', label: 'Partners & Associates', reference: { relationTo: 'pages', value: getPageId('partners-associates') } } },
+              { link: { type: 'reference', label: 'Complaints & Feedback', reference: { relationTo: 'pages', value: getPageId('complaints-feedback') } } },
+            ],
           },
           {
-            link: {
-              type: 'custom',
-              label: 'Source Code',
-              newTab: true,
-              url: 'https://github.com/payloadcms/payload/tree/main/templates/website',
-            },
+            label: 'Product & Services',
+            navItems: serviceDocs.map(doc => ({
+              link: { type: 'reference', label: doc.title, reference: { relationTo: 'services' as any, value: doc.id } }
+            })),
           },
           {
-            link: {
-              type: 'custom',
-              label: 'Payload',
-              newTab: true,
-              url: 'https://payloadcms.com/',
-            },
+            label: 'Media Center',
+            navItems: [
+              { link: { type: 'reference', label: 'Gallery', reference: { relationTo: 'pages', value: getPageId('gallery') } } },
+              { link: { type: 'custom', label: 'Blog', url: '/posts' } },
+              { link: { type: 'reference', label: 'News', reference: { relationTo: 'pages', value: getPageId('news') } } },
+            ],
+          },
+          {
+            label: 'Legal',
+            navItems: [
+              { link: { type: 'reference', label: 'Terms & Conditions', reference: { relationTo: 'pages', value: getPageId('terms') } } },
+              { link: { type: 'reference', label: 'Privacy Policy', reference: { relationTo: 'pages', value: getPageId('privacy') } } },
+              { link: { type: 'reference', label: 'KYC & Compliance', reference: { relationTo: 'pages', value: getPageId('kyc') } } },
+            ],
           },
         ],
       },
@@ -350,17 +280,9 @@ export const seed = async ({
 }
 
 async function fetchFileByURL(url: string): Promise<File> {
-  const res = await fetch(url, {
-    credentials: 'include',
-    method: 'GET',
-  })
-
-  if (!res.ok) {
-    throw new Error(`Failed to fetch file from ${url}, status: ${res.status}`)
-  }
-
+  const res = await fetch(url)
+  if (!res.ok) throw new Error(`Failed to fetch file from ${url}, status: ${res.status}`)
   const data = await res.arrayBuffer()
-
   return {
     name: url.split('/').pop() || `file-${Date.now()}`,
     data: Buffer.from(data),
