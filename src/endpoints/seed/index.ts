@@ -215,6 +215,78 @@ export const seed = async ({
     }),
   ])
 
+  payload.logger.info(`— Seeding additional pages...`)
+  const additionalPages = [
+    { title: 'Company Profile', slug: 'about' },
+    { title: 'Mission & Vision', slug: 'mission-vision' },
+    { title: 'Careers', slug: 'careers' },
+    { title: 'Partners & Associates', slug: 'partners-associates' },
+    { title: 'Complaints & Feedback', slug: 'complaints-feedback' },
+    { title: 'Terms & Conditions', slug: 'terms' },
+    { title: 'Privacy Policy', slug: 'privacy' },
+    { title: 'KYC & Compliance', slug: 'kyc' },
+  ]
+
+  await Promise.all(
+    additionalPages.map((page) =>
+      payload.create({
+        collection: 'pages',
+        data: {
+          title: page.title,
+          slug: page.slug,
+          _status: 'published',
+          hero: {
+            type: 'none',
+          },
+          layout: [
+            {
+              blockType: 'content',
+              columns: [
+                {
+                  size: 'full',
+                  richText: {
+                    root: {
+                      type: 'root',
+                      direction: 'ltr',
+                      format: '',
+                      indent: 0,
+                      version: 1,
+                      children: [
+                        {
+                          type: 'heading',
+                          tag: 'h1',
+                          direction: 'ltr',
+                          format: '',
+                          indent: 0,
+                          version: 1,
+                          children: [{ type: 'text', text: page.title, version: 1 }],
+                        },
+                        {
+                          type: 'paragraph',
+                          direction: 'ltr',
+                          format: '',
+                          indent: 0,
+                          version: 1,
+                          children: [
+                            {
+                              type: 'text',
+                              text: `This is the ${page.title} page. Content coming soon.`,
+                              version: 1,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      }),
+    ),
+  )
+
   payload.logger.info(`— Seeding globals...`)
 
   await Promise.all([

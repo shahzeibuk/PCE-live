@@ -65,7 +65,7 @@ export async function Footer() {
               <h3 className="font-bold text-lg uppercase tracking-wide">Media Center</h3>
               <nav className="flex flex-col gap-2 text-sm">
                 <Link href="/gallery" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Gallery</Link>
-                <Link href="/blog" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Blog</Link>
+                <Link href="/posts" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> Blog</Link>
                 <Link href="/news" className="hover:text-primary-foreground/80 transition-colors flex items-center gap-2"><span className="text-xs">›</span> News</Link>
               </nav>
             </div>
