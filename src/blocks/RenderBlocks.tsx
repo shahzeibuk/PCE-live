@@ -7,6 +7,10 @@ import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { ContentBlock } from '@/blocks/Content/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
+import { LiveExchangeRatesBlock } from '@/blocks/LiveExchangeRates/Component'
+import { CurrencyConverterBlock } from '@/blocks/CurrencyConverter/Component'
+import { ServicesGridBlock } from '@/blocks/ServicesGrid/Component'
+import { WhatsAppCTABlock } from '@/blocks/WhatsAppCTA/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -14,6 +18,10 @@ const blockComponents = {
   cta: CallToActionBlock,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
+  liveExchangeRates: LiveExchangeRatesBlock,
+  currencyConverter: CurrencyConverterBlock,
+  servicesGrid: ServicesGridBlock,
+  whatsappCTA: WhatsAppCTABlock,
 }
 
 export const RenderBlocks: React.FC<{

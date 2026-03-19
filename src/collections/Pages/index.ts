@@ -7,6 +7,10 @@ import { CallToAction } from '../../blocks/CallToAction/config'
 import { Content } from '../../blocks/Content/config'
 import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
+import { LiveExchangeRates } from '../../blocks/LiveExchangeRates/config'
+import { CurrencyConverter } from '../../blocks/CurrencyConverter/config'
+import { ServicesGrid } from '../../blocks/ServicesGrid/config'
+import { WhatsAppCTA } from '../../blocks/WhatsAppCTA/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -72,7 +76,7 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock],
+              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock, LiveExchangeRates, CurrencyConverter, ServicesGrid, WhatsAppCTA],
               required: true,
               admin: {
                 initCollapsed: true,

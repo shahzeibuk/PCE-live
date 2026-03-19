@@ -228,6 +228,10 @@ export interface Page {
       }
     | ArchiveBlock
     | FormBlock
+    | LiveExchangeRatesBlock
+    | CurrencyConverterBlock
+    | ServicesGridBlock
+    | WhatsAppCTABlock
   )[];
   meta?: {
     title?: string | null;
@@ -897,6 +901,49 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LiveExchangeRatesBlock".
+ */
+export interface LiveExchangeRatesBlock {
+  title: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'liveExchangeRates';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CurrencyConverterBlock".
+ */
+export interface CurrencyConverterBlock {
+  title: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'currencyConverter';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ServicesGridBlock".
+ */
+export interface ServicesGridBlock {
+  title: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'servicesGrid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "WhatsAppCTABlock".
+ */
+export interface WhatsAppCTABlock {
+  title: string;
+  body?: string | null;
+  buttonText?: string | null;
+  phoneNumber?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'whatsappCTA';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "currency-rates".
  */
 export interface CurrencyRate {
@@ -1303,6 +1350,10 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        liveExchangeRates?: T | LiveExchangeRatesBlockSelect<T>;
+        currencyConverter?: T | CurrencyConverterBlockSelect<T>;
+        servicesGrid?: T | ServicesGridBlockSelect<T>;
+        whatsappCTA?: T | WhatsAppCTABlockSelect<T>;
       };
   meta?:
     | T
@@ -1399,6 +1450,45 @@ export interface FormBlockSelect<T extends boolean = true> {
   form?: T;
   enableIntro?: T;
   introContent?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LiveExchangeRatesBlock_select".
+ */
+export interface LiveExchangeRatesBlockSelect<T extends boolean = true> {
+  title?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CurrencyConverterBlock_select".
+ */
+export interface CurrencyConverterBlockSelect<T extends boolean = true> {
+  title?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ServicesGridBlock_select".
+ */
+export interface ServicesGridBlockSelect<T extends boolean = true> {
+  title?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "WhatsAppCTABlock_select".
+ */
+export interface WhatsAppCTABlockSelect<T extends boolean = true> {
+  title?: T;
+  body?: T;
+  buttonText?: T;
+  phoneNumber?: T;
   id?: T;
   blockName?: T;
 }
