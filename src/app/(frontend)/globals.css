@@ -48,6 +48,24 @@
 }
 
 @layer utilities {
+  /**
+   * Clears the fixed FloatingHeader (single row + secondary nav on lg).
+   * Keep in sync with src/components/ui/floating-header.tsx vertical size.
+   */
+  .site-main {
+    padding-top: 5.75rem;
+  }
+  @media (width >= theme(--breakpoint-md)) {
+    .site-main {
+      padding-top: 6.75rem;
+    }
+  }
+  @media (width >= theme(--breakpoint-lg)) {
+    .site-main {
+      padding-top: 9rem;
+    }
+  }
+
   .container {
     width: 100%;
     margin-inline: auto;

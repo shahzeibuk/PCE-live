@@ -37,26 +37,26 @@ export default async function NewsItem({ params: paramsPromise }: { params: Prom
   if (!newsItem) return notFound()
 
   return (
-    <article className="pb-24 pt-24 min-h-screen bg-slate-50/30 dark:bg-slate-950">
-      <div className="container px-4 max-w-4xl">
-        <div className="mb-12">
-          <Button asChild variant="ghost" className="mb-8 -ml-4 text-slate-500 hover:text-[#099546] hover:bg-[#099546]/5 rounded-xl font-semibold">
+    <article className="pb-16 md:pb-24 min-h-screen bg-slate-50 dark:bg-slate-950">
+      <div className="container px-4 max-w-4xl pt-6 md:pt-8">
+        <div className="mb-10">
+          <Button asChild variant="ghost" className="mb-6 -ml-2 text-slate-600 hover:text-[#099546] font-semibold rounded">
             <Link href="/news" className="flex items-center gap-2">
               <ArrowLeft className="w-4 h-4" /> Back to News
             </Link>
           </Button>
           
-          <div className="flex items-center gap-2 text-[#099546] font-semibold mb-4 bg-[#099546]/5 w-fit px-4 py-1.5 rounded-full text-sm">
+          <div className="flex items-center gap-2 text-[#099546] font-semibold mb-4 bg-[#099546]/10 w-fit px-3 py-1.5 rounded text-sm border border-[#099546]/20">
             <Calendar className="w-4 h-4" />
             {newsItem.published_date && new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).format(new Date(newsItem.published_date))}
           </div>
           
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 leading-tight mb-8 tracking-tight">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white leading-tight mb-8 tracking-tight">
             {newsItem.title}
           </h1>
         </div>
         
-        <div className="bg-white dark:bg-slate-900 p-8 md:p-12 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800">
+        <div className="bg-white dark:bg-slate-950 p-6 md:p-10 rounded border border-slate-200 dark:border-slate-800">
           <div className="prose prose-lg md:prose-xl dark:prose-invert max-w-none prose-headings:text-slate-900 prose-headings:font-bold prose-p:text-slate-700 prose-p:leading-relaxed">
             {newsItem.content && <RichText data={newsItem.content} />}
           </div>

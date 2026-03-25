@@ -1,702 +1,891 @@
 [
   {
+    "legacy_id": 1,
     "branch_name": "Head Office",
+    "city": "Karachi",
     "address": "Office No -7,8,9 Al- Rasheed Chamber 12/A Block-6 P.E.C.H.S (karachi)",
-    "phone": "021-4312975",
-    "city": "Head",
-    "id": 1
+    "phone": "021-4312975"
   },
   {
+    "legacy_id": 2,
     "branch_name": "Main Branch (khi)",
+    "city": "Karachi",
     "address": "OFFICE NO.9 AL-RASHEED CHAMBERS, 12-A Block-6 PECHS, Shahrah-e-Faisal Karachi",
-    "phone": "021-34534780",
-    "city": "Main",
-    "id": 2
+    "phone": "021-34534780"
   },
   {
+    "legacy_id": 3,
     "branch_name": "Rawalpindi Branch (Mall Plaza)",
+    "city": "Rawalpindi",
     "address": "Shop # 21,Ground Floor Mall Plaza, Rawalpindi.",
-    "phone": "051-5111620-21",
-    "city": "Rawalpindi",
-    "id": 3
+    "phone": "051-5111620-21"
   },
   {
+    "legacy_id": 4,
     "branch_name": "Peshawar Branch I",
-    "address": "Shop # 01, 02 Ground Floor Ahmed II Building  Saddar Road Peshawar",
-    "phone": "091-5270442-3",
     "city": "Peshawar",
-    "id": 4
+    "address": "Shop # 01, 02 Ground Floor Ahmed II Building  Saddar Road Peshawar",
+    "phone": "091-5270442-3"
   },
   {
+    "legacy_id": 5,
     "branch_name": "Gulshan Branch 1",
+    "city": "Karachi",
     "address": "Shop # 1, G.Floor Al-Sultan Chembers SB-8 Block-13/C Main University, Karachi.",
-    "phone": "021-4823825-830-6",
-    "city": "Gulshan",
-    "id": 5
+    "phone": "021-4823825-830-6"
   },
   {
+    "legacy_id": 6,
     "branch_name": "Haidery Branch 2",
+    "city": "Karachi",
     "address": "Shop # B 12 Al Burhan Shoping Circle B Builing Str 04 Block E North Nazimabad Karachi",
-    "phone": "36630356-8",
-    "city": "Haidery",
-    "id": 6
+    "phone": "36630356-8"
   },
   {
+    "legacy_id": 7,
     "branch_name": "Faisalabad Branch 1",
+    "city": "Faislabad",
     "address": "1st Floor Zila Council Plaza Kachairy Bazar, Faislabad.",
-    "phone": "041-2413046",
-    "city": "Faisalabad",
-    "id": 7
+    "phone": "041-2413046"
   },
   {
+    "legacy_id": 8,
     "branch_name": "Gujar Khan Branch",
-    "address": "Shop no 214/3 Punjab Provincial Cooperative Bank Building Railway Road Gujar Khan.",
-    "phone": "0513-516038-39-49",
     "city": "Gujar",
-    "id": 8
+    "address": "Shop no 214/3 Punjab Provincial Cooperative Bank Building Railway Road Gujar Khan.",
+    "phone": "0513-516038-39-49"
   },
   {
+    "legacy_id": 9,
     "branch_name": "Kharian Branch (Gujrat)",
-    "address": "Shop 03 Dawood Rasha Plaza Opp Markazi Jamia Masjid GT Road Kharian",
-    "phone": "053-7603014",
     "city": "Kharian",
-    "id": 9
+    "address": "Shop 03 Dawood Rasha Plaza Opp Markazi Jamia Masjid GT Road Kharian",
+    "phone": "053-7603014"
   },
   {
+    "legacy_id": 10,
     "branch_name": "Zamzama Branch (Khi)",
+    "city": "Karachi",
     "address": "Plot #14-c Shop #5,Zamzama Commercial Lene-8 Phase -5 DHA (Karachi)",
-    "phone": "021-5301985-91",
-    "city": "Zamzama",
-    "id": 10
+    "phone": "021-5301985-91"
   },
   {
+    "legacy_id": 11,
     "branch_name": "Gulberg Lahore Br 1",
+    "city": "Lahore",
     "address": "Shop  G-1   Liberty  Heights Plaza main blvd road Gulberg,-3  Lahore.",
-    "phone": "042-35783080-82",
-    "city": "Gulberg",
-    "id": 11
+    "phone": "042-35783080-82"
   },
   {
+    "legacy_id": 12,
     "branch_name": "Sialkot Branch 1",
+    "city": "Sialkot",
     "address": "Shop x-2f/59 Bano Bazar Municeple Corp, Sialkot.",
-    "phone": "052-4586721-4586811",
-    "city": "Sialkot",
-    "id": 12
+    "phone": "052-4586721-4586811"
   },
   {
+    "legacy_id": 13,
     "branch_name": "Airport Branch (Khi)",
+    "city": "Karachi",
     "address": "Shop #11 Falak Naz Hieghts Opposite Jinnah AirPort, Karachi.",
-    "phone": "021-4596686- 87",
-    "city": "Airport",
-    "id": 13
+    "phone": "021-4596686- 87"
   },
   {
+    "legacy_id": 14,
     "branch_name": "Lahore DHA Branch 2",
+    "city": "Lahore",
     "address": "Ground Floor Shop # 54- defence Commercial Plaza goal Market .innercircel Y-Block phase-3 D.H.A Cantt (Lahore)",
-    "phone": "042- 37199415, 35693844",
-    "city": "Lahore",
-    "id": 14
+    "phone": "042- 37199415, 35693844"
   },
   {
+    "legacy_id": 15,
     "branch_name": "Mangora Branch",
-    "address": "Main Bazar Old Kattera Near MCB Mangora Swat",
-    "phone": "0946-713803-04",
     "city": "Mangora",
-    "id": 15
+    "address": "Main Bazar Old Kattera Near MCB Mangora Swat",
+    "phone": "0946-713803-04"
   },
   {
+    "legacy_id": 16,
     "branch_name": "Islamabad Blue Area Branch",
+    "city": "Islamabad",
     "address": "Shop #1 Asghar Plaza plot #20-D china Chowk  Blue Area, Islamabad.",
-    "phone": "051-2878447",
-    "city": "Islamabad",
-    "id": 16
+    "phone": "051-2878447"
   },
   {
+    "legacy_id": 17,
     "branch_name": "Gujrat Branch",
-    "address": "Shop #32/33 Ground Floor Sarwar Gold Plaza, Gujrat.",
-    "phone": "053- 3515572-3",
     "city": "Gujrat",
-    "id": 17
+    "address": "Shop #32/33 Ground Floor Sarwar Gold Plaza, Gujrat.",
+    "phone": "053- 3515572-3"
   },
   {
+    "legacy_id": 18,
     "branch_name": "Jhelum Branch 1",
+    "city": "Jhelum",
     "address": "Shop #1 Soldiar Arcade Civil Lines, Jehlum.",
-    "phone": "0544-620833-834",
-    "city": "Jhelum",
-    "id": 18
+    "phone": "0544-620833-834"
   },
   {
+    "legacy_id": 19,
     "branch_name": "Kotli Branch (AJK)",
-    "address": "Shop # 3&4 Gulistan Plaza Pindi Road Adjecent to NADRA off AJK, Kotli.",
-    "phone": "058264-47984-85",
     "city": "Kotli",
-    "id": 19
+    "address": "Shop # 3&4 Gulistan Plaza Pindi Road Adjecent to NADRA off AJK, Kotli.",
+    "phone": "058264-47984-85"
   },
   {
+    "legacy_id": 20,
     "branch_name": "Wah Cantt Branch",
+    "city": "Wah Cantt",
     "address": "Shop #1&2 Gol Market Lalarukh Basti Wah Cantt.",
-    "phone": "0514-539551-52",
-    "city": "Wah",
-    "id": 20
+    "phone": "0514-539551-52"
   },
   {
+    "legacy_id": 21,
     "branch_name": "Mansehra Branch",
-    "address": "Shop #1 Al-Naz Hotel Abbottabad Road Urban Area Tehsil & Dist Manshera.",
-    "phone": "0997-390638-640",
-    "city": "Mansehra",
-    "id": 21
-  },
-  {
-    "branch_name": "Multan Branch 1",
-    "address": "Shop # 104 Ground Floor MALL Plaza Multan cantt",
-    "phone": "061-4547476-471",
-    "city": "Multan",
-    "id": 22
-  },
-  {
-    "branch_name": "Multan Branch 2",
-    "address": "Shop #16/36  Mall Shoping Center  Aziz Shaheed Road Multan Cantt",
-    "phone": "061-4515080-907",
-    "city": "Multan",
-    "id": 23
-  },
-  {
-    "branch_name": "Malir Branch",
-    "address": "Shop # G-5 Ground floor Rafi Mall S.No 890 Main Road Mailr, Karachi.",
-    "phone": "021-4512119--162",
-    "city": "Malir",
-    "id": 24
-  },
-  {
-    "branch_name": "Lahore Branch  3",
-    "address": "Shop # 4 & 5 Ground Floor Akbari Shopping Center Hunza Block Allama Iqbal Town, Lahore.",
-    "phone": "042-37809900-3",
-    "city": "Lahore",
-    "id": 25
-  },
-  {
-    "branch_name": "Quetta Branch 1",
-    "address": "Shop # 1, Gull Plaza opposite M.C.B Circle Office M.A. Jinnah Road, Quetta.",
-    "phone": "081-2846245-6",
-    "city": "Quetta",
-    "id": 26
-  },
-  {
-    "branch_name": "Chakwal Branch",
-    "address": "Office No -1 Haidry market near shama TV main Talagang road Chakwal.",
-    "phone": "0543-544220-542956",
-    "city": "Chakwal",
-    "id": 27
-  },
-  {
-    "branch_name": "Faisalabad Branch 2",
-    "address": "Shop # 11, Ground Floor, City Plaza,Kutchery Bazar, Faisalabad.",
-    "phone": "041-2412831",
-    "city": "Faisalabad",
-    "id": 28
-  },
-  {
-    "branch_name": "Gujranwala Branch 1",
-    "address": "Shop # 142-7S-2-BX.Old Ghalla Mandi,Old Hafeez Motors Gujranwala.",
-    "phone": "055-3846602- 604",
-    "city": "Gujranwala",
-    "id": 29
-  },
-  {
-    "branch_name": "Amber Casttle Branch (Khi)",
-    "address": "Shop # 10,Amber Casttel 21-A Block-6 P.E.C.H.S Main Shahr-e-Faisal Karachi",
-    "phone": "021-4388199, 4522005",
-    "city": "Amber",
-    "id": 30
-  },
-  {
-    "branch_name": "Chakri Branch (Rawalpindi)",
-    "address": "Shop # 1,2 Zafar Plaza, Dhamial More,Chakri Road,Rawalpindi,",
-    "phone": "051-5578181, 5126410",
-    "city": "Chakri",
-    "id": 31
-  },
-  {
-    "branch_name": "Lahore Shalamar Branch 4",
-    "address": "Shop # SE 3R-3/15N Shalimar Link Road Baghbanpura Lahor Cantt, Lahore.",
-    "phone": "0423-6812043-4",
-    "city": "Lahore",
-    "id": 32
-  },
-  {
-    "branch_name": "Dinga Branch (Gujrat)",
-    "address": "Shop # 1 Mehdi Khan Square Municipal Committee Market Main Bazar Bohar Chowk Dinga Distt Gujrat.",
-    "phone": "0537-405057-8",
-    "city": "Dinga",
-    "id": 33
-  },
-  {
-    "branch_name": "Faisalabad Samundri Branch",
-    "address": "Shop # 55,56 19/30 Mandi Bazar, Near M.C.B Bank Samundri, Distt Faislabad",
-    "phone": "041-3426572-4",
-    "city": "Faisalabad",
-    "id": 34
-  },
-  {
-    "branch_name": "Dadyal Branch ",
-    "address": "Plot # 44, Food Street, Near Snooti Inn, Main Chowk,Dhadyal A.J.K.",
-    "phone": "05827-465705-6",
-    "city": "Dadyal",
-    "id": 35
-  },
-  {
-    "branch_name": "Rawalpindi Branch 6th Road",
-    "address": "Shop # G-2 Midway Centrum Shopping Mall, Plot # 1-89 - D 6th Road Satellite Town, Rawalpindi.",
-    "phone": "051-4853574-4853575",
-    "city": "Rawalpindi",
-    "id": 36
-  },
-  {
-    "branch_name": "Dina Branch",
-    "address": "Shop # 02,Chaudhry M.Aslam Plaza Near GPO Mangla Road Dina Disst Jhelum.",
-    "phone": "0544-634462-463",
-    "city": "Dina",
-    "id": 37
-  },
-  {
-    "branch_name": "Haripur Hazara Branch",
-    "address": "Shop # B-6 Taimour Building main G.T road Hari Pur Hazara",
-    "phone": "0995-616183-4",
-    "city": "Haripur",
-    "id": 38
-  },
-  {
-    "branch_name": "Gurumandir Branch (Khi)",
-    "address": "Shop # 2 Plot No JN4/907 Jamshed Quarters Guru mandir Karachi",
-    "phone": "021-4920627-8",
-    "city": "Gurumandir",
-    "id": 39
-  },
-  {
-    "branch_name": "Rawalpindi 5th Road Branch",
-    "address": "Shop # 1 Ground Floor Haq Center 5th Road Setlite Town, Rawalpindi.",
-    "phone": "051-4850161-4426072",
-    "city": "Rawalpindi",
-    "id": 40
-  },
-  {
-    "branch_name": "Daska Branch",
-    "address": "Shop # 1 & 2 Tanveer Manzil model town road opp N.B.P Daska.",
-    "phone": "052-6610523-24",
-    "city": "Daska",
-    "id": 41
-  },
-  {
-    "branch_name": "Sambrial Branch",
-    "address": "SHOP # 1 & 2, QASR-E-AMJAD B1/749 NEAR NBP, MAIN ROAD, SAMBRIAL",
-    "phone": "052-6523213-14",
-    "city": "Sambrial",
-    "id": 42
-  },
-  {
-    "branch_name": "Gujranwala Branch 2",
-    "address": "Shop # 15-16 Commercial, Hafiz jee centre commercial  Rail Bazar, Gujranwala.",
-    "phone": "055-4225151",
-    "city": "Gujranwala",
-    "id": 43
-  },
-  {
-    "branch_name": "Johar Branch",
-    "address": "Shop # 24 Ground Floor Faraz Avnue Block-20 KDA Scheme # 36 Gulistan-e-Johar, Karachi.",
-    "phone": "021-4022484-7-410, 427",
-    "city": "Johar",
-    "id": 44
-  },
-  {
-    "branch_name": "Amanah Mall Lahore",
-    "address": "Kiosk no 05 Ground Floor Amanah Mall Model Town Link Road Lahore",
-    "phone": "0423-5131610",
-    "city": "Amanah",
-    "id": 45
-  },
-  {
-    "branch_name": "Sargodha Branch",
-    "address": "Shop No 36 Block No 04 Corner Rail Bazar sabzi Mandi Sargodha.",
-    "phone": "0483-718276-7",
-    "city": "Sargodha",
-    "id": 46
-  },
-  {
-    "branch_name": "Khadda Market Branch",
-    "address": "Shop # 1 Basement Plot no 6-C Stadium lane-1 Khyaban-e-Shamsheer Phase 5 DHA Karachi",
-    "phone": "021-35248710-1-2",
-    "city": "Khadda",
-    "id": 47
-  },
-  {
-    "branch_name": "Aisha Manzil F.B Area Branch",
-    "address": "Shop # 3 & 4 Upper Ground Floor Sohni Residency Plot No C-2 Bolck # 13 F.B area, Karachi.",
-    "phone": "021-36830513-5",
-    "city": "Aisha",
-    "id": 48
-  },
-  {
-    "branch_name": "Faisalabad D Ground",
-    "address": "Shop #246/B Peoples Colony No 1 Commercial Area D Ground, Faisalabad.",
-    "phone": "041-8559287-8",
-    "city": "Faisalabad",
-    "id": 49
-  },
-  {
-    "branch_name": "Mazang Chungi Branch",
-    "address": "Shop #11 Ground Floor Saman Arcade Mazang Chungi Feroz Pur Road, Lahore.",
-    "phone": "042-37500141-2-3",
-    "city": "Mazang",
-    "id": 50
-  },
-  {
-    "branch_name": "Lahore Branch 7",
-    "address": "Shop #8 Ground Floor Sadiq Palaza 69 The Mall, Lahore.",
-    "phone": "0423-6280206-7",
-    "city": "Lahore",
-    "id": 51
-  },
-  {
-    "branch_name": "Lala Musa Branch",
-    "address": "Shop# B-1 /193-2 GT road Near Nisar Hospital Mohalla Kaira Main GT Road Lala Musa.",
-    "phone": "0537-515912",
-    "city": "Lala",
-    "id": 52
-  },
-  {
-    "branch_name": "Mirpur AJK branch 1",
-    "address": "Shop #2 Ground floor Muhammadi palaza mipur azad kashmir",
-    "phone": "05827-448214-15",
-    "city": "Mirpur",
-    "id": 53
-  },
-  {
-    "branch_name": "Wazirabad Branch",
-    "address": "Property #B1,VI-6 -S-54/RH Shop # Main Bazar Kachehry Road,  Near NBP, Wazirabad.",
-    "phone": "055-6604501",
-    "city": "Wazirabad",
-    "id": 54
-  },
-  {
-    "branch_name": "Multan Vehari Branch 3",
-    "address": "Shop #2795 Mohalla chowk Shah Abbas Vehari road MULTAN",
-    "phone": "061-4233518-4234518",
-    "city": "Multan",
-    "id": 55
-  },
-  {
-    "branch_name": "Madina Town Br 6 Faisalabad",
-    "address": "Shop No. 2 & 3, 16-Chenab Market, Main Susan Road, Madina Town, Faisalabad",
-    "phone": "041-8503256-7",
-    "city": "Madina",
-    "id": 56
-  },
-  {
-    "branch_name": "Sialkot Branch 2",
-    "address": "Khawit #584 Shahab Pura road opp wapda  colony near BOP Sahab Pura Road, Sialkot.",
-    "phone": "052-3560133",
-    "city": "Sialkot",
-    "id": 57
-  },
-  {
-    "branch_name": "Toba Tek Singh Branch",
-    "address": "Shop # 105/2 committee bagh road opp main branch toba tek singh",
-    "phone": "046-2512481-2",
-    "city": "Toba",
-    "id": 58
-  },
-  {
-    "branch_name": "Abbottabad Branch",
-    "address": "Shop # 3 Ground Floor Asif Khan Plaza Missile chowk Oposite Daewoo Bus Terminal Mandian Abbotabad.",
-    "phone": "0992-413184-5",
     "city": "Abbottabad",
-    "id": 59
+    "address": "Shop #1 Al-Naz Hotel Abbottabad Road Urban Area Tehsil & Dist Manshera.",
+    "phone": "0997-390638-640"
   },
   {
-    "branch_name": "Lahore 8 Moon Market",
-    "address": "Shop # 2,3 Ground Floor Jalal Center, 9 Kashmir bolck, Allama Iqbal Town (Lahore(Former H block)",
-    "phone": "0423-7810043-5",
+    "legacy_id": 22,
+    "branch_name": "Multan Branch 1",
+    "city": "Multan",
+    "address": "Shop # 104 Ground Floor MALL Plaza Multan cantt",
+    "phone": "061-4547476-471"
+  },
+  {
+    "legacy_id": 23,
+    "branch_name": "Multan Branch 2",
+    "city": "Multan",
+    "address": "Shop #16/36  Mall Shoping Center  Aziz Shaheed Road Multan Cantt",
+    "phone": "061-4515080-907"
+  },
+  {
+    "legacy_id": 24,
+    "branch_name": "Malir Branch",
+    "city": "Karachi",
+    "address": "Shop # G-5 Ground floor Rafi Mall S.No 890 Main Road Mailr, Karachi.",
+    "phone": "021-4512119--162"
+  },
+  {
+    "legacy_id": 25,
+    "branch_name": "Lahore Branch  3",
     "city": "Lahore",
-    "id": 60
+    "address": "Shop # 4 & 5 Ground Floor Akbari Shopping Center Hunza Block Allama Iqbal Town, Lahore.",
+    "phone": "042-37809900-3"
   },
   {
-    "branch_name": "Lahore peco Road Branch",
-    "address": "Shop # 1 Plot # 884-D Main Peco Road Faisal Town, Lahore.",
-    "phone": "0423-5221551-2",
-    "city": "Lahore",
-    "id": 61
-  },
-  {
-    "branch_name": "Rawalpindi Basement Branch",
-    "address": "Shop # 02, Basement, Mall Plaza the Mall, Rawalpindi,",
-    "phone": "051-5515062",
-    "city": "Rawalpindi",
-    "id": 62
-  },
-  {
-    "branch_name": "Quetta Branch 2",
-    "address": "Shop # 1 hakim manzil main alamdar road opp govt sardar Eissa khan girls school or sahib zaman hospital near milo shaheed trust Quetta.",
-    "phone": "081-2668525",
+    "legacy_id": 26,
+    "branch_name": "Quetta Branch 1",
     "city": "Quetta",
-    "id": 63
+    "address": "Shop # 1, Gull Plaza opposite M.C.B Circle Office M.A. Jinnah Road, Quetta.",
+    "phone": "081-2846245-6"
   },
   {
-    "branch_name": "Giga Mall Branch",
-    "address": "KIOSK NO.2 GROUND FLOOR, GIGA WORLD TRADE CENTER,DHA ISLAMABAD",
-    "phone": "051-2725654-5",
-    "city": "Giga",
-    "id": 64
+    "legacy_id": 27,
+    "branch_name": "Chakwal Branch",
+    "city": "Chakwal",
+    "address": "Office No -1 Haidry market near shama TV main Talagang road Chakwal.",
+    "phone": "0543-544220-542956"
   },
   {
-    "branch_name": "Metro Cash & Carry (Lahore) ",
-    "address": "Designated Area (34ft X 6.4ft) Metro Cash & Carry (Pvt).Ltd 2km, Multan Road, Lahore.",
-    "phone": "0423-5255090-1",
-    "city": "Metro",
-    "id": 65
-  },
-  {
-    "branch_name": "Jinnah Int,Airport Branch (Khi)",
-    "address": "Room # 2314, Concourse Area, Level-11, Quaid-e-Azam International Airport, 1st Floor, Karachi.",
-    "phone": "021-4680022,4671227",
-    "city": "Jinnah",
-    "id": 66
-  },
-  {
-    "branch_name": "Haidery Branch 1",
-    "address": "Shop # 6. Ground floor Al-Burhan Plot # SF-3,Bolck # E,North Nazimabad Karachi",
-    "phone": "021-36634245-6",
-    "city": "Haidery",
-    "id": 67
-  },
-  {
-    "branch_name": "Shahbaz Branch",
-    "address": "Shop No,4 Plot No,4 C-Lane No.2 Main shahbaz commercial Phase 6, D.H.A (Karachi)",
-    "phone": "35240471-2-3",
-    "city": "Shahbaz",
-    "id": 68
-  },
-  {
-    "branch_name": "Arif Wala",
-    "address": "Shop No- 158/C Near HBL Bank Thana Bazar Arif Wala.",
-    "phone": "0457-830781-2",
-    "city": "Arif",
-    "id": 69
-  },
-  {
-    "branch_name": "Mian Channu Branch",
-    "address": "Shop # 2, T Chowk, Near Burhan Wahid Traders, GT Road Mian Channu.",
-    "phone": "065-2660552-3",
-    "city": "Mian",
-    "id": 70
-  },
-  {
-    "branch_name": "Sahiwal Branch",
-    "address": "Shop No.24 Quaid -e-Azam Market oppsite National Bank high Street MA-Jinnah road (Sahiwal)",
-    "phone": "040-4221671-2",
-    "city": "Sahiwal",
-    "id": 71
-  },
-  {
-    "branch_name": "Faisalabad Chiniot Bazar Branch",
-    "address": "Shop # 1, Property # 79,Khasra # 782,Khewtnuy # 784,Chiniot Bazar Kutwali Road,(Faisalabad)",
-    "phone": "041-2603935-6",
+    "legacy_id": 28,
+    "branch_name": "Faisalabad Branch 2",
     "city": "Faisalabad",
-    "id": 72
+    "address": "Shop # 11, Ground Floor, City Plaza,Kutchery Bazar, Faisalabad.",
+    "phone": "041-2412831"
   },
   {
-    "branch_name": "Mirpur AJK  Branch 2",
-    "address": "SHOP # 10 PLOT # 119/D OPP RABI CENTER, SECTOR C/2 MIRPUR, DISTRICT MIRPUR",
-    "phone": "05827 449156-7",
-    "city": "Mirpur",
-    "id": 73
+    "legacy_id": 29,
+    "branch_name": "Gujranwala Branch 1",
+    "city": "Gujranwala",
+    "address": "Shop # 142-7S-2-BX.Old Ghalla Mandi,Old Hafeez Motors Gujranwala.",
+    "phone": "055-3846602- 604"
   },
   {
-    "branch_name": "Dera Ghazi khan Branch",
-    "address": "Shop No . 29 Block # B Oppsite HBL Bank Kachari Road Kalma Chowk DG,Khan.",
-    "phone": "064-2470742",
-    "city": "Dera",
-    "id": 74
+    "legacy_id": 30,
+    "branch_name": "Amber Casttle Branch (Khi)",
+    "city": "Karachi",
+    "address": "Shop # 10,Amber Casttel 21-A Block-6 P.E.C.H.S Main Shahr-e-Faisal Karachi",
+    "phone": "021-4388199, 4522005"
   },
   {
-    "branch_name": "Ocean Mall Clifton Branch",
-    "address": "Kiosk At 3rd Floor Ocean Mall Clifton Karachi",
-    "phone": "021-35166656-58",
-    "city": "Ocean",
-    "id": 75
+    "legacy_id": 31,
+    "branch_name": "Chakri Branch (Rawalpindi)",
+    "city": "Rawalpindi",
+    "address": "Shop # 1,2 Zafar Plaza, Dhamial More,Chakri Road,Rawalpindi,",
+    "phone": "051-5578181, 5126410"
   },
   {
-    "branch_name": "DHA Rawalpindi Br ",
-    "address": "Shop No. 04 C Ground Floor Block 43/4 Sector F Phase 1 DHA Rawalpindi",
-    "phone": "051-5155005-6",
-    "city": "DHA",
-    "id": 76
+    "legacy_id": 32,
+    "branch_name": "Lahore Shalamar Branch 4",
+    "city": "Lahore",
+    "address": "Shop # SE 3R-3/15N Shalimar Link Road Baghbanpura Lahor Cantt, Lahore.",
+    "phone": "0423-6812043-4"
   },
   {
-    "branch_name": "Islamabad I-8 Markaz Branch",
-    "address": "Shop No.19 &20,Ground Floor,Huzaifa Centre,I-8 Markaz, (Islamabad)",
-    "phone": "051-4862302-3-4-9",
-    "city": "Islamabad",
-    "id": 77
+    "legacy_id": 33,
+    "branch_name": "Dinga Branch (Gujrat)",
+    "city": "Gujrat",
+    "address": "Shop # 1 Mehdi Khan Square Municipal Committee Market Main Bazar Bohar Chowk Dinga Distt Gujrat.",
+    "phone": "0537-405057-8"
   },
   {
-    "branch_name": "Islamabad G-11 Markaz Branch",
-    "address": "Shop No. 04 & 11,Ground Floor, Farhan Plaza, Plot No .19 Sector G-11 Markaz, (Islamabad)",
-    "phone": "051-2363938-942",
-    "city": "Islamabad",
-    "id": 78
+    "legacy_id": 34,
+    "branch_name": "Faisalabad Samundri Branch",
+    "city": "Faislabad",
+    "address": "Shop # 55,56 19/30 Mandi Bazar, Near M.C.B Bank Samundri, Distt Faislabad",
+    "phone": "041-3426572-4"
   },
   {
-    "branch_name": "Hyderabad Branch",
-    "address": "Shop No.05 Abdullah Chambers,Property no.536,Survey no.41 saddar, Hyderabad Cantt.",
-    "phone": "022-2787432-3",
-    "city": "Hyderabad",
-    "id": 79
+    "legacy_id": 35,
+    "branch_name": "Dadyal Branch",
+    "city": "Dadyal",
+    "address": "Plot # 44, Food Street, Near Snooti Inn, Main Chowk,Dhadyal A.J.K.",
+    "phone": "05827-465705-6"
   },
   {
-    "branch_name": "Tariq Road Branch",
-    "address": "Shop no 25 Kehkashan clotth mall block 02 main tariq road",
-    "phone": "0213-4375530-31-32-34",
-    "city": "Tariq",
-    "id": 80
+    "legacy_id": 36,
+    "branch_name": "Rawalpindi Branch 6th Road",
+    "city": "Rawalpindi",
+    "address": "Shop # G-2 Midway Centrum Shopping Mall, Plot # 1-89 - D 6th Road Satellite Town, Rawalpindi.",
+    "phone": "051-4853574-4853575"
   },
   {
-    "branch_name": "Cantt DHA Lahore Branch",
-    "address": "BASEMENTOF PLAZA # 46-CCA PHASE 5 DHA LAHORE CANTT",
-    "phone": "042-37182245-46",
-    "city": "Cantt",
-    "id": 81
-  },
-  {
-    "branch_name": "ISLAMABAD CENTAURUS BRANCH           ",
-    "address": "KIOSK NO.201,2ND FLOOR, CENTAURUS SHOPPING MALL,JINNAH AVENUE,BL Islamabad",
-    "phone": "051-2701290-91",
-    "city": "ISLAMABAD",
-    "id": 82
-  },
-  {
-    "branch_name": "Bahria Town Rwp",
-    "address": "SHOP NO.5 CIVIC CENTRE, PHASE 4, BAHRIA TOWN Rawalpindi",
-    "phone": "051-5733884-87",
-    "city": "Bahria",
-    "id": 83
-  },
-  {
-    "branch_name": "Sheikhupura Branch",
-    "address": "SHOP NO.08, GROUND FLOOR AFTAB ALAM PLAZA, AZIZ BHATTI ROAD SHEIKHUPURA",
-    "phone": "056-3546503-4-7",
-    "city": "Sheikhupura",
-    "id": 84
-  },
-  {
-    "branch_name": "Bahawalpur",
-    "address": "SHOP NO.1612/10,NEAR APWA HIGH  FARID GATE, CIRCULAR ROAD BAHAWALPUR ",
-    "phone": "062-2885245-6-7",
-    "city": "Bahawalpur",
-    "id": 85
-  },
-  {
-    "branch_name": "Muzaffarabad branch",
-    "address": "Shop No.2, Taj Mahal Hotel Building Old Tanga Stand, Muzaffarabad",
-    "phone": "05822-206818-206963",
-    "city": "Muzaffarabad",
-    "id": 86
-  },
-  {
-    "branch_name": "Battagram Branch",
-    "address": "Shop No 01 Opp Bank Islamic Near HBL Main Road Battagram",
-    "phone": "0997-310122",
-    "city": "Battagram",
-    "id": 87
-  },
-  {
-    "branch_name": "Jhelum Branch 02",
-    "address": "Shop 3,4 Khawaja Market Shandar Chowk Jhelum",
-    "phone": "0544-293125.293067",
+    "legacy_id": 37,
+    "branch_name": "Dina Branch",
     "city": "Jhelum",
-    "id": 88
+    "address": "Shop # 02,Chaudhry M.Aslam Plaza Near GPO Mangla Road Dina Disst Jhelum.",
+    "phone": "0544-634462-463"
   },
   {
-    "branch_name": "Mansehra Br 2",
-    "address": "SHOP NO 305 & 306 General Bus Stand Mainn shahre e Rashim Lari adda Mansehra",
-    "phone": " 0997-543084-85",
-    "city": "Mansehra",
-    "id": 89
+    "legacy_id": 38,
+    "branch_name": "Haripur Hazara Branch",
+    "city": "Haripur",
+    "address": "Shop # B-6 Taimour Building main G.T road Hari Pur Hazara",
+    "phone": "0995-616183-4"
   },
   {
-    "branch_name": "HB PLAZA RAWALPINDI BR",
-    "address": "SHOP NO.A-5,GROUND FLOOR,HAYAT BAKSH PLAZA,COMMITTEE CHOWK,Muree Road RAWALPINDI",
-    "phone": "051-5132162 74",
-    "city": "HB",
-    "id": 90
+    "legacy_id": 39,
+    "branch_name": "Gurumandir Branch (Khi)",
+    "city": "Karachi",
+    "address": "Shop # 2 Plot No JN4/907 Jamshed Quarters Guru mandir Karachi",
+    "phone": "021-4920627-8"
   },
   {
-    "branch_name": "Hazro Branch",
-    "address": "Shop 12 Opposite Hasrat Sports Bank Road Main Bazar Hazro Attock",
-    "phone": "0572-310281-2",
-    "city": "Hazro",
-    "id": 91
+    "legacy_id": 40,
+    "branch_name": "Rawalpindi 5th Road Branch",
+    "city": "Rawalpindi",
+    "address": "Shop # 1 Ground Floor Haq Center 5th Road Setlite Town, Rawalpindi.",
+    "phone": "051-4850161-4426072"
   },
   {
-    "branch_name": "Islamabad O 9",
-    "address": "Shop No G 5 Faizan Arcade National Police Foundation Sector O 9 Islamabad",
-    "phone": "051 5708610-11",
+    "legacy_id": 41,
+    "branch_name": "Daska Branch",
+    "city": "Daska",
+    "address": "Shop # 1 & 2 Tanveer Manzil model town road opp N.B.P Daska.",
+    "phone": "052-6610523-24"
+  },
+  {
+    "legacy_id": 42,
+    "branch_name": "Sambrial Branch",
+    "city": "Sambrial",
+    "address": "SHOP # 1 & 2, QASR-E-AMJAD B1/749 NEAR NBP, MAIN ROAD, SAMBRIAL",
+    "phone": "052-6523213-14"
+  },
+  {
+    "legacy_id": 43,
+    "branch_name": "Gujranwala Branch 2",
+    "city": "Gujranwala",
+    "address": "Shop # 15-16 Commercial, Hafiz jee centre commercial  Rail Bazar, Gujranwala.",
+    "phone": "055-4225151"
+  },
+  {
+    "legacy_id": 44,
+    "branch_name": "Johar Branch",
+    "city": "Karachi",
+    "address": "Shop # 24 Ground Floor Faraz Avnue Block-20 KDA Scheme # 36 Gulistan-e-Johar, Karachi.",
+    "phone": "021-4022484-7-410, 427"
+  },
+  {
+    "legacy_id": 45,
+    "branch_name": "Amanah Mall Lahore",
+    "city": "Lahore",
+    "address": "Kiosk no 05 Ground Floor Amanah Mall Model Town Link Road Lahore",
+    "phone": "0423-5131610"
+  },
+  {
+    "legacy_id": 46,
+    "branch_name": "Sargodha Branch",
+    "city": "Sargodha",
+    "address": "Shop No 36 Block No 04 Corner Rail Bazar sabzi Mandi Sargodha.",
+    "phone": "0483-718276-7"
+  },
+  {
+    "legacy_id": 47,
+    "branch_name": "Khadda Market Branch",
+    "city": "Karachi",
+    "address": "Shop # 1 Basement Plot no 6-C Stadium lane-1 Khyaban-e-Shamsheer Phase 5 DHA Karachi",
+    "phone": "021-35248710-1-2"
+  },
+  {
+    "legacy_id": 48,
+    "branch_name": "Aisha Manzil F.B Area Branch",
+    "city": "Karachi",
+    "address": "Shop # 3 & 4 Upper Ground Floor Sohni Residency Plot No C-2 Bolck # 13 F.B area, Karachi.",
+    "phone": "021-36830513-5"
+  },
+  {
+    "legacy_id": 49,
+    "branch_name": "Faisalabad D Ground",
+    "city": "Faisalabad",
+    "address": "Shop #246/B Peoples Colony No 1 Commercial Area D Ground, Faisalabad.",
+    "phone": "041-8559287-8"
+  },
+  {
+    "legacy_id": 50,
+    "branch_name": "Mazang Chungi Branch",
+    "city": "Lahore",
+    "address": "Shop #11 Ground Floor Saman Arcade Mazang Chungi Feroz Pur Road, Lahore.",
+    "phone": "042-37500141-2-3"
+  },
+  {
+    "legacy_id": 51,
+    "branch_name": "Lahore Branch 7",
+    "city": "Lahore",
+    "address": "Shop #8 Ground Floor Sadiq Palaza 69 The Mall, Lahore.",
+    "phone": "0423-6280206-7"
+  },
+  {
+    "legacy_id": 52,
+    "branch_name": "Lala Musa Branch",
+    "city": "Lala",
+    "address": "Shop# B-1 /193-2 GT road Near Nisar Hospital Mohalla Kaira Main GT Road Lala Musa.",
+    "phone": "0537-515912"
+  },
+  {
+    "legacy_id": 53,
+    "branch_name": "Mirpur AJK branch 1",
+    "city": "Mirpur",
+    "address": "Shop #2 Ground floor Muhammadi palaza mipur azad kashmir",
+    "phone": "05827-448214-15"
+  },
+  {
+    "legacy_id": 54,
+    "branch_name": "Wazirabad Branch",
+    "city": "Wazirabad",
+    "address": "Property #B1,VI-6 -S-54/RH Shop # Main Bazar Kachehry Road,  Near NBP, Wazirabad.",
+    "phone": "055-6604501"
+  },
+  {
+    "legacy_id": 55,
+    "branch_name": "Multan Vehari Branch 3",
+    "city": "Multan",
+    "address": "Shop #2795 Mohalla chowk Shah Abbas Vehari road MULTAN",
+    "phone": "061-4233518-4234518"
+  },
+  {
+    "legacy_id": 56,
+    "branch_name": "Madina Town Br 6 Faisalabad",
+    "city": "Faisalabad",
+    "address": "Shop No. 2 & 3, 16-Chenab Market, Main Susan Road, Madina Town, Faisalabad",
+    "phone": "041-8503256-7"
+  },
+  {
+    "legacy_id": 57,
+    "branch_name": "Sialkot Branch 2",
+    "city": "Sialkot",
+    "address": "Khawit #584 Shahab Pura road opp wapda  colony near BOP Sahab Pura Road, Sialkot.",
+    "phone": "052-3560133"
+  },
+  {
+    "legacy_id": 58,
+    "branch_name": "Toba Tek Singh Branch",
+    "city": "Toba Tek Singh",
+    "address": "Shop # 105/2 committee bagh road opp main branch toba tek singh",
+    "phone": "046-2512481-2"
+  },
+  {
+    "legacy_id": 59,
+    "branch_name": "Abbottabad Branch",
+    "city": "Abbottabad",
+    "address": "Shop # 3 Ground Floor Asif Khan Plaza Missile chowk Oposite Daewoo Bus Terminal Mandian Abbotabad.",
+    "phone": "0992-413184-5"
+  },
+  {
+    "legacy_id": 60,
+    "branch_name": "Lahore 8 Moon Market",
+    "city": "Lahore(former H Block",
+    "address": "Shop # 2,3 Ground Floor Jalal Center, 9 Kashmir bolck, Allama Iqbal Town (Lahore(Former H block)",
+    "phone": "0423-7810043-5"
+  },
+  {
+    "legacy_id": 61,
+    "branch_name": "Lahore peco Road Branch",
+    "city": "Lahore",
+    "address": "Shop # 1 Plot # 884-D Main Peco Road Faisal Town, Lahore.",
+    "phone": "0423-5221551-2"
+  },
+  {
+    "legacy_id": 62,
+    "branch_name": "Rawalpindi Basement Branch",
+    "city": "Rawalpindi",
+    "address": "Shop # 02, Basement, Mall Plaza the Mall, Rawalpindi,",
+    "phone": "051-5515062"
+  },
+  {
+    "legacy_id": 63,
+    "branch_name": "Quetta Branch 2",
+    "city": "Quetta",
+    "address": "Shop # 1 hakim manzil main alamdar road opp govt sardar Eissa khan girls school or sahib zaman hospital near milo shaheed trust Quetta.",
+    "phone": "081-2668525"
+  },
+  {
+    "legacy_id": 64,
+    "branch_name": "Giga Mall Branch",
     "city": "Islamabad",
-    "id": 92
+    "address": "KIOSK NO.2 GROUND FLOOR, GIGA WORLD TRADE CENTER,DHA ISLAMABAD",
+    "phone": "051-2725654-5"
   },
   {
+    "legacy_id": 65,
+    "branch_name": "Metro Cash & Carry (Lahore)",
+    "city": "Lahore",
+    "address": "Designated Area (34ft X 6.4ft) Metro Cash & Carry (Pvt).Ltd 2km, Multan Road, Lahore.",
+    "phone": "0423-5255090-1"
+  },
+  {
+    "legacy_id": 66,
+    "branch_name": "Jinnah Int,Airport Branch (Khi)",
+    "city": "Karachi",
+    "address": "Room # 2314, Concourse Area, Level-11, Quaid-e-Azam International Airport, 1st Floor, Karachi.",
+    "phone": "021-4680022,4671227"
+  },
+  {
+    "legacy_id": 67,
+    "branch_name": "Haidery Branch 1",
+    "city": "Karachi",
+    "address": "Shop # 6. Ground floor Al-Burhan Plot # SF-3,Bolck # E,North Nazimabad Karachi",
+    "phone": "021-36634245-6"
+  },
+  {
+    "legacy_id": 68,
+    "branch_name": "Shahbaz Branch",
+    "city": "Karachi",
+    "address": "Shop No,4 Plot No,4 C-Lane No.2 Main shahbaz commercial Phase 6, D.H.A (Karachi)",
+    "phone": "35240471-2-3"
+  },
+  {
+    "legacy_id": 69,
+    "branch_name": "Arif Wala",
+    "city": "Arif",
+    "address": "Shop No- 158/C Near HBL Bank Thana Bazar Arif Wala.",
+    "phone": "0457-830781-2"
+  },
+  {
+    "legacy_id": 70,
+    "branch_name": "Mian Channu Branch",
+    "city": "Mian",
+    "address": "Shop # 2, T Chowk, Near Burhan Wahid Traders, GT Road Mian Channu.",
+    "phone": "065-2660552-3"
+  },
+  {
+    "legacy_id": 71,
+    "branch_name": "Sahiwal Branch",
+    "city": "Sahiwal",
+    "address": "Shop No.24 Quaid -e-Azam Market oppsite National Bank high Street MA-Jinnah road (Sahiwal)",
+    "phone": "040-4221671-2"
+  },
+  {
+    "legacy_id": 72,
+    "branch_name": "Faisalabad Chiniot Bazar Branch",
+    "city": "Faisalabad",
+    "address": "Shop # 1, Property # 79,Khasra # 782,Khewtnuy # 784,Chiniot Bazar Kutwali Road,(Faisalabad)",
+    "phone": "041-2603935-6"
+  },
+  {
+    "legacy_id": 73,
+    "branch_name": "Mirpur AJK  Branch 2",
+    "city": "Mirpur",
+    "address": "SHOP # 10 PLOT # 119/D OPP RABI CENTER, SECTOR C/2 MIRPUR, DISTRICT MIRPUR",
+    "phone": "05827 449156-7"
+  },
+  {
+    "legacy_id": 74,
+    "branch_name": "Dera Ghazi khan Branch",
+    "city": "Dera",
+    "address": "Shop No . 29 Block # B Oppsite HBL Bank Kachari Road Kalma Chowk DG,Khan.",
+    "phone": "064-2470742"
+  },
+  {
+    "legacy_id": 75,
+    "branch_name": "Ocean Mall Clifton Branch",
+    "city": "Karachi",
+    "address": "Kiosk At 3rd Floor Ocean Mall Clifton Karachi",
+    "phone": "021-35166656-58"
+  },
+  {
+    "legacy_id": 76,
+    "branch_name": "DHA Rawalpindi Br",
+    "city": "Rawalpindi",
+    "address": "Shop No. 04 C Ground Floor Block 43/4 Sector F Phase 1 DHA Rawalpindi",
+    "phone": "051-5155005-6"
+  },
+  {
+    "legacy_id": 77,
+    "branch_name": "Islamabad I-8 Markaz Branch",
+    "city": "Islamabad",
+    "address": "Shop No.19 &20,Ground Floor,Huzaifa Centre,I-8 Markaz, (Islamabad)",
+    "phone": "051-4862302-3-4-9"
+  },
+  {
+    "legacy_id": 78,
+    "branch_name": "Islamabad G-11 Markaz Branch",
+    "city": "Islamabad",
+    "address": "Shop No. 04 & 11,Ground Floor, Farhan Plaza, Plot No .19 Sector G-11 Markaz, (Islamabad)",
+    "phone": "051-2363938-942"
+  },
+  {
+    "legacy_id": 79,
+    "branch_name": "Hyderabad Branch",
+    "city": "Hyderabad",
+    "address": "Shop No.05 Abdullah Chambers,Property no.536,Survey no.41 saddar, Hyderabad Cantt.",
+    "phone": "022-2787432-3"
+  },
+  {
+    "legacy_id": 80,
+    "branch_name": "Tariq Road Branch",
+    "city": "Tariq",
+    "address": "Shop no 25 Kehkashan clotth mall block 02 main tariq road",
+    "phone": "0213-4375530-31-32-34"
+  },
+  {
+    "legacy_id": 81,
+    "branch_name": "Cantt DHA Lahore Branch",
+    "city": "Lahore",
+    "address": "BASEMENTOF PLAZA # 46-CCA PHASE 5 DHA LAHORE CANTT",
+    "phone": "042-37182245-46"
+  },
+  {
+    "legacy_id": 82,
+    "branch_name": "ISLAMABAD CENTAURUS BRANCH",
+    "city": "Islamabad",
+    "address": "KIOSK NO.201,2ND FLOOR, CENTAURUS SHOPPING MALL,JINNAH AVENUE,BL Islamabad",
+    "phone": "051-2701290-91"
+  },
+  {
+    "legacy_id": 83,
+    "branch_name": "Bahria Town Rwp",
+    "city": "Rawalpindi",
+    "address": "SHOP NO.5 CIVIC CENTRE, PHASE 4, BAHRIA TOWN Rawalpindi",
+    "phone": "051-5733884-87"
+  },
+  {
+    "legacy_id": 84,
+    "branch_name": "Sheikhupura Branch",
+    "city": "Sheikhupura",
+    "address": "SHOP NO.08, GROUND FLOOR AFTAB ALAM PLAZA, AZIZ BHATTI ROAD SHEIKHUPURA",
+    "phone": "056-3546503-4-7"
+  },
+  {
+    "legacy_id": 85,
+    "branch_name": "Bahawalpur",
+    "city": "Bahawalpur",
+    "address": "SHOP NO.1612/10,NEAR APWA HIGH  FARID GATE, CIRCULAR ROAD BAHAWALPUR",
+    "phone": "062-2885245-6-7"
+  },
+  {
+    "legacy_id": 86,
+    "branch_name": "Muzaffarabad branch",
+    "city": "Muzaffarabad",
+    "address": "Shop No.2, Taj Mahal Hotel Building Old Tanga Stand, Muzaffarabad",
+    "phone": "05822-206818-206963"
+  },
+  {
+    "legacy_id": 87,
+    "branch_name": "Battagram Branch",
+    "city": "Battagram",
+    "address": "Shop No 01 Opp Bank Islamic Near HBL Main Road Battagram",
+    "phone": "0997-310122"
+  },
+  {
+    "legacy_id": 88,
+    "branch_name": "Jhelum Branch 02",
+    "city": "Jhelum",
+    "address": "Shop 3,4 Khawaja Market Shandar Chowk Jhelum",
+    "phone": "0544-293125.293067"
+  },
+  {
+    "legacy_id": 89,
+    "branch_name": "Mansehra Br 2",
+    "city": "Mansehra",
+    "address": "SHOP NO 305 & 306 General Bus Stand Mainn shahre e Rashim Lari adda Mansehra",
+    "phone": "0997-543084-85"
+  },
+  {
+    "legacy_id": 90,
+    "branch_name": "HB PLAZA RAWALPINDI BR",
+    "city": "Rawalpindi",
+    "address": "SHOP NO.A-5,GROUND FLOOR,HAYAT BAKSH PLAZA,COMMITTEE CHOWK,Muree Road RAWALPINDI",
+    "phone": "051-5132162 74"
+  },
+  {
+    "legacy_id": 91,
+    "branch_name": "Hazro Branch",
+    "city": "Attock",
+    "address": "Shop 12 Opposite Hasrat Sports Bank Road Main Bazar Hazro Attock",
+    "phone": "0572-310281-2"
+  },
+  {
+    "legacy_id": 92,
+    "branch_name": "Islamabad O 9",
+    "city": "Islamabad",
+    "address": "Shop No G 5 Faizan Arcade National Police Foundation Sector O 9 Islamabad",
+    "phone": "051 5708610-11"
+  },
+  {
+    "legacy_id": 93,
     "branch_name": "Gulshan Branch 2",
-    "address": "Shop no 16 Ground Floor Al Ahmed Mansion SB 42 Blk 13 B Gulshan",
-    "phone": "0213-4977411-2",
     "city": "Gulshan",
-    "id": 93
+    "address": "Shop no 16 Ground Floor Al Ahmed Mansion SB 42 Blk 13 B Gulshan",
+    "phone": "0213-4977411-2"
   },
   {
+    "legacy_id": 94,
     "branch_name": "Adyala Road Branch",
+    "city": "Rawalpindi",
     "address": "Shop No. 02, Situated at Chungi No 20, Adyala Road, Rawalpindi.",
-    "phone": "051-5180675-6",
-    "city": "Adyala",
-    "id": 94
+    "phone": "051-5180675-6"
   },
   {
+    "legacy_id": 95,
     "branch_name": "Chaklala Br",
+    "city": "Rawalpindi",
     "address": "Shop No 11 Munaf Commercial Market Chaklala Scheme 3 Rawalpindi",
-    "phone": "051-5766408-9",
-    "city": "Chaklala",
-    "id": 95
+    "phone": "051-5766408-9"
   },
   {
+    "legacy_id": 96,
     "branch_name": "Burewala Branch",
-    "address": "Khata No 347/306 Khatoni Survey Plot No 592 College Road Stop Gulistan Colony Multan Road ",
-    "phone": "067 3770116-7-8",
-    "city": "Burewala",
-    "id": 96
+    "city": "Multan",
+    "address": "Khata No 347/306 Khatoni Survey Plot No 592 College Road Stop Gulistan Colony Multan Road",
+    "phone": "067 3770116-7-8"
   },
   {
+    "legacy_id": 97,
     "branch_name": "Ghulam Muhammad Abad Fasialabad",
+    "city": "Faisalabad",
     "address": "Shop No. 410-B, Saddar Bazar, Ghulam Muhammad Abad, Faisalabad",
-    "phone": "041-2691125-6-7",
-    "city": "Ghulam",
-    "id": 97
+    "phone": "041-2691125-6-7"
   },
   {
+    "legacy_id": 98,
     "branch_name": "Mandi Bahauddin Branch",
-    "address": "Shop No. 06/153, Saddar Bazar, Mandi Bahauddin",
-    "phone": "0546-507102-521985",
     "city": "Mandi",
-    "id": 98
+    "address": "Shop No. 06/153, Saddar Bazar, Mandi Bahauddin",
+    "phone": "0546-507102-521985"
   },
   {
+    "legacy_id": 99,
     "branch_name": "Bahria Town Lahore Branch",
+    "city": "Lahore",
     "address": "Shop No. 23-A, Basement Plaza, Street No. 10, Commercial Sector C, Bahria Town, Lahore",
-    "phone": "0423-7863198-9",
-    "city": "Bahria",
-    "id": 99
+    "phone": "0423-7863198-9"
   },
   {
+    "legacy_id": 100,
     "branch_name": "Hafizabad Branch",
-    "address": "Shop No. 03 VP-28/3/SH Main Vanike Hafizabad",
-    "phone": "0547-541112-3",
     "city": "Hafizabad",
-    "id": 100
+    "address": "Shop No. 03 VP-28/3/SH Main Vanike Hafizabad",
+    "phone": "0547-541112-3"
+  },
+  {
+    "legacy_id": 101,
+    "branch_name": "Jalalpur Jattan Branch",
+    "city": "Jalalpur",
+    "address": "Shop No. 4,5 Benazir Chowk Camp Market Opposite Meezan Bank Jalalpur Jattan",
+    "phone": "0533-430271-2"
+  },
+  {
+    "legacy_id": 102,
+    "branch_name": "Multan Gulgasht Colony Branch",
+    "city": "Multan",
+    "address": "Shop No 1 Building No C 613 Jalal Masjid Chowk Gulgasht Colony",
+    "phone": "061-6218801-03"
+  },
+  {
+    "legacy_id": 103,
+    "branch_name": "Chichawatni Branch",
+    "city": "Chichawatni",
+    "address": "Shop No 124 Okan Wala Road Ghurbi Chowk",
+    "phone": "040-5484778-9"
+  },
+  {
+    "legacy_id": 104,
+    "branch_name": "Mardan Branch",
+    "city": "Mardan",
+    "address": "Shop No. 01, Commercial Unit at Khushal Plaza, near Sadiq Exchange and National Bank, Main Bank Road, Mardan",
+    "phone": "0937-871666, 8712666"
+  },
+  {
+    "legacy_id": 105,
+    "branch_name": "Quetta Branch 3",
+    "city": "Quetta",
+    "address": "Shop No. 03, Ahmed Plaza, Main Ali abad Road, near Mashallah Shadi Hall, Hazara Town,",
+    "phone": "081-2860666-765"
+  },
+  {
+    "legacy_id": 106,
+    "branch_name": "Okara Branch",
+    "city": "Okara",
+    "address": "Shop No. 23, Venus Chowk, Deepalpur Road, Okara.",
+    "phone": "044-2713687-88"
+  },
+  {
+    "legacy_id": 107,
+    "branch_name": "Talagang Branch",
+    "city": "Chakwal",
+    "address": "Shop No. 6, Khan Plaza, Chakwal Road, Talagang.",
+    "phone": "0543-695081-82"
+  },
+  {
+    "legacy_id": 108,
+    "branch_name": "Bacha Khan Intl Airport Peshawar Br",
+    "city": "Peshawar",
+    "address": "Consourse Hall, Bacha Khan International Airport, Peshawar.",
+    "phone": "091-5253461-2"
+  },
+  {
+    "legacy_id": 109,
+    "branch_name": "DHA Pahse 2 Branch (KHI)",
+    "city": "Karachi",
+    "address": "Shop No. 02, Ground Floor, Plot No. 84-C, 11th Commercial Street, Phase 2 Extention, DHA , Karachi,",
+    "phone": "021-35382052-35308107"
+  },
+  {
+    "legacy_id": 110,
+    "branch_name": "Quetta Branch 4",
+    "city": "Quetta",
+    "address": "Shop No. 01, Asghar Hospital Building, Alamdar Road, Opposite Yazdan Khan Govt Model High School, Quetta.",
+    "phone": "081-2668053-2662866"
+  },
+  {
+    "legacy_id": 111,
+    "branch_name": "Mall Plaza Branch 03",
+    "city": "Rawalpindi",
+    "address": "Shop No. 19, Ground Floor, Mall Plaza, Saddar Road, Rawalpindi Cantt.",
+    "phone": "051-5580789-5515366"
+  },
+  {
+    "legacy_id": 112,
+    "branch_name": "KDA Scheme-24 Gulshan Br",
+    "city": "Karachi",
+    "address": "Shop # 04, Nabi Arcade, Block-3, KDA Scheme # 24, Karachi.",
+    "phone": "0304-2229668"
+  },
+  {
+    "legacy_id": 113,
+    "branch_name": "F-10 Islamabad Br",
+    "city": "Islamabad",
+    "address": "Shop # 14 I.T, Gul Plaza Main Double Road, F-10 Markaz, Islamabad.",
+    "phone": "051-2211810-811"
+  },
+  {
+    "legacy_id": 114,
+    "branch_name": "Millennium Karachi Br",
+    "city": "Karachi",
+    "address": "Shop # F-1, Millennium Shopping Mall, Opposite Askari IV, Rashid Minhas Road, Karachi.",
+    "phone": "0304-2226970"
+  },
+  {
+    "legacy_id": 115,
+    "branch_name": "Malir Cantt Br",
+    "city": "Karachi",
+    "address": "Shop No 10/3, M.E.S Market, Beside J.J Fashion Boutique, Malir Cantonement, Malir Karachi.",
+    "phone": "0304-2226982"
+  },
+  {
+    "legacy_id": 116,
+    "branch_name": "Faislabad Br-07",
+    "city": "Faisalabad",
+    "address": "Shop No 5, Ground Floor, (88 SQ FT) and  First Floor (1435 Sq Ft) Zaila Council City Plaza, Kachiary Bazar, Faisalabad",
+    "phone": "041-2615025"
+  },
+  {
+    "legacy_id": 117,
+    "branch_name": "Sialkot Br 3",
+    "city": "Sialkot",
+    "address": "Shop # 20/56 Bano Bazar (Sialkot City).",
+    "phone": "0304-2226972"
+  },
+  {
+    "legacy_id": 118,
+    "branch_name": "Mall Plaza Rawalpindi Br-4",
+    "city": "Rawalpindi",
+    "address": "Shop # 16, Ground Floor, The Mall Plaza, Rawalpindi.",
+    "phone": "0304-2226973"
+  },
+  {
+    "legacy_id": 119,
+    "branch_name": "Badar Commercial Karachi Br",
+    "city": "Karachi",
+    "address": "Shop # 4, Ground Floor, Plot No 40-C, Badar Commercial Street No.10, Phase 5 Extention, DHA, Karachi.",
+    "phone": "0304-2226974"
+  },
+  {
+    "legacy_id": 120,
+    "branch_name": "Pindi Ghaib Branch",
+    "city": "Pindi",
+    "address": "Shop # 3, Haidry Market, New Lari Adda Bus Stop, Pindi Gheb.",
+    "phone": "0304-2226975"
+  },
+  {
+    "legacy_id": 121,
+    "branch_name": "Rawalpindi Mall Plaza Br-5",
+    "city": "Rawalpindi",
+    "address": "Shop # 9, Ground Floor, Mall Plaza, Rawalpindi.",
+    "phone": "0304-2226976"
+  },
+  {
+    "legacy_id": 122,
+    "branch_name": "Dhora G Branch",
+    "city": "Karachi",
+    "address": "Shop # 04, Mustafa Heights, Plot No .247, Block 7 & 8 CP Barar Co - operative Housing Society, Karachi.",
+    "phone": "0304-2226971"
+  },
+  {
+    "legacy_id": 123,
+    "branch_name": "Hazro Br-2",
+    "city": "Attock",
+    "address": "Shop No 2, Madina Market, Bank Road, Hazro, Distt Attock.",
+    "phone": "0304-2226981"
+  },
+  {
+    "legacy_id": 124,
+    "branch_name": "Haidry Br-3",
+    "city": "Karachi",
+    "address": "Shop # 3, Ground Floor, Yaqoob Market, Block E, North Nazimabad, Opposite Hyderi Market, Karachi.",
+    "phone": "0304-2226978"
+  },
+  {
+    "legacy_id": 125,
+    "branch_name": "Sahiwal Br-2",
+    "city": "Sahiwal",
+    "address": "Shop # 303 Block No 2, Jinnah Chowk, Opposite Habib Bank Ltd. Sahiwal.",
+    "phone": "0304-2226979"
+  },
+  {
+    "legacy_id": 126,
+    "branch_name": "Forum Branch",
+    "city": "Karachi",
+    "address": "Forum Corridor, 1st Mezzanine Floor, G-2, Block-09, KDA Scheme No. 05, Kahakshan Clifton, Karachi.",
+    "phone": "0304-2226980"
+  },
+  {
+    "legacy_id": 127,
+    "branch_name": "Quetta International Airport Branch",
+    "city": "Shop Id G-23",
+    "address": "Concourse Hall Quetta International Airport (Shop id G-23)",
+    "phone": "0304-2226489"
   }
 ]

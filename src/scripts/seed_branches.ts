@@ -6,25 +6,39 @@ import { fileURLToPath } from 'url'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-export const seedBranches = async (payload: Payload): Promise<void> => {
+export type SeedBranchesOptions = {
+  /** When true, deletes all branch documents before inserting from JSON. */
+  replace?: boolean
+}
+
+export const seedBranches = async (payload: Payload, options?: SeedBranchesOptions): Promise<void> => {
   payload.logger.info('Seeding branches...')
 
   const branchesPath = path.resolve(dirname, '../../branches_data.json')
-  
+
   if (!fs.existsSync(branchesPath)) {
     payload.logger.error('branches_data.json not found!')
     return
   }
 
-  const branchesData = JSON.parse(fs.readFileSync(branchesPath, 'utf-8'))
+  const branchesData = JSON.parse(fs.readFileSync(branchesPath, 'utf-8')) as Array<{
+    branch_name: string
+    city: string
+    address: string
+    phone?: string
+    google_map_link?: string
+  }>
 
-  // Optional: Clear existing branches first if you want a clean seed
-  // await payload.delete({
-  //   collection: 'branches',
-  //   where: {
-  //     id: { exists: true },
-  //   },
-  // })
+  const replace =
+    options?.replace === true || process.env.SEED_BRANCHES_REPLACE === 'true'
+
+  if (replace) {
+    await payload.delete({
+      collection: 'branches',
+      where: { id: { exists: true } },
+    })
+    payload.logger.info('Existing branches removed (replace mode).')
+  }
 
   for (const branch of branchesData) {
     try {
@@ -34,7 +48,7 @@ export const seedBranches = async (payload: Payload): Promise<void> => {
           branch_name: branch.branch_name,
           city: branch.city,
           address: branch.address,
-          phone: branch.phone,
+          phone: branch.phone?.trim() || '0800-13537',
           // google_map_link: branch.google_map_link, // Not in scraped data currently
         },
       })

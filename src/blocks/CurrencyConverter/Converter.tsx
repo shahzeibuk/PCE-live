@@ -1,9 +1,20 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Input } from '@/components/ui/input'
-import { ArrowRightLeft } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Play } from 'lucide-react'
 import type { CurrencyRate } from '@/payload-types'
+
+const FLAG_MAP: Record<string, string> = {
+  USD: '🇺🇸',
+  PKR: '🇵🇰',
+  GBP: '🇬🇧',
+  EUR: '🇪🇺',
+  SAR: '🇸🇦',
+  AED: '🇦🇪',
+  CAD: '🇨🇦',
+  AUD: '🇦🇺',
+}
 
 export const Converter = ({ rates }: { rates: CurrencyRate[] }) => {
   const [amount, setAmount] = useState<number>(100)
@@ -12,113 +23,79 @@ export const Converter = ({ rates }: { rates: CurrencyRate[] }) => {
   const [result, setResult] = useState<number>(0)
 
   useEffect(() => {
-    const fromRateDoc = rates.find(r => r.currency_code === from)
-    const toRateDoc = rates.find(r => r.currency_code === to)
-    
-    // Logic: 
-    // If 'from' is USD, sell_rate is what the user *pays* PKR to gets USD? No, usually:
-    // Buy rate: What the exchange house pays YOU for your currency.
-    // Sell rate: What the exchange house charges YOU to give you currency.
-    // If user wants to convert USD to PKR: They SELL USD to company. Company BUYS USD at 'buy_rate'.
-    // Result = amount * fromRate.buy_rate
-    
-    const fromBuy = fromRateDoc?.buy_rate || 1
-    const fromSell = fromRateDoc?.sell_rate || 1
-    const toBuy = toRateDoc?.buy_rate || 1
-    const toSell = toRateDoc?.sell_rate || 1
+    const fromRateDoc = rates.find((r) => r.currency_code === from)
+    const toRateDoc = rates.find((r) => r.currency_code === to)
+
+    const fromBuy = fromRateDoc?.buy_rate ?? 1
+    const toSell = toRateDoc?.sell_rate ?? 1
 
     let converted = 0
-
     if (from === 'PKR' && to === 'PKR') {
       converted = amount
     } else if (from === 'PKR') {
-      // User has PKR, wants 'to'. Company SELLS 'to' at 'toSell'.
       converted = amount / toSell
     } else if (to === 'PKR') {
-      // User has 'from', wants PKR. Company BUYS 'from' at 'fromBuy'.
       converted = amount * fromBuy
     } else {
-      // Cross rate: from -> PKR -> to
-      // 1. Sell 'from' for PKR at 'fromBuy'
       const inPkr = amount * fromBuy
-      // 2. Buy 'to' with PKR at 'toSell'
       converted = inPkr / toSell
     }
-
     setResult(converted)
   }, [amount, from, to, rates])
 
   return (
-    <div className="max-w-4xl mx-auto bg-card rounded-3xl shadow-2xl p-6 md:p-10 border border-primary/10 relative overflow-hidden group">
-      <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
-      <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary/5 rounded-full translate-y-1/2 -translate-x-1/2 blur-2xl" />
-
-      <div className="flex flex-col lg:flex-row items-end gap-6 relative z-10">
-        <div className="w-full lg:w-1/4">
-          <label className="text-xs font-bold text-primary uppercase tracking-widest mb-3 block">Amount</label>
-          <Input 
-            type="number" 
-            value={amount} 
-            onChange={(e) => setAmount(Number(e.target.value))}
-            className="text-2xl font-black h-16 bg-muted/30 border-2 border-transparent focus:border-primary transition-all rounded-2xl"
+    <div className="max-w-4xl mx-auto space-y-6">
+      <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded px-4 py-3 md:py-4 shadow-sm">
+        <div className="flex flex-col md:flex-row md:flex-wrap md:items-center gap-3 md:gap-4">
+          <span className="text-sm font-semibold text-slate-600 dark:text-slate-400 shrink-0">Convert</span>
+          <input
+            type="number"
+            min={0}
+            value={amount}
+            onChange={(e) => setAmount(Number(e.target.value) || 0)}
+            className="w-24 md:w-28 border border-slate-200 dark:border-slate-700 rounded px-3 py-2 text-sm font-mono tabular-nums bg-white dark:bg-slate-900"
           />
-        </div>
-
-        <div className="w-full lg:w-1/3">
-          <label className="text-xs font-bold text-primary uppercase tracking-widest mb-3 block">From Currency</label>
           <Select value={from} onValueChange={setFrom}>
-            <SelectTrigger className="h-16 text-xl font-bold bg-muted/30 border-2 border-transparent focus:border-primary transition-all rounded-2xl">
-              <SelectValue />
+            <SelectTrigger className="w-full md:w-[140px] h-10 rounded border-slate-200 dark:border-slate-700 text-sm font-semibold">
+              <div className="flex items-center gap-2">
+                <span>{FLAG_MAP[from] || '🏳️'}</span>
+                <SelectValue />
+              </div>
             </SelectTrigger>
-            <SelectContent className="rounded-xl border-border">
-              <SelectItem value="PKR">🇵🇰 PKR - Pakistani Rupee</SelectItem>
-              {rates.map(r => (
+            <SelectContent>
+              <SelectItem value="PKR">🇵🇰 PKR</SelectItem>
+              {rates.map((r) => (
                 <SelectItem key={r.id} value={r.currency_code}>
-                   {r.currency_code} - {r.currency_name}
+                  {FLAG_MAP[r.currency_code] || '🏳️'} {r.currency_code}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
-        </div>
-
-        <div className="hidden lg:flex items-center justify-center p-3 bg-primary text-primary-foreground rounded-full h-16 w-16 mb-0 shadow-lg hover:rotate-180 transition-transform duration-500">
-            <ArrowRightLeft className="w-6 h-6" />
-        </div>
-
-        <div className="w-full lg:w-1/3">
-          <label className="text-xs font-bold text-primary uppercase tracking-widest mb-3 block">To Currency</label>
-          <Select value={to} onValueChange={setTo}>
-            <SelectTrigger className="h-16 text-xl font-bold bg-muted/30 border-2 border-transparent focus:border-primary transition-all rounded-2xl">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent className="rounded-xl border-border">
-              <SelectItem value="PKR">🇵🇰 PKR - Pakistani Rupee</SelectItem>
-              {rates.map(r => (
-                <SelectItem key={r.id} value={r.currency_code}>
-                   {r.currency_code} - {r.currency_name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <span className="text-lg font-medium text-slate-400 hidden md:inline">=</span>
+          <div className="flex items-center gap-2 flex-1 min-w-0">
+            <span className="text-lg md:hidden text-slate-400">=</span>
+            <span className="text-base md:text-lg font-bold text-[#099546] tabular-nums truncate">
+              {result.toLocaleString(undefined, { maximumFractionDigits: 2 })} {to}
+            </span>
+            <Button
+              type="button"
+              size="icon"
+              className="shrink-0 h-9 w-9 rounded bg-[#099546] hover:bg-[#088040] text-white"
+              aria-label="Convert"
+            >
+              <Play className="h-4 w-4 fill-current" />
+            </Button>
+          </div>
         </div>
       </div>
-
-      <div className="mt-12 p-8 bg-linear-to-br from-primary/10 to-transparent rounded-2xl border border-primary/20 text-center shadow-inner">
-        <p className="text-muted-foreground font-bold tracking-tighter uppercase mb-2">{amount} {from} converts to</p>
-        <div className="flex flex-col items-center">
-            <h3 className="text-5xl md:text-7xl font-black text-primary tracking-tighter transition-all hover:scale-105">
-                {result.toLocaleString(undefined, { maximumFractionDigits: 2 })}
-            </h3>
-            <span className="text-2xl font-black text-primary/60 uppercase mt-2 tracking-widest">{to}</span>
-        </div>
-        <p className="text-xs text-muted-foreground mt-4 font-medium italic">*Rates are subject to change. Visit nearest branch for final quote.</p>
+      <div className="text-center">
+        <Button className="rounded bg-[#099546] hover:bg-[#088040] text-white h-11 px-8 font-semibold" type="button">
+          Convert &gt;
+        </Button>
       </div>
-      
-      <div className="text-center mt-10">
-          <button className="bg-primary hover:bg-primary/90 text-primary-foreground px-12 py-5 rounded-2xl font-black text-xl shadow-xl hover:-translate-y-1 transition-all active:scale-95 uppercase tracking-tighter">
-              Instant Conversion
-          </button>
-      </div>
+      <p className="text-center text-xs text-slate-500">
+        Rates for indication only. Confirm at your branch.
+      </p>
     </div>
   )
 }

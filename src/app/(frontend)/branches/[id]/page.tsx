@@ -39,8 +39,8 @@ export default async function BranchPage({ params }: { params: { id: string } })
   if (!branch) return notFound()
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900/20 py-24">
-      <div className="container px-4 max-w-4xl mx-auto">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pb-16 md:pb-24">
+      <div className="container px-4 max-w-4xl mx-auto pt-6 md:pt-8">
         <div className="mb-8">
           <Button asChild variant="ghost" className="mb-4 text-muted-foreground hover:text-primary">
             <Link href="/branches">← Back to All Branches</Link>

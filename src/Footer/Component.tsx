@@ -53,8 +53,12 @@ export async function Footer() {
             ))}
           </div>
 
+          <p className="text-center text-sm text-white/80 mt-10 pt-6 border-t border-white/20">
+            © {new Date().getFullYear()} Pakistan Currency Exchange. All rights reserved.
+          </p>
+
           {/* Bottom Bar: Contact Info and CMS Links */}
-          <div className="mt-12 pt-8 border-t border-white/20 flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="mt-8 pt-8 border-t border-white/20 flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex flex-col sm:flex-row gap-6 text-sm items-center">
               <a href="tel:080013537" className="flex items-center gap-2 hover:text-[#099546] transition-colors"><Phone className="h-4 w-4" /> Toll Free: 080013537</a>
               <a href="mailto:info@pakistancurrency.com" className="flex items-center gap-2 hover:text-[#099546] transition-colors"><Mail className="h-4 w-4" /> info@pakistancurrency.com</a>

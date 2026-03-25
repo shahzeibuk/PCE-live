@@ -1,47 +1,81 @@
-import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from '@/components/ui/table'
-import { Card, CardContent } from '@/components/ui/card'
 import { getPayload } from 'payload'
 import configPromise from '@/payload.config'
-import { ArrowUpRight } from 'lucide-react'
+import {
+  getCurrencyRatesForFrontend,
+  type FrontendCurrencyRate,
+} from '@/utilities/getCurrencyRatesForFrontend'
 
 const FLAG_MAP: Record<string, string> = {
-  USD: '🇺🇸', GBP: '🇬🇧', EUR: '🇪🇺', SAR: '🇸🇦', AED: '🇦🇪',
-  CAD: '🇨🇦', AUD: '🇦🇺', JPY: '🇯🇵', CNY: '🇨🇳', PKR: '🇵🇰'
+  USD: '🇺🇸',
+  GBP: '🇬🇧',
+  EUR: '🇪🇺',
+  SAR: '🇸🇦',
+  AED: '🇦🇪',
+  CAD: '🇨🇦',
+  AUD: '🇦🇺',
+  JPY: '🇯🇵',
+  CNY: '🇨🇳',
+  PKR: '🇵🇰',
 }
 
-export const CurrencyTable = async () => {
-  let rates: any[] = []
+type Props = {
+  /** When omitted, loads from CMS with live API fallback (no rates stored on branches). */
+  rates?: FrontendCurrencyRate[]
+}
+
+export const CurrencyTable = async ({ rates: providedRates }: Props = {}) => {
+  let rates: FrontendCurrencyRate[] = []
   try {
-    const payload = await getPayload({ config: configPromise })
-    const result = await payload.find({
-      collection: 'currency-rates',
-      sort: 'currency_name',
-      pagination: false,
-    })
-    rates = result.docs
+    if (providedRates?.length) {
+      rates = providedRates
+    } else {
+      const payload = await getPayload({ config: configPromise })
+      rates = await getCurrencyRatesForFrontend(payload)
+    }
   } catch (error) {
     console.error('Error fetching currency rates in CurrencyTable:', error)
   }
+
+  const isFallback = rates.some((r) => r.isLiveFallback)
+  const latestTs = rates.reduce((max, r) => {
+    if (!r.last_updated) return max
+    const t = new Date(r.last_updated).getTime()
+    return Number.isFinite(t) && t > max ? t : max
+  }, 0)
+
+  const syncLabel = isFallback
+    ? 'Indicative · open market API'
+    : latestTs > 0
+      ? `Last updated ${new Date(latestTs).toLocaleString()}`
+      : '—'
 
   return (
     <div className="w-full space-y-4">
       <div className="flex items-center justify-between px-2">
         <div className="flex items-center gap-2">
           <div className="size-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">Live Market</span>
+          <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+            Live Market
+          </span>
         </div>
-        <span className="text-xs text-muted-foreground font-medium">
-          Last sync: {new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
-        </span>
+        <span className="text-xs text-muted-foreground font-medium text-right max-w-[70%]">{syncLabel}</span>
       </div>
-      
+
+      {isFallback && (
+        <p className="text-xs text-amber-800 dark:text-amber-200/90 px-2 -mt-2 leading-snug">
+          CMS has no saved rates yet — showing the same API figures sync uses. Run sync or cron to store rows under{' '}
+          <strong>Currency Rates</strong> (separate from branches).
+        </p>
+      )}
+
       <div className="bg-white dark:bg-slate-950 border rounded-2xl overflow-hidden shadow-sm">
         <Table>
           <TableHeader className="bg-slate-50/50 dark:bg-slate-900/50">
@@ -52,8 +86,11 @@ export const CurrencyTable = async () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {rates.map((rate: any) => (
-              <TableRow key={rate.id} className="group hover:bg-slate-50/50 dark:hover:bg-slate-900/50 transition-colors border-b last:border-0">
+            {rates.map((rate) => (
+              <TableRow
+                key={`${rate.id}-${rate.currency_code}`}
+                className="group hover:bg-slate-50/50 dark:hover:bg-slate-900/50 transition-colors border-b last:border-0"
+              >
                 <TableCell className="py-4">
                   <div className="flex items-center gap-3">
                     <span className="text-2xl grayscale group-hover:grayscale-0 transition-all duration-300">
@@ -61,7 +98,9 @@ export const CurrencyTable = async () => {
                     </span>
                     <div>
                       <div className="font-bold text-slate-900 dark:text-slate-100">{rate.currency_code}</div>
-                      <div className="text-[10px] uppercase tracking-tighter text-muted-foreground font-medium">{rate.currency_name}</div>
+                      <div className="text-[10px] uppercase tracking-tighter text-muted-foreground font-medium">
+                        {rate.currency_name}
+                      </div>
                     </div>
                   </div>
                 </TableCell>
@@ -76,7 +115,7 @@ export const CurrencyTable = async () => {
             {rates.length === 0 && (
               <TableRow>
                 <TableCell colSpan={3} className="text-center py-12 text-muted-foreground italic font-medium">
-                  Loading latest market rates...
+                  Rates unavailable — check your connection or try again shortly.
                 </TableCell>
               </TableRow>
             )}

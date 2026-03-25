@@ -40,15 +40,17 @@ export default async function Page({ params: paramsPromise }: Args) {
   }
 
   return (
-    <div className="pt-24 pb-24">
+    <div className="pb-16 md:pb-24">
       <PageClient />
-      <div className="container mb-16">
-        <div className="prose dark:prose-invert max-w-none">
-          <h1>Posts</h1>
+      <div className="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/40">
+        <div className="container px-4 py-10 md:py-12 text-center">
+          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">Posts</h1>
+          <p className="text-slate-600 dark:text-slate-400 mt-3 max-w-2xl mx-auto text-base">
+            Page {sanitizedPageNumber} — archives and updates.
+          </p>
         </div>
       </div>
-
-      <div className="container mb-8">
+      <div className="container mb-8 mt-10 px-4">
         <PageRange
           collection="posts"
           currentPage={posts.page}

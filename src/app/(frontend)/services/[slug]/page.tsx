@@ -52,8 +52,8 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
   }
 
   return (
-    <main className="pt-24 pb-32">
-      <section className="relative h-[60vh] min-h-[400px] flex items-center mb-20 overflow-hidden">
+    <div className="pb-20 md:pb-28">
+      <section className="relative h-[50vh] min-h-[360px] md:h-[56vh] md:min-h-[420px] flex items-center mb-12 md:mb-16 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Media resource={service.hero_image} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-slate-900/70" />
@@ -61,7 +61,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
 
         <div className="container relative z-10 text-white">
           <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 md:mb-6">
               {service.title}
             </h1>
             <p className="text-lg md:text-xl text-slate-200 leading-relaxed max-w-2xl">
@@ -72,25 +72,28 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
       </section>
 
       <div className="container px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-12">
           <div className="lg:col-span-2">
-            <div className="prose prose-slate dark:prose-invert max-w-none">
-                <RichText data={service.content} enableGutter={false} />
+            <div className="prose prose-slate dark:prose-invert max-w-none prose-headings:font-bold">
+              <RichText data={service.content} enableGutter={false} />
             </div>
           </div>
-          <div className="space-y-8">
-            <div className="p-8 bg-slate-50 dark:bg-slate-900 rounded-3xl border">
-                <h3 className="text-2xl font-bold mb-4 uppercase tracking-tighter">Secure Service</h3>
-                <p className="text-slate-600 dark:text-slate-400 mb-6">
-                    Reliable financial solutions.
-                </p>
-                <Button className="w-full h-14 rounded-2xl font-bold text-lg">
-                    Contact Agent
-                </Button>
+          <div className="space-y-6">
+            <div className="p-6 md:p-8 bg-slate-50 dark:bg-slate-900/50 rounded border border-slate-200 dark:border-slate-800">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Need help?</h3>
+              <p className="text-slate-600 dark:text-slate-400 text-sm mb-6 leading-relaxed">
+                Speak with our team for quotes and branch timings.
+              </p>
+              <Button
+                asChild
+                className="w-full h-11 rounded bg-[#099546] hover:bg-[#088040] text-white font-semibold"
+              >
+                <Link href="/contact">Contact us</Link>
+              </Button>
             </div>
           </div>
         </div>
       </div>
-    </main>
+    </div>
   )
 }

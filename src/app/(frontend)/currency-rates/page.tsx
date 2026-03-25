@@ -3,18 +3,14 @@ import { CurrencyTable } from '@/components/CurrencyTable'
 import { CurrencyConverter } from '@/components/CurrencyConverter'
 import { getPayload } from 'payload'
 import configPromise from '@/payload.config'
+import { getCurrencyRatesForFrontend } from '@/utilities/getCurrencyRatesForFrontend'
+import { InnerPageHeader } from '@/components/layout/InnerPageHeader'
 
 export default async function RatesPage() {
   let rates: any[] = []
   try {
     const payload = await getPayload({ config: configPromise })
-    const result = await payload.find({
-      collection: 'currency-rates',
-      sort: 'currency_name',
-      limit: 100,
-      pagination: false,
-    })
-    rates = result.docs
+    rates = await getCurrencyRatesForFrontend(payload, { limit: 100 })
   } catch (error) {
     console.error('Error fetching currency rates:', error)
   }
@@ -28,50 +24,43 @@ export default async function RatesPage() {
   }))
 
   return (
-    <div className="pb-24">
-      <section className="bg-primary/5 py-16 mb-12 border-b">
-        <div className="container px-4 text-center">
-          <h1 className="text-4xl font-bold tracking-tight mb-4">Live Exchange Rates</h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Get the most competitive rates in the market. Updated regularly based on market movements.
-          </p>
-        </div>
-      </section>
+    <div className="pb-16 md:pb-24">
+      <InnerPageHeader
+        title="Live Exchange Rates"
+        description="Get competitive open-market rates. Figures update regularly; confirm at your branch before transacting."
+      />
 
-      <div className="container px-4 grid lg:grid-cols-3 gap-12">
-        <div className="lg:col-span-2">
-          <div className="bg-card border rounded-2xl shadow-sm overflow-hidden">
-             <CurrencyTable />
+      <div className="container px-4 py-10 md:py-12 grid lg:grid-cols-3 gap-10 lg:gap-12">
+        <div className="lg:col-span-2 space-y-6">
+          <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded overflow-hidden">
+            <CurrencyTable rates={rates} />
           </div>
-          <div className="mt-8 p-6 bg-muted/30 rounded-xl border border-dashed">
-            <p className="text-sm text-balance">
-              <strong>Disclaimer:</strong> Rates are subject to change without notice due to market volatility. 
-              The rates provided here are for information purposes only. Please confirm the rates with our branches 
-              before making any transaction.
-            </p>
+          <div className="p-5 md:p-6 bg-slate-50 dark:bg-slate-900/50 rounded border border-slate-200 dark:border-slate-800 text-sm text-slate-600 dark:text-slate-400">
+            <strong className="text-slate-900 dark:text-slate-200">Disclaimer:</strong> Rates may change without
+            notice. Information only — confirm with a branch before any transaction.
           </div>
         </div>
 
         <div className="space-y-8">
           <CurrencyConverter rates={converterRates} />
-          
-          <div className="bg-card border rounded-2xl p-8 shadow-sm">
-            <h3 className="text-xl font-bold mb-4">Need Bulk Exchange?</h3>
-            <p className="text-muted-foreground mb-6">
-              For large transactions, we offer special rates. Contact our treasury department or visit our main branch.
+
+          <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded p-6 md:p-8">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3">Bulk or treasury rates</h3>
+            <p className="text-slate-600 dark:text-slate-400 text-sm mb-6 leading-relaxed">
+              For large volumes, ask about preferential pricing at our main branch or treasury desk.
             </p>
-            <ul className="space-y-3 text-sm mb-6">
-              <li className="flex justify-between">
-                <span>Working Hours:</span>
-                <span className="font-medium text-foreground">9:00 AM - 6:00 PM</span>
+            <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-300">
+              <li className="flex justify-between gap-4">
+                <span>Hours</span>
+                <span className="font-medium">9:00 AM – 6:00 PM</span>
               </li>
-              <li className="flex justify-between">
-                <span>Mon - Sat:</span>
-                <span className="font-medium text-foreground">Open</span>
+              <li className="flex justify-between gap-4">
+                <span>Mon – Sat</span>
+                <span className="font-medium">Open</span>
               </li>
-              <li className="flex justify-between">
-                <span>Sunday:</span>
-                <span className="font-medium text-destructive">Closed</span>
+              <li className="flex justify-between gap-4">
+                <span>Sunday</span>
+                <span className="font-medium text-red-600 dark:text-red-400">Closed</span>
               </li>
             </ul>
           </div>

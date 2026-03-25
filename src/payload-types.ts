@@ -617,6 +617,8 @@ export interface ArchiveBlock {
   blockType: 'archive';
 }
 /**
+ * Items can surface on the homepage “Daily Currency Updates” grid and on /news/[slug] pages.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "news".
  */
@@ -656,17 +658,32 @@ export interface Gallery {
   createdAt: string;
 }
 /**
+ * Service offerings for the homepage grid, /services listing, and detail pages. Slug is generated from the title — you can edit it in the sidebar.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "services".
  */
 export interface Service {
   id: number;
   title: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
   slug: string;
   hero_image?: (number | null) | Media;
+  /**
+   * Optional icon for cards on the homepage and services page.
+   */
   icon?: (number | null) | Media;
-  description?: string | null;
+  /**
+   * Short text used on listing cards.
+   */
   short_description?: string | null;
+  /**
+   * Longer summary shown on the service detail hero.
+   */
+  description?: string | null;
   content?: {
     root: {
       type: string;
@@ -684,17 +701,20 @@ export interface Service {
   } | null;
   process_steps?:
     | {
-        step?: string | null;
+        step: string;
         id?: string | null;
       }[]
     | null;
   benefits?:
     | {
-        benefit?: string | null;
+        benefit: string;
         id?: string | null;
       }[]
     | null;
   cta_text?: string | null;
+  /**
+   * Internal path (e.g. /contact) or full URL.
+   */
   cta_link?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -943,6 +963,8 @@ export interface WhatsAppCTABlock {
   blockType: 'whatsappCTA';
 }
 /**
+ * Global FX listings only — not stored on branch records. Powers the homepage table, /currency-rates, and the converter. Sync fills from the live API; cron can refresh on a schedule.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "currency-rates".
  */
@@ -957,6 +979,8 @@ export interface CurrencyRate {
   createdAt: string;
 }
 /**
+ * Branch locations only (name, address, contact, map link). Exchange rates are managed under Currency Rates, not here.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "branches".
  */
@@ -967,6 +991,9 @@ export interface Branch {
   address: string;
   phone: string;
   email?: string | null;
+  /**
+   * Full URL to open this branch in Google Maps.
+   */
   google_map_link?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -986,6 +1013,8 @@ export interface ContactSubmission {
   createdAt: string;
 }
 /**
+ * Partner logos and names (e.g. for carousels or landing sections).
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "partners".
  */
@@ -998,6 +1027,8 @@ export interface Partner {
   createdAt: string;
 }
 /**
+ * Customer quotes for marketing sections (e.g. blocks on CMS pages).
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "testimonials".
  */
@@ -1693,11 +1724,12 @@ export interface BranchesSelect<T extends boolean = true> {
  */
 export interface ServicesSelect<T extends boolean = true> {
   title?: T;
+  generateSlug?: T;
   slug?: T;
   hero_image?: T;
   icon?: T;
-  description?: T;
   short_description?: T;
+  description?: T;
   content?: T;
   process_steps?:
     | T

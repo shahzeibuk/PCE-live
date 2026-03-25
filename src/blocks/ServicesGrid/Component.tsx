@@ -1,8 +1,9 @@
 import React from 'react'
+import Link from 'next/link'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { Media } from '@/components/Media'
-import type { Service } from '@/payload-types'
+import { Button } from '@/components/ui/button'
 
 export type ServicesGridProps = {
   title?: string
@@ -10,10 +11,10 @@ export type ServicesGridProps = {
   disableInnerContainer?: boolean
 }
 
-export const ServicesGridBlock: React.FC<ServicesGridProps> = async ({ 
-  title, 
+export const ServicesGridBlock: React.FC<ServicesGridProps> = async ({
+  title,
   services: providedServices,
-  disableInnerContainer = false
+  disableInnerContainer = false,
 }) => {
   let services = providedServices
 
@@ -21,72 +22,74 @@ export const ServicesGridBlock: React.FC<ServicesGridProps> = async ({
     const payload = await getPayload({ config: configPromise })
     const result = await payload.find({
       collection: 'services',
-      limit: 4,
+      limit: 12,
+      sort: 'title',
     })
     services = result.docs
   }
 
-  const containerClasses = disableInnerContainer ? "" : "container py-24"
+  const containerClasses = disableInnerContainer ? '' : 'container px-4 py-16 md:py-20'
+
+  const list = (services ?? []).filter((s) => s?.id != null && s?.slug)
 
   return (
     <div className={containerClasses}>
       {!disableInnerContainer && (
-        <div className="relative flex items-center justify-center mb-16">
+        <div className="relative flex items-center justify-center mb-12">
           <div className="absolute inset-0 flex items-center" aria-hidden="true">
-            <div className="w-full border-t border-border/80"></div>
+            <div className="w-full border-t border-slate-200 dark:border-slate-700" />
           </div>
-          <div className="relative bg-background px-8">
-            <h2 className="text-3xl md:text-5xl font-black text-primary uppercase tracking-tighter">
+          <div className="relative bg-background px-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-[#099546] text-center">
               {title || 'Our Services'}
             </h2>
           </div>
         </div>
       )}
 
-      <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 ${disableInnerContainer ? "container" : ""}`}>
-        {services && services.map((service: any) => (
-          <div 
-            key={service.id} 
-            className="group relative bg-card p-10 rounded-3xl border border-border/60 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(9,149,70,0.15)] hover:-translate-y-3 hover:border-primary/20 overflow-hidden"
+      <div
+        className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 ${disableInnerContainer ? 'container px-4' : ''}`}
+      >
+        {list.map((service: any) => (
+          <Link
+            key={service.id}
+            href={`/services/${service.slug}`}
+            className="bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded p-6 md:p-8 flex flex-col items-center text-center hover:border-[#099546]/50 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#099546] focus-visible:ring-offset-2"
           >
-            <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/10 transition-colors" />
-            
-            <div className="relative z-10">
-              <div className="w-20 h-20 bg-primary/5 rounded-2xl flex items-center justify-center mb-8 border border-primary/10 group-hover:bg-primary group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-inner">
-                {service.icon ? (
-                  <Media 
-                    resource={service.icon} 
-                    className="w-12 h-12 grayscale group-hover:grayscale-0 group-hover:invert group-hover:scale-110 transition-all duration-500" 
-                  />
-                ) : (
-                  <div className="w-12 h-12 bg-primary/20 rounded-full" />
-                )}
-              </div>
-              <h3 className="text-2xl font-black text-foreground mb-4 group-hover:text-primary transition-colors tracking-tight">
-                {service.title}
-              </h3>
-              <p className="text-muted-foreground text-base leading-relaxed line-clamp-3 font-medium">
-                {service.short_description || service.description}
-              </p>
+            <div className="w-16 h-16 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded flex items-center justify-center mb-4">
+              {service.icon ? (
+                <Media resource={service.icon} className="w-10 h-10 object-contain" />
+              ) : (
+                <div className="w-10 h-10 rounded bg-[#099546]/15" />
+              )}
             </div>
-          </div>
+            <h3 className="text-base md:text-lg font-bold text-slate-900 dark:text-slate-100 mb-2">
+              {service.title}
+            </h3>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed line-clamp-3">
+              {service.short_description || service.description}
+            </p>
+          </Link>
         ))}
+
+        {list.length === 0 && (
+          <div className="col-span-full text-center py-14 px-4 border border-dashed border-slate-300 dark:border-slate-600 rounded bg-slate-50/80 dark:bg-slate-900/30">
+            <p className="text-slate-700 dark:text-slate-300 font-medium mb-2">No services to show yet</p>
+            <p className="text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto">
+              In the admin, go to <strong className="text-slate-700 dark:text-slate-300">Website → Services</strong>{' '}
+              and publish entries. They appear here and on the <strong>/services</strong> page automatically.
+            </p>
+          </div>
+        )}
       </div>
 
       {!disableInnerContainer && (
-        <div className="text-center mt-20">
-          <button className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-12 py-5 rounded-2xl font-black text-xl shadow-2xl hover:shadow-primary/30 hover:-translate-y-1 transition-all active:scale-95 uppercase tracking-tighter shadow-primary/20 group">
-            Find Nearest Branch
-            <svg 
-              className="w-6 h-6 group-hover:translate-x-1 transition-transform" 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-          </button>
+        <div className="text-center mt-10">
+          <Button asChild className="rounded bg-[#099546] hover:bg-[#088040] text-white h-11 px-8 font-semibold">
+            <Link href="/branches" className="inline-flex items-center gap-2">
+              Find Nearest Branch &gt;
+            </Link>
+          </Button>
         </div>
       )}
     </div>

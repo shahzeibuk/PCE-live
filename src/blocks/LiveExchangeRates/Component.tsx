@@ -1,7 +1,11 @@
 import React from 'react'
+import Link from 'next/link'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
+import { getCurrencyRatesForFrontend } from '@/utilities/getCurrencyRatesForFrontend'
 import type { CurrencyRate } from '@/payload-types'
+import { Button } from '@/components/ui/button'
+import { ChevronDown } from 'lucide-react'
 
 export type LiveExchangeRatesProps = {
   title?: string
@@ -9,24 +13,18 @@ export type LiveExchangeRatesProps = {
   disableInnerContainer?: boolean
 }
 
-export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({ 
-  title, 
+export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
+  title,
   rates: providedRates,
-  disableInnerContainer = false
+  disableInnerContainer = false,
 }) => {
   let rates = providedRates
 
   if (!rates) {
     const payload = await getPayload({ config: configPromise })
-    const result = await payload.find({
-      collection: 'currency-rates',
-      limit: 10,
-      sort: 'currency_name',
-    })
-    rates = result.docs as unknown as CurrencyRate[]
+    rates = (await getCurrencyRatesForFrontend(payload, { limit: 10 })) as unknown as CurrencyRate[]
   }
 
-  // Basic flag mapping based on currency code
   const flags: Record<string, string> = {
     USD: '🇺🇸',
     SAR: '🇸🇦',
@@ -39,67 +37,70 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
     CNY: '🇨🇳',
   }
 
-  const containerClasses = disableInnerContainer ? "" : "container py-16"
+  const list = rates ?? []
+  const containerClasses = disableInnerContainer ? '' : 'container px-4 py-16'
 
   return (
     <div className={containerClasses}>
       {!disableInnerContainer && (
-        <div className="max-w-4xl mx-auto text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">{title || 'Live Exchange Rates'}</h2>
-          <div className="w-24 h-1 bg-primary/20 mx-auto rounded-full" />
+        <div className="max-w-4xl mx-auto text-center mb-10">
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-2">
+            {title || 'Live Exchange Rates'}
+          </h2>
         </div>
       )}
 
       <div className="max-w-3xl mx-auto">
-        <div className="overflow-hidden rounded-2xl border border-border shadow-xl bg-card">
+        <div className="overflow-hidden rounded border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-primary text-primary-foreground">
-                <th className="p-5 font-bold uppercase tracking-wider">Currency</th>
-                <th className="p-5 font-bold uppercase tracking-wider text-center">Buying</th>
-                <th className="p-5 font-bold uppercase tracking-wider text-center">Selling</th>
+              <tr className="bg-[#099546] text-white">
+                <th className="px-4 py-3 text-sm font-bold">Currency</th>
+                <th className="px-4 py-3 text-sm font-bold text-center">Buying</th>
+                <th className="px-4 py-3 text-sm font-bold text-center">Selling</th>
               </tr>
             </thead>
             <tbody>
-              {rates && rates.map((rate: CurrencyRate) => (
-                <tr key={rate.id} className="border-t border-border/60 hover:bg-muted/30 transition-all group">
-                  <td className="p-5 flex items-center gap-4">
-                    <span className="text-3xl filter grayscale group-hover:grayscale-0 transition-all duration-300">
-                      {flags[rate.currency_code] || '🏳️'}
-                    </span>
-                    <div className="flex flex-col">
-                      <span className="font-bold text-lg text-foreground tracking-tight">{rate.currency_code}</span>
-                      <span className="text-xs text-muted-foreground uppercase">{rate.currency_name}</span>
+              {list.map((rate, i) => (
+                <tr
+                  key={rate.id}
+                  className={`border-t border-slate-200 dark:border-slate-800 ${i % 2 === 0 ? 'bg-white dark:bg-slate-950' : 'bg-slate-50 dark:bg-slate-900/50'}`}
+                >
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-3">
+                      <span className="text-2xl">{flags[rate.currency_code] || '🏳️'}</span>
+                      <div>
+                        <span className="font-bold text-slate-900 dark:text-slate-100">{rate.currency_code}</span>
+                        <span className="text-xs text-slate-500 dark:text-slate-400 block">{rate.currency_name}</span>
+                      </div>
                     </div>
                   </td>
-                  <td className="p-5 text-center">
-                    <span className="font-mono text-xl font-semibold text-primary/80">
-                      {rate.buy_rate.toFixed(2)}
-                    </span>
+                  <td className="px-4 py-3 text-center font-mono text-sm font-semibold text-slate-800 dark:text-slate-200 tabular-nums">
+                    {Number(rate.buy_rate ?? 0).toFixed(2)}
                   </td>
-                  <td className="p-5 text-center">
-                    <span className="font-mono text-xl font-semibold text-primary">
-                      {rate.sell_rate.toFixed(2)}
-                    </span>
+                  <td className="px-4 py-3 text-center font-mono text-sm font-semibold text-[#099546] dark:text-emerald-400 tabular-nums">
+                    {Number(rate.sell_rate ?? 0).toFixed(2)}
                   </td>
                 </tr>
               ))}
+              {list.length === 0 && (
+                <tr>
+                  <td colSpan={3} className="px-4 py-10 text-center text-slate-500 text-sm">
+                    No rates available yet.
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
         {!disableInnerContainer && (
-          <div className="text-center mt-10">
-            <button className="inline-flex items-center justify-center bg-primary text-primary-foreground px-8 py-4 rounded-full font-bold text-lg hover:bg-primary/90 hover:scale-105 transition-all shadow-lg active:scale-95 group">
-              View Full Forex Rates
-              <svg 
-                className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
+          <div className="text-center mt-8">
+            <Button asChild className="rounded bg-[#099546] hover:bg-[#088040] text-white h-11 px-6 font-semibold">
+              <Link href="/currency-rates" className="inline-flex items-center gap-2">
+                View Full Forex Rates
+                <ChevronDown className="h-4 w-4" />
+              </Link>
+            </Button>
           </div>
         )}
       </div>

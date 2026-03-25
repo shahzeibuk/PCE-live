@@ -4,7 +4,7 @@ import { Search, Home, ArrowLeft } from 'lucide-react'
 
 export default function NotFound() {
   return (
-    <div className="min-h-[70vh] flex items-center justify-center px-4">
+    <div className="min-h-[60vh] flex flex-1 items-center justify-center px-4 py-16 bg-slate-50 dark:bg-slate-950">
       <div className="max-w-md w-full text-center space-y-8">
         <div className="relative">
           <h1 className="text-[12rem] font-black text-slate-100 dark:text-slate-900 leading-none">404</h1>
