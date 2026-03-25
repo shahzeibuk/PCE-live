@@ -13,12 +13,12 @@ function unauthorized() {
 }
 
 /**
- * Scheduled currency sync for cron (Vercel Cron, GitHub Actions, etc.).
+ * Optional manual or external currency sync (GitHub Actions, uptime ping, etc.).
  *
- * Security: Authorization: Bearer <CRON_SECRET>
+ * Public pages do not need a cron: they use `RATES_AUTO_SYNC_STALE_HOURS` and traffic to
+ * refresh DB rates (see `getCurrencyRatesForFrontend`).
  *
- * Schedule: set vercel.json crons (or external caller) to match desired frequency.
- * Examples: every 6h at minute 0 (0 star-slash-6...), every 12h, or daily at 08:00 UTC.
+ * Security: `Authorization: Bearer <CRON_SECRET>` when `CRON_SECRET` is set.
  */
 export async function GET(req: NextRequest) {
   const secret = process.env.CRON_SECRET
