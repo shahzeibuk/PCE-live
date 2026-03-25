@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { cn } from '@/utilities/ui'
 import { Button } from '@/components/ui/button'
@@ -13,10 +13,12 @@ import {
   X,
   Search,
   ChevronLeft,
+  ChevronDown,
   Smartphone,
 } from 'lucide-react'
 
 import type { Header } from '@/payload-types'
+import type { ServiceNavLink } from '@/Header/serviceNav'
 
 function getNavHref(link: NonNullable<Header['navItems']>[number]['link']): string | null {
   if (link.type === 'custom' && link.url) return link.url
@@ -31,9 +33,28 @@ function getNavHref(link: NonNullable<Header['navItems']>[number]['link']): stri
   return null
 }
 
-export const FloatingHeader = ({ data }: { data: Header | null }) => {
+function isServicesNavItem(href: string | null, label: string | null | undefined): boolean {
+  if (!label) return href === '/services'
+  const l = label.toLowerCase().trim()
+  if (l === 'services' || l === 'our services') return true
+  return href === '/services'
+}
+
+const navLinkClass =
+  'px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:text-[#099546] transition-colors'
+
+export const FloatingHeader = ({
+  data,
+  serviceNavLinks = [],
+}: {
+  data: Header | null
+  serviceNavLinks?: ServiceNavLink[]
+}) => {
   const [scrolled, setScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [servicesOpen, setServicesOpen] = useState(false)
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false)
+  const servicesDropdownRef = useRef<HTMLDivElement>(null)
 
   const navItems = data?.navItems ?? []
 
@@ -50,6 +71,7 @@ export const FloatingHeader = ({ data }: { data: Header | null }) => {
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = ''
+      setMobileServicesOpen(false)
     }
     return () => {
       document.body.style.overflow = ''
@@ -63,6 +85,17 @@ export const FloatingHeader = ({ data }: { data: Header | null }) => {
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])
+
+  useEffect(() => {
+    if (!servicesOpen) return
+    const onDown = (e: MouseEvent) => {
+      if (servicesDropdownRef.current && !servicesDropdownRef.current.contains(e.target as Node)) {
+        setServicesOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', onDown)
+    return () => document.removeEventListener('mousedown', onDown)
+  }, [servicesOpen])
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
@@ -124,13 +157,64 @@ export const FloatingHeader = ({ data }: { data: Header | null }) => {
         <nav className="hidden lg:flex items-center justify-center gap-1 flex-wrap border-t border-slate-100 dark:border-slate-800 mt-3 pt-3">
           {navItems.map(({ link }, i) => {
             const href = getNavHref(link)
+            if (!href && !isServicesNavItem(null, link.label)) return null
+            const showServicesMenu =
+              serviceNavLinks.length > 0 && isServicesNavItem(href, link.label)
+
+            if (showServicesMenu) {
+              return (
+                <div key={i} className="relative" ref={servicesDropdownRef}>
+                  <button
+                    type="button"
+                    className={cn(
+                      navLinkClass,
+                      'inline-flex items-center gap-0.5 rounded-sm',
+                      servicesOpen && 'text-[#099546]',
+                    )}
+                    aria-expanded={servicesOpen}
+                    aria-haspopup="true"
+                    onClick={() => setServicesOpen((o) => !o)}
+                  >
+                    {link.label}
+                    <ChevronDown
+                      className={cn('h-3.5 w-3.5 shrink-0 transition-transform', servicesOpen && 'rotate-180')}
+                      aria-hidden
+                    />
+                  </button>
+                  {servicesOpen ? (
+                    <div
+                      role="menu"
+                      className="absolute left-0 top-full z-50 mt-1 min-w-56 max-h-[min(70vh,24rem)] overflow-y-auto rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 py-1 shadow-lg"
+                    >
+                      <Link
+                        href="/services"
+                        role="menuitem"
+                        className="block px-4 py-2.5 text-xs font-bold uppercase tracking-wide text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-900"
+                        onClick={() => setServicesOpen(false)}
+                      >
+                        All services
+                      </Link>
+                      <div className="my-1 h-px bg-slate-100 dark:bg-slate-800" aria-hidden />
+                      {serviceNavLinks.map((s) => (
+                        <Link
+                          key={s.href}
+                          href={s.href}
+                          role="menuitem"
+                          className="block px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-[#099546]"
+                          onClick={() => setServicesOpen(false)}
+                        >
+                          {s.title}
+                        </Link>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+              )
+            }
+
             if (!href) return null
             return (
-              <Link
-                key={i}
-                href={href}
-                className="px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:text-[#099546] transition-colors"
-              >
+              <Link key={i} href={href} className={navLinkClass}>
                 {link.label}
               </Link>
             )
@@ -187,6 +271,54 @@ export const FloatingHeader = ({ data }: { data: Header | null }) => {
           <nav className="space-y-1">
             {navItems.map(({ link }, i) => {
               const href = getNavHref(link)
+              const showServicesMenu =
+                serviceNavLinks.length > 0 && isServicesNavItem(href, link.label)
+
+              if (showServicesMenu) {
+                return (
+                  <div key={i} className="border-b border-slate-100 dark:border-slate-800">
+                    <button
+                      type="button"
+                      className="flex w-full items-center justify-between text-left text-lg font-bold text-slate-900 dark:text-white py-3 hover:text-[#099546] transition-colors"
+                      aria-expanded={mobileServicesOpen}
+                      onClick={() => setMobileServicesOpen((o) => !o)}
+                    >
+                      {link.label}
+                      <ChevronDown
+                        className={cn('h-5 w-5 shrink-0 transition-transform', mobileServicesOpen && 'rotate-180')}
+                      />
+                    </button>
+                    {mobileServicesOpen ? (
+                      <div className="pb-3 pl-3 space-y-0 border-l-2 border-[#099546]/40 ml-1">
+                        <Link
+                          href="/services"
+                          onClick={() => {
+                            setMobileMenuOpen(false)
+                            setMobileServicesOpen(false)
+                          }}
+                          className="block py-2 text-base font-semibold text-[#099546]"
+                        >
+                          All services
+                        </Link>
+                        {serviceNavLinks.map((s) => (
+                          <Link
+                            key={s.href}
+                            href={s.href}
+                            onClick={() => {
+                              setMobileMenuOpen(false)
+                              setMobileServicesOpen(false)
+                            }}
+                            className="block py-2 text-base text-slate-600 dark:text-slate-400 hover:text-[#099546]"
+                          >
+                            {s.title}
+                          </Link>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                )
+              }
+
               if (!href) return null
               const newTab = link.newTab ?? false
               return (

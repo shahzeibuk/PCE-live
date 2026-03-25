@@ -12,6 +12,9 @@ import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
+import { PartnersShowcase } from '@/components/PartnersShowcase'
+
+const SLUGS_WITH_PARTNER_SHOWCASE = new Set(['about', 'partners-associates'])
 
 export async function generateStaticParams() {
   try {
@@ -81,6 +84,9 @@ export default async function Page({ params: paramsPromise }: Args) {
 
       <RenderHero {...hero} />
       <RenderBlocks blocks={layout} />
+      {SLUGS_WITH_PARTNER_SHOWCASE.has(decodedSlug) ? (
+        <PartnersShowcase className="mt-4 md:mt-8" />
+      ) : null}
     </article>
   )
 }

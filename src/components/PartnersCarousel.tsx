@@ -5,23 +5,15 @@ import Image from 'next/image'
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 
-const partners = [
-  { name: 'Western Union', src: '/partners/westren-unoin.jpg' },
-  { name: 'RIA', src: '/partners/ria.jpg' },
-  { name: 'MoneyGram', src: '/partners/money.jpg' },
-  { name: 'Aussie Forex', src: '/partners/Aussie02.jpg' },
-  // Duplicating for infinite scroll effect
-  { name: 'Western Union 2', src: '/partners/westren-unoin.jpg' },
-  { name: 'RIA 2', src: '/partners/ria.jpg' },
-  { name: 'MoneyGram 2', src: '/partners/money.jpg' },
-  { name: 'Aussie Forex 2', src: '/partners/Aussie02.jpg' },
-]
+import { partnerLogosForCarouselLoop } from '@/constants/partnerLogos'
 
 export function PartnersCarousel() {
   const [emblaRef] = useEmblaCarousel(
     { loop: true, align: 'start', skipSnaps: false },
     [Autoplay({ delay: 3000, stopOnInteraction: false })]
   )
+
+  const partners = partnerLogosForCarouselLoop()
 
   return (
     <div className="w-full py-12 bg-white overflow-hidden border-y border-border/50">
@@ -37,8 +29,8 @@ export function PartnersCarousel() {
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex -ml-4">
             {partners.map((partner, index) => (
-              <div 
-                key={index} 
+              <div
+                key={`${partner.name}-${index}`}
                 className="flex-[0_0_50%] min-w-0 pl-4 sm:flex-[0_0_33%] md:flex-[0_0_25%] lg:flex-[0_0_20%]"
               >
                 <div className="flex items-center justify-center h-24 p-4 grayscale hover:grayscale-0 transition-colors duration-200">
