@@ -13,6 +13,7 @@ import { getPayload } from 'payload'
 
 import config from '../payload.config'
 import { seedBranches } from './seed_branches'
+import { seedCmsFromLegacy } from './seed_cms_from_legacy'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -268,6 +269,9 @@ async function main() {
     })
     console.log(`  created testimonial: ${t.name}`)
   }
+
+  console.log('→ CMS pages, header, contact form, service bodies (legacy site copy)')
+  await seedCmsFromLegacy(payload)
 
   console.log('Done.')
   process.exit(0)
