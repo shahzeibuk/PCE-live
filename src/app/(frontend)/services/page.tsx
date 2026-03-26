@@ -35,6 +35,7 @@ export default async function ServicesPage() {
               description={service.short_description || service.description}
               slug={service.slug}
               hero_image={service.hero_image}
+              icon={service.icon}
             />
           ))}
         </div>

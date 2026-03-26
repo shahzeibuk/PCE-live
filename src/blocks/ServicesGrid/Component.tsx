@@ -2,8 +2,8 @@ import React from 'react'
 import Link from 'next/link'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
-import { Media } from '@/components/Media'
 import { Button } from '@/components/ui/button'
+import { ServiceListingIcon } from '@/components/services/ServiceListingIcon'
 
 export type ServicesGridProps = {
   title?: string
@@ -56,12 +56,8 @@ export const ServicesGridBlock: React.FC<ServicesGridProps> = async ({
             href={`/services/${service.slug}`}
             className="bg-slate-100 border border-slate-200 rounded p-6 md:p-8 flex flex-col items-center text-center hover:border-[#099546]/50 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#099546] focus-visible:ring-offset-2"
           >
-            <div className="w-16 h-16 bg-white border border-slate-200 rounded flex items-center justify-center mb-4">
-              {service.icon ? (
-                <Media resource={service.icon} className="w-10 h-10 object-contain" />
-              ) : (
-                <div className="w-10 h-10 rounded bg-[#099546]/15" />
-              )}
+            <div className="mb-4">
+              <ServiceListingIcon service={service} className="mx-auto" />
             </div>
             <h3 className="text-base md:text-lg font-bold text-slate-900 mb-2">
               {service.title}
