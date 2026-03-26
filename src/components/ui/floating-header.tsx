@@ -41,7 +41,7 @@ function isServicesNavItem(href: string | null, label: string | null | undefined
 }
 
 const navLinkClass =
-  'px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:text-[#099546] transition-colors'
+  'px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-slate-600 hover:text-[#099546] transition-colors'
 
 export const FloatingHeader = ({
   data,
@@ -98,7 +98,7 @@ export const FloatingHeader = ({
   }, [servicesOpen])
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+    <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white border-b border-slate-200">
       <div
         className={cn(
           'container mx-auto px-4 sm:px-6 transition-all duration-300',
@@ -115,7 +115,7 @@ export const FloatingHeader = ({
           </Link>
 
           {/* Center: toll-free + mobile (md+) */}
-          <div className="hidden md:flex flex-1 items-center justify-center gap-6 lg:gap-10 text-slate-700 dark:text-slate-300">
+          <div className="hidden md:flex flex-1 items-center justify-center gap-6 lg:gap-10 text-slate-700">
             <a href="tel:080013537" className="flex items-center gap-2 text-sm font-semibold hover:text-[#099546] transition-colors">
               <Phone className="h-4 w-4 text-[#099546] shrink-0" />
               <span>0800-13537</span>
@@ -135,14 +135,14 @@ export const FloatingHeader = ({
             </Button>
             <Link
               href="/search"
-              className="p-2 text-slate-900 dark:text-white hover:text-[#099546] transition-colors"
+              className="p-2 text-slate-900 hover:text-[#099546] transition-colors"
               aria-label="Search"
             >
               <Search className="h-5 w-5" />
             </Link>
             <button
               type="button"
-              className="lg:hidden p-2 -mr-2 text-slate-900 dark:text-white hover:text-[#099546] transition-colors"
+              className="lg:hidden p-2 -mr-2 text-slate-900 hover:text-[#099546] transition-colors"
               onClick={() => setMobileMenuOpen((prev) => !prev)}
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-nav-menu"
@@ -154,7 +154,7 @@ export const FloatingHeader = ({
         </div>
 
         {/* Desktop nav links */}
-        <nav className="hidden lg:flex items-center justify-center gap-1 flex-wrap border-t border-slate-100 dark:border-slate-800 mt-3 pt-3">
+        <nav className="hidden lg:flex items-center justify-center gap-1 flex-wrap border-t border-slate-100 mt-3 pt-3">
           {navItems.map(({ link }, i) => {
             const href = getNavHref(link)
             if (!href && !isServicesNavItem(null, link.label)) return null
@@ -184,23 +184,23 @@ export const FloatingHeader = ({
                   {servicesOpen ? (
                     <div
                       role="menu"
-                      className="absolute left-0 top-full z-50 mt-1 min-w-56 max-h-[min(70vh,24rem)] overflow-y-auto rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 py-1 shadow-lg"
+                      className="absolute left-0 top-full z-50 mt-1 min-w-56 max-h-[min(70vh,24rem)] overflow-y-auto rounded-md border border-slate-200 bg-white py-1 shadow-lg"
                     >
                       <Link
                         href="/services"
                         role="menuitem"
-                        className="block px-4 py-2.5 text-xs font-bold uppercase tracking-wide text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-900"
+                        className="block px-4 py-2.5 text-xs font-bold uppercase tracking-wide text-slate-900 hover:bg-slate-50"
                         onClick={() => setServicesOpen(false)}
                       >
                         All services
                       </Link>
-                      <div className="my-1 h-px bg-slate-100 dark:bg-slate-800" aria-hidden />
+                      <div className="my-1 h-px bg-slate-100" aria-hidden />
                       {serviceNavLinks.map((s) => (
                         <Link
                           key={s.href}
                           href={s.href}
                           role="menuitem"
-                          className="block px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-[#099546]"
+                          className="block px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-[#099546]"
                           onClick={() => setServicesOpen(false)}
                         >
                           {s.title}
@@ -229,7 +229,7 @@ export const FloatingHeader = ({
         aria-modal="true"
         aria-label="Mobile navigation"
         className={cn(
-          'fixed inset-0 bg-white dark:bg-slate-950 z-40 transition-transform duration-300 ease-out lg:hidden',
+          'fixed inset-0 bg-white z-40 transition-transform duration-300 ease-out lg:hidden',
           mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         )}
       >
@@ -237,17 +237,17 @@ export const FloatingHeader = ({
           <button
             type="button"
             onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-[#099546] transition-colors -ml-1 mb-6"
+            className="flex items-center gap-2 text-slate-600 hover:text-[#099546] transition-colors -ml-1 mb-6"
             aria-label="Close menu"
           >
             <ChevronLeft className="h-6 w-6" />
             <span className="text-sm font-semibold uppercase tracking-wider">Back</span>
           </button>
 
-          <div className="flex flex-col gap-3 mb-8 pb-6 border-b border-slate-200 dark:border-slate-800">
+          <div className="flex flex-col gap-3 mb-8 pb-6 border-b border-slate-200">
             <a
               href="tel:080013537"
-              className="flex items-center gap-3 text-base font-semibold text-slate-900 dark:text-white"
+              className="flex items-center gap-3 text-base font-semibold text-slate-900"
               onClick={() => setMobileMenuOpen(false)}
             >
               <Phone className="h-5 w-5 text-[#099546]" />
@@ -255,7 +255,7 @@ export const FloatingHeader = ({
             </a>
             <a
               href="tel:03046668810"
-              className="flex items-center gap-3 text-base font-semibold text-slate-900 dark:text-white"
+              className="flex items-center gap-3 text-base font-semibold text-slate-900"
               onClick={() => setMobileMenuOpen(false)}
             >
               <Smartphone className="h-5 w-5 text-[#099546]" />
@@ -276,10 +276,10 @@ export const FloatingHeader = ({
 
               if (showServicesMenu) {
                 return (
-                  <div key={i} className="border-b border-slate-100 dark:border-slate-800">
+                  <div key={i} className="border-b border-slate-100">
                     <button
                       type="button"
-                      className="flex w-full items-center justify-between text-left text-lg font-bold text-slate-900 dark:text-white py-3 hover:text-[#099546] transition-colors"
+                      className="flex w-full items-center justify-between text-left text-lg font-bold text-slate-900 py-3 hover:text-[#099546] transition-colors"
                       aria-expanded={mobileServicesOpen}
                       onClick={() => setMobileServicesOpen((o) => !o)}
                     >
@@ -308,7 +308,7 @@ export const FloatingHeader = ({
                               setMobileMenuOpen(false)
                               setMobileServicesOpen(false)
                             }}
-                            className="block py-2 text-base text-slate-600 dark:text-slate-400 hover:text-[#099546]"
+                            className="block py-2 text-base text-slate-600 hover:text-[#099546]"
                           >
                             {s.title}
                           </Link>
@@ -328,7 +328,7 @@ export const FloatingHeader = ({
                   target={newTab ? '_blank' : undefined}
                   rel={newTab ? 'noopener noreferrer' : undefined}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block text-lg font-bold text-slate-900 dark:text-white py-3 border-b border-slate-100 dark:border-slate-800 hover:text-[#099546] transition-colors"
+                  className="block text-lg font-bold text-slate-900 py-3 border-b border-slate-100 hover:text-[#099546] transition-colors"
                 >
                   {link.label}
                 </Link>

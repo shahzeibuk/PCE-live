@@ -45,14 +45,14 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
     <div className={containerClasses}>
       {!disableInnerContainer && (
         <div className="max-w-4xl mx-auto text-center mb-10">
-          <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-2">
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">
             {title || 'Live Exchange Rates'}
           </h2>
         </div>
       )}
 
       <div className="max-w-3xl mx-auto">
-        <div className="overflow-hidden rounded border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
+        <div className="overflow-hidden rounded border border-slate-200 bg-white">
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-[#099546] text-white">
@@ -65,21 +65,21 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
               {list.map((rate, i) => (
                 <tr
                   key={rate.id}
-                  className={`border-t border-slate-200 dark:border-slate-800 ${i % 2 === 0 ? 'bg-white dark:bg-slate-950' : 'bg-slate-50 dark:bg-slate-900/50'}`}
+                  className={`border-t border-slate-200 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}
                 >
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
                       <span className="text-2xl">{flags[rate.currency_code] || '🏳️'}</span>
                       <div>
-                        <span className="font-bold text-slate-900 dark:text-slate-100">{rate.currency_code}</span>
-                        <span className="text-xs text-slate-500 dark:text-slate-400 block">{rate.currency_name}</span>
+                        <span className="font-bold text-slate-900">{rate.currency_code}</span>
+                        <span className="text-xs text-slate-500 block">{rate.currency_name}</span>
                       </div>
                     </div>
                   </td>
-                  <td className="px-4 py-3 text-center font-mono text-sm font-semibold text-slate-800 dark:text-slate-200 tabular-nums">
+                  <td className="px-4 py-3 text-center font-mono text-sm font-semibold text-slate-800 tabular-nums">
                     {Number(rate.buy_rate ?? 0).toFixed(2)}
                   </td>
-                  <td className="px-4 py-3 text-center font-mono text-sm font-semibold text-[#099546] dark:text-emerald-400 tabular-nums">
+                  <td className="px-4 py-3 text-center font-mono text-sm font-semibold text-[#099546] tabular-nums">
                     {Number(rate.sell_rate ?? 0).toFixed(2)}
                   </td>
                 </tr>
@@ -103,7 +103,7 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
               </Link>
             </Button>
             <CurrencyNoteSurface className="p-3 md:p-4">
-              <p className="text-xs text-slate-600 dark:text-slate-400 text-center leading-relaxed">
+              <p className="text-xs text-slate-600 text-center leading-relaxed">
                 Open-market figures for reference — confirm live rates at your branch before transacting.
               </p>
             </CurrencyNoteSurface>

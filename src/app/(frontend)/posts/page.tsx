@@ -36,12 +36,12 @@ export default async function Page() {
   return (
     <div className="pb-16 md:pb-24">
       <PageClient />
-      <div className="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/40">
+      <div className="border-b border-slate-200 bg-slate-50">
         <div className="container px-4 py-10 md:py-12 text-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
+          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
             Posts
           </h1>
-          <p className="text-slate-600 dark:text-slate-400 mt-3 max-w-2xl mx-auto text-base">
+          <p className="text-slate-600 mt-3 max-w-2xl mx-auto text-base">
             News and updates from Pakistan Currency Exchange.
           </p>
         </div>

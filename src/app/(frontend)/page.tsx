@@ -68,20 +68,20 @@ export default async function HomePage() {
         </HeroCurrencyBackdrop>
       </section>
 
-      <section className="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800">
+      <section className="bg-white border-t border-slate-200">
         <LiveExchangeRatesBlock rates={rates as any} disableInnerContainer={false} />
       </section>
 
       <CurrencyConverterBlock rates={rates as any} disableInnerContainer={false} />
 
-      <section className="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800">
+      <section className="bg-white border-t border-slate-200">
         <ServicesGridBlock services={services as any} disableInnerContainer={false} />
       </section>
 
       {news.length > 0 && (
-        <section className="bg-slate-100 dark:bg-slate-900/40 py-16 md:py-20 border-t border-slate-200 dark:border-slate-800">
+        <section className="bg-slate-100 py-16 md:py-20 border-t border-slate-200">
           <div className="container px-4">
-            <h2 className="text-2xl md:text-3xl font-bold text-center text-slate-900 dark:text-white mb-10">
+            <h2 className="text-2xl md:text-3xl font-bold text-center text-slate-900 mb-10">
               Daily Currency Updates
             </h2>
             <div className="grid md:grid-cols-3 gap-6">
@@ -90,10 +90,10 @@ export default async function HomePage() {
                 .map((item: any) => (
                   <article
                     key={item.id}
-                    className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded p-6 shadow-sm flex flex-col"
+                    className="bg-white border border-slate-200 rounded p-6 shadow-sm flex flex-col"
                   >
                     <h3 className="text-lg font-bold text-[#099546] mb-3 leading-snug">{item.title}</h3>
-                    <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-3 flex-1 mb-4">
+                    <p className="text-sm text-slate-600 line-clamp-3 flex-1 mb-4">
                       {item.description || 'Read the latest on open-market rates and company news.'}
                     </p>
                     <Link
@@ -109,7 +109,7 @@ export default async function HomePage() {
         </section>
       )}
 
-      <section className="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800">
+      <section className="bg-white border-t border-slate-200">
         <WhatsAppCTABlock
           disableInnerContainer={false}
           phoneNumber="923046668810"

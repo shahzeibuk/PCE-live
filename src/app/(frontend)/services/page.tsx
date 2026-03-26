@@ -40,9 +40,9 @@ export default async function ServicesPage() {
         </div>
 
         {services.length === 0 && (
-          <div className="text-center py-20 border border-dashed border-slate-300 dark:border-slate-700 rounded bg-slate-50 dark:bg-slate-900/30">
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">No services found</h2>
-            <p className="text-slate-600 dark:text-slate-400 text-sm">Check back later or contact us.</p>
+          <div className="text-center py-20 border border-dashed border-slate-300 rounded bg-slate-50">
+            <h2 className="text-xl font-semibold text-slate-900 mb-2">No services found</h2>
+            <p className="text-slate-600 text-sm">Check back later or contact us.</p>
           </div>
         )}
       </div>

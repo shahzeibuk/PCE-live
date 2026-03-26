@@ -26,7 +26,7 @@ export default async function BranchesPage() {
   }
 
   return (
-    <div className="pb-16 md:pb-24 bg-slate-50 dark:bg-slate-950">
+    <div className="pb-16 md:pb-24 bg-slate-50">
       <InnerPageHeader
         variant="brand"
         title="Find a Branch Near You"
@@ -34,7 +34,7 @@ export default async function BranchesPage() {
       />
 
       <section className="container px-4 -mt-4 md:-mt-6 relative z-10 pb-4">
-        <div className="bg-white dark:bg-slate-950 rounded border border-slate-200 dark:border-slate-800 p-6 md:p-8 min-h-[420px] shadow-sm">
+        <div className="bg-white rounded border border-slate-200 p-6 md:p-8 min-h-[420px] shadow-sm">
           <BranchLocator branches={branches} />
         </div>
       </section>

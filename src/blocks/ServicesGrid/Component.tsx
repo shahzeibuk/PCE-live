@@ -37,7 +37,7 @@ export const ServicesGridBlock: React.FC<ServicesGridProps> = async ({
       {!disableInnerContainer && (
         <div className="relative flex items-center justify-center mb-12">
           <div className="absolute inset-0 flex items-center" aria-hidden="true">
-            <div className="w-full border-t border-slate-200 dark:border-slate-700" />
+            <div className="w-full border-t border-slate-200" />
           </div>
           <div className="relative bg-background px-6">
             <h2 className="text-2xl md:text-3xl font-bold text-[#099546] text-center">
@@ -54,29 +54,29 @@ export const ServicesGridBlock: React.FC<ServicesGridProps> = async ({
           <Link
             key={service.id}
             href={`/services/${service.slug}`}
-            className="bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded p-6 md:p-8 flex flex-col items-center text-center hover:border-[#099546]/50 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#099546] focus-visible:ring-offset-2"
+            className="bg-slate-100 border border-slate-200 rounded p-6 md:p-8 flex flex-col items-center text-center hover:border-[#099546]/50 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#099546] focus-visible:ring-offset-2"
           >
-            <div className="w-16 h-16 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded flex items-center justify-center mb-4">
+            <div className="w-16 h-16 bg-white border border-slate-200 rounded flex items-center justify-center mb-4">
               {service.icon ? (
                 <Media resource={service.icon} className="w-10 h-10 object-contain" />
               ) : (
                 <div className="w-10 h-10 rounded bg-[#099546]/15" />
               )}
             </div>
-            <h3 className="text-base md:text-lg font-bold text-slate-900 dark:text-slate-100 mb-2">
+            <h3 className="text-base md:text-lg font-bold text-slate-900 mb-2">
               {service.title}
             </h3>
-            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed line-clamp-3">
+            <p className="text-sm text-slate-600 leading-relaxed line-clamp-3">
               {service.short_description || service.description}
             </p>
           </Link>
         ))}
 
         {list.length === 0 && (
-          <div className="col-span-full text-center py-14 px-4 border border-dashed border-slate-300 dark:border-slate-600 rounded bg-slate-50/80 dark:bg-slate-900/30">
-            <p className="text-slate-700 dark:text-slate-300 font-medium mb-2">No services to show yet</p>
-            <p className="text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto">
-              In the admin, go to <strong className="text-slate-700 dark:text-slate-300">Website → Services</strong>{' '}
+          <div className="col-span-full text-center py-14 px-4 border border-dashed border-slate-300 rounded bg-slate-50/80">
+            <p className="text-slate-700 font-medium mb-2">No services to show yet</p>
+            <p className="text-sm text-slate-500 max-w-md mx-auto">
+              In the admin, go to <strong className="text-slate-700">Website → Services</strong>{' '}
               and publish entries. They appear here and on the <strong>/services</strong> page automatically.
             </p>
           </div>

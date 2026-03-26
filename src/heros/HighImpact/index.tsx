@@ -1,7 +1,6 @@
 'use client'
-import { useHeaderTheme } from '@/providers/HeaderTheme'
-import React, { useEffect } from 'react'
 import Image from 'next/image'
+import React from 'react'
 
 import type { Page } from '@/payload-types'
 
@@ -11,17 +10,8 @@ import RichText from '@/components/RichText'
 import { CURRENCY_HERO_BACKGROUND_IMAGE } from '@/constants/currencyBrand'
 
 export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText }) => {
-  const { setHeaderTheme } = useHeaderTheme()
-
-  useEffect(() => {
-    setHeaderTheme('dark')
-  })
-
   return (
-    <div
-      className="relative flex items-center justify-center text-white"
-      data-theme="dark"
-    >
+    <div className="relative flex items-center justify-center text-white">
       <div className="container mb-8 z-10 relative flex items-center justify-center">
         <div className="max-w-[36.5rem] md:text-center">
           {richText && <RichText className="mb-6" data={richText} enableGutter={false} />}
@@ -38,7 +28,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
           )}
         </div>
       </div>
-      <div className="min-h-[80vh] select-none">
+      <div className="min-h-[80vh] select-none relative">
         {media && typeof media === 'object' ? (
           <Media fill imgClassName="-z-10 object-cover" priority resource={media} />
         ) : (

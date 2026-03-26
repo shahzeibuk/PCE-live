@@ -34,7 +34,7 @@ export function HeroCurrencyBackdrop({
       />
       <div
         className={cn(
-          'pointer-events-none absolute inset-0 z-[1] bg-linear-to-r from-slate-950/90 via-slate-950/78 to-slate-950/55 dark:from-slate-950/92 dark:via-slate-950/80 dark:to-slate-950/60',
+          'pointer-events-none absolute inset-0 z-[1] bg-linear-to-r from-slate-950/90 via-slate-950/78 to-slate-950/55',
           overlayClassName,
         )}
       />
@@ -55,7 +55,7 @@ export function CurrencyNoteSurface({ children, className }: CurrencyNoteSurface
   return (
     <div
       className={cn(
-        'relative overflow-hidden rounded-lg border border-slate-200/90 dark:border-slate-700/80',
+        'relative overflow-hidden rounded-lg border border-slate-200/90',
         className,
       )}
     >
@@ -64,11 +64,11 @@ export function CurrencyNoteSurface({ children, className }: CurrencyNoteSurface
           src={CURRENCY_HERO_BACKGROUND_IMAGE}
           alt=""
           fill
-          className="object-cover object-[center_30%] opacity-[0.11] dark:opacity-[0.15]"
+          className="object-cover object-[center_30%] opacity-[0.11]"
           sizes="(max-width: 1024px) 100vw, 896px"
         />
       </div>
-      <div className="pointer-events-none absolute inset-0 z-[1] bg-slate-50/96 dark:bg-slate-900/94" />
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-slate-50/96" />
       <div className="relative z-10">{children}</div>
     </div>
   )

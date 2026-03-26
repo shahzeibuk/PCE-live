@@ -32,7 +32,7 @@ export function InnerPageHeader({
       <h1
         className={cn(
           'text-3xl md:text-4xl font-bold tracking-tight mb-3',
-          variant === 'muted' && 'text-slate-900 dark:text-white',
+          variant === 'muted' && 'text-slate-900',
           variant === 'brand' && 'text-white',
           variant === 'currency' && 'text-white',
         )}
@@ -44,7 +44,7 @@ export function InnerPageHeader({
           className={cn(
             'text-lg max-w-2xl leading-relaxed',
             centered && 'mx-auto',
-            variant === 'muted' && 'text-slate-600 dark:text-slate-400',
+            variant === 'muted' && 'text-slate-600',
             variant === 'brand' && 'text-white/90',
             variant === 'currency' && 'text-slate-200',
           )}
@@ -66,8 +66,8 @@ export function InnerPageHeader({
   return (
     <header
       className={cn(
-        'border-b border-slate-200 dark:border-slate-800',
-        variant === 'muted' && 'bg-slate-50 dark:bg-slate-900/40',
+        'border-b border-slate-200',
+        variant === 'muted' && 'bg-slate-50',
         variant === 'brand' && 'bg-[#099546] text-white border-[#088040]',
         className,
       )}

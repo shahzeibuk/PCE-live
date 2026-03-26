@@ -4,20 +4,20 @@ import { Search, Home, ArrowLeft } from 'lucide-react'
 
 export default function NotFound() {
   return (
-    <div className="min-h-[60vh] flex flex-1 items-center justify-center px-4 py-16 bg-slate-50 dark:bg-slate-950">
+    <div className="min-h-[60vh] flex flex-1 items-center justify-center px-4 py-16 bg-slate-50">
       <div className="max-w-md w-full text-center space-y-8">
         <div className="relative">
-          <h1 className="text-[12rem] font-black text-slate-100 dark:text-slate-900 leading-none">404</h1>
+          <h1 className="text-[12rem] font-black text-slate-100 leading-none">404</h1>
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="bg-slate-100 dark:bg-slate-800 p-6 rounded-full">
-                <Search className="w-16 h-16 text-slate-400 dark:text-slate-500" />
+            <div className="bg-slate-100 p-6 rounded-full">
+                <Search className="w-16 h-16 text-slate-400" />
             </div>
           </div>
         </div>
         
         <div className="space-y-3">
-          <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Page Not Found</h2>
-          <p className="text-slate-600 dark:text-slate-400 text-lg">
+          <h2 className="text-3xl font-bold tracking-tight text-slate-900">Page Not Found</h2>
+          <p className="text-slate-600 text-lg">
             Sorry, we couldn't find the page you're looking for. It might have been moved or doesn't exist.
           </p>
         </div>

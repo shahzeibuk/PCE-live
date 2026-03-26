@@ -14,7 +14,7 @@ interface ServiceProps {
 
 export const ServiceCard = ({ title, description, slug, hero_image }: ServiceProps) => {
   return (
-    <Card className="group flex flex-col h-full overflow-hidden border border-slate-200 dark:border-slate-800 hover:border-primary/40 transition-colors bg-white dark:bg-slate-950 rounded-lg">
+    <Card className="group flex flex-col h-full overflow-hidden border border-slate-200 hover:border-primary/40 transition-colors bg-white rounded-lg">
       {hero_image && (
         <div className="relative aspect-video w-full overflow-hidden">
           <Media 
@@ -29,7 +29,7 @@ export const ServiceCard = ({ title, description, slug, hero_image }: ServicePro
         </CardTitle>
       </CardHeader>
       <CardContent className="grow pb-8">
-        <CardDescription className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed line-clamp-3">
+        <CardDescription className="text-slate-600 text-lg leading-relaxed line-clamp-3">
           {description || "Explore our professional exchange and remittance services."}
         </CardDescription>
       </CardContent>

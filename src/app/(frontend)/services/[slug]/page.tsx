@@ -72,14 +72,14 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
       <div className="container px-4">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-12">
           <div className="lg:col-span-2">
-            <div className="prose prose-slate dark:prose-invert max-w-none prose-headings:font-bold">
+            <div className="prose prose-slate max-w-none prose-headings:font-bold">
               <RichText data={service.content} enableGutter={false} />
             </div>
           </div>
           <div className="space-y-6">
-            <div className="p-6 md:p-8 bg-slate-50 dark:bg-slate-900/50 rounded border border-slate-200 dark:border-slate-800">
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Need help?</h3>
-              <p className="text-slate-600 dark:text-slate-400 text-sm mb-6 leading-relaxed">
+            <div className="p-6 md:p-8 bg-slate-50 rounded border border-slate-200">
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Need help?</h3>
+              <p className="text-slate-600 text-sm mb-6 leading-relaxed">
                 Speak with our team for quotes and branch timings.
               </p>
               <Button

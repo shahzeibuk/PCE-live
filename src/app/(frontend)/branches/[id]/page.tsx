@@ -39,7 +39,7 @@ export default async function BranchPage({ params }: { params: { id: string } })
   if (!branch) return notFound()
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pb-16 md:pb-24">
+    <div className="min-h-screen bg-slate-50 pb-16 md:pb-24">
       <div className="container px-4 max-w-4xl mx-auto pt-6 md:pt-8">
         <div className="mb-8">
           <Button asChild variant="ghost" className="mb-4 text-muted-foreground hover:text-primary">
@@ -50,7 +50,7 @@ export default async function BranchPage({ params }: { params: { id: string } })
               <Building2 className="w-8 h-8" />
             </div>
             <div>
-              <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-white dark:bg-slate-800 text-muted-foreground mb-2">
+              <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-white text-muted-foreground mb-2">
                 {branch.city}
               </div>
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight">{branch.branch_name}</h1>
@@ -60,7 +60,7 @@ export default async function BranchPage({ params }: { params: { id: string } })
 
         <div className="grid md:grid-cols-3 gap-8">
           <div className="md:col-span-2 space-y-6">
-            <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 border shadow-sm">
+            <div className="bg-white rounded-3xl p-8 border shadow-sm">
               <h2 className="text-xl font-bold mb-6">Branch Details</h2>
               
               <div className="space-y-6">

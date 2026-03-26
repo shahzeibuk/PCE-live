@@ -23,10 +23,10 @@ export const WhatsAppCTABlock: React.FC<WhatsAppCTAProps> = ({
       {!disableInnerContainer && (
         <div className="relative flex items-center justify-center mb-8">
           <div className="absolute inset-0 flex items-center" aria-hidden="true">
-            <div className="w-full border-t border-slate-200 dark:border-slate-700" />
+            <div className="w-full border-t border-slate-200" />
           </div>
           <div className="relative bg-background px-6 text-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-900">
               Contact Us on <span className="text-[#099546]">WhatsApp</span>
             </h2>
           </div>
@@ -34,9 +34,9 @@ export const WhatsAppCTABlock: React.FC<WhatsAppCTAProps> = ({
       )}
 
       <div
-        className={`max-w-2xl mx-auto text-center border border-slate-200 dark:border-slate-800 rounded bg-slate-50 dark:bg-slate-900/30 p-8 md:p-10 ${disableInnerContainer ? 'container px-4' : ''}`}
+        className={`max-w-2xl mx-auto text-center border border-slate-200 rounded bg-slate-50 p-8 md:p-10 ${disableInnerContainer ? 'container px-4' : ''}`}
       >
-        <p className="text-slate-600 dark:text-slate-400 mb-8 text-base leading-relaxed">
+        <p className="text-slate-600 mb-8 text-base leading-relaxed">
           {body ||
             'Need the Best Exchange Rates? Chat with us on WhatsApp for fast instant updates!'}
         </p>

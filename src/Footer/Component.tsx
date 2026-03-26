@@ -4,7 +4,6 @@ import React from 'react'
 
 import type { Footer } from '@/payload-types'
 
-import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
 import { CMSLink } from '@/components/Link'
 import { Logo } from '@/components/Logo/Logo'
 import { PartnersCarousel } from '@/components/PartnersCarousel'
@@ -18,7 +17,7 @@ export async function Footer() {
       {/* Partners section sits right above the footer */}
       <PartnersCarousel />
       
-      <footer className="mt-auto bg-[#099546] dark:bg-card text-white overflow-hidden relative">
+      <footer className="mt-auto bg-[#099546] text-white overflow-hidden relative">
         
         <div className="container py-12 gap-8 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
@@ -69,7 +68,6 @@ export async function Footer() {
               <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#099546] transition-colors"><Twitter className="h-5 w-5 fill-current" /></a>
               <a href="https://pk.linkedin.com/company/pakistan-currency-exchange-pvt-ltd" target="_blank" rel="noopener noreferrer" className="hover:text-[#099546] transition-colors"><Linkedin className="h-5 w-5 fill-current" /></a>
               <a href="https://www.facebook.com/pkcurrency/" target="_blank" rel="noopener noreferrer" className="hover:text-[#099546] transition-colors"><Facebook className="h-5 w-5 fill-current" /></a>
-              <ThemeSelector />
             </div>
           </div>
         </div>

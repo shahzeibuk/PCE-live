@@ -37,7 +37,7 @@ export default async function NewsItem({ params: paramsPromise }: { params: Prom
   if (!newsItem) return notFound()
 
   return (
-    <article className="pb-16 md:pb-24 min-h-screen bg-slate-50 dark:bg-slate-950">
+    <article className="pb-16 md:pb-24 min-h-screen bg-slate-50">
       <div className="container px-4 max-w-4xl pt-6 md:pt-8">
         <div className="mb-10">
           <Button asChild variant="ghost" className="mb-6 -ml-2 text-slate-600 hover:text-[#099546] font-semibold rounded">
@@ -51,13 +51,13 @@ export default async function NewsItem({ params: paramsPromise }: { params: Prom
             {newsItem.published_date && new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).format(new Date(newsItem.published_date))}
           </div>
           
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white leading-tight mb-8 tracking-tight">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 leading-tight mb-8 tracking-tight">
             {newsItem.title}
           </h1>
         </div>
         
-        <div className="bg-white dark:bg-slate-950 p-6 md:p-10 rounded border border-slate-200 dark:border-slate-800">
-          <div className="prose prose-lg md:prose-xl dark:prose-invert max-w-none prose-headings:text-slate-900 prose-headings:font-bold prose-p:text-slate-700 prose-p:leading-relaxed">
+        <div className="bg-white p-6 md:p-10 rounded border border-slate-200">
+          <div className="prose prose-lg md:prose-xl max-w-none prose-headings:text-slate-900 prose-headings:font-bold prose-p:text-slate-700 prose-p:leading-relaxed">
             {newsItem.content && <RichText data={newsItem.content} />}
           </div>
         </div>

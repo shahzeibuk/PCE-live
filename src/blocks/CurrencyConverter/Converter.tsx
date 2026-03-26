@@ -45,18 +45,18 @@ export const Converter = ({ rates }: { rates: CurrencyRate[] }) => {
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
-      <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded px-4 py-3 md:py-4 shadow-sm">
+      <div className="bg-white border border-slate-200 rounded px-4 py-3 md:py-4 shadow-sm">
         <div className="flex flex-col md:flex-row md:flex-wrap md:items-center gap-3 md:gap-4">
-          <span className="text-sm font-semibold text-slate-600 dark:text-slate-400 shrink-0">Convert</span>
+          <span className="text-sm font-semibold text-slate-600 shrink-0">Convert</span>
           <input
             type="number"
             min={0}
             value={amount}
             onChange={(e) => setAmount(Number(e.target.value) || 0)}
-            className="w-24 md:w-28 border border-slate-200 dark:border-slate-700 rounded px-3 py-2 text-sm font-mono tabular-nums bg-white dark:bg-slate-900"
+            className="w-24 md:w-28 border border-slate-200 rounded px-3 py-2 text-sm font-mono tabular-nums bg-white"
           />
           <Select value={from} onValueChange={setFrom}>
-            <SelectTrigger className="w-full md:w-[140px] h-10 rounded border-slate-200 dark:border-slate-700 text-sm font-semibold">
+            <SelectTrigger className="w-full md:w-[140px] h-10 rounded border-slate-200 text-sm font-semibold">
               <div className="flex items-center gap-2">
                 <span>{FLAG_MAP[from] || '🏳️'}</span>
                 <SelectValue />

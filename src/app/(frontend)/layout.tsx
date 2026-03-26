@@ -24,7 +24,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const { isEnabled } = await draftMode()
 
   return (
-    <html className={cn(inter.variable)} lang="en" suppressHydrationWarning>
+    <html
+      className={cn(inter.variable)}
+      lang="en"
+      data-theme="light"
+      suppressHydrationWarning
+    >
       <head>
         <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
@@ -39,7 +44,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           />
 
           <Header />
-          <main className="site-main flex min-h-0 min-w-0 flex-1 flex-col bg-white dark:bg-slate-950">
+          <main className="site-main flex min-h-0 min-w-0 flex-1 flex-col bg-white">
             {children}
           </main>
           <Footer />

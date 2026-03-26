@@ -71,9 +71,9 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
   return (
     <div className="pb-16 md:pb-24">
       <PageClient />
-      <div className="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/40">
+      <div className="border-b border-slate-200 bg-slate-50">
         <div className="container px-4 py-10 md:py-12 text-center max-w-3xl mx-auto">
-          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white tracking-tight mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-8">
             Search
           </h1>
           <div className="max-w-[50rem] mx-auto">
@@ -85,7 +85,7 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
       {posts.totalDocs > 0 ? (
         <CollectionArchive posts={posts.docs as CardPostData[]} />
       ) : (
-        <div className="container px-4 py-10 text-center text-slate-600 dark:text-slate-400">
+        <div className="container px-4 py-10 text-center text-slate-600">
           No results found.
         </div>
       )}

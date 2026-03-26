@@ -23,13 +23,13 @@ export const CurrencyConverterBlock: React.FC<CurrencyConverterProps> = async ({
     rates = await getCurrencyRatesForFrontend(payload, { limit: 100 })
   }
 
-  const containerClasses = disableInnerContainer ? '' : 'bg-slate-100 dark:bg-slate-900/40 py-16 md:py-20 border-y border-slate-200 dark:border-slate-800'
+  const containerClasses = disableInnerContainer ? '' : 'bg-slate-100 py-16 md:py-20 border-y border-slate-200'
 
   return (
     <div className={containerClasses}>
       <div className={disableInnerContainer ? '' : 'container px-4'}>
         {!disableInnerContainer && (
-          <h2 className="text-2xl md:text-3xl font-bold text-center text-slate-900 dark:text-white mb-10">
+          <h2 className="text-2xl md:text-3xl font-bold text-center text-slate-900 mb-10">
             {title || 'Currency Converter'}
           </h2>
         )}

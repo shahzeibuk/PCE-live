@@ -34,11 +34,11 @@ export default async function RatesPage() {
 
       <div className="container px-4 py-10 md:py-12 grid lg:grid-cols-3 gap-10 lg:gap-12">
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded overflow-hidden">
+          <div className="bg-white border border-slate-200 rounded overflow-hidden">
             <CurrencyTable rates={rates} />
           </div>
-          <CurrencyNoteSurface className="p-5 md:p-6 text-sm text-slate-600 dark:text-slate-400">
-            <strong className="text-slate-900 dark:text-slate-200">Disclaimer:</strong> Rates may change without
+          <CurrencyNoteSurface className="p-5 md:p-6 text-sm text-slate-600">
+            <strong className="text-slate-900">Disclaimer:</strong> Rates may change without
             notice. Information only — confirm with a branch before any transaction.
           </CurrencyNoteSurface>
         </div>
@@ -46,12 +46,12 @@ export default async function RatesPage() {
         <div className="space-y-8">
           <CurrencyConverter rates={converterRates} />
 
-          <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded p-6 md:p-8">
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3">Bulk or treasury rates</h3>
-            <p className="text-slate-600 dark:text-slate-400 text-sm mb-6 leading-relaxed">
+          <div className="bg-white border border-slate-200 rounded p-6 md:p-8">
+            <h3 className="text-lg font-bold text-slate-900 mb-3">Bulk or treasury rates</h3>
+            <p className="text-slate-600 text-sm mb-6 leading-relaxed">
               For large volumes, ask about preferential pricing at our main branch or treasury desk.
             </p>
-            <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-300">
+            <ul className="space-y-2 text-sm text-slate-700">
               <li className="flex justify-between gap-4">
                 <span>Hours</span>
                 <span className="font-medium">9:00 AM – 6:00 PM</span>
@@ -62,7 +62,7 @@ export default async function RatesPage() {
               </li>
               <li className="flex justify-between gap-4">
                 <span>Sunday</span>
-                <span className="font-medium text-red-600 dark:text-red-400">Closed</span>
+                <span className="font-medium text-red-600">Closed</span>
               </li>
             </ul>
           </div>
