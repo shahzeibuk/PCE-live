@@ -101,7 +101,8 @@ export const FloatingHeader = ({
     <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white border-b border-slate-200">
       <div
         className={cn(
-          'container mx-auto px-4 sm:px-6 transition-all duration-300',
+          /* Match globals `.container` horizontal padding only — no extra px so hero/text align with nav */
+          'container mx-auto transition-all duration-300',
           scrolled ? 'py-2.5' : 'py-3 md:py-4'
         )}
       >

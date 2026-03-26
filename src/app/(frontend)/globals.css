@@ -46,23 +46,38 @@
   --font-sans: var(--font-inter);
 }
 
+/**
+ * Matches `.site-main` offset for fixed `FloatingHeader` (see floating-header.tsx).
+ * Used by `.flush-under-site-header` so full-bleed heroes sit under the nav with no white gap.
+ */
+:root {
+  --site-header-height: 5.75rem;
+}
+@media (width >= theme(--breakpoint-md)) {
+  :root {
+    --site-header-height: 6.75rem;
+  }
+}
+@media (width >= theme(--breakpoint-lg)) {
+  :root {
+    --site-header-height: 9rem;
+  }
+}
+
 @layer utilities {
   /**
    * Clears the fixed FloatingHeader (single row + secondary nav on lg).
-   * Keep in sync with src/components/ui/floating-header.tsx vertical size.
    */
   .site-main {
-    padding-top: 5.75rem;
+    padding-top: var(--site-header-height);
   }
-  @media (width >= theme(--breakpoint-md)) {
-    .site-main {
-      padding-top: 6.75rem;
-    }
-  }
-  @media (width >= theme(--breakpoint-lg)) {
-    .site-main {
-      padding-top: 9rem;
-    }
+
+  /**
+   * Pull first hero/header band up through main’s top padding so the background meets the fixed nav.
+   */
+  .flush-under-site-header {
+    margin-top: calc(-1 * var(--site-header-height));
+    padding-top: var(--site-header-height);
   }
 
   .container {

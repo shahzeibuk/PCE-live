@@ -57,7 +57,7 @@ export function InnerPageHeader({
 
   if (variant === 'currency') {
     return (
-      <header className={cn('border-b border-white/10', className)}>
+      <header className={cn('border-b border-white/10 flush-under-site-header', className)}>
         <HeroCurrencyBackdrop>{inner}</HeroCurrencyBackdrop>
       </header>
     )

@@ -31,41 +31,50 @@ export default async function HomePage() {
 
   return (
     <div className="flex flex-col gap-0 overflow-x-hidden">
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden flush-under-site-header">
         <HeroCurrencyBackdrop
-          minHeightClassName="min-h-[380px] md:min-h-[440px]"
-          className="pb-16 md:pb-24"
+          minHeightClassName="min-h-[min(88vh,560px)] sm:min-h-[min(82vh,520px)]"
+          className="pb-12 md:pb-16"
           priority
         >
-          <div className="container px-4">
-            <div className="max-w-3xl space-y-6 text-left">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight tracking-tight">
-                Today&apos;s Live Currency Exchange Rates{' '}
-                <span className="text-[#099546]">in Pakistan</span>
-              </h1>
-              <p className="text-lg text-slate-200 max-w-xl">
-                Check the latest USD, SAR, AED and EUR rates in the open market.
+          <div className="container flex flex-1 flex-col justify-center pb-12 pt-2 md:pb-16 md:pt-4">
+            <div className="max-w-2xl">
+              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.22em] text-[#7dd89a]">
+                Pakistan Currency Exchange
               </p>
-              <div className="flex flex-wrap gap-3 pt-2">
+              <h1 className="text-pretty text-3xl font-bold leading-[1.12] tracking-tight text-white sm:text-4xl md:text-[2.65rem] md:leading-[1.1]">
+                Today&apos;s live exchange rates{' '}
+                <span className="text-[#099546] drop-shadow-[0_1px_12px_rgba(9,149,70,0.35)]">
+                  in Pakistan
+                </span>
+              </h1>
+              <p className="mt-5 max-w-md text-base leading-relaxed text-slate-200/95 md:text-lg">
+                Open-market USD, SAR, AED, EUR and more — updated for quick reference before you visit a branch.
+              </p>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
                 <Button
                   asChild
-                  className="rounded bg-[#099546] hover:bg-[#088040] text-white h-12 px-6 font-semibold"
+                  className="h-12 rounded-md bg-[#099546] px-7 font-semibold text-white shadow-lg shadow-emerald-900/20 hover:bg-[#088040]"
                 >
-                  <Link href="/currency-rates">Check Today&apos;s Rates</Link>
+                  <Link href="/currency-rates">Check today&apos;s rates</Link>
                 </Button>
                 <Button
                   asChild
                   variant="outline"
-                  className="rounded h-12 px-6 font-semibold border-2 border-white/80 text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm"
+                  className="h-12 rounded-md border border-white/25 bg-white/10 px-7 font-semibold text-white backdrop-blur-md hover:bg-white/18"
                 >
                   <Link href="https://wa.me/923046668810" target="_blank" rel="noopener noreferrer">
-                    WhatsApp for Best Rate
+                    WhatsApp for best rate
                   </Link>
                 </Button>
               </div>
             </div>
           </div>
         </HeroCurrencyBackdrop>
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-20 bg-linear-to-t from-white to-transparent md:h-28"
+          aria-hidden
+        />
       </section>
 
       <section className="bg-white border-t border-slate-200">
