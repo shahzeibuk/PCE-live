@@ -25,7 +25,7 @@ export default async function RatesPage() {
   }))
 
   return (
-    <div className="pb-16 md:pb-24">
+    <div className="pb-16 md:pb-24 flush-under-site-header">
       <InnerPageHeader
         variant="currency"
         title="Live Exchange Rates"

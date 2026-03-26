@@ -30,8 +30,8 @@ export default async function HomePage() {
   }
 
   return (
-    <div className="flex flex-col gap-0 overflow-x-hidden">
-      <section className="relative overflow-hidden flush-under-site-header">
+    <div className="flex flex-col gap-0 overflow-x-hidden flush-under-site-header">
+      <section className="relative overflow-hidden">
         <HeroCurrencyBackdrop
           minHeightClassName="min-h-[min(85vh,520px)] sm:min-h-[min(80vh,480px)]"
           className="pb-10 md:pb-14"
@@ -59,7 +59,7 @@ export default async function HomePage() {
                 <Button
                   asChild
                   variant="outline"
-                  className="h-11 rounded border-2 border-white bg-white px-6 font-semibold text-slate-900 hover:bg-slate-100"
+                  className="h-11 rounded border-2 border-white bg-transparent px-6 font-semibold text-white shadow-none hover:bg-white/10 hover:text-white"
                 >
                   <Link href="https://wa.me/923046668810" target="_blank" rel="noopener noreferrer">
                     WhatsApp for best rate
@@ -69,14 +69,14 @@ export default async function HomePage() {
             </div>
           </div>
         </HeroCurrencyBackdrop>
-        <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-14 bg-linear-to-t from-white to-transparent"
-          aria-hidden
-        />
       </section>
 
       <section className="bg-white border-t border-slate-200">
-        <LiveExchangeRatesBlock rates={rates as any} disableInnerContainer={false} />
+        <LiveExchangeRatesBlock
+          rates={rates as any}
+          disableInnerContainer={false}
+          containerClassName="container px-4 pt-6 pb-12 sm:pt-8 sm:pb-14 md:pb-16"
+        />
       </section>
 
       <CurrencyConverterBlock rates={rates as any} disableInnerContainer={false} />

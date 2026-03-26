@@ -19,7 +19,7 @@ export default async function ServicesPage() {
   }
 
   return (
-    <div className="pb-16 md:pb-24">
+    <div className="pb-16 md:pb-24 flush-under-site-header">
       <InnerPageHeader
         variant="currency"
         title="Our Services"

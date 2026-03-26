@@ -51,12 +51,11 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
   }
 
   return (
-    <div className="pb-20 md:pb-28">
-      <div className="flush-under-site-header">
-        <HeroCurrencyBackdrop
-          minHeightClassName="min-h-[360px] md:min-h-[420px] h-[50vh] md:h-[56vh]"
-          className="mb-12 md:mb-16"
-        >
+    <div className="pb-20 md:pb-28 flush-under-site-header">
+      <HeroCurrencyBackdrop
+        minHeightClassName="min-h-[360px] md:min-h-[420px] h-[50vh] md:h-[56vh]"
+        className="mb-12 md:mb-16"
+      >
         <div className="hero-below-nav container flex w-full min-h-[inherit] flex-col justify-center py-8 text-white md:py-12">
           <div className="max-w-3xl">
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 md:mb-6">
@@ -68,7 +67,6 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           </div>
         </div>
       </HeroCurrencyBackdrop>
-      </div>
 
       <div className="container px-4">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-12">

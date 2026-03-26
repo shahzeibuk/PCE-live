@@ -12,12 +12,15 @@ export type LiveExchangeRatesProps = {
   title?: string
   rates?: CurrencyRate[]
   disableInnerContainer?: boolean
+  /** Overrides default container padding (e.g. tighter top after flush hero) */
+  containerClassName?: string
 }
 
 export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
   title,
   rates: providedRates,
   disableInnerContainer = false,
+  containerClassName,
 }) => {
   let rates = providedRates
 
@@ -39,7 +42,9 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
   }
 
   const list = rates ?? []
-  const containerClasses = disableInnerContainer ? '' : 'container px-4 py-16'
+  const containerClasses = disableInnerContainer
+    ? ''
+    : (containerClassName ?? 'container px-4 py-16')
 
   return (
     <div className={containerClasses}>
