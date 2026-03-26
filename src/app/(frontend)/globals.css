@@ -73,10 +73,16 @@
   }
 
   /**
-   * Pull first hero/header band up through main’s top padding so the background meets the fixed nav.
+   * Cancel main top padding so the next sibling (hero) can extend under the fixed nav.
+   * Do not add padding here — that would sit *above* the hero image and show main’s white bg.
+   * Use `.hero-below-nav` on the inner content wrapper instead.
    */
   .flush-under-site-header {
     margin-top: calc(-1 * var(--site-header-height));
+  }
+
+  /** Push hero text/CTAs below the fixed header; background stays full-bleed to the top. */
+  .hero-below-nav {
     padding-top: var(--site-header-height);
   }
 

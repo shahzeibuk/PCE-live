@@ -6,14 +6,14 @@ import { CURRENCY_HERO_BACKGROUND_IMAGE } from '@/constants/currencyBrand'
 type HeroCurrencyBackdropProps = {
   children: React.ReactNode
   className?: string
-  /** Extra classes on the dark overlay (e.g. stronger tint). */
+  /** Extra classes on the overlay (single tint layer). */
   overlayClassName?: string
   minHeightClassName?: string
   priority?: boolean
 }
 
 /**
- * Full-width hero-style background (banknotes image + readable overlay).
+ * Full-width hero (banknotes image + one simple dark scrim for text contrast).
  */
 export function HeroCurrencyBackdrop({
   children,
@@ -25,7 +25,7 @@ export function HeroCurrencyBackdrop({
   return (
     <div
       className={cn(
-        'relative flex flex-col overflow-hidden',
+        'relative flex flex-col overflow-hidden bg-slate-900',
         minHeightClassName,
         className,
       )}
@@ -34,20 +34,15 @@ export function HeroCurrencyBackdrop({
         src={CURRENCY_HERO_BACKGROUND_IMAGE}
         alt=""
         fill
-        className="object-cover object-[center_22%] scale-[1.04] motion-reduce:scale-100"
+        className="object-cover object-center"
         sizes="100vw"
         priority={priority}
       />
-      {/* Base tint + subtle depth; text stays readable without flattening the photo */}
       <div
         className={cn(
-          'pointer-events-none absolute inset-0 z-[1] bg-linear-to-br from-slate-950/88 via-slate-900/65 to-slate-950/50',
+          'pointer-events-none absolute inset-0 z-[1] bg-slate-950/72',
           overlayClassName,
         )}
-      />
-      <div
-        className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_110%_75%_at_72%_18%,transparent_35%,rgb(15_23_42/0.52)_100%)]"
-        aria-hidden
       />
       <div className="relative z-10 flex min-h-0 flex-1 flex-col">{children}</div>
     </div>

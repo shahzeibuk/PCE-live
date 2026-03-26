@@ -25,7 +25,8 @@ export function InnerPageHeader({
   const inner = (
     <div
       className={cn(
-        'container px-4 py-10 md:py-12',
+        'container py-8 md:py-10',
+        variant === 'currency' && 'hero-below-nav',
         centered && 'text-center',
       )}
     >

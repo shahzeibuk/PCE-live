@@ -41,7 +41,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
               sizes="100vw"
               priority
             />
-            <div className="pointer-events-none absolute inset-0 bg-slate-950/50 -z-[9]" aria-hidden />
+            <div className="pointer-events-none absolute inset-0 -z-[9] bg-slate-950/70" aria-hidden />
           </>
         )}
       </div>
