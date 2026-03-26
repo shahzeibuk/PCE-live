@@ -21,6 +21,7 @@ export default async function ServicesPage() {
   return (
     <div className="pb-16 md:pb-24">
       <InnerPageHeader
+        variant="currency"
         title="Our Services"
         description="Exchange, remittance, and business solutions for individuals and companies across Pakistan."
       />

@@ -12,6 +12,7 @@ import {
   getCurrencyRatesForFrontend,
   type FrontendCurrencyRate,
 } from '@/utilities/getCurrencyRatesForFrontend'
+import { CurrencyNoteSurface } from '@/components/layout/currencyBrandSurfaces'
 
 const FLAG_MAP: Record<string, string> = {
   USD: '🇺🇸',
@@ -70,10 +71,12 @@ export const CurrencyTable = async ({ rates: providedRates }: Props = {}) => {
       </div>
 
       {isFallback && (
-        <p className="text-xs text-amber-800 dark:text-amber-200/90 px-2 -mt-2 leading-snug">
-          CMS has no saved rates yet — showing the same API figures sync uses. Run sync or cron to store rows under{' '}
-          <strong>Currency Rates</strong> (separate from branches).
-        </p>
+        <CurrencyNoteSurface className="p-3 -mt-2">
+          <p className="text-xs text-amber-900 dark:text-amber-100/90 leading-snug">
+            CMS has no saved rates yet — showing the same API figures sync uses. Run sync or schedules to store rows
+            under <strong>Currency Rates</strong> (separate from branches).
+          </p>
+        </CurrencyNoteSurface>
       )}
 
       <div className="bg-white dark:bg-slate-950 border rounded-2xl overflow-hidden shadow-sm">

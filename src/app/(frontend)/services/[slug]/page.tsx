@@ -2,11 +2,10 @@ import React from 'react'
 import { getPayload } from 'payload'
 import configPromise from '@/payload.config'
 import { notFound } from 'next/navigation'
-import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import { CheckCircle2, ArrowRight, ShieldCheck, Clock, HeadphonesIcon } from 'lucide-react'
+import { HeroCurrencyBackdrop } from '@/components/layout/currencyBrandSurfaces'
 
 export async function generateStaticParams() {
   try {
@@ -53,13 +52,12 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
 
   return (
     <div className="pb-20 md:pb-28">
-      <section className="relative h-[50vh] min-h-[360px] md:h-[56vh] md:min-h-[420px] flex items-center mb-12 md:mb-16 overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <Media resource={service.hero_image} className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-slate-900/70" />
-        </div>
-
-        <div className="container relative z-10 text-white">
+      <HeroCurrencyBackdrop
+        minHeightClassName="min-h-[360px] md:min-h-[420px] h-[50vh] md:h-[56vh]"
+        className="mb-12 md:mb-16"
+        overlayClassName="!from-slate-950/88 !via-slate-950/72 !to-slate-950/50"
+      >
+        <div className="container px-4 text-white w-full py-16 md:py-20 flex flex-col justify-center min-h-[inherit]">
           <div className="max-w-3xl">
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 md:mb-6">
               {service.title}
@@ -69,7 +67,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
             </p>
           </div>
         </div>
-      </section>
+      </HeroCurrencyBackdrop>
 
       <div className="container px-4">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-12">

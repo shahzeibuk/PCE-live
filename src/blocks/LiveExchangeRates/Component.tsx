@@ -6,6 +6,7 @@ import { getCurrencyRatesForFrontend } from '@/utilities/getCurrencyRatesForFron
 import type { CurrencyRate } from '@/payload-types'
 import { Button } from '@/components/ui/button'
 import { ChevronDown } from 'lucide-react'
+import { CurrencyNoteSurface } from '@/components/layout/currencyBrandSurfaces'
 
 export type LiveExchangeRatesProps = {
   title?: string
@@ -94,13 +95,18 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
           </table>
         </div>
         {!disableInnerContainer && (
-          <div className="text-center mt-8">
+          <div className="text-center mt-8 space-y-5">
             <Button asChild className="rounded bg-[#099546] hover:bg-[#088040] text-white h-11 px-6 font-semibold">
               <Link href="/currency-rates" className="inline-flex items-center gap-2">
                 View Full Forex Rates
                 <ChevronDown className="h-4 w-4" />
               </Link>
             </Button>
+            <CurrencyNoteSurface className="p-3 md:p-4">
+              <p className="text-xs text-slate-600 dark:text-slate-400 text-center leading-relaxed">
+                Open-market figures for reference — confirm live rates at your branch before transacting.
+              </p>
+            </CurrencyNoteSurface>
           </div>
         )}
       </div>

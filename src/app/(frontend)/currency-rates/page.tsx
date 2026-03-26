@@ -5,6 +5,7 @@ import { getPayload } from 'payload'
 import configPromise from '@/payload.config'
 import { getCurrencyRatesForFrontend } from '@/utilities/getCurrencyRatesForFrontend'
 import { InnerPageHeader } from '@/components/layout/InnerPageHeader'
+import { CurrencyNoteSurface } from '@/components/layout/currencyBrandSurfaces'
 
 export default async function RatesPage() {
   let rates: any[] = []
@@ -26,6 +27,7 @@ export default async function RatesPage() {
   return (
     <div className="pb-16 md:pb-24">
       <InnerPageHeader
+        variant="currency"
         title="Live Exchange Rates"
         description="Get competitive open-market rates. Figures update regularly; confirm at your branch before transacting."
       />
@@ -35,10 +37,10 @@ export default async function RatesPage() {
           <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded overflow-hidden">
             <CurrencyTable rates={rates} />
           </div>
-          <div className="p-5 md:p-6 bg-slate-50 dark:bg-slate-900/50 rounded border border-slate-200 dark:border-slate-800 text-sm text-slate-600 dark:text-slate-400">
+          <CurrencyNoteSurface className="p-5 md:p-6 text-sm text-slate-600 dark:text-slate-400">
             <strong className="text-slate-900 dark:text-slate-200">Disclaimer:</strong> Rates may change without
             notice. Information only — confirm with a branch before any transaction.
-          </div>
+          </CurrencyNoteSurface>
         </div>
 
         <div className="space-y-8">
