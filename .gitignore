@@ -12,6 +12,7 @@ public/media/
 public/robots.txt
 public/sitemap*.xml
 
+legacy-html-snapshot/
 
 # Playwright
 node_modules/

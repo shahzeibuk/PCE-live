@@ -104,6 +104,7 @@ export const HEADER_NAV: { url: string; label: string }[] = [
   { url: '/services', label: 'Services' },
   { url: '/branches', label: 'Branches' },
   { url: '/currency-rates', label: 'Live Rates' },
+  { url: '/posts', label: 'Blog' },
   { url: '/contact', label: 'Contact' },
 ]
 
@@ -127,6 +128,7 @@ export const FOOTER_GROUPS: {
       { url: '/services/western-union', label: 'Western Union' },
       { url: '/services/currency-exchange', label: 'Currency exchange' },
       { url: '/currency-rates', label: 'Live rates' },
+      { url: '/posts', label: 'Blog' },
     ],
   },
   {

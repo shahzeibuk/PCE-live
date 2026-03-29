@@ -17,6 +17,8 @@
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "seed:legacy": "cross-env NODE_OPTIONS=--no-deprecation tsx src/scripts/seed_from_legacy_site.ts",
     "seed:cms": "cross-env NODE_OPTIONS=--no-deprecation tsx src/scripts/seed_cms_from_legacy.ts",
+    "migrate:site": "cross-env NODE_OPTIONS=--no-deprecation tsx src/scripts/migrate_from_live_site.ts",
+    "snapshot:legacy": "cross-env NODE_OPTIONS=--no-deprecation tsx src/scripts/snapshot_legacy_public_site.ts",
     "reinstall": "cross-env NODE_OPTIONS=--no-deprecation rm -rf node_modules && rm pnpm-lock.yaml && pnpm --ignore-workspace install",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "test": "pnpm run test:int && pnpm run test:e2e",
