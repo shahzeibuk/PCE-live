@@ -9,6 +9,7 @@ import { getCurrencyRatesForFrontend } from '@/utilities/getCurrencyRatesForFron
 import { ServicesGridBlock } from '@/blocks/ServicesGrid/Component'
 import { WhatsAppCTABlock } from '@/blocks/WhatsAppCTA/Component'
 import { HeroCurrencyBackdrop } from '@/components/layout/currencyBrandSurfaces'
+import { HomeBlogTeasers } from '@/components/HomeBlogTeasers'
 
 export default async function HomePage() {
   const payload = await getPayload({ config: configPromise })
@@ -16,6 +17,7 @@ export default async function HomePage() {
   let rates: any[] = []
   let services: any[] = []
   let news: any[] = []
+  let blogPosts: any[] = []
 
   try {
     rates = await getCurrencyRatesForFrontend(payload, { limit: 8 })
@@ -25,6 +27,20 @@ export default async function HomePage() {
 
     const newsResult = await payload.find({ collection: 'news', limit: 3, sort: '-published_date' })
     news = (newsResult.docs ?? []) as any[]
+
+    const blogResult = await payload.find({
+      collection: 'posts',
+      depth: 0,
+      limit: 3,
+      sort: '-publishedAt',
+      overrideAccess: false,
+      select: {
+        title: true,
+        slug: true,
+        meta: true,
+      },
+    })
+    blogPosts = (blogResult.docs ?? []) as any[]
   } catch (err) {
     console.error('Home Page Data Fetch Error:', err)
   }
@@ -115,6 +131,8 @@ export default async function HomePage() {
           </div>
         </section>
       )}
+
+      <HomeBlogTeasers posts={blogPosts} />
 
       <section className="bg-white border-t border-slate-200">
         <WhatsAppCTABlock

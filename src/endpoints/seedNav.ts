@@ -1,6 +1,11 @@
 import { PayloadHandler } from 'payload'
 
+import { denySeedInProduction } from '@/utilities/seedEndpointGuard'
+
 export const seedNavHandler: PayloadHandler = async (req) => {
+  const forbidden = denySeedInProduction(req)
+  if (forbidden) return forbidden
+
   const payload = req.payload as any
 
   console.log('Seeding navigation...')

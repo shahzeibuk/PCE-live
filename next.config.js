@@ -6,6 +6,8 @@ const NEXT_PUBLIC_SERVER_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
   ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
   : undefined || process.env.__NEXT_PRIVATE_ORIGIN || 'http://localhost:3000'
 
+const mediaImageHost = process.env.NEXT_PUBLIC_IMAGE_HOSTNAME?.trim()
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -18,6 +20,9 @@ const nextConfig = {
           protocol: url.protocol.replace(':', ''),
         }
       }),
+      ...(mediaImageHost
+        ? [{ protocol: 'https', hostname: mediaImageHost }]
+        : []),
       {
         protocol: 'https',
         hostname: 'images.unsplash.com',

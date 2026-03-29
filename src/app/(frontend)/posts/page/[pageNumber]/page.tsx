@@ -44,9 +44,9 @@ export default async function Page({ params: paramsPromise }: Args) {
       <PageClient />
       <div className="border-b border-slate-200 bg-slate-50">
         <div className="container px-4 py-10 md:py-12 text-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">Posts</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">Blog</h1>
           <p className="text-slate-600 mt-3 max-w-2xl mx-auto text-base">
-            Page {sanitizedPageNumber} — archives and updates.
+            Page {sanitizedPageNumber} — all articles.
           </p>
         </div>
       </div>
@@ -73,7 +73,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
   const { pageNumber } = await paramsPromise
   return {
-    title: `Payload Website Template Posts Page ${pageNumber || ''}`,
+    title: `Blog — page ${pageNumber || ''}`,
   }
 }
 

@@ -25,6 +25,7 @@ import { getServerSideURL } from './utilities/getURL'
 import { seedHandler } from './endpoints/seed'
 import { seedNavHandler } from './endpoints/seedNav'
 import { seedBranches } from './scripts/seed_branches'
+import { denySeedInProduction } from './utilities/seedEndpointGuard'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -142,6 +143,8 @@ export default buildConfig({
       path: '/seed-branches',
       method: 'get',
       handler: async (req: PayloadRequest) => {
+        const forbidden = denySeedInProduction(req)
+        if (forbidden) return forbidden
         try {
           await seedBranches(req.payload)
           return Response.json({ message: 'Branches seeded successfully' })

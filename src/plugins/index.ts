@@ -12,9 +12,12 @@ import { beforeSyncWithSearch } from '@/search/beforeSync'
 
 import { Page, Post } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
+import { s3StoragePlugin } from '@/plugins/s3Storage'
+
+const siteTitle = 'Pakistan Currency Exchange'
 
 const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
-  return doc?.title ? `${doc.title} | Payload Website Template` : 'Payload Website Template'
+  return doc?.title ? `${doc.title} | ${siteTitle}` : siteTitle
 }
 
 const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
@@ -23,7 +26,10 @@ const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
   return doc?.slug ? `${url}/${doc.slug}` : url
 }
 
+const optionalStorage = s3StoragePlugin()
+
 export const plugins: Plugin[] = [
+  ...(optionalStorage ? [optionalStorage] : []),
   redirectsPlugin({
     collections: ['pages', 'posts'],
     overrides: {
