@@ -13,6 +13,11 @@ import { beforeSyncWithSearch } from '@/search/beforeSync'
 import { Page, Post } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
 import { s3StoragePlugin } from '@/plugins/s3Storage'
+import { vercelBlobStoragePlugin } from '@/plugins/vercelBlobStorage'
+
+function pickUploadStoragePlugin(): Plugin | null {
+  return vercelBlobStoragePlugin() ?? s3StoragePlugin()
+}
 
 const siteTitle = 'Pakistan Currency Exchange'
 
@@ -26,7 +31,7 @@ const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
   return doc?.slug ? `${url}/${doc.slug}` : url
 }
 
-const optionalStorage = s3StoragePlugin()
+const optionalStorage = pickUploadStoragePlugin()
 
 export const plugins: Plugin[] = [
   ...(optionalStorage ? [optionalStorage] : []),

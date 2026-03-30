@@ -5,6 +5,10 @@ declare global {
       DATABASE_URL: string
       NEXT_PUBLIC_SERVER_URL: string
       VERCEL_PROJECT_PRODUCTION_URL: string
+      /** Vercel Blob — enables @payloadcms/storage-vercel-blob for Media */
+      BLOB_READ_WRITE_TOKEN?: string
+      /** Set to `true` for large uploads on Vercel (see Payload Vercel Blob client uploads) */
+      VERCEL_BLOB_CLIENT_UPLOADS?: string
     }
   }
 }
