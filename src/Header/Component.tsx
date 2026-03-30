@@ -5,7 +5,7 @@ import { getPayload } from 'payload'
 
 import type { Header as HeaderType } from '@/payload-types'
 import { FloatingHeader } from '@/components/ui/floating-header'
-import type { ServiceNavLink } from '@/Header/serviceNav'
+import { mergeServiceNavLinks, type ServiceNavLink } from '@/Header/serviceNav'
 
 export default async function Header() {
   const headerData: HeaderType = await getCachedGlobal('header', 1)()
@@ -23,12 +23,14 @@ export default async function Header() {
     },
   })
 
-  const serviceNavLinks: ServiceNavLink[] = serviceDocs
+  const fromCms: ServiceNavLink[] = serviceDocs
     .filter((d) => typeof d.slug === 'string' && d.slug.length > 0)
     .map((d) => ({
       title: d.title,
       href: `/services/${d.slug}`,
     }))
+
+  const serviceNavLinks = mergeServiceNavLinks(fromCms)
 
   return <FloatingHeader data={headerData} serviceNavLinks={serviceNavLinks} />
 }

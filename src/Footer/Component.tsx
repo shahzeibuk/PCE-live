@@ -8,6 +8,7 @@ import { CMSLink } from '@/components/Link'
 import { Logo } from '@/components/Logo/Logo'
 import { PartnersCarousel } from '@/components/PartnersCarousel'
 import { Facebook, Linkedin, Twitter, Mail, Phone, MessageCircle } from 'lucide-react'
+import { FOOTER_COMPANY_BLURB } from '@/components/home/homeContent'
 
 export async function Footer() {
   const footerData: Footer = await getCachedGlobal('footer', 1)()
@@ -15,6 +16,11 @@ export async function Footer() {
   return (
     <>
       {/* Partners section sits right above the footer */}
+      <div className="bg-white pt-10">
+        <p className="text-center text-sm text-slate-600 max-w-3xl mx-auto px-4 mb-2 leading-relaxed">
+          {FOOTER_COMPANY_BLURB}
+        </p>
+      </div>
       <PartnersCarousel />
       
       <footer className="mt-auto bg-[#099546] text-white overflow-hidden relative">

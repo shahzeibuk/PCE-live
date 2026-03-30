@@ -54,16 +54,19 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   )
 }
 
+const siteDescription =
+  'Check the latest USD, SAR, AED, and EUR to PKR open market exchange rates in Pakistan. Live forex rates, currency exchange, and remittance services nationwide.'
+
 export const metadata: Metadata = {
   metadataBase: new URL(getServerSideURL()),
   title: {
-    default: 'Most Reliable Currency Exchange Rates Available',
+    default: 'Live Currency Exchange Rates in Pakistan | Pakistan Currency Exchange',
     template: '%s | Pakistan Currency Exchange',
   },
-  description: 'Pakistan currency exchange put forward feasibility, ease and convenience, our agenda revolves around the satisfaction of our customers that is integrated with good and best currency exchange rates in town along with updated list of rates everyday!',
+  description: siteDescription,
   openGraph: mergeOpenGraph({
-    title: 'Most Reliable Currency Exchange Rates Available',
-    description: 'Pakistan currency exchange put forward feasibility, ease and convenience, our agenda revolves around the satisfaction of our customers that is integrated with good and best currency exchange rates in town along with updated list of rates everyday!',
+    title: 'Live Currency Exchange Rates in Pakistan | Pakistan Currency Exchange',
+    description: siteDescription,
   }),
   twitter: {
     card: 'summary_large_image',

@@ -33,13 +33,13 @@ export function PartnersCarousel() {
                 key={`${partner.name}-${index}`}
                 className="flex-[0_0_50%] min-w-0 pl-4 sm:flex-[0_0_33%] md:flex-[0_0_25%] lg:flex-[0_0_20%]"
               >
-                <div className="flex items-center justify-center h-24 p-4 grayscale hover:grayscale-0 transition-colors duration-200">
+                <div className="flex items-center justify-center h-28 md:h-32 p-4 grayscale hover:grayscale-0 transition-colors duration-200">
                   <Image
                     src={partner.src}
-                    alt={partner.name}
-                    width={160}
-                    height={80}
-                    className="max-h-16 w-auto object-contain"
+                    alt={`${partner.name} partner logo`}
+                    width={240}
+                    height={120}
+                    className="max-h-24 md:max-h-28 w-auto object-contain"
                   />
                 </div>
               </div>

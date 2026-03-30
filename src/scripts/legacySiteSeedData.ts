@@ -174,6 +174,114 @@ export const LEGACY_SERVICES: LegacyServiceSeed[] = [
     ],
     body: 'We support compliant remittance flows benefiting Pakistani families and align desk procedures with applicable rules and partner requirements.',
   },
+  {
+    title: 'IME',
+    slug: 'ime',
+    short_description: 'Receive international remittances through IME-supported corridors at select branches.',
+    description:
+      'Pakistan Currency Exchange facilitates IME remittance payouts where available, with ID verification and customer guidance at the counter.',
+    process_steps: [
+      { step: 'Confirm IME reference / transaction details' },
+      { step: 'Visit branch with valid CNIC' },
+      { step: 'Complete verification and collect funds' },
+    ],
+    benefits: [
+      { benefit: 'Supported receive options where offered' },
+      { benefit: 'Trained branch staff' },
+      { benefit: 'Part of global receive network' },
+    ],
+    body: 'IME is a remittance channel many families rely on. Visit your nearest Pakistan Currency Exchange branch for availability, limits, and required documents.',
+  },
+  {
+    title: 'URemit',
+    slug: 'uremit',
+    short_description: 'Collect remittances sent via URemit through participating PCE outlets.',
+    description:
+      'We help beneficiaries receive funds sent through URemit subject to partner availability and regulatory requirements.',
+    process_steps: [
+      { step: 'Bring reference and valid ID' },
+      { step: 'Confirm payout with staff' },
+      { step: 'Sign off and receive cash or credit as applicable' },
+    ],
+    benefits: [
+      { benefit: 'Convenient branch access' },
+      { benefit: 'Clear process at the desk' },
+      { benefit: 'Nationwide presence where offered' },
+    ],
+    body: 'URemit senders can support family in Pakistan through licensed channels; beneficiaries can inquire at Pakistan Currency Exchange for supported services.',
+  },
+  {
+    title: 'Speed Remit',
+    slug: 'speed-remit',
+    short_description: 'Fast remittance receive options via Speed Remit at eligible branches.',
+    description:
+      'Speed Remit focuses on efficient transfers; PCE branches assist with compliant collection and customer support.',
+    process_steps: [
+      { step: 'Obtain PIN / reference from sender' },
+      { step: 'Visit branch with ID' },
+      { step: 'Complete KYC and collect' },
+    ],
+    benefits: [
+      { benefit: 'Designed for quick payouts' },
+      { benefit: 'Staff-assisted process' },
+      { benefit: 'Multiple cities' },
+    ],
+    body: 'Ask at your branch whether Speed Remit receive is available and what documents you need for your transaction.',
+  },
+  {
+    title: 'HelloPaisa',
+    slug: 'hellopaisa',
+    short_description: 'HelloPaisa remittance receive services where supported at our network.',
+    description:
+      'Pakistan Currency Exchange may offer HelloPaisa beneficiary services at select locations—confirm with your branch.',
+    process_steps: [
+      { step: 'Check branch support for HelloPaisa' },
+      { step: 'Bring transaction details and ID' },
+      { step: 'Complete payout per policy' },
+    ],
+    benefits: [
+      { benefit: 'Focused receive experience' },
+      { benefit: 'Guidance on requirements' },
+      { benefit: 'Trusted counter service' },
+    ],
+    body: 'HelloPaisa users can visit Pakistan Currency Exchange branches that support the product for collection and assistance.',
+  },
+  {
+    title: 'Aussie Forex & Finance',
+    slug: 'aussie-forex-finance',
+    short_description: 'Remittance and forex solutions linked to Aussie Forex & Finance where offered.',
+    description:
+      'We support applicable Aussie Forex & Finance-linked services at participating branches alongside our core exchange and remittance desk.',
+    process_steps: [
+      { step: 'Confirm product availability locally' },
+      { step: 'Provide sender information and ID' },
+      { step: 'Complete transaction with staff' },
+    ],
+    benefits: [
+      { benefit: 'Corridor-specific support' },
+      { benefit: 'Professional handling' },
+      { benefit: 'Aligned with compliance' },
+    ],
+    body: 'Contact us or your nearest branch to learn which Aussie Forex & Finance services are available in your city.',
+  },
+  {
+    title: 'ARY Exchange',
+    slug: 'ary-exchange',
+    short_description: 'ARY Exchange remittance services through supported Pakistan Currency Exchange locations.',
+    description:
+      'Beneficiaries may receive ARY Exchange remittances at eligible PCE branches with valid identification and transaction details.',
+    process_steps: [
+      { step: 'Verify branch offers ARY Exchange' },
+      { step: 'Present ID and reference' },
+      { step: 'Collect proceeds securely' },
+    ],
+    benefits: [
+      { benefit: 'Recognised brand partnership' },
+      { benefit: 'Nationwide reach where enabled' },
+      { benefit: 'Customer-first service' },
+    ],
+    body: 'ARY Exchange senders can rely on Pakistan Currency Exchange for supported receive paths—our staff will confirm steps at the branch.',
+  },
 ]
 
 export const LEGACY_TESTIMONIALS = [

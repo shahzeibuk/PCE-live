@@ -5,6 +5,8 @@ import React from 'react'
 import { MapPin, Phone, Mail, Navigation, Building2 } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { getBranchMapEmbedUrl } from '@/utilities/branchMapEmbed'
+import { getServerSideURL } from '@/utilities/getURL'
 
 export async function generateStaticParams() {
   try {
@@ -38,8 +40,29 @@ export default async function BranchPage({ params }: { params: { id: string } })
 
   if (!branch) return notFound()
 
+  const mapSrc = getBranchMapEmbedUrl({
+    address: branch.address,
+    city: branch.city,
+    google_map_link: branch.google_map_link,
+  })
+
+  const localSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: `Pakistan Currency Exchange — ${branch.branch_name}`,
+    url: `${getServerSideURL().replace(/\/$/, '')}/branches/${branch.id}`,
+    telephone: branch.phone ?? undefined,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: branch.address,
+      addressLocality: branch.city,
+      addressCountry: 'PK',
+    },
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 pb-16 md:pb-24">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localSchema) }} />
       <div className="container px-4 max-w-4xl mx-auto pt-6 md:pt-8">
         <div className="mb-8">
           <Button asChild variant="ghost" className="mb-4 text-muted-foreground hover:text-primary">
@@ -104,6 +127,32 @@ export default async function BranchPage({ params }: { params: { id: string } })
                 )}
               </div>
             </div>
+
+            {mapSrc ? (
+              <div className="bg-white rounded-3xl p-4 md:p-6 border shadow-sm overflow-hidden">
+                <h2 className="text-lg font-bold mb-4 px-2">Location map</h2>
+                <iframe
+                  title={`Map: ${branch.branch_name}`}
+                  src={mapSrc}
+                  className="w-full h-64 md:h-80 rounded-2xl border-0 bg-slate-100"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  allowFullScreen
+                />
+                {branch.google_map_link ? (
+                  <p className="text-center mt-3 text-sm">
+                    <a
+                      href={branch.google_map_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary font-medium hover:underline"
+                    >
+                      Open in Google Maps
+                    </a>
+                  </p>
+                ) : null}
+              </div>
+            ) : null}
           </div>
 
           <div className="space-y-6">

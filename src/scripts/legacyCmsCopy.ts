@@ -96,6 +96,36 @@ export const SERVICE_DETAIL_PARAGRAPHS: Record<string, string[]> = {
     'Use authorised channels and licensed partners so your transfer is recorded appropriately and beneficiaries receive funds safely.',
     'Visit any branch for product options (cash pickup, account credit where available) and compliance steps for your corridor.',
   ],
+  ime: [
+    'IME remittance services let beneficiaries collect funds at supported Pakistan Currency Exchange branches with valid ID and transaction details.',
+    'Ask locally whether IME receive is available and what reference information you need before visiting the counter.',
+    'Our staff follow applicable rules for verification and payout.',
+  ],
+  uremit: [
+    'URemit supports convenient remittance flows; Pakistan Currency Exchange assists eligible beneficiaries at participating locations.',
+    'Bring your reference and CNIC; we will guide you through the collection process step by step.',
+    'Availability may vary by branch and corridor — contact us to confirm.',
+  ],
+  'speed-remit': [
+    'Speed Remit is designed for efficient international transfers; collect at eligible PCE outlets when your sender uses supported channels.',
+    'Present PIN, ID, and any partner requirements requested at the branch.',
+    'We focus on a quick, compliant desk experience.',
+  ],
+  hellopaisa: [
+    'HelloPaisa beneficiaries may receive supported transactions at Pakistan Currency Exchange branches where the product is enabled.',
+    'Confirm with your branch before visiting so you have the correct documents and reference.',
+    'We prioritise clear communication at payout.',
+  ],
+  'aussie-forex-finance': [
+    'Aussie Forex & Finance-linked services may be available at selected branches alongside our standard exchange and remittance desk.',
+    'Contact your nearest outlet for corridor-specific guidance.',
+    'Documentation and limits follow partner and regulatory rules.',
+  ],
+  'ary-exchange': [
+    'ARY Exchange remittances can be received at supported Pakistan Currency Exchange locations nationwide.',
+    'Valid ID and transaction information are required for payout.',
+    'Our network aims to make collection straightforward and secure.',
+  ],
 }
 
 export const HEADER_NAV: { url: string; label: string }[] = [

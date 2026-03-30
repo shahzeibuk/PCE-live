@@ -185,7 +185,7 @@ export const FloatingHeader = ({
                   {servicesOpen ? (
                     <div
                       role="menu"
-                      className="absolute left-0 top-full z-50 mt-1 min-w-56 max-h-[min(70vh,24rem)] overflow-y-auto rounded-md border border-slate-200 bg-white py-1 shadow-lg"
+                      className="absolute left-0 top-full z-50 mt-1 min-w-72 max-h-[min(70vh,28rem)] overflow-y-auto rounded-md border border-slate-200 bg-white py-1 shadow-lg"
                     >
                       <Link
                         href="/services"
