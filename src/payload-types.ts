@@ -990,6 +990,10 @@ export interface Branch {
   city: string;
   address: string;
   phone: string;
+  /**
+   * Optional direct mobile or cell number for this branch.
+   */
+  cell_phone?: string | null;
   email?: string | null;
   /**
    * Full URL to open this branch in Google Maps.
@@ -1713,6 +1717,7 @@ export interface BranchesSelect<T extends boolean = true> {
   city?: T;
   address?: T;
   phone?: T;
+  cell_phone?: T;
   email?: T;
   google_map_link?: T;
   updatedAt?: T;
