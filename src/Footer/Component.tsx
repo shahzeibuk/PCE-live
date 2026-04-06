@@ -32,8 +32,15 @@ export async function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
             {/* Logo and Head Office Info */}
             <div className="lg:col-span-1 flex flex-col items-start gap-4">
-              <Link className="flex items-center bg-white p-2 rounded-md" href="/">
-                <Logo />
+              <Link
+                className="inline-flex items-center justify-center bg-white p-3 sm:p-3.5 rounded-lg shadow-sm ring-1 ring-black/5"
+                href="/"
+              >
+                <Logo
+                  loading="eager"
+                  priority="high"
+                  className="h-14 w-auto sm:h-16 md:h-18"
+                />
               </Link>
               <div className="mt-4">
                 <p className="font-semibold text-sm uppercase tracking-wider mb-2">Head Office Timing</p>
