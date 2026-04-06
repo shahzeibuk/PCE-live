@@ -17,12 +17,12 @@ export const Logo = (props: Props) => {
     /* eslint-disable @next/next/no-img-element */
     <img
       alt="Pakistan Currency Exchange — official logo"
-      width={240}
-      height={78}
+      width={300}
+      height={98}
       loading={loading}
       fetchPriority={priority}
       decoding="async"
-      className={clsx('max-w-[15rem] w-full h-auto min-h-[2.25rem] object-contain', className)}
+      className={clsx('max-w-[min(100%,22rem)] w-full h-auto min-h-11 object-contain', className)}
       src="/Pakistan%20Currency%20Logo.png"
     />
   )

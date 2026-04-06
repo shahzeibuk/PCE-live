@@ -112,8 +112,8 @@ export const FloatingHeader = ({
               loading="eager"
               priority="high"
               className={cn(
-                'transition-all duration-300',
-                scrolled ? 'h-9 sm:h-10' : 'h-10 sm:h-12',
+                'transition-all duration-300 w-auto',
+                scrolled ? 'h-11 sm:h-12' : 'h-12 sm:h-14 md:h-16',
               )}
             />
           </Link>
