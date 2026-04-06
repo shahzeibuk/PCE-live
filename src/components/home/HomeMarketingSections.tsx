@@ -55,18 +55,18 @@ export function HomeMainServicesThree() {
         <h2 id="home-main-services-heading" className="text-2xl md:text-3xl font-bold text-center text-slate-900 mb-10">
           Our main services
         </h2>
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto items-stretch">
           {HOME_MAIN_SERVICES.map((s) => (
             <Link
               key={s.href}
               href={s.href}
-              className="rounded-xl border border-slate-200 bg-slate-50 p-8 text-center hover:border-[#099546]/40 hover:shadow-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#099546]"
+              className="rounded-xl border border-slate-200 bg-slate-50 p-8 text-center hover:border-[#099546]/40 hover:shadow-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#099546] h-full flex flex-col"
             >
               <div className="flex justify-center mb-4" aria-hidden>
                 <MainServiceIcon kind={s.icon} />
               </div>
               <h3 className="text-lg font-bold text-slate-900 mb-2">{s.title}</h3>
-              <p className="text-sm text-slate-600 leading-relaxed">{s.blurb}</p>
+              <p className="text-sm md:text-base text-slate-600 leading-relaxed flex-1">{s.blurb}</p>
             </Link>
           ))}
         </div>
@@ -84,11 +84,14 @@ export function HomeServicesFourSection() {
           {heading}
         </h2>
         <p className="text-center text-slate-600 max-w-3xl mx-auto mb-12">{intro}</p>
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-8 items-stretch">
           {items.map((item) => (
-            <article key={item.title} className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
-              <h3 className="text-lg font-bold text-slate-900 mb-3">{item.title}</h3>
-              <p className="text-sm text-slate-600 leading-relaxed mb-4">{item.text}</p>
+            <article
+              key={item.title}
+              className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm h-full flex flex-col"
+            >
+              <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-3">{item.title}</h3>
+              <p className="text-sm md:text-base text-slate-600 leading-relaxed mb-4 flex-1">{item.text}</p>
               <Link href={item.href} className="text-sm font-semibold text-[#099546] hover:underline inline-flex items-center gap-1">
                 Learn more <ChevronDown className="h-4 w-4 -rotate-90" aria-hidden />
               </Link>
@@ -166,7 +169,10 @@ export function HomeBranchPromoSection() {
         <h2 id="home-branch-heading" className="text-2xl md:text-3xl font-bold text-slate-900 mb-4">
           {HOME_BRANCH.heading}
         </h2>
-        <p className="text-slate-700 leading-relaxed mb-4">{HOME_BRANCH.paragraph}</p>
+        <p className="text-slate-700 text-base md:text-lg leading-relaxed mb-4">
+          With <strong className="text-slate-900 font-bold">150+ branches</strong> across Pakistan, visit your nearest
+          Pakistan Currency Exchange outlet for currency exchange, remittance collection, and customer support.
+        </p>
         <p className="text-slate-600 text-sm mb-8">{HOME_BRANCH.supporting}</p>
         <Button asChild variant="outline" className="rounded border-2 border-[#099546] text-[#099546] hover:bg-[#099546]/5 h-11 px-8 font-semibold">
           <Link href={HOME_BRANCH.ctaHref} className="inline-flex items-center gap-2">

@@ -24,7 +24,7 @@ export const ABOUT_COPY = {
       paragraphs: [
         'Pakistan Currency Exchange (Pvt) dates back to 1992, but the idea of a full-service platform took shape on 20 June 2003 under the Companies Ordinance 1984, following Exchange Company reforms. Everything we offer under PCE is operated in line with State Bank of Pakistan rules.',
         'Whether it is safety, compliance, or reliability for remittance and money changing, PCE focuses on a straightforward experience at the counter. We know sending and receiving money is emotional—not just a transaction—so we prioritise convenience, clear requirements, and professional service.',
-        'Our network has expanded to well over a hundred branch locations across Pakistan, improving access for customers and supporting our brand as a trusted exchange company.',
+        'Our network has expanded to 150+ branch locations across Pakistan, improving access for customers and supporting our brand as a trusted exchange company.',
       ],
     },
     {
