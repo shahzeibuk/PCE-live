@@ -27,7 +27,7 @@ export function HomeAboutSection() {
   return (
     <section className="border-t border-slate-200 bg-slate-50 py-14 md:py-20" aria-labelledby="home-about-heading">
       <div className="container px-4 max-w-4xl mx-auto text-center md:text-left">
-        <h2 id="home-about-heading" className="text-2xl md:text-3xl font-bold text-slate-900 mb-8">
+        <h2 id="home-about-heading" className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-8">
           {HOME_ABOUT.heading}
         </h2>
         <div className="space-y-5 text-slate-700 leading-relaxed">

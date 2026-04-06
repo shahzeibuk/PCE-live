@@ -102,10 +102,10 @@ export default async function HomePage() {
                 <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-[#099546]">
                   {HOME_HERO.eyebrow}
                 </p>
-                <h1 className="text-pretty text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl md:text-5xl">
+                <h1 className="text-pretty text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
                   {HOME_HERO.h1}
                 </h1>
-                <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-200 md:text-lg">
+                <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-200 md:text-lg lg:text-xl">
                   {HOME_HERO.lead}
                 </p>
                 <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">

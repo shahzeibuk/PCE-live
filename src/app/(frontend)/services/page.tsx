@@ -27,7 +27,7 @@ export default async function ServicesPage() {
       />
 
       <div className="container px-4 py-10 md:py-12">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 items-stretch">
           {services.map((service: any) => (
             <ServiceCard
               key={service.id}

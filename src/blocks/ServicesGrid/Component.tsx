@@ -40,7 +40,7 @@ export const ServicesGridBlock: React.FC<ServicesGridProps> = async ({
             <div className="w-full border-t border-slate-200" />
           </div>
           <div className="relative bg-background px-6">
-            <h2 className="text-2xl md:text-3xl font-bold text-[#099546] text-center">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#099546] text-center">
               {title || 'Our Services'}
             </h2>
           </div>
@@ -48,13 +48,13 @@ export const ServicesGridBlock: React.FC<ServicesGridProps> = async ({
       )}
 
       <div
-        className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 ${disableInnerContainer ? 'container px-4' : ''}`}
+        className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 items-stretch ${disableInnerContainer ? 'container px-4' : ''}`}
       >
         {list.map((service: any) => (
           <Link
             key={service.id}
             href={`/services/${service.slug}`}
-            className="bg-slate-100 border border-slate-200 rounded p-6 md:p-8 flex flex-col items-center text-center hover:border-[#099546]/50 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#099546] focus-visible:ring-offset-2"
+            className="bg-slate-100 border border-slate-200 rounded p-6 md:p-8 flex flex-col items-center text-center hover:border-[#099546]/50 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#099546] focus-visible:ring-offset-2 h-full min-h-48"
           >
             <div className="mb-4">
               <ServiceListingIcon service={service} className="mx-auto" />
@@ -62,7 +62,7 @@ export const ServicesGridBlock: React.FC<ServicesGridProps> = async ({
             <h3 className="text-base md:text-lg font-bold text-slate-900 mb-2">
               {service.title}
             </h3>
-            <p className="text-sm text-slate-600 leading-relaxed line-clamp-3">
+            <p className="text-sm md:text-base text-slate-600 leading-relaxed line-clamp-3 flex-1">
               {service.short_description || service.description}
             </p>
           </Link>
