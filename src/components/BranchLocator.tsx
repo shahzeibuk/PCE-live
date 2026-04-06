@@ -74,6 +74,17 @@ export function BranchLocator({ branches }: { branches: any[] }) {
                       <p className="text-sm font-medium">{branch.phone}</p>
                     </div>
                   )}
+                  {branch.cell_phone && (
+                    <div className="flex gap-2.5 items-center text-slate-600">
+                      <Phone className="w-4 h-4 shrink-0 text-slate-400" aria-hidden />
+                      <div className="text-sm">
+                        <span className="text-slate-500 font-normal">Cell: </span>
+                        <a href={`tel:${String(branch.cell_phone).replace(/\s/g, '')}`} className="font-medium text-[#099546] hover:underline">
+                          {branch.cell_phone}
+                        </a>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>

@@ -109,7 +109,7 @@ export const HOME_REMITTANCE = {
 export const HOME_BRANCH = {
   heading: 'Find Your Nearest Branch',
   paragraph:
-    'Visit your nearest Pakistan Currency Exchange branch for currency exchange, remittance collection, and customer support services.',
+    'With 150+ branches across Pakistan, visit your nearest Pakistan Currency Exchange outlet for currency exchange, remittance collection, and customer support.',
   supporting: 'Our team is ready to help you with fast, secure, and professional service.',
   ctaLabel: 'Locate Branches',
   ctaHref: '/branches',

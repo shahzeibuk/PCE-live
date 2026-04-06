@@ -8,7 +8,7 @@ import { InnerPageHeader } from '@/components/layout/InnerPageHeader'
 export const metadata: Metadata = {
   title: 'Our Branches - Locate Us Nationwide',
   description:
-    'Find a Pakistan Currency Exchange branch near you. Over 130 branches across Pakistan for currency exchange and remittance.',
+    'Find a Pakistan Currency Exchange branch near you. 150+ branches across Pakistan for currency exchange and remittance.',
 }
 
 export default async function BranchesPage() {
@@ -30,7 +30,12 @@ export default async function BranchesPage() {
       <InnerPageHeader
         variant="brand"
         title="Find a Branch Near You"
-        description="130+ locations nationwide — seamless currency exchange and remittance, always within reach."
+        description={
+          <>
+            <strong className="font-bold text-white">150+ branches</strong> nationwide — seamless currency exchange and
+            remittance, always within reach.
+          </>
+        }
       />
 
       <section className="container px-4 -mt-4 md:-mt-6 relative z-10 pb-4">

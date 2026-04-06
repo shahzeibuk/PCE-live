@@ -5,7 +5,7 @@ import { HeroCurrencyBackdrop } from '@/components/layout/currencyBrandSurfaces'
 
 type InnerPageHeaderProps = {
   title: React.ReactNode
-  description?: string
+  description?: React.ReactNode
   centered?: boolean
   /**
    * `muted` = slate band (default). `brand` = forest green. `currency` = banknote hero image + overlay

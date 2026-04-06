@@ -114,6 +114,23 @@ export default async function BranchPage({ params }: { params: { id: string } })
                   </div>
                 )}
 
+                {branch.cell_phone && (
+                  <div className="flex gap-4">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                      <Phone className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-semibold mb-1">Cell / mobile</p>
+                      <a
+                        href={`tel:${String(branch.cell_phone).replace(/\s/g, '')}`}
+                        className="text-primary font-medium hover:underline"
+                      >
+                        {branch.cell_phone}
+                      </a>
+                    </div>
+                  </div>
+                )}
+
                 {branch.email && (
                   <div className="flex gap-4">
                     <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
