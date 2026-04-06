@@ -32,6 +32,8 @@ const homeDescription =
 
 const siteOrigin = getServerSideURL().replace(/\/$/, '')
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: homeTitle,
   description: homeDescription,

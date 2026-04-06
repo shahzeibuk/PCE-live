@@ -7,19 +7,7 @@ import { Calendar, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
-export async function generateStaticParams() {
-  const payload = await getPayload({ config: configPromise })
-  try {
-    const news = await payload.find({
-      collection: 'news',
-      limit: 1000,
-    })
-    return news?.docs?.map(({ slug }) => ({ slug })) || []
-  } catch (err) {
-    console.error('Failed to fetch news for static params:', err)
-    return []
-  }
-}
+export const dynamic = 'force-dynamic'
 
 export default async function NewsItem({ params: paramsPromise }: { params: Promise<{ slug: string }> }) {
   const { slug } = await paramsPromise

@@ -8,6 +8,8 @@ import { getCurrencyRatesForFrontend } from '@/utilities/getCurrencyRatesForFron
 import { InnerPageHeader } from '@/components/layout/InnerPageHeader'
 import { CurrencyNoteSurface } from '@/components/layout/currencyBrandSurfaces'
 
+export const dynamic = 'force-dynamic'
+
 export default async function RatesPage() {
   let rates: any[] = []
   try {

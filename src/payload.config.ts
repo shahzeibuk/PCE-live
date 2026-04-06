@@ -88,8 +88,13 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URL || '',
     },
     prodMigrations: migrations,
-    /** Off during `next build` (NODE_ENV=production) — avoids Drizzle push / schema pull per worker. Dev: auto-push schema unless `PAYLOAD_DATABASE_PUSH=false`. */
-    push: process.env.NODE_ENV === 'development' && process.env.PAYLOAD_DATABASE_PUSH !== 'false',
+    /**
+     * Always off: dev `push` writes `batch = -1` rows in `payload_migrations`, which triggers an
+     * interactive “dev mode” migrate prompt and can stall `next build` / CI. After schema edits run
+     * `pnpm payload migrate:create` then `pnpm db:migrate`. To clean an existing DB: delete dev
+     * markers — `scripts/sql/clean-payload-dev-migration-markers.sql`.
+     */
+    push: false,
   }),
   collections: [
     Pages,

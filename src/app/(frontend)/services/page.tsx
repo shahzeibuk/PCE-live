@@ -4,6 +4,8 @@ import configPromise from '@/payload.config'
 import { ServiceCard } from '@/components/ServiceCard'
 import { InnerPageHeader } from '@/components/layout/InnerPageHeader'
 
+export const dynamic = 'force-dynamic'
+
 export default async function ServicesPage() {
   let services: any[] = []
   try {

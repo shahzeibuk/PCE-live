@@ -16,34 +16,8 @@ import { PartnersShowcase } from '@/components/PartnersShowcase'
 
 const SLUGS_WITH_PARTNER_SHOWCASE = new Set(['about', 'partners-associates'])
 
-export async function generateStaticParams() {
-  try {
-    const payload = await getPayload({ config: configPromise })
-    const pages = await payload.find({
-      collection: 'pages',
-      draft: false,
-      limit: 1000,
-      overrideAccess: false,
-      pagination: false,
-      select: {
-        slug: true,
-      },
-    })
-
-    const params = pages.docs
-      ?.filter((doc) => {
-        return doc.slug !== 'home'
-      })
-      .map(({ slug }) => {
-        return { slug }
-      })
-
-    return params
-  } catch (error) {
-    console.error('Error generating static params for pages:', error)
-    return []
-  }
-}
+/** CMS pages: avoid SSG for every slug at build (Payload + full layout per path). */
+export const dynamic = 'force-dynamic'
 
 type Args = {
   params: Promise<{

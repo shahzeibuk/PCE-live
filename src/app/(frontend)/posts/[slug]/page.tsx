@@ -15,30 +15,8 @@ import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
-export async function generateStaticParams() {
-  try {
-    const payload = await getPayload({ config: configPromise })
-    const posts = await payload.find({
-      collection: 'posts',
-      draft: false,
-      limit: 1000,
-      overrideAccess: false,
-      pagination: false,
-      select: {
-        slug: true,
-      },
-    })
-
-    const params = posts.docs.map(({ slug }) => {
-      return { slug }
-    })
-
-    return params
-  } catch (error) {
-    console.error('Error generating static params for posts:', error)
-    return []
-  }
-}
+/** Skip SSG: up to 1000 posts × Payload during `next build` was very slow. */
+export const dynamic = 'force-dynamic'
 
 type Args = {
   params: Promise<{

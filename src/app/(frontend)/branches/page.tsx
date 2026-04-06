@@ -5,6 +5,8 @@ import { BranchLocator } from '@/components/BranchLocator'
 import type { Metadata } from 'next'
 import { InnerPageHeader } from '@/components/layout/InnerPageHeader'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Our Branches - Locate Us Nationwide',
   description:

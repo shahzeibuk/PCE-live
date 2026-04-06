@@ -7,25 +7,7 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { HeroCurrencyBackdrop } from '@/components/layout/currencyBrandSurfaces'
 
-export async function generateStaticParams() {
-  try {
-    const payload = await getPayload({ config: configPromise })
-    const services = await payload.find({
-      collection: 'services',
-      limit: 100,
-      select: {
-        slug: true,
-      },
-    })
-
-    return services.docs.map(({ slug }) => ({
-      slug,
-    }))
-  } catch (error) {
-    console.error('Error generating static params for services:', error)
-    return []
-  }
-}
+export const dynamic = 'force-dynamic'
 
 export default async function ServicePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
