@@ -31,6 +31,7 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 import { up as initializeSchema } from './migrations/20260319_013549_init_collections'
+import { migrations } from './migrations'
 
 export default buildConfig({
   onInit: async (payload) => {
@@ -86,6 +87,7 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URL || '',
     },
+    prodMigrations: migrations,
   }),
   collections: [
     Pages,

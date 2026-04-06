@@ -549,6 +549,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"city" varchar NOT NULL,
   	"address" varchar NOT NULL,
   	"phone" varchar NOT NULL,
+  	"cell_phone" varchar,
   	"email" varchar,
   	"google_map_link" varchar,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
