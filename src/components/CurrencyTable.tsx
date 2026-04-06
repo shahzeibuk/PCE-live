@@ -13,19 +13,8 @@ import {
   type FrontendCurrencyRate,
 } from '@/utilities/getCurrencyRatesForFrontend'
 import { CurrencyNoteSurface } from '@/components/layout/currencyBrandSurfaces'
-
-const FLAG_MAP: Record<string, string> = {
-  USD: '🇺🇸',
-  GBP: '🇬🇧',
-  EUR: '🇪🇺',
-  SAR: '🇸🇦',
-  AED: '🇦🇪',
-  CAD: '🇨🇦',
-  AUD: '🇦🇺',
-  JPY: '🇯🇵',
-  CNY: '🇨🇳',
-  PKR: '🇵🇰',
-}
+import { currencyFlagEmoji } from '@/utilities/currencyFlags'
+import { getRatesSyncMeta } from '@/utilities/currencyRatesDisplay'
 
 type Props = {
   /** When omitted, loads from CMS with live API fallback (no rates stored on branches). */
@@ -45,29 +34,18 @@ export const CurrencyTable = async ({ rates: providedRates }: Props = {}) => {
     console.error('Error fetching currency rates in CurrencyTable:', error)
   }
 
-  const isFallback = rates.some((r) => r.isLiveFallback)
-  const latestTs = rates.reduce((max, r) => {
-    if (!r.last_updated) return max
-    const t = new Date(r.last_updated).getTime()
-    return Number.isFinite(t) && t > max ? t : max
-  }, 0)
-
-  const syncLabel = isFallback
-    ? 'Indicative · open market API'
-    : latestTs > 0
-      ? `Last updated ${new Date(latestTs).toLocaleString()}`
-      : '—'
+  const { isFallback, syncLabel } = getRatesSyncMeta(rates)
 
   return (
     <div className="w-full space-y-4">
       <div className="flex items-center justify-between px-2">
         <div className="flex items-center gap-2">
           <div className="size-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="text-xs font-bold uppercase tracking-wider text-emerald-600">
+          <span className="text-sm font-bold uppercase tracking-wider text-emerald-600">
             Live Market
           </span>
         </div>
-        <span className="text-xs text-muted-foreground font-medium text-right max-w-[70%]">{syncLabel}</span>
+        <span className="text-sm text-muted-foreground font-medium text-right max-w-[70%]">{syncLabel}</span>
       </div>
 
       {isFallback && (
@@ -83,9 +61,9 @@ export const CurrencyTable = async ({ rates: providedRates }: Props = {}) => {
         <Table>
           <TableHeader className="bg-slate-50/50">
             <TableRow className="hover:bg-transparent border-b">
-              <TableHead className="font-bold text-slate-900 h-12">Currency</TableHead>
-              <TableHead className="font-bold text-slate-900 h-12 text-right">Buy</TableHead>
-              <TableHead className="font-bold text-slate-900 h-12 text-right">Sell</TableHead>
+              <TableHead className="font-bold text-slate-900 h-14 text-base">Currency</TableHead>
+              <TableHead className="font-bold text-slate-900 h-14 text-right text-base">Buy</TableHead>
+              <TableHead className="font-bold text-slate-900 h-14 text-right text-base">Sell</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -94,23 +72,23 @@ export const CurrencyTable = async ({ rates: providedRates }: Props = {}) => {
                 key={`${rate.id}-${rate.currency_code}`}
                 className="group hover:bg-slate-50/50 transition-colors border-b last:border-0"
               >
-                <TableCell className="py-4">
+                <TableCell className="py-4 md:py-5">
                   <div className="flex items-center gap-3">
-                    <span className="text-2xl grayscale group-hover:grayscale-0 transition-all duration-300">
-                      {FLAG_MAP[rate.currency_code] || '🏳️'}
+                    <span className="text-2xl md:text-[1.75rem] grayscale-0 group-hover:grayscale-0 transition-all duration-300">
+                      {currencyFlagEmoji(rate.currency_code)}
                     </span>
                     <div>
-                      <div className="font-bold text-slate-900">{rate.currency_code}</div>
-                      <div className="text-[10px] uppercase tracking-tighter text-muted-foreground font-medium">
+                      <div className="font-bold text-slate-900 text-base md:text-lg">{rate.currency_code}</div>
+                      <div className="text-xs uppercase tracking-tight text-muted-foreground font-medium">
                         {rate.currency_name}
                       </div>
                     </div>
                   </div>
                 </TableCell>
-                <TableCell className="text-right py-4 font-mono font-bold text-slate-700 tabular-nums">
+                <TableCell className="text-right py-4 md:py-5 font-mono font-bold text-slate-700 tabular-nums text-base md:text-lg">
                   {Number(rate.buy_rate).toFixed(2)}
                 </TableCell>
-                <TableCell className="text-right py-4 font-mono font-bold text-emerald-600 tabular-nums">
+                <TableCell className="text-right py-4 md:py-5 font-mono font-bold text-emerald-600 tabular-nums text-base md:text-lg">
                   {Number(rate.sell_rate).toFixed(2)}
                 </TableCell>
               </TableRow>

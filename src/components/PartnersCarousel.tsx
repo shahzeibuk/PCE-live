@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 
@@ -33,15 +34,18 @@ export function PartnersCarousel() {
                 key={`${partner.name}-${index}`}
                 className="flex-[0_0_50%] min-w-0 pl-4 sm:flex-[0_0_33%] md:flex-[0_0_25%] lg:flex-[0_0_20%]"
               >
-                <div className="flex items-center justify-center h-28 md:h-32 p-4 grayscale hover:grayscale-0 transition-colors duration-200">
+                <Link
+                  href={partner.href}
+                  className="flex items-center justify-center h-28 md:h-32 p-4 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#099546] focus-visible:ring-offset-2 transition-transform duration-200 hover:scale-105 motion-reduce:hover:scale-100"
+                >
                   <Image
                     src={partner.src}
-                    alt={`${partner.name} partner logo`}
-                    width={240}
-                    height={120}
+                    alt={`${partner.name} — view service`}
+                    width={260}
+                    height={130}
                     className="max-h-24 md:max-h-28 w-auto object-contain"
                   />
-                </div>
+                </Link>
               </div>
             ))}
           </div>

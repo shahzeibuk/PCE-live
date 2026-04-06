@@ -1,5 +1,6 @@
 import React from 'react'
-import { CurrencyTable } from '@/components/CurrencyTable'
+import { CurrencyRatesDualSection } from '@/components/currency/CurrencyRatesDualSection'
+import { CurrencyRatesLiveHeader } from '@/components/currency/CurrencyRatesLiveHeader'
 import { CurrencyConverter } from '@/components/CurrencyConverter'
 import { getPayload } from 'payload'
 import configPromise from '@/payload.config'
@@ -34,10 +35,13 @@ export default async function RatesPage() {
 
       <div className="container px-4 py-10 md:py-12 grid lg:grid-cols-3 gap-10 lg:gap-12">
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white border border-slate-200 rounded overflow-hidden">
-            <CurrencyTable rates={rates} />
+          <div className="bg-white border border-slate-200 rounded-xl p-4 md:p-6 overflow-hidden">
+            <div className="space-y-4 mb-6">
+              <CurrencyRatesLiveHeader rates={rates} />
+            </div>
+            <CurrencyRatesDualSection rates={rates} />
           </div>
-          <CurrencyNoteSurface className="p-5 md:p-6 text-sm text-slate-600">
+          <CurrencyNoteSurface className="p-5 md:p-6 text-base text-slate-600 leading-relaxed">
             <strong className="text-slate-900">Disclaimer:</strong> Rates may change without
             notice. Information only — confirm with a branch before any transaction.
           </CurrencyNoteSurface>

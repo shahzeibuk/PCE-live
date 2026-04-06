@@ -8,13 +8,14 @@ export const HOME_HERO = {
     'Check live USD, SAR, AED, EUR and GBP to PKR open-market rates, currency exchange, and trusted remittance services across our branch network.',
 }
 
+/** Full company intro lives on `/about`; homepage keeps a short CTA only. */
 export const HOME_ABOUT = {
-  heading: 'Your Trusted Currency Exchange & Remittance Partner in Pakistan',
+  heading: 'About Pakistan Currency Exchange',
   paragraphs: [
-    'Pakistan Currency Exchange is committed to providing secure, transparent, and reliable foreign currency exchange and remittance services across Pakistan. Whether you want to buy or sell foreign currency, receive funds from overseas, or check the latest open market forex rates, we are here to serve you with professionalism and trust.',
-    'Whether you need to buy or sell foreign currency, check today’s open market exchange rates, or receive funds sent from abroad, Pakistan Currency Exchange is here to serve you with professionalism and care.',
-    'We believe in customer trust, competitive market rates, and efficient service. By offering updated forex information and reliable remittance solutions, we help our customers manage their financial needs with confidence.',
+    'We are an SBP-licensed exchange company offering currency exchange, live market rates, and remittance services across Pakistan—with a nationwide branch network you can rely on.',
   ],
+  ctaLabel: 'Read our full story',
+  ctaHref: '/about',
 }
 
 export const HOME_RATES_SECTION = {

@@ -12,6 +12,14 @@ export const ABOUT_COPY = {
     'We are an exchange company and part of Bostan Group, offering regulated currency exchange and remittance services aligned with State Bank of Pakistan expectations.',
   sections: [
     {
+      heading: 'Your Trusted Currency Exchange & Remittance Partner in Pakistan',
+      paragraphs: [
+        'Pakistan Currency Exchange is committed to providing secure, transparent, and reliable foreign currency exchange and remittance services across Pakistan. Whether you want to buy or sell foreign currency, receive funds from overseas, or check the latest open market forex rates, we are here to serve you with professionalism and trust.',
+        'Whether you need to buy or sell foreign currency, check today’s open market exchange rates, or receive funds sent from abroad, Pakistan Currency Exchange is here to serve you with professionalism and care.',
+        'We believe in customer trust, competitive market rates, and efficient service. By offering updated forex information and reliable remittance solutions, we help our customers manage their financial needs with confidence.',
+      ],
+    },
+    {
       heading: 'Company profile',
       paragraphs: [
         'Pakistan Currency Exchange (Pvt) dates back to 1992, but the idea of a full-service platform took shape on 20 June 2003 under the Companies Ordinance 1984, following Exchange Company reforms. Everything we offer under PCE is operated in line with State Bank of Pakistan rules.',

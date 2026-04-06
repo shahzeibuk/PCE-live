@@ -32,7 +32,7 @@ export function InnerPageHeader({
     >
       <h1
         className={cn(
-          'text-3xl md:text-4xl font-bold tracking-tight mb-3',
+          'text-3xl md:text-4xl lg:text-[2.75rem] font-bold tracking-tight mb-3',
           variant === 'muted' && 'text-slate-900',
           variant === 'brand' && 'text-white',
           variant === 'currency' && 'text-white',

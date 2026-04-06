@@ -47,6 +47,14 @@ export const Branches: CollectionConfig = {
       required: true,
     },
     {
+      name: 'cell_phone',
+      type: 'text',
+      label: 'Branch cell / mobile',
+      admin: {
+        description: 'Optional direct mobile or cell number for this branch.',
+      },
+    },
+    {
       name: 'email',
       type: 'email',
     },

@@ -4,6 +4,8 @@ declare global {
       PAYLOAD_SECRET: string
       DATABASE_URL: string
       NEXT_PUBLIC_SERVER_URL: string
+      /** Facebook Page Plugin href override (defaults to official PK Currency page). */
+      NEXT_PUBLIC_FACEBOOK_PAGE_URL?: string
       VERCEL_PROJECT_PRODUCTION_URL: string
       /** Vercel Blob — enables @payloadcms/storage-vercel-blob for Media */
       BLOB_READ_WRITE_TOKEN?: string

@@ -35,6 +35,11 @@ export function HomeAboutSection() {
             <p key={i}>{p}</p>
           ))}
         </div>
+        <div className="mt-8">
+          <Button asChild className="rounded bg-[#099546] hover:bg-[#088040] text-white h-11 px-8 font-semibold">
+            <Link href={HOME_ABOUT.ctaHref}>{HOME_ABOUT.ctaLabel}</Link>
+          </Button>
+        </div>
       </div>
     </section>
   )

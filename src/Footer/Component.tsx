@@ -9,6 +9,7 @@ import { Logo } from '@/components/Logo/Logo'
 import { PartnersCarousel } from '@/components/PartnersCarousel'
 import { Facebook, Linkedin, Twitter, Mail, Phone, MessageCircle } from 'lucide-react'
 import { FOOTER_COMPANY_BLURB } from '@/components/home/homeContent'
+import { FacebookPageEmbed } from '@/components/social/FacebookPageEmbed'
 
 export async function Footer() {
   const footerData: Footer = await getCachedGlobal('footer', 1)()
@@ -22,6 +23,8 @@ export async function Footer() {
         </p>
       </div>
       <PartnersCarousel />
+
+      <FacebookPageEmbed />
       
       <footer className="mt-auto bg-[#099546] text-white overflow-hidden relative">
         
