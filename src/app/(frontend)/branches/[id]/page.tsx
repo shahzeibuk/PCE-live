@@ -8,33 +8,20 @@ import { Button } from '@/components/ui/button'
 import { getBranchMapEmbedUrl } from '@/utilities/branchMapEmbed'
 import { getServerSideURL } from '@/utilities/getURL'
 
-export async function generateStaticParams() {
-  try {
-    const payload = await getPayload({ config: configPromise })
-    const { docs: branches } = await payload.find({
-      collection: 'branches',
-      limit: 1000,
-    })
+/** Avoid SSG for 100+ branches (each path = DB work + Payload init during `next build`). */
+export const dynamic = 'force-dynamic'
 
-    return branches.map((branch) => ({
-      id: String(branch.id),
-    }))
-  } catch (error) {
-    console.error('Error generating static params for branches:', error)
-    return []
-  }
-}
-
-export default async function BranchPage({ params }: { params: { id: string } }) {
+export default async function BranchPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
   let branch = null
   try {
     const payload = await getPayload({ config: configPromise })
     branch = await payload.findByID({
       collection: 'branches',
-      id: params.id,
+      id,
     })
   } catch (e) {
-    console.error(`Error fetching branch by ID ${params.id}:`, e)
+    console.error(`Error fetching branch by ID ${id}:`, e)
     return notFound()
   }
 

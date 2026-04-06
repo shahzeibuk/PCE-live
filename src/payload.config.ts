@@ -88,6 +88,8 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URL || '',
     },
     prodMigrations: migrations,
+    /** Off during `next build` (NODE_ENV=production) — avoids Drizzle push / schema pull per worker. Dev: auto-push schema unless `PAYLOAD_DATABASE_PUSH=false`. */
+    push: process.env.NODE_ENV === 'development' && process.env.PAYLOAD_DATABASE_PUSH !== 'false',
   }),
   collections: [
     Pages,
