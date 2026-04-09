@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { ChevronDown } from 'lucide-react'
 import { CurrencyNoteSurface } from '@/components/layout/currencyBrandSurfaces'
 import { POPULAR_FOREX_CODES, isPopularForexCode } from '@/constants/popularCurrencyCodes'
+import { MobileCurrencyRateCards, ratesToMobileItems } from '@/components/currency/MobileCurrencyRateCards'
 import { currencyFlagEmoji } from '@/utilities/currencyFlags'
 
 export type LiveExchangeRatesProps = {
@@ -22,8 +23,8 @@ export type LiveExchangeRatesProps = {
   containerClassName?: string
 }
 
-const thCls = 'px-4 py-3.5 text-base font-bold md:px-5 md:py-4 md:text-lg'
-const tdCls = 'px-4 py-3.5 md:px-5 md:py-4'
+const thCls = 'px-3 py-3 text-sm font-bold sm:px-4 sm:py-3.5 sm:text-base md:px-5 md:py-4 md:text-lg'
+const tdCls = 'px-3 py-3 sm:px-4 sm:py-3.5 md:px-5 md:py-4'
 
 export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
   title,
@@ -55,11 +56,20 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
 
   const renderTable = (rows: CurrencyRate[], ariaLabel: string) => (
     <div className="space-y-2">
-      <p className="text-center text-xs text-slate-500 md:hidden px-1" aria-hidden>
-        Swipe sideways to see all columns
-      </p>
-      <div className="overflow-x-auto overflow-y-auto max-h-[min(70vh,28rem)] md:max-h-none rounded border border-slate-200 bg-white shadow-sm [-webkit-overflow-scrolling:touch]">
-        <table className="w-full min-w-[18rem] border-collapse text-left" aria-label={ariaLabel}>
+      {rows.length === 0 ? (
+        <p className="md:hidden rounded-lg border border-dashed border-slate-200 bg-slate-50 py-8 text-center text-sm text-slate-600">
+          No rates in this group.
+        </p>
+      ) : (
+        <MobileCurrencyRateCards
+          rates={ratesToMobileItems(rows)}
+          buyLabel="Buying"
+          sellLabel="Selling"
+          aria-label={`${ariaLabel} (mobile list)`}
+        />
+      )}
+      <div className="hidden md:block overflow-x-auto overflow-y-auto max-h-[min(70vh,32rem)] lg:max-h-none rounded border border-slate-200 bg-white shadow-sm [-webkit-overflow-scrolling:touch]">
+        <table className="w-full border-collapse text-left" aria-label={ariaLabel}>
           <thead className="sticky top-0 z-10 shadow-[0_1px_0_0_rgb(226_232_240)]">
             <tr className="bg-[#099546] text-white">
               <th className={`${thCls} text-left`}>Currency</th>
@@ -82,22 +92,22 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
               >
                 <td className={tdCls}>
                   <div className="flex items-center gap-3">
-                    <span className="text-2xl md:text-[1.75rem]" aria-hidden>
+                    <span className="text-xl sm:text-2xl lg:text-[1.75rem]" aria-hidden>
                       {currencyFlagEmoji(rate.currency_code)}
                     </span>
-                    <div>
-                      <span className="font-bold text-slate-900 text-base md:text-lg">{rate.currency_code}</span>
-                      <span className="text-slate-500 block text-sm md:text-base">{rate.currency_name}</span>
+                    <div className="min-w-0">
+                      <span className="font-bold text-slate-900 text-sm sm:text-base lg:text-lg">{rate.currency_code}</span>
+                      <span className="text-slate-500 block text-xs sm:text-sm lg:text-base line-clamp-2">{rate.currency_name}</span>
                     </div>
                   </div>
                 </td>
                 <td
-                  className={`${tdCls} text-center font-mono text-base md:text-lg font-semibold text-slate-800 tabular-nums`}
+                  className={`${tdCls} text-center font-mono text-sm sm:text-base lg:text-lg font-semibold text-slate-800 tabular-nums whitespace-nowrap`}
                 >
                   {Number(rate.buy_rate ?? 0).toFixed(2)}
                 </td>
                 <td
-                  className={`${tdCls} text-center font-mono text-base md:text-lg font-semibold text-[#099546] tabular-nums`}
+                  className={`${tdCls} text-center font-mono text-sm sm:text-base lg:text-lg font-semibold text-[#099546] tabular-nums whitespace-nowrap`}
                 >
                   {Number(rate.sell_rate ?? 0).toFixed(2)}
                 </td>

@@ -3,6 +3,7 @@
 import React, { useMemo, useState } from 'react'
 import { POPULAR_FOREX_CODES, isPopularForexCode } from '@/constants/popularCurrencyCodes'
 import type { FrontendCurrencyRate } from '@/utilities/getCurrencyRatesForFrontend'
+import { MobileCurrencyRateCards, ratesToMobileItems } from '@/components/currency/MobileCurrencyRateCards'
 import { currencyFlagEmoji } from '@/utilities/currencyFlags'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
@@ -17,24 +18,35 @@ function RatesTable({
   'aria-label'?: string
 }) {
   const th = compact
-    ? 'px-3 py-2.5 text-sm md:text-base font-bold'
-    : 'px-4 py-3.5 text-base md:text-lg font-bold'
-  const td = compact ? 'px-3 py-2.5 md:py-3' : 'px-4 py-4 md:py-[1.125rem]'
-  const codeCls = compact ? 'font-bold text-slate-900' : 'font-bold text-slate-900 text-base md:text-lg'
+    ? 'px-2.5 py-2 text-xs font-bold sm:px-3 sm:py-2.5 sm:text-sm md:text-base'
+    : 'px-3 py-3 text-sm font-bold sm:px-4 sm:py-3.5 md:text-lg'
+  const td = compact
+    ? 'px-2.5 py-2 sm:px-3 sm:py-2.5 md:py-3'
+    : 'px-3 py-3 sm:px-4 md:py-[1.125rem]'
+  const codeCls = compact ? 'font-bold text-slate-900 text-sm sm:text-base' : 'font-bold text-slate-900 text-sm md:text-lg'
   const nameCls = compact
-    ? 'text-xs uppercase tracking-tight text-slate-500'
-    : 'text-sm uppercase tracking-tight text-slate-500'
+    ? 'text-[10px] uppercase tracking-tight text-slate-500 sm:text-xs'
+    : 'text-xs uppercase tracking-tight text-slate-500 sm:text-sm'
   const numCls = compact
-    ? 'text-center font-mono text-sm md:text-base font-semibold tabular-nums'
-    : 'text-center font-mono text-base md:text-lg font-semibold tabular-nums'
+    ? 'text-right font-mono text-xs font-semibold tabular-nums sm:text-sm md:text-base'
+    : 'text-right font-mono text-sm font-semibold tabular-nums md:text-lg'
+
+  if (rates.length === 0) {
+    return (
+      <p className="rounded-lg border border-dashed border-slate-200 bg-slate-50 py-8 text-center text-sm text-slate-600">
+        No rows in this group.
+      </p>
+    )
+  }
 
   return (
     <div className="space-y-2">
-      <p className="text-center text-xs text-slate-500 sm:hidden px-1" aria-hidden>
-        Swipe sideways for all columns
-      </p>
-      <div className="overflow-x-auto overflow-y-auto max-h-[min(70vh,26rem)] sm:max-h-none rounded-xl border border-slate-200 bg-white shadow-sm [-webkit-overflow-scrolling:touch]">
-        <table className="w-full min-w-[16rem] border-collapse text-left" aria-label={ariaLabel}>
+      <MobileCurrencyRateCards
+        rates={ratesToMobileItems(rates)}
+        aria-label={`${ariaLabel ?? 'Rates'} (mobile list)`}
+      />
+      <div className="hidden md:block overflow-x-auto overflow-y-auto max-h-[min(70vh,32rem)] lg:max-h-none rounded-xl border border-slate-200 bg-white shadow-sm [-webkit-overflow-scrolling:touch]">
+        <table className="w-full border-collapse text-left" aria-label={ariaLabel}>
           <thead className="sticky top-0 z-10 shadow-[0_1px_0_0_rgb(226_232_240)]">
             <tr className="bg-[#099546] text-white">
               <th className={th}>Currency</th>
@@ -49,31 +61,24 @@ function RatesTable({
               className={`border-t border-slate-200 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/80'}`}
             >
               <td className={td}>
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl md:text-[1.75rem]" aria-hidden>
+                <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+                  <span className="text-xl shrink-0 sm:text-2xl md:text-[1.75rem]" aria-hidden>
                     {currencyFlagEmoji(rate.currency_code)}
                   </span>
-                  <div>
+                  <div className="min-w-0">
                     <div className={codeCls}>{rate.currency_code}</div>
-                    <div className={nameCls}>{rate.currency_name}</div>
+                    <div className={`${nameCls} line-clamp-2`}>{rate.currency_name}</div>
                   </div>
                 </div>
               </td>
-              <td className={`${td} ${numCls} text-slate-800`}>
+              <td className={`${td} ${numCls} text-slate-800 whitespace-nowrap`}>
                 {Number(rate.buy_rate).toFixed(2)}
               </td>
-              <td className={`${td} ${numCls} text-emerald-700`}>
+              <td className={`${td} ${numCls} text-emerald-700 whitespace-nowrap`}>
                 {Number(rate.sell_rate).toFixed(2)}
               </td>
             </tr>
           ))}
-          {rates.length === 0 && (
-            <tr>
-              <td colSpan={3} className="px-4 py-10 text-center text-slate-500">
-                No rows in this group.
-              </td>
-            </tr>
-          )}
           </tbody>
         </table>
       </div>
