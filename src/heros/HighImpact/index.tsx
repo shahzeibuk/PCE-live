@@ -7,7 +7,10 @@ import type { Page } from '@/payload-types'
 import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
-import { CURRENCY_HERO_BACKGROUND_IMAGE } from '@/constants/currencyBrand'
+import {
+  CURRENCY_HERO_BACKGROUND_DESKTOP,
+  CURRENCY_HERO_BACKGROUND_MOBILE,
+} from '@/constants/currencyBrand'
 
 export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText }) => {
   return (
@@ -34,10 +37,18 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
         ) : (
           <>
             <Image
-              src={CURRENCY_HERO_BACKGROUND_IMAGE}
+              src={CURRENCY_HERO_BACKGROUND_MOBILE}
               alt=""
               fill
-              className="-z-10 object-cover object-center"
+              className="-z-10 object-cover object-[center_40%] md:hidden"
+              sizes="100vw"
+              priority
+            />
+            <Image
+              src={CURRENCY_HERO_BACKGROUND_DESKTOP}
+              alt=""
+              fill
+              className="-z-10 hidden object-cover object-center md:block"
               sizes="100vw"
               priority
             />

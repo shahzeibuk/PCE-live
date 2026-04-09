@@ -1,7 +1,11 @@
 import Image from 'next/image'
 import { cn } from '@/utilities/ui'
 
-import { CURRENCY_HERO_BACKGROUND_IMAGE } from '@/constants/currencyBrand'
+import {
+  CURRENCY_HERO_BACKGROUND_DESKTOP,
+  CURRENCY_HERO_BACKGROUND_IMAGE,
+  CURRENCY_HERO_BACKGROUND_MOBILE,
+} from '@/constants/currencyBrand'
 
 type HeroCurrencyBackdropProps = {
   children: React.ReactNode
@@ -30,14 +34,24 @@ export function HeroCurrencyBackdrop({
         className,
       )}
     >
-      <Image
-        src={CURRENCY_HERO_BACKGROUND_IMAGE}
-        alt=""
-        fill
-        className="object-cover object-center"
-        sizes="100vw"
-        priority={priority}
-      />
+      <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
+        <Image
+          src={CURRENCY_HERO_BACKGROUND_MOBILE}
+          alt=""
+          fill
+          className="object-cover object-[center_40%] md:hidden"
+          sizes="100vw"
+          priority={priority}
+        />
+        <Image
+          src={CURRENCY_HERO_BACKGROUND_DESKTOP}
+          alt=""
+          fill
+          className="hidden object-cover object-center md:block"
+          sizes="100vw"
+          priority={priority}
+        />
+      </div>
       <div
         className={cn(
           'pointer-events-none absolute inset-0 z-[1] bg-slate-950/72',
