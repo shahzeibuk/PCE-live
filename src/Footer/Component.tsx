@@ -10,6 +10,7 @@ import { PartnersCarousel } from '@/components/PartnersCarousel'
 import { Facebook, Linkedin, Twitter, Mail, Phone, MessageCircle } from 'lucide-react'
 import { FOOTER_COMPANY_BLURB } from '@/components/home/homeContent'
 import { FacebookPageEmbed } from '@/components/social/FacebookPageEmbed'
+import { SOCIAL_FACEBOOK, SOCIAL_LINKEDIN, SOCIAL_TWITTER } from '@/constants/social'
 
 export async function Footer() {
   const footerData: Footer = await getCachedGlobal('footer', 1)()
@@ -81,9 +82,33 @@ export async function Footer() {
             </div>
             
             <div className="flex items-center gap-4">
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#099546] transition-colors"><Twitter className="h-5 w-5 fill-current" /></a>
-              <a href="https://pk.linkedin.com/company/pakistan-currency-exchange-pvt-ltd" target="_blank" rel="noopener noreferrer" className="hover:text-[#099546] transition-colors"><Linkedin className="h-5 w-5 fill-current" /></a>
-              <a href="https://www.facebook.com/pkcurrency/" target="_blank" rel="noopener noreferrer" className="hover:text-[#099546] transition-colors"><Facebook className="h-5 w-5 fill-current" /></a>
+              <a
+                href={SOCIAL_TWITTER}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white/90 transition-colors"
+                aria-label="Pakistan Currency Exchange on X (Twitter)"
+              >
+                <Twitter className="h-5 w-5 fill-current" />
+              </a>
+              <a
+                href={SOCIAL_LINKEDIN}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white/90 transition-colors"
+                aria-label="Pakistan Currency Exchange on LinkedIn"
+              >
+                <Linkedin className="h-5 w-5 fill-current" />
+              </a>
+              <a
+                href={SOCIAL_FACEBOOK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white/90 transition-colors"
+                aria-label="Pakistan Currency Exchange on Facebook"
+              >
+                <Facebook className="h-5 w-5 fill-current" />
+              </a>
             </div>
           </div>
         </div>

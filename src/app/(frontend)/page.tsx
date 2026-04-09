@@ -107,20 +107,23 @@ export default async function HomePage() {
                 <h1 className="text-pretty text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
                   {HOME_HERO.h1}
                 </h1>
-                <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-200 md:text-lg lg:text-xl">
+                <p className="mt-4 max-w-xl text-sm leading-relaxed text-slate-200 sm:hidden">
+                  {HOME_HERO.leadShort}
+                </p>
+                <p className="mt-4 max-w-xl hidden text-base leading-relaxed text-slate-200 sm:block md:text-lg lg:text-xl">
                   {HOME_HERO.lead}
                 </p>
-                <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+                <div className="mt-8 flex flex-col gap-4 sm:mt-7 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3">
                   <Button
                     asChild
-                    className="h-11 rounded bg-[#099546] px-6 font-semibold text-white hover:bg-[#088040]"
+                    className="min-h-12 rounded bg-[#099546] px-6 font-semibold text-white hover:bg-[#088040]"
                   >
                     <Link href="/currency-rates">View full rate list</Link>
                   </Button>
                   <Button
                     asChild
                     variant="outline"
-                    className="h-11 rounded border-2 border-white bg-transparent px-6 font-semibold text-white shadow-none hover:bg-white/10 hover:text-white"
+                    className="min-h-12 rounded border-2 border-white bg-transparent px-6 font-semibold text-white shadow-none hover:bg-white/10 hover:text-white"
                   >
                     <Link href="https://wa.me/923046668810" target="_blank" rel="noopener noreferrer">
                       WhatsApp for best rate

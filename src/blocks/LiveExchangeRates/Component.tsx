@@ -54,16 +54,20 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
     : (containerClassName ?? 'container px-4 py-16')
 
   const renderTable = (rows: CurrencyRate[], ariaLabel: string) => (
-    <div className="overflow-hidden rounded border border-slate-200 bg-white shadow-sm">
-      <table className="w-full border-collapse text-left" aria-label={ariaLabel}>
-        <thead>
-          <tr className="bg-[#099546] text-white">
-            <th className={`${thCls} text-left`}>Currency</th>
-            <th className={`${thCls} text-center`}>Buying</th>
-            <th className={`${thCls} text-center`}>Selling</th>
-          </tr>
-        </thead>
-        <tbody>
+    <div className="space-y-2">
+      <p className="text-center text-xs text-slate-500 md:hidden px-1" aria-hidden>
+        Swipe sideways to see all columns
+      </p>
+      <div className="overflow-x-auto overflow-y-auto max-h-[min(70vh,28rem)] md:max-h-none rounded border border-slate-200 bg-white shadow-sm [-webkit-overflow-scrolling:touch]">
+        <table className="w-full min-w-[18rem] border-collapse text-left" aria-label={ariaLabel}>
+          <thead className="sticky top-0 z-10 shadow-[0_1px_0_0_rgb(226_232_240)]">
+            <tr className="bg-[#099546] text-white">
+              <th className={`${thCls} text-left`}>Currency</th>
+              <th className={`${thCls} text-center`}>Buying</th>
+              <th className={`${thCls} text-center`}>Selling</th>
+            </tr>
+          </thead>
+          <tbody>
           {rows.length === 0 ? (
             <tr>
               <td colSpan={3} className={`${tdCls} text-center text-slate-500 text-base`}>
@@ -100,8 +104,9 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
               </tr>
             ))
           )}
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 
@@ -125,14 +130,14 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
 
       <div className="max-w-6xl mx-auto space-y-10 md:space-y-12">
         {popularTitle && popularList.length > 0 && otherList.length > 0 ? (
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 items-start">
-            <div className="w-full">
+          <div className="flex flex-col gap-10 lg:grid lg:grid-cols-2 lg:gap-10 lg:items-start">
+            <div className="w-full order-1">
               <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-4 text-center lg:text-left">
                 {popularTitle}
               </h3>
               {renderTable(popularList, 'Popular currency exchange rates')}
             </div>
-            <div className="w-full">
+            <div className="w-full order-2">
               <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-4 text-center lg:text-left">
                 Other quoted rates
               </h3>

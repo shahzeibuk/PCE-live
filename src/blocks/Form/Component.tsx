@@ -44,6 +44,7 @@ export const FormBlock: React.FC<
   const [isLoading, setIsLoading] = useState(false)
   const [hasSubmitted, setHasSubmitted] = useState<boolean>()
   const [error, setError] = useState<{ message: string; status?: string } | undefined>()
+  const [honeypot, setHoneypot] = useState('')
   const router = useRouter()
 
   const onSubmit = useCallback(
@@ -51,6 +52,11 @@ export const FormBlock: React.FC<
       let loadingTimerID: ReturnType<typeof setTimeout>
       const submitForm = async () => {
         setError(undefined)
+
+        if (honeypot.trim() !== '') {
+          setHasSubmitted(true)
+          return
+        }
 
         const dataToSend = Object.entries(data).map(([name, value]) => ({
           field: name,
@@ -110,7 +116,7 @@ export const FormBlock: React.FC<
 
       void submitForm()
     },
-    [router, formID, redirect, confirmationType],
+    [router, formID, redirect, confirmationType, honeypot],
   )
 
   return (
@@ -124,9 +130,29 @@ export const FormBlock: React.FC<
             <CoreRichText data={confirmationMessage} />
           )}
           {isLoading && !hasSubmitted && <p>Loading, please wait...</p>}
-          {error && <div>{`${error.status || '500'}: ${error.message || ''}`}</div>}
+          {error && (
+            <div
+              role="alert"
+              className="rounded-md border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive mb-4"
+            >
+              {error.status ? `${error.status}: ` : ''}
+              {error.message}
+            </div>
+          )}
           {!hasSubmitted && (
-            <form id={formID} onSubmit={handleSubmit(onSubmit)}>
+            <form id={formID} className="relative" onSubmit={handleSubmit(onSubmit)} noValidate>
+              <div className="absolute left-[-9999px] top-auto h-0 w-0 overflow-hidden" aria-hidden>
+                <label htmlFor={`${formID}-company-website`}>Company website</label>
+                <input
+                  id={`${formID}-company-website`}
+                  type="text"
+                  name="company_website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                />
+              </div>
               <div className="mb-4 last:mb-0">
                 {formFromProps &&
                   formFromProps.fields &&

@@ -4,6 +4,9 @@ export const HOME_HERO = {
   eyebrow: 'Pakistan Currency Exchange',
   h1: 'Live Currency Exchange Rates in Pakistan',
   h1Accent: '',
+  /** Shown below `sm` so the hero stays scannable on small phones */
+  leadShort:
+    'Live USD–PKR and major forex rates, plus exchange and remittance across Pakistan.',
   lead:
     'Check live USD, SAR, AED, EUR and GBP to PKR open-market rates, currency exchange, and trusted remittance services across our branch network.',
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import useEmblaCarousel from 'embla-carousel-react'
@@ -9,9 +9,19 @@ import Autoplay from 'embla-carousel-autoplay'
 import { partnerLogosForCarouselLoop } from '@/constants/partnerLogos'
 
 export function PartnersCarousel() {
+  const [reduceMotion, setReduceMotion] = useState(false)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const update = () => setReduceMotion(mq.matches)
+    update()
+    mq.addEventListener('change', update)
+    return () => mq.removeEventListener('change', update)
+  }, [])
+
   const [emblaRef] = useEmblaCarousel(
     { loop: true, align: 'start', skipSnaps: false },
-    [Autoplay({ delay: 3000, stopOnInteraction: false })]
+    reduceMotion ? [] : [Autoplay({ delay: 3000, stopOnInteraction: false })],
   )
 
   const partners = partnerLogosForCarouselLoop()
@@ -26,7 +36,7 @@ export function PartnersCarousel() {
           We collaborate with leading global financial institutions to provide you with seamless and secure transactions.
         </p>
       </div>
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" key={reduceMotion ? 'rm' : 'motion'}>
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex -ml-4">
             {partners.map((partner, index) => (
@@ -36,22 +46,21 @@ export function PartnersCarousel() {
               >
                 <Link
                   href={partner.href}
-                  className="flex items-center justify-center h-28 md:h-32 p-4 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#099546] focus-visible:ring-offset-2 transition-transform duration-200 hover:scale-105 motion-reduce:hover:scale-100"
+                  className="flex h-32 md:h-36 w-full items-center justify-center rounded-lg border border-slate-100 bg-white p-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#099546] focus-visible:ring-offset-2 transition-transform duration-200 hover:scale-105 motion-reduce:transition-none motion-reduce:hover:scale-100"
                 >
                   <Image
                     src={partner.src}
                     alt={`${partner.name} — view service`}
                     width={260}
                     height={130}
-                    className="max-h-24 md:max-h-28 w-auto object-contain"
+                    className="max-h-20 md:max-h-24 w-auto max-w-full object-contain"
                   />
                 </Link>
               </div>
             ))}
           </div>
         </div>
-        
-        {/* Gradient fades for edge smoothing */}
+
         <div className="absolute top-0 left-0 w-16 h-full bg-gradient-to-r from-white to-transparent pointer-events-none" />
         <div className="absolute top-0 right-0 w-16 h-full bg-gradient-to-l from-white to-transparent pointer-events-none" />
       </div>

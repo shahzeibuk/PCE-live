@@ -120,7 +120,7 @@ export const CurrencyConverter = ({ rates }: { rates: Rate[] }) => {
 
         {/* You Send Section */}
         <div className="relative space-y-1">
-          <label className="text-sm font-semibold text-gray-500 ml-1">You send exactly</label>
+          <label className="text-sm font-semibold text-gray-500 ml-1">You send exactly (amount)</label>
           <div className="flex items-center justify-between gap-4">
             <Select 
               value={fromCurrency} 
@@ -148,9 +148,11 @@ export const CurrencyConverter = ({ rates }: { rates: Rate[] }) => {
             </Select>
             <input
               type="text"
+              inputMode="decimal"
+              aria-label={`Amount in ${fromCurrency}`}
               value={sendAmount}
               onChange={(e) => setSendAmount(formatNumber(e.target.value))}
-              className="text-right text-4xl font-black bg-transparent border-0 focus:ring-0 p-0 w-full tracking-tighter text-gray-900"
+              className="min-h-12 text-right text-3xl sm:text-4xl font-black bg-transparent border-0 focus:ring-0 p-0 w-full min-w-0 tracking-tighter text-gray-900"
             />
           </div>
         </div>
@@ -167,7 +169,12 @@ export const CurrencyConverter = ({ rates }: { rates: Rate[] }) => {
 
         {/* Recipient Gets Section */}
         <div className="relative space-y-1">
-          <label className="text-sm font-semibold text-gray-500 ml-1">Recipient gets</label>
+          <label className="text-sm font-semibold text-gray-500 ml-1">
+            Recipient gets
+            {toCurrency === 'PKR' ? (
+              <span className="block text-xs font-normal text-gray-400 mt-0.5">Pakistani rupees (PKR)</span>
+            ) : null}
+          </label>
           <div className="flex items-center justify-between gap-4">
             <Select 
               value={toCurrency} 
@@ -193,8 +200,11 @@ export const CurrencyConverter = ({ rates }: { rates: Rate[] }) => {
                 ))}
               </SelectContent>
             </Select>
-            <div className="text-right text-4xl font-black tracking-tighter text-gray-900">
-                {receiveAmount}
+            <div
+              className="text-right text-3xl sm:text-4xl font-black tracking-tighter text-gray-900 min-h-12 flex items-center justify-end"
+              aria-label={`Converted amount in ${toCurrency}`}
+            >
+              {receiveAmount}
             </div>
           </div>
         </div>

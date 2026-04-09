@@ -29,16 +29,20 @@ function RatesTable({
     : 'text-center font-mono text-base md:text-lg font-semibold tabular-nums'
 
   return (
-    <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-      <table className="w-full border-collapse text-left" aria-label={ariaLabel}>
-        <thead>
-          <tr className="bg-[#099546] text-white">
-            <th className={th}>Currency</th>
-            <th className={`${th} text-right`}>Buy</th>
-            <th className={`${th} text-right`}>Sell</th>
-          </tr>
-        </thead>
-        <tbody>
+    <div className="space-y-2">
+      <p className="text-center text-xs text-slate-500 sm:hidden px-1" aria-hidden>
+        Swipe sideways for all columns
+      </p>
+      <div className="overflow-x-auto overflow-y-auto max-h-[min(70vh,26rem)] sm:max-h-none rounded-xl border border-slate-200 bg-white shadow-sm [-webkit-overflow-scrolling:touch]">
+        <table className="w-full min-w-[16rem] border-collapse text-left" aria-label={ariaLabel}>
+          <thead className="sticky top-0 z-10 shadow-[0_1px_0_0_rgb(226_232_240)]">
+            <tr className="bg-[#099546] text-white">
+              <th className={th}>Currency</th>
+              <th className={`${th} text-right`}>Buy</th>
+              <th className={`${th} text-right`}>Sell</th>
+            </tr>
+          </thead>
+          <tbody>
           {rates.map((rate, i) => (
             <tr
               key={`${rate.id}-${rate.currency_code}`}
@@ -70,8 +74,9 @@ function RatesTable({
               </td>
             </tr>
           )}
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }

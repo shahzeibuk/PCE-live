@@ -38,15 +38,18 @@ export const CurrencyTable = async ({ rates: providedRates }: Props = {}) => {
 
   return (
     <div className="w-full space-y-4">
-      <div className="flex items-center justify-between px-2">
-        <div className="flex items-center gap-2">
-          <div className="size-2 rounded-full bg-emerald-500 animate-pulse" />
+      <div className="flex items-center justify-between px-2 gap-2">
+        <div className="flex items-center gap-2 min-w-0">
+          <div className="size-2 shrink-0 rounded-full bg-emerald-500 animate-pulse motion-reduce:animate-none" />
           <span className="text-sm font-bold uppercase tracking-wider text-emerald-600">
             Live Market
           </span>
         </div>
         <span className="text-sm text-muted-foreground font-medium text-right max-w-[70%]">{syncLabel}</span>
       </div>
+      <p className="text-center text-xs text-muted-foreground md:hidden px-1" aria-hidden>
+        Swipe to see all columns
+      </p>
 
       {isFallback && (
         <CurrencyNoteSurface className="p-3 -mt-2">
@@ -57,9 +60,9 @@ export const CurrencyTable = async ({ rates: providedRates }: Props = {}) => {
         </CurrencyNoteSurface>
       )}
 
-      <div className="bg-white border rounded-2xl overflow-hidden shadow-sm">
-        <Table>
-          <TableHeader className="bg-slate-50/50">
+      <div className="overflow-x-auto overflow-y-auto max-h-[min(70vh,28rem)] md:max-h-none rounded-2xl border bg-white shadow-sm [-webkit-overflow-scrolling:touch]">
+        <Table className="min-w-[17rem]">
+          <TableHeader className="sticky top-0 z-10 bg-slate-50/95 backdrop-blur-sm shadow-[inset_0_-1px_0_0_var(--border)]">
             <TableRow className="hover:bg-transparent border-b">
               <TableHead className="font-bold text-slate-900 h-14 text-base">Currency</TableHead>
               <TableHead className="font-bold text-slate-900 h-14 text-right text-base">Buy</TableHead>

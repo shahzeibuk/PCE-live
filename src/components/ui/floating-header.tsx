@@ -16,7 +16,9 @@ import {
   ChevronDown,
   Smartphone,
   Banknote,
+  Twitter,
 } from 'lucide-react'
+import { SOCIAL_FACEBOOK, SOCIAL_LINKEDIN, SOCIAL_TWITTER } from '@/constants/social'
 
 import type { Header } from '@/payload-types'
 import type { ServiceNavLink } from '@/Header/serviceNav'
@@ -367,9 +369,9 @@ export const FloatingHeader = ({
             })}
           </nav>
 
-          <div className="mt-auto pt-8 pb-10 flex gap-4">
+          <div className="mt-auto pt-8 pb-10 flex flex-wrap gap-4">
             <a
-              href="https://www.facebook.com/pkcurrency/"
+              href={SOCIAL_FACEBOOK}
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-md p-2 text-slate-400 hover:bg-slate-100 hover:text-[#099546] transition-colors"
@@ -378,13 +380,22 @@ export const FloatingHeader = ({
               <Facebook className="h-6 w-6" />
             </a>
             <a
-              href="https://pk.linkedin.com/company/pakistan-currency-exchange-pvt-ltd"
+              href={SOCIAL_LINKEDIN}
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-md p-2 text-slate-400 hover:bg-slate-100 hover:text-[#099546] transition-colors"
               aria-label="LinkedIn"
             >
               <Linkedin className="h-6 w-6" />
+            </a>
+            <a
+              href={SOCIAL_TWITTER}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-md p-2 text-slate-400 hover:bg-slate-100 hover:text-[#099546] transition-colors"
+              aria-label="X (Twitter)"
+            >
+              <Twitter className="h-6 w-6" />
             </a>
           </div>
         </div>

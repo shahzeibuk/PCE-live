@@ -19,6 +19,17 @@
     font-weight: unset;
     font-size: unset;
   }
+
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-pulse {
+      animation: none;
+    }
+  }
 }
 
 @plugin "@tailwindcss/typography";

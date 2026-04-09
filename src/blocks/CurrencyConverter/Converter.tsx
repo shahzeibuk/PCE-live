@@ -142,6 +142,9 @@ export const Converter = ({ rates }: { rates: CurrencyRate[] }) => {
         </div>
 
         <div className="bg-white border border-slate-200 rounded px-4 py-4 md:py-5 shadow-sm space-y-4">
+          <p className="text-xs text-slate-500 text-center md:text-left">
+            Amounts in <strong className="text-slate-700">PKR</strong> are Pakistani rupees; foreign codes use the same buy/sell PKR figures as our rate table.
+          </p>
           <div className="flex flex-col gap-4">
             <div className="flex flex-col sm:flex-row sm:items-end gap-3 sm:gap-4">
               <div className="flex-1 min-w-0 space-y-1">
@@ -155,7 +158,7 @@ export const Converter = ({ rates }: { rates: CurrencyRate[] }) => {
                   inputMode="decimal"
                   value={amount}
                   onChange={(e) => setAmount(Number(e.target.value) || 0)}
-                  className="w-full border border-slate-200 rounded px-3 py-2.5 text-base font-mono tabular-nums bg-white"
+                  className="w-full min-h-12 border border-slate-200 rounded-md px-4 py-3 text-lg font-mono tabular-nums bg-white"
                 />
               </div>
             </div>
@@ -163,11 +166,11 @@ export const Converter = ({ rates }: { rates: CurrencyRate[] }) => {
             <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-3">
               <div className="flex-1 min-w-0 space-y-1">
                 <span id="label-from" className="text-xs font-semibold uppercase tracking-wide text-slate-500 block">
-                  From
+                  From (you have)
                 </span>
                 <Select value={from} onValueChange={setFrom}>
                   <SelectTrigger
-                    className="w-full h-11 rounded border-slate-200 text-sm font-semibold [&_[data-slot=select-value]]:flex [&_[data-slot=select-value]]:items-center [&_[data-slot=select-value]]:gap-2"
+                    className="w-full min-h-12 rounded border-slate-200 text-sm font-semibold [&_[data-slot=select-value]]:flex [&_[data-slot=select-value]]:items-center [&_[data-slot=select-value]]:gap-2"
                     aria-labelledby="label-from"
                   >
                     <SelectValue placeholder="Currency you have" />
@@ -208,11 +211,11 @@ export const Converter = ({ rates }: { rates: CurrencyRate[] }) => {
 
               <div className="flex-1 min-w-0 space-y-1">
                 <span id="label-to" className="text-xs font-semibold uppercase tracking-wide text-slate-500 block">
-                  To
+                  To (you want)
                 </span>
                 <Select value={to} onValueChange={setTo}>
                   <SelectTrigger
-                    className="w-full h-11 rounded border-slate-200 text-sm font-semibold [&_[data-slot=select-value]]:flex [&_[data-slot=select-value]]:items-center [&_[data-slot=select-value]]:gap-2"
+                    className="w-full min-h-12 rounded border-slate-200 text-sm font-semibold [&_[data-slot=select-value]]:flex [&_[data-slot=select-value]]:items-center [&_[data-slot=select-value]]:gap-2"
                     aria-labelledby="label-to"
                   >
                     <SelectValue placeholder="Currency you want" />
@@ -242,7 +245,15 @@ export const Converter = ({ rates }: { rates: CurrencyRate[] }) => {
             <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 pt-1 border-t border-slate-100">
               <span className="text-sm font-semibold text-slate-600">You get about</span>
               <span className="text-2xl sm:text-3xl font-bold text-[#099546] tabular-nums break-all">
-                {result.toLocaleString(undefined, { maximumFractionDigits: 2 })} {to}
+                {result.toLocaleString(undefined, { maximumFractionDigits: 2 })}{' '}
+                <span className="inline-flex items-baseline gap-1">
+                  <abbr title="Currency code" className="no-underline">
+                    {to}
+                  </abbr>
+                  {to === 'PKR' ? (
+                    <span className="text-sm font-semibold text-slate-500 normal-case">(Pakistani rupees)</span>
+                  ) : null}
+                </span>
               </span>
             </div>
           </div>
