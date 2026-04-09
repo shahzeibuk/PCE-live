@@ -154,8 +154,8 @@ You can exchange foreign currency through Pakistan Currency Exchange branches ac
 
 Q3: Does Pakistan Currency Exchange offer remittance services?
 Yes, Pakistan Currency Exchange offers reliable and convenient home remittance services through its nationwide branch network. Customers can receive international remittances safely and efficiently from our selected branches.
-Q4: Can I send money abroad through Pakistan Currency Exchange?
-Yes, you can send money abroad through Pakistan Currency Exchange using our trusted international transfer and telegraphic transfer services, subject to applicable regulations and required documentation.
+Q4: Can I Convert  abroad through Pakistan Currency Exchange?
+Yes, you can Convert  abroad through Pakistan Currency Exchange using our trusted international transfer and telegraphic transfer services, subject to applicable regulations and required documentation.
 Q5: How can I find the nearest Pakistan Currency Exchange branch?
 You can find your nearest Pakistan Currency Exchange branch by visiting our Branch Locator section on the website or by contacting our customer support team for assistance and branch details.
 

@@ -5,10 +5,8 @@ export const HOME_HERO = {
   h1: 'Live Currency Exchange Rates in Pakistan',
   h1Accent: '',
   /** Shown below `sm` so the hero stays scannable on small phones */
-  leadShort:
-    'Live USD–PKR and major forex rates, plus exchange and remittance across Pakistan.',
-  lead:
-    'Check live USD, SAR, AED, EUR and GBP to PKR open-market rates, currency exchange, and trusted remittance services across our branch network.',
+  leadShort: 'Live USD–PKR and major forex rates, plus exchange and remittance across Pakistan.',
+  lead: 'Check live USD, SAR, AED, EUR and GBP to PKR open-market rates, currency exchange, and trusted remittance services across our branch network.',
 }
 
 /** Full company intro lives on `/about`; homepage keeps a short CTA only. */
@@ -150,8 +148,8 @@ export const HOME_FAQ = {
       a: 'Yes, Pakistan Currency Exchange offers reliable and convenient home remittance services through its nationwide branch network. Customers can receive international remittances safely and efficiently from our selected branches.',
     },
     {
-      q: 'Can I send money abroad through Pakistan Currency Exchange?',
-      a: 'Yes, you can send money abroad through Pakistan Currency Exchange using our trusted international transfer and telegraphic transfer services, subject to applicable regulations and required documentation.',
+      q: 'Can I Convert  abroad through Pakistan Currency Exchange?',
+      a: 'Yes, you can Convert  abroad through Pakistan Currency Exchange using our trusted international transfer and telegraphic transfer services, subject to applicable regulations and required documentation.',
     },
     {
       q: 'How can I find the nearest Pakistan Currency Exchange branch?',

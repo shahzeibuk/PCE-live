@@ -91,11 +91,11 @@ const seed = async () => {
 
   // Create Sample Currency Rates
   const rates = [
-    { currency_name: 'US Dollar', currency_code: 'USD', buy_rate: 278.50, sell_rate: 281.00 },
-    { currency_name: 'Euro', currency_code: 'EUR', buy_rate: 302.20, sell_rate: 305.50 },
-    { currency_name: 'British Pound', currency_code: 'GBP', buy_rate: 352.40, sell_rate: 356.80 },
-    { currency_name: 'UAE Dirham', currency_code: 'AED', buy_rate: 75.80, sell_rate: 76.50 },
-    { currency_name: 'Saudi Riyal', currency_code: 'SAR', buy_rate: 74.20, sell_rate: 74.90 },
+    { currency_name: 'US Dollar', currency_code: 'USD', buy_rate: 278.5, sell_rate: 281.0 },
+    { currency_name: 'Euro', currency_code: 'EUR', buy_rate: 302.2, sell_rate: 305.5 },
+    { currency_name: 'British Pound', currency_code: 'GBP', buy_rate: 352.4, sell_rate: 356.8 },
+    { currency_name: 'UAE Dirham', currency_code: 'AED', buy_rate: 75.8, sell_rate: 76.5 },
+    { currency_name: 'Saudi Riyal', currency_code: 'SAR', buy_rate: 74.2, sell_rate: 74.9 },
   ]
 
   for (const rate of rates) {
@@ -107,9 +107,21 @@ const seed = async () => {
 
   // Create Sample Services
   const services = [
-    { title: 'Currency Exchange', slug: 'currency-exchange', description: 'Buy and sell foreign currencies at competitive market rates.' },
-    { title: 'Foreign Remittance', slug: 'remittance', description: 'Send money to your loved ones globally with ease and security.' },
-    { title: 'Western Union', slug: 'western-union', description: 'Authorized agent for Western Union money transfer services.' },
+    {
+      title: 'Currency Exchange',
+      slug: 'currency-exchange',
+      description: 'Buy and sell foreign currencies at competitive market rates.',
+    },
+    {
+      title: 'Foreign Remittance',
+      slug: 'remittance',
+      description: 'Convert  to your loved ones globally with ease and security.',
+    },
+    {
+      title: 'Western Union',
+      slug: 'western-union',
+      description: 'Authorized agent for Western Union money transfer services.',
+    },
   ]
 
   for (const service of services) {

@@ -81,7 +81,7 @@ export function ServiceListingIcon({ service, className }: Props) {
     return wrap(<ArrowRightLeft className="w-10 h-10 text-[#099546]" aria-hidden />)
   }
 
-  if (key.includes('remittance') || key.includes('transfer') || key.includes('send money')) {
+  if (key.includes('remittance') || key.includes('transfer') || key.includes('Convert ')) {
     return wrap(<Send className="w-10 h-10 text-[#099546]" aria-hidden />)
   }
 

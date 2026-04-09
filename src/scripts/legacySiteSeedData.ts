@@ -51,9 +51,9 @@ export const LEGACY_SERVICES: LegacyServiceSeed[] = [
     title: 'Western Union',
     slug: 'western-union',
     short_description:
-      'Receive and send money online with one of the most reliable transfer networks.',
+      'Receive and Convert  online with one of the most reliable transfer networks.',
     description:
-      'An easy way to receive and send money to your loved ones online with a globally trusted transfer company.',
+      'An easy way to receive and Convert  to your loved ones online with a globally trusted transfer company.',
     process_steps: [
       { step: 'Visit a PCE branch with valid ID' },
       { step: 'Provide sender/receiver details or MTCN' },
@@ -64,12 +64,12 @@ export const LEGACY_SERVICES: LegacyServiceSeed[] = [
       { benefit: 'Fast cash pickup' },
       { benefit: 'Licensed agent support' },
     ],
-    body: 'Western Union offers a simple way to receive and send money to family and friends through Pakistan Currency Exchange branches nationwide.',
+    body: 'Western Union offers a simple way to receive and Convert  to family and friends through Pakistan Currency Exchange branches nationwide.',
   },
   {
     title: 'MoneyGram',
     slug: 'moneygram',
-    short_description: 'Send money globally with a provider known for reliability and speed.',
+    short_description: 'Convert  globally with a provider known for reliability and speed.',
     description:
       'Save time by sending money worldwide with a well-known transfer company built for dependable, near real-time transfers.',
     process_steps: [
@@ -87,7 +87,8 @@ export const LEGACY_SERVICES: LegacyServiceSeed[] = [
   {
     title: 'RIA Money Transfer',
     slug: 'ria-money-transfer',
-    short_description: 'Send or receive funds when it matters—supported round the clock by our network.',
+    short_description:
+      'Send or receive funds when it matters—supported round the clock by our network.',
     description:
       'Transfer money conveniently whenever you need it, with fast fund-receiving options from around the world.',
     process_steps: [
@@ -141,7 +142,8 @@ export const LEGACY_SERVICES: LegacyServiceSeed[] = [
   {
     title: 'Demand Draft',
     slug: 'demand-draft',
-    short_description: 'Bank drafts for university fees, immigration, and official payments abroad.',
+    short_description:
+      'Bank drafts for university fees, immigration, and official payments abroad.',
     description:
       'Avoid repeated bank queues—issue a demand draft in major currencies for institutions that require guaranteed instruments.',
     process_steps: [
@@ -177,7 +179,8 @@ export const LEGACY_SERVICES: LegacyServiceSeed[] = [
   {
     title: 'IME',
     slug: 'ime',
-    short_description: 'Receive international remittances through IME-supported corridors at select branches.',
+    short_description:
+      'Receive international remittances through IME-supported corridors at select branches.',
     description:
       'Pakistan Currency Exchange facilitates IME remittance payouts where available, with ID verification and customer guidance at the counter.',
     process_steps: [
@@ -249,7 +252,8 @@ export const LEGACY_SERVICES: LegacyServiceSeed[] = [
   {
     title: 'Aussie Forex & Finance',
     slug: 'aussie-forex-finance',
-    short_description: 'Remittance and forex solutions linked to Aussie Forex & Finance where offered.',
+    short_description:
+      'Remittance and forex solutions linked to Aussie Forex & Finance where offered.',
     description:
       'We support applicable Aussie Forex & Finance-linked services at participating branches alongside our core exchange and remittance desk.',
     process_steps: [
@@ -267,7 +271,8 @@ export const LEGACY_SERVICES: LegacyServiceSeed[] = [
   {
     title: 'ARY Exchange',
     slug: 'ary-exchange',
-    short_description: 'ARY Exchange remittance services through supported Pakistan Currency Exchange locations.',
+    short_description:
+      'ARY Exchange remittance services through supported Pakistan Currency Exchange locations.',
     description:
       'Beneficiaries may receive ARY Exchange remittances at eligible PCE branches with valid identification and transaction details.',
     process_steps: [
