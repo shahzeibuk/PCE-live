@@ -95,25 +95,25 @@ export default async function HomePage() {
       <div className="flex flex-col gap-0 overflow-x-hidden flush-under-site-header">
         <section className="relative overflow-hidden">
           <HeroCurrencyBackdrop
-            minHeightClassName="min-h-[min(85vh,520px)] sm:min-h-[min(80vh,480px)]"
-            className="pb-10 md:pb-14"
+            minHeightClassName="min-h-[min(88vh,540px)] sm:min-h-[min(82vh,500px)] md:min-h-[min(78vh,560px)]"
+            className="pb-12 md:pb-16 lg:pb-20"
             priority
           >
-            <div className="hero-below-nav container flex flex-1 flex-col justify-center pb-10 md:pb-14">
-              <div className="max-w-2xl">
-                <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-[#099546]">
+            <div className="hero-below-nav container flex flex-1 flex-col justify-center pb-12 md:pb-16 lg:pb-20">
+              <div className="max-w-2xl space-y-0">
+                <p className="text-xs font-semibold uppercase tracking-wider text-[#099546] sm:text-sm">
                   {HOME_HERO.eyebrow}
                 </p>
-                <h1 className="text-pretty text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
+                <h1 className="text-pretty mt-4 text-3xl font-bold leading-[1.12] tracking-tight text-white sm:mt-5 sm:text-4xl sm:leading-[1.1] md:mt-6 md:text-5xl lg:mt-7 lg:text-6xl">
                   {HOME_HERO.h1}
                 </h1>
-                <p className="mt-4 max-w-xl text-sm leading-relaxed text-slate-200 sm:hidden">
+                <p className="mt-5 max-w-xl text-sm leading-relaxed text-slate-200 sm:mt-6 sm:hidden">
                   {HOME_HERO.leadShort}
                 </p>
-                <p className="mt-4 max-w-xl hidden text-base leading-relaxed text-slate-200 sm:block md:text-lg lg:text-xl">
+                <p className="mt-5 max-w-xl hidden text-base leading-relaxed text-slate-200 sm:mt-6 sm:block md:text-lg md:leading-relaxed lg:mt-7 lg:text-xl lg:leading-relaxed">
                   {HOME_HERO.lead}
                 </p>
-                <div className="mt-8 flex flex-col gap-4 sm:mt-7 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3">
+                <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 md:mt-12">
                   <Button
                     asChild
                     className="min-h-12 rounded bg-[#099546] px-6 font-semibold text-white hover:bg-[#088040]"

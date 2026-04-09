@@ -109,15 +109,16 @@ export const FloatingHeader = ({
           scrolled ? 'py-2.5' : 'py-3 md:py-4'
         )}
       >
-        <div className="flex items-center justify-between gap-2 min-[480px]:gap-3">
+        <div className="flex flex-nowrap items-center justify-between gap-2 min-[480px]:gap-3">
           {/*
-            Mobile: wide horizontal logo — cap width so search + menu stay visible (avoids “crushed” layout).
+            Mobile: keep logo small and reserve ~10.5rem for Rates/bank + search + menu (40px taps + gaps).
+            Too small a reserve was hiding the hamburger on narrow phones.
           */}
           <Link
             href="/"
             className={cn(
-              'relative z-50 flex min-w-0 shrink items-center',
-              'max-w-[calc(100%-6.25rem)] min-[400px]:max-w-[calc(100%-7rem)] sm:max-w-none',
+              'relative z-50 flex min-w-0 flex-1 items-center overflow-hidden',
+              'max-w-[calc(100%-10.75rem)] min-[400px]:max-w-[calc(100%-11.25rem)] sm:max-w-[calc(100%-12rem)] md:max-w-none md:flex-initial md:overflow-visible',
             )}
             aria-label="Pakistan Currency Exchange — Home"
           >
@@ -125,13 +126,16 @@ export const FloatingHeader = ({
               loading="eager"
               priority="high"
               className={cn(
-                'block w-auto transition-[height,max-height,max-width] duration-300',
-                'max-h-9 max-w-[10.25rem] min-[400px]:max-w-[11.5rem]',
-                'sm:max-h-11 sm:max-w-[13.5rem]',
-                'md:max-h-14 md:max-w-[17rem]',
+                'w-full min-w-0 transition-[height,max-height,max-width] duration-300',
+                /* Base mobile: compact logo so header + hero text stay clear */
+                'max-h-7 max-w-[6.25rem]',
+                'min-[360px]:max-h-7 min-[360px]:max-w-[7rem]',
+                'min-[400px]:max-h-8 min-[400px]:max-w-[8rem]',
+                'sm:max-h-10 sm:max-w-[10.5rem]',
+                'md:max-h-14 md:max-w-[17rem] md:w-auto',
                 'lg:max-h-[4.25rem] lg:max-w-[20rem]',
                 scrolled
-                  ? 'max-h-8 max-w-[9.5rem] min-[400px]:max-w-[10.5rem] sm:max-h-10 sm:max-w-[12rem] md:max-h-12 md:max-w-[15rem] lg:max-h-[3.5rem] lg:max-w-[18rem]'
+                  ? 'max-h-6 max-w-[5.75rem] min-[360px]:max-w-[6.5rem] min-[400px]:max-h-7 min-[400px]:max-w-[7.25rem] sm:max-h-9 sm:max-w-[9.5rem] md:max-h-12 md:max-w-[15rem] lg:max-h-[3.5rem] lg:max-w-[18rem]'
                   : null,
               )}
             />

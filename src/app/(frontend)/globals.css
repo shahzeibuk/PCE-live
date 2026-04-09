@@ -61,8 +61,9 @@
  * Matches `.site-main` offset for fixed `FloatingHeader` (see floating-header.tsx).
  * Used by `.flush-under-site-header` so full-bleed heroes sit under the nav with no white gap.
  */
+/* Slightly taller default so hero eyebrow clears the fixed bar after logo + one-row nav */
 :root {
-  --site-header-height: 6rem;
+  --site-header-height: 6.75rem;
 }
 @media (width >= theme(--breakpoint-md)) {
   :root {
@@ -92,9 +93,22 @@
     margin-top: calc(-1 * var(--site-header-height));
   }
 
-  /** Push hero text/CTAs below the fixed header; background stays full-bleed to the top. */
+  /**
+   * Push hero text/CTAs below the fixed header; background stays full-bleed to the top.
+   * Extra inset after the header bar so the eyebrow and heading are not visually glued to the nav.
+   */
   .hero-below-nav {
-    padding-top: var(--site-header-height);
+    padding-top: calc(var(--site-header-height) + 1rem);
+  }
+  @variant md {
+    .hero-below-nav {
+      padding-top: calc(var(--site-header-height) + 1.35rem);
+    }
+  }
+  @variant lg {
+    .hero-below-nav {
+      padding-top: calc(var(--site-header-height) + 1.75rem);
+    }
   }
 
   .container {
