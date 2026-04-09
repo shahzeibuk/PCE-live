@@ -22,7 +22,10 @@ export const Logo = (props: Props) => {
       loading={loading}
       fetchPriority={priority}
       decoding="async"
-      className={clsx('max-w-[min(100%,22rem)] w-full h-auto min-h-11 object-contain', className)}
+      className={clsx(
+        'h-auto max-w-full object-contain object-left',
+        className,
+      )}
       src="/Pakistan%20Currency%20Logo.png"
     />
   )

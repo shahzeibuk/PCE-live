@@ -15,6 +15,7 @@ import {
   ChevronLeft,
   ChevronDown,
   Smartphone,
+  Banknote,
 } from 'lucide-react'
 
 import type { Header } from '@/payload-types'
@@ -106,14 +107,30 @@ export const FloatingHeader = ({
           scrolled ? 'py-2.5' : 'py-3 md:py-4'
         )}
       >
-        <div className="flex items-center justify-between gap-3">
-          <Link href="/" className="relative z-50 shrink-0">
+        <div className="flex items-center justify-between gap-2 min-[480px]:gap-3">
+          {/*
+            Mobile: wide horizontal logo — cap width so search + menu stay visible (avoids “crushed” layout).
+          */}
+          <Link
+            href="/"
+            className={cn(
+              'relative z-50 flex min-w-0 shrink items-center',
+              'max-w-[calc(100%-6.25rem)] min-[400px]:max-w-[calc(100%-7rem)] sm:max-w-none',
+            )}
+            aria-label="Pakistan Currency Exchange — Home"
+          >
             <Logo
               loading="eager"
               priority="high"
               className={cn(
-                'transition-all duration-300 w-auto',
-                scrolled ? 'h-11 sm:h-12' : 'h-12 sm:h-14 md:h-16',
+                'block w-auto transition-[height,max-height,max-width] duration-300',
+                'max-h-9 max-w-[10.25rem] min-[400px]:max-w-[11.5rem]',
+                'sm:max-h-11 sm:max-w-[13.5rem]',
+                'md:max-h-14 md:max-w-[17rem]',
+                'lg:max-h-[4.25rem] lg:max-w-[20rem]',
+                scrolled
+                  ? 'max-h-8 max-w-[9.5rem] min-[400px]:max-w-[10.5rem] sm:max-h-10 sm:max-w-[12rem] md:max-h-12 md:max-w-[15rem] lg:max-h-[3.5rem] lg:max-w-[18rem]'
+                  : null,
               )}
             />
           </Link>
@@ -130,23 +147,30 @@ export const FloatingHeader = ({
             </a>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          <div className="flex items-center gap-1 sm:gap-2 md:gap-3 shrink-0">
             <Button
               asChild
-              className="hidden sm:inline-flex rounded bg-[#099546] hover:bg-[#088040] text-white h-9 md:h-10 px-4 md:px-5 text-xs md:text-sm font-semibold"
+              className="hidden min-[400px]:inline-flex rounded bg-[#099546] hover:bg-[#088040] text-white h-8 px-3 text-xs font-semibold sm:h-9 md:h-10 md:px-5 md:text-sm"
             >
-              <Link href="/currency-rates">Get Live Rates</Link>
+              <Link href="/currency-rates">Rates</Link>
             </Button>
             <Link
+              href="/currency-rates"
+              aria-label="Live exchange rates"
+              className="min-[400px]:hidden flex h-10 w-10 items-center justify-center rounded-md text-[#099546] hover:bg-[#099546]/10 transition-colors"
+            >
+              <Banknote className="h-5 w-5" aria-hidden />
+            </Link>
+            <Link
               href="/search"
-              className="p-2 text-slate-900 hover:text-[#099546] transition-colors"
+              className="flex h-10 w-10 items-center justify-center rounded-md text-slate-900 hover:bg-slate-100 hover:text-[#099546] transition-colors"
               aria-label="Search"
             >
               <Search className="h-5 w-5" />
             </Link>
             <button
               type="button"
-              className="lg:hidden p-2 -mr-2 text-slate-900 hover:text-[#099546] transition-colors"
+              className="lg:hidden flex h-10 w-10 items-center justify-center rounded-md text-slate-900 hover:bg-slate-100 hover:text-[#099546] transition-colors"
               onClick={() => setMobileMenuOpen((prev) => !prev)}
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-nav-menu"
@@ -237,7 +261,10 @@ export const FloatingHeader = ({
           mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         )}
       >
-        <div className="relative flex flex-col h-full pt-20 px-5 sm:px-8 overflow-y-auto">
+        <div
+          className="relative flex flex-col h-full px-5 pt-[calc(var(--site-header-height)+0.75rem)] sm:px-8 overflow-y-auto"
+          style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom))' }}
+        >
           <button
             type="button"
             onClick={() => setMobileMenuOpen(false)}
@@ -341,12 +368,24 @@ export const FloatingHeader = ({
           </nav>
 
           <div className="mt-auto pt-8 pb-10 flex gap-4">
-            <Link href="#" className="hover:text-[#099546] transition-colors" aria-label="Facebook">
-              <Facebook className="h-6 w-6 text-slate-400" />
-            </Link>
-            <Link href="#" className="hover:text-[#099546] transition-colors" aria-label="LinkedIn">
-              <Linkedin className="h-6 w-6 text-slate-400" />
-            </Link>
+            <a
+              href="https://www.facebook.com/pkcurrency/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-md p-2 text-slate-400 hover:bg-slate-100 hover:text-[#099546] transition-colors"
+              aria-label="Facebook"
+            >
+              <Facebook className="h-6 w-6" />
+            </a>
+            <a
+              href="https://pk.linkedin.com/company/pakistan-currency-exchange-pvt-ltd"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-md p-2 text-slate-400 hover:bg-slate-100 hover:text-[#099546] transition-colors"
+              aria-label="LinkedIn"
+            >
+              <Linkedin className="h-6 w-6" />
+            </a>
           </div>
         </div>
       </div>
