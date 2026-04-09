@@ -142,13 +142,13 @@ export function CurrencyRatesDualSection({ rates }: Props) {
               <RatesTable rates={popularOrdered} compact aria-label="Major currency rates" />
             </div>
             <div>
-              <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
+              <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
                 <h2 className="text-lg font-bold text-slate-900">More quoted rates</h2>
                 {hasMoreOther ? (
                   <Button
                     type="button"
                     variant="outline"
-                    className="border-[#099546] text-[#099546] hover:bg-[#099546]/5 font-semibold"
+                    className="w-full shrink-0 border-[#099546] font-semibold text-[#099546] hover:bg-[#099546]/5 sm:w-auto"
                     onClick={openOtherOnly}
                   >
                     All quoted rates ({otherRates.length})
@@ -165,11 +165,11 @@ export function CurrencyRatesDualSection({ rates }: Props) {
             </div>
           </div>
 
-          <div className="flex justify-center pt-2 lg:hidden">
+          <div className="flex justify-center px-0 pt-2 lg:hidden">
             <Button
               type="button"
               variant="outline"
-              className="border-2 border-[#099546] text-[#099546] hover:bg-[#099546]/5 font-semibold h-11 px-8"
+              className="h-12 min-h-12 w-full max-w-lg border-2 border-[#099546] px-4 font-semibold text-[#099546] hover:bg-[#099546]/5 sm:w-auto sm:max-w-none sm:px-8"
               onClick={openFullList}
             >
               All quoted rates in one view ({rates.length})
@@ -181,7 +181,7 @@ export function CurrencyRatesDualSection({ rates }: Props) {
       )}
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-h-[85vh] max-w-4xl overflow-y-auto sm:max-w-4xl">
+        <DialogContent className="max-h-[min(90vh,900px)] w-[calc(100vw-1.25rem)] max-w-4xl gap-3 overflow-y-auto p-4 sm:p-6">
           <DialogHeader>
             <DialogTitle>
               {dialogMode === 'other' ? 'All additional quoted rates' : 'Complete rate list'}

@@ -88,16 +88,16 @@ export const CurrencyConverter = ({ rates }: { rates: Rate[] }) => {
   }
 
   return (
-    <Card className="w-full max-w-[480px] mx-auto bg-card border shadow-sm rounded-3xl overflow-hidden">
-      <CardContent className="p-8 space-y-6">
+    <Card className="w-full max-w-full bg-card border border-slate-200 shadow-sm rounded-2xl sm:rounded-3xl overflow-hidden mx-auto lg:mx-0">
+      <CardContent className="p-4 sm:p-6 md:p-8 space-y-5 sm:space-y-6">
         {/* Rate Pill & Sync */}
-        <div className="flex justify-center items-center gap-2">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-gray-100 rounded-full text-sm font-semibold text-gray-700">
-            <Lock className="size-3 text-gray-400" />
-            <span>
+        <div className="flex flex-wrap items-center justify-center gap-2">
+          <div className="inline-flex max-w-full min-w-0 items-center gap-2 px-3 py-1.5 sm:px-4 bg-gray-100 rounded-full text-xs font-semibold text-gray-700 sm:text-sm">
+            <Lock className="size-3 shrink-0 text-gray-400" aria-hidden />
+            <span className="truncate tabular-nums">
               1 {fromCurrency} = {rateValue.toFixed(3)} {toCurrency}
             </span>
-            <ChevronRight className="size-4 text-gray-400" />
+            <ChevronRight className="size-4 shrink-0 text-gray-400 hidden sm:inline" aria-hidden />
           </div>
 
           <Button
@@ -116,7 +116,7 @@ export const CurrencyConverter = ({ rates }: { rates: Rate[] }) => {
             }}
             disabled={isSyncing}
             title="Sync Live Exchange Rates"
-            className="rounded-full size-8 p-0 bg-gray-100 hover:bg-gray-200 text-gray-700"
+            className="rounded-full size-8 shrink-0 p-0 bg-gray-100 hover:bg-gray-200 text-gray-700"
           >
             <RefreshCw className={cn('size-4', isSyncing && 'animate-spin')} />
           </Button>
@@ -127,7 +127,7 @@ export const CurrencyConverter = ({ rates }: { rates: Rate[] }) => {
           <label className="text-sm font-semibold text-gray-500 ml-1">
             You send exactly (amount)
           </label>
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex flex-col gap-3 min-[420px]:flex-row min-[420px]:items-center min-[420px]:justify-between sm:gap-4">
             <Select
               value={fromCurrency}
               onValueChange={(val) => {
@@ -135,10 +135,10 @@ export const CurrencyConverter = ({ rates }: { rates: Rate[] }) => {
                 setFromCurrency(val)
               }}
             >
-              <SelectTrigger className="w-fit h-auto flex items-center gap-2 px-3 py-2 bg-gray-50 rounded-2xl hover:bg-gray-100 transition-colors cursor-pointer group border-0 ring-0 focus:ring-0 shadow-none">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">{FLAG_MAP[fromCurrency] || '🏳️'}</span>
-                  <span className="text-xl font-bold">{fromCurrency}</span>
+              <SelectTrigger className="w-fit max-w-full h-auto flex items-center gap-2 px-3 py-2 bg-gray-50 rounded-2xl hover:bg-gray-100 transition-colors cursor-pointer group border-0 ring-0 focus:ring-0 shadow-none">
+                <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                  <span className="text-xl sm:text-2xl shrink-0">{FLAG_MAP[fromCurrency] || '🏳️'}</span>
+                  <span className="text-lg sm:text-xl font-bold tabular-nums">{fromCurrency}</span>
                 </div>
               </SelectTrigger>
               <SelectContent className="rounded-2xl max-h-[300px] z-50">
@@ -164,7 +164,7 @@ export const CurrencyConverter = ({ rates }: { rates: Rate[] }) => {
               aria-label={`Amount in ${fromCurrency}`}
               value={sendAmount}
               onChange={(e) => setSendAmount(formatNumber(e.target.value))}
-              className="min-h-12 text-right text-3xl sm:text-4xl font-black bg-transparent border-0 focus:ring-0 p-0 w-full min-w-0 tracking-tighter text-gray-900"
+              className="min-h-12 w-full min-w-0 flex-1 text-right text-2xl sm:text-3xl md:text-4xl font-black bg-transparent border-0 focus:ring-0 p-0 tracking-tighter text-gray-900 min-[420px]:text-3xl"
             />
           </div>
         </div>
@@ -189,7 +189,7 @@ export const CurrencyConverter = ({ rates }: { rates: Rate[] }) => {
               </span>
             ) : null}
           </label>
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex flex-col gap-3 min-[420px]:flex-row min-[420px]:items-center min-[420px]:justify-between sm:gap-4">
             <Select
               value={toCurrency}
               onValueChange={(val) => {
@@ -197,10 +197,10 @@ export const CurrencyConverter = ({ rates }: { rates: Rate[] }) => {
                 setToCurrency(val)
               }}
             >
-              <SelectTrigger className="w-fit h-auto flex items-center gap-2 px-3 py-2 bg-gray-50 rounded-2xl hover:bg-gray-100 transition-colors cursor-pointer group border-0 ring-0 focus:ring-0 shadow-none">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">{FLAG_MAP[toCurrency] || '🏳️'}</span>
-                  <span className="text-xl font-bold">{toCurrency}</span>
+              <SelectTrigger className="w-fit max-w-full h-auto flex items-center gap-2 px-3 py-2 bg-gray-50 rounded-2xl hover:bg-gray-100 transition-colors cursor-pointer group border-0 ring-0 focus:ring-0 shadow-none">
+                <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                  <span className="text-xl sm:text-2xl shrink-0">{FLAG_MAP[toCurrency] || '🏳️'}</span>
+                  <span className="text-lg sm:text-xl font-bold tabular-nums">{toCurrency}</span>
                 </div>
               </SelectTrigger>
               <SelectContent className="rounded-2xl max-h-[300px] z-50">
@@ -221,7 +221,7 @@ export const CurrencyConverter = ({ rates }: { rates: Rate[] }) => {
               </SelectContent>
             </Select>
             <div
-              className="text-right text-3xl sm:text-4xl font-black tracking-tighter text-gray-900 min-h-12 flex items-center justify-end"
+              className="flex min-h-12 w-full min-w-0 flex-1 items-center justify-end text-right text-2xl font-black tracking-tighter text-gray-900 min-[420px]:text-3xl sm:text-4xl break-all sm:break-normal"
               aria-label={`Converted amount in ${toCurrency}`}
             >
               {receiveAmount}
@@ -233,14 +233,14 @@ export const CurrencyConverter = ({ rates }: { rates: Rate[] }) => {
 
         {/* Details Section */}
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="size-10 rounded-full border border-gray-100 flex items-center justify-center bg-white shadow-sm">
-                <Zap className="size-5 text-gray-900 fill-gray-900" />
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+              <div className="size-9 shrink-0 rounded-full border border-gray-100 flex items-center justify-center bg-white shadow-sm sm:size-10">
+                <Zap className="size-4 fill-gray-900 text-gray-900 sm:size-5" aria-hidden />
               </div>
-              <div>
-                <p className="text-sm font-semibold text-gray-500">Arrives</p>
-                <p className="font-bold text-gray-900">Today - in seconds</p>
+              <div className="min-w-0">
+                <p className="text-xs font-semibold text-gray-500 sm:text-sm">Arrives</p>
+                <p className="text-sm font-bold text-gray-900 sm:text-base">Today — instantly</p>
               </div>
             </div>
           </div>
@@ -262,8 +262,8 @@ export const CurrencyConverter = ({ rates }: { rates: Rate[] }) => {
             </div> */}
         </div>
 
-        {/* CTA Button */}
-        <Button className="w-full h-16 rounded-full text-xl font-bold transition-opacity">
+        {/* CTA — presentational; conversion updates live above */}
+        <Button type="button" className="h-14 w-full rounded-full text-base font-bold transition-opacity sm:h-16 sm:text-lg md:text-xl">
           Convert
         </Button>
       </CardContent>

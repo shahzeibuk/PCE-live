@@ -35,24 +35,24 @@ export default async function RatesPage() {
         description="Get competitive open-market rates. Figures update regularly; confirm at your branch before transacting."
       />
 
-      <div className="container px-4 py-10 md:py-12 grid lg:grid-cols-3 gap-10 lg:gap-12">
-        <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white border border-slate-200 rounded-xl p-4 md:p-6 overflow-hidden">
-            <div className="space-y-4 mb-6">
+      <div className="container min-w-0 px-3 sm:px-4 py-8 md:py-12 grid grid-cols-1 gap-8 lg:grid-cols-3 lg:gap-10 xl:gap-12">
+        <div className="min-w-0 space-y-6 lg:col-span-2">
+          <div className="bg-white border border-slate-200 rounded-xl p-3 sm:p-4 md:p-6 overflow-hidden shadow-sm">
+            <div className="mb-4 space-y-4 md:mb-6">
               <CurrencyRatesLiveHeader rates={rates} />
             </div>
             <CurrencyRatesDualSection rates={rates} />
           </div>
-          <CurrencyNoteSurface className="p-5 md:p-6 text-base text-slate-600 leading-relaxed">
+          <CurrencyNoteSurface className="p-4 text-sm leading-relaxed text-slate-600 sm:p-5 md:p-6 md:text-base">
             <strong className="text-slate-900">Disclaimer:</strong> Rates may change without
             notice. Information only — confirm with a branch before any transaction.
           </CurrencyNoteSurface>
         </div>
 
-        <div className="space-y-8">
+        <aside className="min-w-0 space-y-6 lg:sticky lg:top-[calc(var(--site-header-height)+0.75rem)] lg:self-start xl:top-[calc(var(--site-header-height)+1rem)]">
           <CurrencyConverter rates={converterRates} />
 
-          <div className="bg-white border border-slate-200 rounded p-6 md:p-8">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6 md:p-8">
             <h3 className="text-lg font-bold text-slate-900 mb-3">Bulk or treasury rates</h3>
             <p className="text-slate-600 text-sm mb-6 leading-relaxed">
               For large volumes, ask about preferential pricing at our main branch or treasury desk.
@@ -72,7 +72,7 @@ export default async function RatesPage() {
               </li>
             </ul>
           </div>
-        </div>
+        </aside>
       </div>
     </div>
   )
