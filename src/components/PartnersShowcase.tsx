@@ -12,7 +12,8 @@ type Props = {
 
 /**
  * Static partner logo grid using assets in `public/partners/`.
- * Use on About and other marketing pages; footer uses `PartnersCarousel` for motion.
+ * Site-wide partner strip is `PartnersCarousel` in the footer — use this only if you need
+ * an extra static grid in a specific layout (avoid duplicating both on the same view).
  */
 export function PartnersShowcase({
   title = 'Our partners',
