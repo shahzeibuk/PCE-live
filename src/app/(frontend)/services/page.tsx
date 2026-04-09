@@ -14,6 +14,7 @@ export default async function ServicesPage() {
       collection: 'services',
       sort: 'title',
       limit: 100,
+      depth: 1,
     })
     services = result.docs
   } catch (error) {

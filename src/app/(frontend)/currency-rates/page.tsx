@@ -58,17 +58,17 @@ export default async function RatesPage() {
               For large volumes, ask about preferential pricing at our main branch or treasury desk.
             </p>
             <ul className="space-y-2 text-sm text-slate-700">
-              <li className="flex justify-between gap-4">
-                <span>Hours</span>
-                <span className="font-medium">9:00 AM – 6:00 PM</span>
+              <li className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                <span className="min-w-0 shrink">Hours</span>
+                <span className="font-medium tabular-nums text-right">9:00 AM – 6:00 PM</span>
               </li>
-              <li className="flex justify-between gap-4">
-                <span>Mon – Sat</span>
-                <span className="font-medium">Open</span>
+              <li className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                <span className="min-w-0 shrink">Mon – Sat</span>
+                <span className="font-medium text-right">Open</span>
               </li>
-              <li className="flex justify-between gap-4">
-                <span>Sunday</span>
-                <span className="font-medium text-red-600">Closed</span>
+              <li className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                <span className="min-w-0 shrink">Sunday</span>
+                <span className="font-medium text-right text-red-600">Closed</span>
               </li>
             </ul>
           </div>

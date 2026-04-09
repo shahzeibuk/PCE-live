@@ -18,6 +18,7 @@ type ServiceLike = {
   title?: string | null
   slug?: string | null
   icon?: unknown
+  hero_image?: unknown
 }
 
 type Props = {
@@ -45,7 +46,23 @@ export function ServiceListingIcon({ service, className }: Props) {
   )
 
   if (service.icon && typeof service.icon === 'object') {
-    return wrap(<Media resource={service.icon as never} className="w-10 h-10 object-contain" />)
+    return wrap(
+      <Media
+        resource={service.icon as never}
+        className="relative h-10 w-10"
+        imgClassName="h-full w-full object-contain"
+      />,
+    )
+  }
+
+  if (service.hero_image && typeof service.hero_image === 'object') {
+    return wrap(
+      <Media
+        resource={service.hero_image as never}
+        className="relative h-10 w-10 overflow-hidden rounded-sm"
+        imgClassName="h-full w-full object-cover"
+      />,
+    )
   }
 
   if (key.includes('moneygram')) {

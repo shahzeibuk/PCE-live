@@ -1,11 +1,7 @@
 import Image from 'next/image'
 import { cn } from '@/utilities/ui'
 
-import {
-  CURRENCY_HERO_BACKGROUND_DESKTOP,
-  CURRENCY_HERO_BACKGROUND_IMAGE,
-  CURRENCY_HERO_BACKGROUND_MOBILE,
-} from '@/constants/currencyBrand'
+import { pickRandomHeroBackground, pickRandomHeroBackgroundPair } from '@/utilities/heroBackgrounds'
 
 type HeroCurrencyBackdropProps = {
   children: React.ReactNode
@@ -26,6 +22,8 @@ export function HeroCurrencyBackdrop({
   minHeightClassName,
   priority = false,
 }: HeroCurrencyBackdropProps) {
+  const { mobile, desktop } = pickRandomHeroBackgroundPair()
+
   return (
     <div
       className={cn(
@@ -36,7 +34,7 @@ export function HeroCurrencyBackdrop({
     >
       <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
         <Image
-          src={CURRENCY_HERO_BACKGROUND_MOBILE}
+          src={mobile}
           alt=""
           fill
           className="object-cover object-[center_40%] md:hidden"
@@ -44,7 +42,7 @@ export function HeroCurrencyBackdrop({
           priority={priority}
         />
         <Image
-          src={CURRENCY_HERO_BACKGROUND_DESKTOP}
+          src={desktop}
           alt=""
           fill
           className="hidden object-cover object-center md:block"
@@ -72,6 +70,8 @@ type CurrencyNoteSurfaceProps = {
  * Disclaimers & CMS/fallback rate notes — subtle note texture, content stays readable.
  */
 export function CurrencyNoteSurface({ children, className }: CurrencyNoteSurfaceProps) {
+  const noteTextureSrc = pickRandomHeroBackground()
+
   return (
     <div
       className={cn(
@@ -81,7 +81,7 @@ export function CurrencyNoteSurface({ children, className }: CurrencyNoteSurface
     >
       <div className="absolute inset-0 z-0">
         <Image
-          src={CURRENCY_HERO_BACKGROUND_IMAGE}
+          src={noteTextureSrc}
           alt=""
           fill
           className="object-cover object-[center_30%] opacity-[0.11]"

@@ -27,7 +27,7 @@ export const ServiceCard = ({ title, description, slug, hero_image, icon }: Serv
       )}
       <CardHeader className="pb-4">
         <div className="flex justify-center mb-3">
-          <ServiceListingIcon service={{ title, slug, icon }} />
+          <ServiceListingIcon service={{ title, slug, icon, hero_image }} />
         </div>
         <CardTitle className="text-2xl font-bold tracking-tight group-hover:text-primary transition-colors">
           {title}

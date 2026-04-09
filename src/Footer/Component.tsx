@@ -40,7 +40,7 @@ export async function Footer() {
                 <Logo
                   loading="eager"
                   priority="high"
-                  className="h-14 w-auto sm:h-16 md:h-18"
+                  className="h-12 w-auto max-w-[11rem] object-contain object-left sm:h-14 sm:max-w-[13rem] md:h-16 md:max-w-[15rem]"
                 />
               </Link>
               <div className="mt-4">
@@ -74,11 +74,31 @@ export async function Footer() {
           </p>
 
           {/* Bottom Bar: Contact Info and CMS Links */}
-          <div className="mt-8 pt-8 border-t border-white/20 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex flex-col sm:flex-row gap-6 text-sm items-center">
-              <a href="tel:080013537" className="flex items-center gap-2 hover:text-[#099546] transition-colors"><Phone className="h-4 w-4" /> Toll Free: 080013537</a>
-              <a href="mailto:info@pakistancurrency.com" className="flex items-center gap-2 hover:text-[#099546] transition-colors"><Mail className="h-4 w-4" /> info@pakistancurrency.com</a>
-              <a href="https://wa.me/923046668810" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-[#099546] transition-colors"><MessageCircle className="h-4 w-4" /> +92 304 6668810</a>
+          <div className="mt-8 pt-8 border-t border-white/20 flex flex-col gap-6 md:flex-row md:justify-between md:items-center">
+            <div className="flex w-full min-w-0 max-w-full flex-col items-center gap-4 text-sm sm:flex-row sm:flex-wrap sm:justify-center md:max-w-[70%] md:items-start md:justify-start lg:max-w-none">
+              <a
+                href="tel:080013537"
+                className="flex max-w-full items-center justify-center gap-2 break-words text-center hover:text-white/90 transition-colors sm:text-left md:justify-start"
+              >
+                <Phone className="h-4 w-4 shrink-0" aria-hidden />
+                <span>Toll Free: 080013537</span>
+              </a>
+              <a
+                href="mailto:info@pakistancurrency.com"
+                className="flex max-w-full items-center justify-center gap-2 break-all text-center hover:text-white/90 transition-colors sm:break-words sm:text-left md:justify-start"
+              >
+                <Mail className="h-4 w-4 shrink-0" aria-hidden />
+                <span>info@pakistancurrency.com</span>
+              </a>
+              <a
+                href="https://wa.me/923046668810"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex max-w-full items-center justify-center gap-2 text-center hover:text-white/90 transition-colors sm:text-left md:justify-start"
+              >
+                <MessageCircle className="h-4 w-4 shrink-0" aria-hidden />
+                <span>+92 304 6668810</span>
+              </a>
             </div>
             
             <div className="flex items-center gap-4">

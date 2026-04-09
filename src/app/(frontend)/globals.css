@@ -235,7 +235,12 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground min-h-[100vh] flex flex-col text-[1.0625rem] leading-relaxed antialiased;
+    @apply bg-background text-foreground min-h-[100vh] flex flex-col overflow-x-clip text-[1.0625rem] leading-relaxed antialiased;
+  }
+
+  .payload-richtext img {
+    max-width: 100%;
+    height: auto;
   }
 }
 

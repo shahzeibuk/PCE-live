@@ -27,13 +27,13 @@ export function FacebookPageEmbed() {
         <p className="text-center text-slate-600 text-base md:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
           Follow Pakistan Currency Exchange for rate alerts, branch news, and customer announcements.
         </p>
-        <div className="max-w-[100%] mx-auto flex justify-center">
-          <div className="w-full max-w-[500px] min-h-[420px] rounded-lg border border-slate-200 bg-white shadow-sm overflow-hidden">
+        <div className="mx-auto flex w-full max-w-full justify-center">
+          <div className="w-full max-w-[500px] min-h-[min(480px,70vh)] min-w-0 rounded-lg border border-slate-200 bg-white shadow-sm overflow-hidden">
             <iframe
               title="Pakistan Currency Exchange on Facebook"
               src={src}
-              className="w-full border-0 bg-white"
-              style={{ height: 480 }}
+              className="block h-[min(480px,70vh)] w-full max-w-full border-0 bg-white"
+              style={{ maxWidth: '100%' }}
               loading="lazy"
               scrolling="no"
               allow="encrypted-media"

@@ -43,7 +43,7 @@ export function InnerPageHeader({
       {description ? (
         <p
           className={cn(
-            'text-lg md:text-xl max-w-3xl leading-relaxed',
+            'text-base sm:text-lg md:text-xl max-w-3xl min-w-0 leading-relaxed px-1 sm:px-0',
             centered && 'mx-auto',
             variant === 'muted' && 'text-slate-600',
             variant === 'brand' && 'text-white/90',

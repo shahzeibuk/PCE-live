@@ -277,8 +277,8 @@ export function HomeFaqSection() {
               key={i}
               className="group rounded-lg border border-slate-200 bg-white px-4 py-3 shadow-sm open:shadow-md"
             >
-              <summary className="cursor-pointer list-none font-semibold text-slate-900 flex justify-between gap-4 items-center">
-                <span>{item.q}</span>
+              <summary className="cursor-pointer list-none font-semibold text-slate-900 flex justify-between gap-3 items-start text-left sm:items-center">
+                <span className="min-w-0 flex-1 pr-2 text-pretty">{item.q}</span>
                 <ChevronDown className="h-5 w-5 shrink-0 text-slate-500 group-open:rotate-180 transition-transform" aria-hidden />
               </summary>
               <p className="mt-3 text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">{item.a}</p>
