@@ -3,6 +3,8 @@ import React from 'react'
 
 import type { Post } from '@/payload-types'
 
+import { HOME_INDEX_HEADING_CLASS } from '@/components/home/homeContent'
+
 export type HomeBlogTeaserPost = Pick<Post, 'id' | 'title' | 'slug' | 'meta'>
 
 type Props = {
@@ -17,7 +19,7 @@ export function HomeBlogTeasers({ posts }: Props) {
       <div className="container px-4">
         <div className="mb-10 flex flex-col gap-4 text-center md:flex-row md:items-end md:justify-between md:text-left">
           <div>
-            <h2 className="text-2xl font-bold text-slate-900 md:text-3xl">Blog</h2>
+            <h2 className={`text-2xl md:text-3xl ${HOME_INDEX_HEADING_CLASS}`}>Blog</h2>
             <p className="mx-auto mt-2 max-w-xl text-base text-slate-600 md:mx-0">
               Articles on exchange rates, remittance, and getting the most from our branches.
             </p>
@@ -45,7 +47,7 @@ export function HomeBlogTeasers({ posts }: Props) {
                 key={item.id}
                 className="flex flex-col rounded-lg border border-slate-200 bg-slate-50 p-6 shadow-sm"
               >
-                <h3 className="mb-3 text-lg font-bold leading-snug text-slate-900">{item.title}</h3>
+                <h3 className={`mb-3 text-lg leading-snug ${HOME_INDEX_HEADING_CLASS}`}>{item.title}</h3>
                 <p className="mb-4 flex-1 line-clamp-3 text-sm text-slate-600">
                   {typeof item.meta?.description === 'string' && item.meta.description.trim()
                     ? item.meta.description

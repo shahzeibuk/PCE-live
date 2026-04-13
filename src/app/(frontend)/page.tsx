@@ -10,16 +10,14 @@ import { getCurrencyRatesForFrontend } from '@/utilities/getCurrencyRatesForFron
 import { WhatsAppCTABlock } from '@/blocks/WhatsAppCTA/Component'
 import { HeroCurrencyBackdrop } from '@/components/layout/currencyBrandSurfaces'
 import { HomeBlogTeasers } from '@/components/HomeBlogTeasers'
-import { HOME_HERO, HOME_RATES_SECTION } from '@/components/home/homeContent'
+import { HOME_HERO, HOME_INDEX_HEADING_CLASS, HOME_RATES_SECTION } from '@/components/home/homeContent'
 import {
   HomeAboutSection,
   HomeBranchPromoSection,
   HomeClosingCtaSection,
   HomeContactSection,
   HomeFaqSection,
-  HomeMainServicesThree,
-  HomeRemittanceSection,
-  HomeServicesFourSection,
+  HomeServicesOrderSection,
   HomeTrustSection,
   HomeWhyChooseSection,
 } from '@/components/home/HomeMarketingSections'
@@ -104,7 +102,7 @@ export default async function HomePage() {
                 <p className="text-xs font-semibold uppercase tracking-wider text-[#099546] sm:text-sm">
                   {HOME_HERO.eyebrow}
                 </p>
-                <h1 className="text-pretty mt-4 text-3xl font-bold leading-[1.12] tracking-tight text-white sm:mt-5 sm:text-4xl sm:leading-[1.1] md:mt-6 md:text-5xl lg:mt-7 lg:text-6xl">
+                <h1 className="text-pretty mt-4 text-3xl font-black leading-[1.12] tracking-tight text-white sm:mt-5 sm:text-4xl sm:leading-[1.1] md:mt-6 md:text-5xl lg:mt-7 lg:text-6xl">
                   {HOME_HERO.h1}
                 </h1>
                 <p className="mt-5 max-w-xl text-sm leading-relaxed text-slate-200 sm:mt-6 sm:hidden">
@@ -118,7 +116,7 @@ export default async function HomePage() {
                     asChild
                     className="min-h-12 rounded bg-[#099546] px-6 font-semibold text-white hover:bg-[#088040]"
                   >
-                    <Link href="/currency-rates">View full rate list</Link>
+                    <Link href="/currency-rates">Check Today's Rates</Link>
                   </Button>
                   <Button
                     asChild
@@ -126,7 +124,7 @@ export default async function HomePage() {
                     className="min-h-12 rounded border-2 border-white bg-transparent px-6 font-semibold text-white shadow-none hover:bg-white/10 hover:text-white"
                   >
                     <Link href="https://wa.me/923046668810" target="_blank" rel="noopener noreferrer">
-                      WhatsApp for best rate
+                      WhatsApp for Best Rate
                     </Link>
                   </Button>
                 </div>
@@ -141,26 +139,24 @@ export default async function HomePage() {
           <LiveExchangeRatesBlock
             rates={rates as any}
             disableInnerContainer={false}
-            containerClassName="container px-4 pt-6 pb-12 sm:pt-8 sm:pb-14 md:pb-16"
+            containerClassName="container px-4 py-14 md:py-20"
             title={HOME_RATES_SECTION.title}
             intro={HOME_RATES_SECTION.paragraph}
             supportingText={HOME_RATES_SECTION.supporting}
             ctaLabel={HOME_RATES_SECTION.ctaLabel}
-            popularTitle="Popular Forex Rates"
+            popularTitle={HOME_RATES_SECTION.popularTabLabel}
+            popularTabLabel={HOME_RATES_SECTION.popularTabLabel}
+            otherTabLabel={HOME_RATES_SECTION.otherTabLabel}
           />
         </section>
 
         <CurrencyConverterBlock rates={rates as any} disableInnerContainer={false} />
 
-        <HomeMainServicesThree />
-
-        <HomeServicesFourSection />
+        <HomeServicesOrderSection />
 
         <HomeClosingCtaSection />
 
         <HomeWhyChooseSection />
-
-        <HomeRemittanceSection />
 
         <HomeBranchPromoSection />
 
@@ -173,7 +169,7 @@ export default async function HomePage() {
         {news.length > 0 && (
           <section className="bg-slate-100 py-16 md:py-20 border-t border-slate-200">
             <div className="container px-4">
-              <h2 className="text-2xl md:text-3xl font-bold text-center text-slate-900 mb-10">
+              <h2 className={`text-2xl md:text-3xl text-center mb-10 ${HOME_INDEX_HEADING_CLASS}`}>
                 Daily Currency Updates
               </h2>
               <div className="grid md:grid-cols-3 gap-6">
@@ -184,7 +180,7 @@ export default async function HomePage() {
                       key={item.id}
                       className="bg-white border border-slate-200 rounded p-6 shadow-sm flex flex-col"
                     >
-                      <h3 className="text-lg font-bold text-[#099546] mb-3 leading-snug">{item.title}</h3>
+                      <h3 className={`text-lg mb-3 leading-snug ${HOME_INDEX_HEADING_CLASS}`}>{item.title}</h3>
                       <p className="text-sm text-slate-600 line-clamp-3 flex-1 mb-4">
                         {item.description || 'Read the latest on open-market rates and company news.'}
                       </p>
@@ -203,7 +199,7 @@ export default async function HomePage() {
 
         <HomeBlogTeasers posts={blogPosts} />
 
-        <section className="bg-white border-t border-slate-200">
+        <section className="border-t border-slate-200 bg-slate-50 py-14 md:py-20">
           <WhatsAppCTABlock
             disableInnerContainer={false}
             phoneNumber="923046668810"

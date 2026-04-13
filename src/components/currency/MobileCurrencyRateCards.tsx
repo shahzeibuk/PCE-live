@@ -16,6 +16,8 @@ type Props = {
   sellLabel?: string
   /** Stripe alternate rows like the desktop table */
   striped?: boolean
+  /** Centered Travelex-style cards (homepage tabbed rates) */
+  variant?: 'default' | 'centered'
   className?: string
   'aria-label'?: string
 }
@@ -28,6 +30,7 @@ export function MobileCurrencyRateCards({
   buyLabel = 'Buy',
   sellLabel = 'Sell',
   striped = true,
+  variant = 'default',
   className,
   'aria-label': ariaLabel,
 }: Props) {
@@ -46,39 +49,73 @@ export function MobileCurrencyRateCards({
             striped && i % 2 === 1 && 'bg-slate-50/95',
           )}
         >
-          <div className="flex items-start justify-between gap-3">
-            <div className="flex min-w-0 flex-1 items-center gap-2.5">
-              <span className="text-xl leading-none shrink-0 md:text-2xl" aria-hidden>
-                {currencyFlagEmoji(rate.currency_code)}
-              </span>
-              <div className="min-w-0">
+          {variant === 'centered' ? (
+            <div className="flex flex-col items-center text-center gap-3 py-1">
+              <div className="flex flex-col items-center gap-1">
+                <span className="text-2xl leading-none" aria-hidden>
+                  {currencyFlagEmoji(rate.currency_code)}
+                </span>
                 <div className="font-bold text-slate-900 text-sm tabular-nums">{rate.currency_code}</div>
                 {rate.currency_name ? (
-                  <div className="text-xs text-slate-600 leading-snug line-clamp-2 mt-0.5">
+                  <div className="text-xs text-slate-600 leading-snug line-clamp-2 max-w-[16rem]">
                     {rate.currency_name}
                   </div>
                 ) : null}
               </div>
-            </div>
-            <div className="grid shrink-0 grid-cols-2 gap-x-4 text-right">
-              <div className="min-w-[3.25rem]">
-                <div className="text-[10px] font-bold uppercase tracking-wide text-slate-500 leading-none mb-1">
-                  {buyLabel}
+              <div className="flex w-full max-w-xs justify-center gap-8 sm:gap-10">
+                <div className="text-center min-w-[3.5rem]">
+                  <div className="text-[10px] font-bold uppercase tracking-wide text-slate-500 leading-none mb-1">
+                    {buyLabel}
+                  </div>
+                  <div className="font-mono text-sm font-semibold tabular-nums text-slate-800">
+                    {rate.buy_rate.toFixed(2)}
+                  </div>
                 </div>
-                <div className="font-mono text-sm font-semibold tabular-nums text-slate-800">
-                  {rate.buy_rate.toFixed(2)}
+                <div className="text-center min-w-[3.5rem]">
+                  <div className="text-[10px] font-bold uppercase tracking-wide text-slate-500 leading-none mb-1">
+                    {sellLabel}
+                  </div>
+                  <div className="font-mono text-sm font-semibold tabular-nums text-[#099546]">
+                    {rate.sell_rate.toFixed(2)}
+                  </div>
                 </div>
               </div>
-              <div className="min-w-[3.25rem]">
-                <div className="text-[10px] font-bold uppercase tracking-wide text-slate-500 leading-none mb-1">
-                  {sellLabel}
+            </div>
+          ) : (
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex min-w-0 flex-1 items-center gap-2.5">
+                <span className="text-xl leading-none shrink-0 md:text-2xl" aria-hidden>
+                  {currencyFlagEmoji(rate.currency_code)}
+                </span>
+                <div className="min-w-0">
+                  <div className="font-bold text-slate-900 text-sm tabular-nums">{rate.currency_code}</div>
+                  {rate.currency_name ? (
+                    <div className="text-xs text-slate-600 leading-snug line-clamp-2 mt-0.5">
+                      {rate.currency_name}
+                    </div>
+                  ) : null}
                 </div>
-                <div className="font-mono text-sm font-semibold tabular-nums text-[#099546]">
-                  {rate.sell_rate.toFixed(2)}
+              </div>
+              <div className="grid shrink-0 grid-cols-2 gap-x-4 text-right">
+                <div className="min-w-[3.25rem]">
+                  <div className="text-[10px] font-bold uppercase tracking-wide text-slate-500 leading-none mb-1">
+                    {buyLabel}
+                  </div>
+                  <div className="font-mono text-sm font-semibold tabular-nums text-slate-800">
+                    {rate.buy_rate.toFixed(2)}
+                  </div>
+                </div>
+                <div className="min-w-[3.25rem]">
+                  <div className="text-[10px] font-bold uppercase tracking-wide text-slate-500 leading-none mb-1">
+                    {sellLabel}
+                  </div>
+                  <div className="font-mono text-sm font-semibold tabular-nums text-[#099546]">
+                    {rate.sell_rate.toFixed(2)}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
         </li>
       ))}
     </ul>

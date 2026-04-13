@@ -10,13 +10,18 @@ import { CurrencyNoteSurface } from '@/components/layout/currencyBrandSurfaces'
 import { POPULAR_FOREX_CODES, isPopularForexCode } from '@/constants/popularCurrencyCodes'
 import { MobileCurrencyRateCards, ratesToMobileItems } from '@/components/currency/MobileCurrencyRateCards'
 import { currencyFlagEmoji } from '@/utilities/currencyFlags'
+import { HOME_INDEX_HEADING_CLASS } from '@/components/home/homeContent'
+import { LiveExchangeRateTabs } from '@/blocks/LiveExchangeRates/LiveExchangeRateTabs'
 
 export type LiveExchangeRatesProps = {
   title?: string
   intro?: string
   supportingText?: string
   ctaLabel?: string
+  /** When set with data, shows Travelex-style tabbed popular / other tables */
   popularTitle?: string
+  popularTabLabel?: string
+  otherTabLabel?: string
   rates?: CurrencyRate[]
   disableInnerContainer?: boolean
   /** Overrides default container padding (e.g. tighter top after flush hero) */
@@ -32,6 +37,8 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
   supportingText,
   ctaLabel,
   popularTitle,
+  popularTabLabel = 'Popular Forex Rates',
+  otherTabLabel = 'Other quoted rates',
   rates: providedRates,
   disableInnerContainer = false,
   containerClassName,
@@ -54,11 +61,11 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
     ? ''
     : (containerClassName ?? 'container px-4 py-16')
 
-  const renderTable = (rows: CurrencyRate[], ariaLabel: string) => (
-    <div className="space-y-2">
+  const renderSimpleTable = (rows: CurrencyRate[], ariaLabel: string) => (
+    <div className="space-y-2 max-w-3xl mx-auto">
       {rows.length === 0 ? (
         <p className="md:hidden rounded-lg border border-dashed border-slate-200 bg-slate-50 py-8 text-center text-sm text-slate-600">
-          No rates in this group.
+          No rates available.
         </p>
       ) : (
         <MobileCurrencyRateCards
@@ -78,42 +85,42 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
             </tr>
           </thead>
           <tbody>
-          {rows.length === 0 ? (
-            <tr>
-              <td colSpan={3} className={`${tdCls} text-center text-slate-500 text-base`}>
-                No rates in this group.
-              </td>
-            </tr>
-          ) : (
-            rows.map((rate, i) => (
-              <tr
-                key={`${rate.id}-${rate.currency_code}`}
-                className={`border-t border-slate-200 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-100'}`}
-              >
-                <td className={tdCls}>
-                  <div className="flex items-center gap-3">
-                    <span className="text-xl sm:text-2xl lg:text-[1.75rem]" aria-hidden>
-                      {currencyFlagEmoji(rate.currency_code)}
-                    </span>
-                    <div className="min-w-0">
-                      <span className="font-bold text-slate-900 text-sm sm:text-base lg:text-lg">{rate.currency_code}</span>
-                      <span className="text-slate-500 block text-xs sm:text-sm lg:text-base line-clamp-2">{rate.currency_name}</span>
-                    </div>
-                  </div>
-                </td>
-                <td
-                  className={`${tdCls} text-center font-mono text-sm sm:text-base lg:text-lg font-semibold text-slate-800 tabular-nums whitespace-nowrap`}
-                >
-                  {Number(rate.buy_rate ?? 0).toFixed(2)}
-                </td>
-                <td
-                  className={`${tdCls} text-center font-mono text-sm sm:text-base lg:text-lg font-semibold text-[#099546] tabular-nums whitespace-nowrap`}
-                >
-                  {Number(rate.sell_rate ?? 0).toFixed(2)}
+            {rows.length === 0 ? (
+              <tr>
+                <td colSpan={3} className={`${tdCls} text-center text-slate-500 text-base`}>
+                  No rates available.
                 </td>
               </tr>
-            ))
-          )}
+            ) : (
+              rows.map((rate, i) => (
+                <tr
+                  key={`${rate.id}-${rate.currency_code}`}
+                  className={`border-t border-slate-200 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-100'}`}
+                >
+                  <td className={tdCls}>
+                    <div className="flex items-center gap-3">
+                      <span className="text-xl sm:text-2xl lg:text-[1.75rem]" aria-hidden>
+                        {currencyFlagEmoji(rate.currency_code)}
+                      </span>
+                      <div className="min-w-0 text-left">
+                        <span className="font-bold text-slate-900 text-sm sm:text-base lg:text-lg">{rate.currency_code}</span>
+                        <span className="text-slate-500 block text-xs sm:text-sm lg:text-base line-clamp-2">{rate.currency_name}</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td
+                    className={`${tdCls} text-center font-mono text-sm sm:text-base lg:text-lg font-semibold text-slate-800 tabular-nums whitespace-nowrap`}
+                  >
+                    {Number(rate.buy_rate ?? 0).toFixed(2)}
+                  </td>
+                  <td
+                    className={`${tdCls} text-center font-mono text-sm sm:text-base lg:text-lg font-semibold text-[#099546] tabular-nums whitespace-nowrap`}
+                  >
+                    {Number(rate.sell_rate ?? 0).toFixed(2)}
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
@@ -124,7 +131,7 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
     <div className={containerClasses}>
       {!disableInnerContainer && (
         <div className="max-w-4xl mx-auto text-center mb-10 md:mb-12">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-3">
+          <h2 className={`text-2xl md:text-3xl lg:text-4xl mb-3 md:mb-4 ${HOME_INDEX_HEADING_CLASS}`}>
             {title || 'Live Exchange Rates'}
           </h2>
           {intro ? (
@@ -139,27 +146,19 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
       )}
 
       <div className="max-w-6xl mx-auto space-y-10 md:space-y-12">
-        {popularTitle && popularList.length > 0 && otherList.length > 0 ? (
-          <div className="flex flex-col gap-10 lg:grid lg:grid-cols-2 lg:gap-10 lg:items-start">
-            <div className="w-full order-1">
-              <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-4 text-center lg:text-left">
-                {popularTitle}
-              </h3>
-              {renderTable(popularList, 'Popular currency exchange rates')}
-            </div>
-            <div className="w-full order-2">
-              <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-4 text-center lg:text-left">
-                Other quoted rates
-              </h3>
-              {renderTable(otherList, 'Additional currency exchange rates')}
-            </div>
-          </div>
+        {popularTitle && fullList.length > 0 ? (
+          <LiveExchangeRateTabs
+            popularLabel={popularTabLabel}
+            otherLabel={otherTabLabel}
+            popularRows={ratesToMobileItems(popularList)}
+            otherRows={ratesToMobileItems(otherList)}
+          />
         ) : (
-          <div className="max-w-3xl mx-auto">
+          <div>
             {popularTitle ? (
-              <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-4 text-center">{popularTitle}</h3>
+              <h3 className={`text-lg md:text-xl mb-4 text-center ${HOME_INDEX_HEADING_CLASS}`}>{popularTitle}</h3>
             ) : null}
-            {renderTable(fullList, 'Open market currency rates')}
+            {renderSimpleTable(fullList, 'Open market currency rates')}
           </div>
         )}
 
@@ -168,10 +167,10 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
             <Button asChild className="rounded bg-[#099546] hover:bg-[#088040] text-white h-12 px-8 font-semibold">
               <Link href="/currency-rates" className="inline-flex items-center gap-2">
                 {ctaLabel || 'View Full Forex Rates'}
-                <ChevronDown className="h-4 w-4" />
+                <ChevronDown className="h-4 w-4" aria-hidden />
               </Link>
             </Button>
-            <CurrencyNoteSurface className="p-4 md:p-5">
+            <CurrencyNoteSurface className="p-4 md:p-5 max-w-3xl mx-auto">
               <p className="text-sm md:text-base text-slate-600 text-center leading-relaxed">
                 Open-market figures for reference — confirm live rates at your branch before transacting.
               </p>

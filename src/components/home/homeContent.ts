@@ -1,5 +1,8 @@
 /** Homepage marketing copy — docs/Chnages.md */
 
+/** Section headings on the homepage (below hero): weight 900, brand ink */
+export const HOME_INDEX_HEADING_CLASS = 'font-black text-[#2a313c]'
+
 export const HOME_HERO = {
   eyebrow: 'Pakistan Currency Exchange',
   h1: 'Live Currency Exchange Rates in Pakistan',
@@ -11,9 +14,11 @@ export const HOME_HERO = {
 
 /** Full company intro lives on `/about`; homepage keeps a short CTA only. */
 export const HOME_ABOUT = {
-  heading: 'About Pakistan Currency Exchange',
+  heading: 'Your Trusted Currency Exchange & Remittance Partner in Pakistan',
+  /** Shown in the about band next to copy (under `public/hero/`) */
+  imageSrc: '/hero/about-ingo.png',
   paragraphs: [
-    'We are an SBP-licensed exchange company offering currency exchange, live market rates, and remittance services across Pakistan—with a nationwide branch network you can rely on.',
+    'Pakistan Currency Exchange is committed to providing secure, transparent, and reliable foreign currency exchange and remittance services across Pakistan. Whether you want to buy or sell foreign currency, receive funds from overseas, or check the latest open market forex rates, we are here to serve you with professionalism and trust. Whether you need to buy or sell foreign currency, check today’s open market exchange rates, or receive funds sent from abroad, Pakistan Currency Exchange is here to serve you with professionalism and care. We believe in customer trust, competitive market rates, and efficient service. By offering updated forex information and reliable remittance solutions, we help our customers manage their financial needs with confidence.',
   ],
   ctaLabel: 'Read our full story',
   ctaHref: '/about',
@@ -26,85 +31,83 @@ export const HOME_RATES_SECTION = {
   supporting:
     'Our live forex rates help you make better financial decisions for travel, Hajj, Umrah, study abroad, remittance, and personal exchange needs.',
   ctaLabel: 'View Full Rate List',
+  /** Tab labels (Travelex-style “Popular foreign currency rates”) */
+  popularTabLabel: 'Popular Forex Rates',
+  otherTabLabel: 'Other quoted rates',
 }
 
 export const HOME_POPULAR_RATES_TITLE = 'Popular Forex Rates'
 
-export const HOME_MAIN_SERVICES = [
-  {
-    title: 'Currency Exchange',
-    href: '/services/currency-exchange',
-    blurb: 'Buy and sell major currencies at competitive open-market rates.',
-    icon: 'exchange' as const,
-  },
-  {
-    title: 'Home Remittance',
-    href: '/services/western-union',
-    blurb: 'Receive money from abroad quickly through trusted global partners.',
-    icon: 'remittance' as const,
-  },
-  {
-    title: 'International Telegraphic Transfer',
-    href: '/services/telegraphic-transfer',
-    blurb: 'Send funds securely to overseas bank accounts for education and business.',
-    icon: 'tt' as const,
-  },
-]
-
-export const HOME_SERVICES_FOUR = {
-  heading: 'Our Services',
+/** Travelex-style “Order your travel money online in minutes” section — three icon columns */
+export const HOME_SERVICES_ORDER_SECTION = {
+  heading: 'Choose how you want to use our services',
   intro:
-    'Pakistan Currency Exchange offers a range of financial services designed to meet your everyday currency and remittance needs.',
-  items: [
+    'From branch visits to live rates online, Pakistan Currency Exchange makes currency exchange and remittance straightforward—wherever you start.',
+  /** Header band: right column image (`public/hero/`) */
+  imageSrc: '/hero/our-services.png',
+  cards: [
     {
-      title: 'Foreign Currency Exchange',
-      text: 'We offer foreign currency buying and selling services for major international currencies at competitive open market rates. Whether you are traveling, managing business payments, or handling personal financial needs, our exchange services are designed for your convenience.',
-      href: '/services/currency-exchange',
+      icon: 'branch' as const,
+      title: 'Visit a branch',
+      description:
+        'Walk in to buy or sell major currencies, collect home remittance, and get in-person guidance from our team across Pakistan.',
+      benefits: [
+        'Competitive open-market buying and selling rates',
+        '150+ branches for exchange and remittance support',
+        'Same-day service for many requests',
+      ],
+      href: '/branches',
+      ctaLabel: 'Locate branches',
     },
     {
-      title: 'Home Remittance Services',
-      text: 'Receive funds from your loved ones abroad quickly, safely, and conveniently through our trusted remittance services. Pakistan Currency Exchange helps make the remittance collection process simple and secure.',
-      href: '/services/western-union',
-    },
-    {
-      title: 'Live Forex Rate Updates',
-      text: 'Stay informed with the latest open market forex rates in Pakistan. We provide updated rates for major currencies including USD to PKR, SAR to PKR, AED to PKR, EUR to PKR, GBP to PKR, and more.',
+      icon: 'rates' as const,
+      title: 'Check rates online',
+      description:
+        'See today’s USD, SAR, AED, EUR, GBP and other PKR pairs before you visit—so you can plan travel, Hajj, Umrah, or transfers with confidence.',
+      benefits: [
+        'Updated open-market buy and sell figures',
+        'Popular pairs highlighted for quick scanning',
+        'Figures for reference—confirm at the branch before transacting',
+      ],
       href: '/currency-rates',
+      ctaLabel: 'View live rates',
     },
     {
-      title: 'Customer Assistance & Support',
-      text: 'Our team is available to guide and assist you with your exchange and remittance needs. We aim to provide a smooth, professional, and reliable customer experience.',
+      icon: 'support' as const,
+      title: 'Help & specialist services',
+      description:
+        'Ask about transfers, documentation, or the best way to send or receive funds. We also support telegraphic transfers for education and business.',
+      benefits: [
+        'WhatsApp and phone support for quick answers',
+        'Guidance on remittance and FX paperwork',
+        'International TT for eligible overseas payments',
+      ],
       href: '/contact',
+      ctaLabel: 'Contact us',
     },
   ],
-}
+} as const
 
 export const HOME_CLOSING_CTA = {
   heading: 'Need Help with Currency Exchange or Remittance?',
   text: 'Visit your nearest branch or contact Pakistan Currency Exchange today for reliable financial services.',
 }
 
+/** Travelex-style “Money Card” band: headline + tagline + icon list + image */
 export const HOME_WHY_US = {
   heading: 'Why Choose Pakistan Currency Exchange?',
-  bullets: [
-    'Trusted and professional service',
-    'Competitive open market currency rates',
-    'Secure and reliable remittance solutions',
-    'Quick and convenient transactions',
-    'Customer-focused support',
-    'Branch network across Pakistan',
+  subheading: 'A smarter way to buy, sell, and receive currency across Pakistan.',
+  imageSrc: '/hero/company.jpeg',
+  items: [
+    { icon: 'shield' as const, text: 'Trusted and professional service' },
+    { icon: 'trending' as const, text: 'Competitive open market currency rates' },
+    { icon: 'lock' as const, text: 'Secure and reliable remittance solutions' },
+    { icon: 'zap' as const, text: 'Quick and convenient transactions' },
+    { icon: 'users' as const, text: 'Customer-focused support' },
+    { icon: 'map' as const, text: 'Branch network across Pakistan' },
   ],
   footer:
     'We are dedicated to making your currency exchange and remittance experience smooth, secure, and hassle-free.',
-}
-
-export const HOME_REMITTANCE = {
-  heading: 'Receive Home Remittance with Confidence',
-  paragraph:
-    'Pakistan Currency Exchange makes it easy for you to receive funds sent by your loved ones from abroad. With secure remittance services and reliable partner networks, we ensure a smooth and convenient payment experience.',
-  supporting: 'Visit your nearest branch to collect your remittance quickly and safely.',
-  ctaLabel: 'Find a Branch',
-  ctaHref: '/branches',
 }
 
 export const HOME_BRANCH = {
@@ -114,18 +117,33 @@ export const HOME_BRANCH = {
   ctaHref: '/branches',
 }
 
+/** Travelex-style “Trusted travel money” band: headline, tagline, large stat tiles */
 export const HOME_TRUST = {
   heading: 'Reliable Currency Exchange Services You Can Trust',
-  paragraphs: [
-    'At Pakistan Currency Exchange, trust and transparency are at the heart of everything we do. We aim to provide reliable foreign exchange and remittance services that meet the needs of customers across Pakistan.',
-    'Whether you are exchanging money for travel, receiving remittance, or tracking live forex rates, we are here to make the process easier for you.',
-  ],
+  subheading:
+    'Customers across Pakistan and around the world choose Pakistan Currency Exchange for transparent rates, secure remittance, and dependable service.',
+  /** `target` is the number animated from 0; `suffix` is appended after (e.g. +, M+) */
+  stats: [
+    { target: 25, suffix: '+', label: "Years' expertise" },
+    { target: 150, suffix: '+', label: 'Branches across Pakistan' },
+    { target: 10, suffix: 'M+', label: 'Trusted customers worldwide' },
+  ] as const,
+  footnote:
+    'Figures reflect our commitment to scale and experience; visit a branch or contact us for services available in your area.',
 }
 
+/** Travelex-style “Upgrade your travel money” band — email + CTA + find out more */
 export const HOME_CONTACT = {
   heading: 'Get in Touch',
   paragraph:
-    'Have a question about today’s exchange rates, remittance services, or branch locations? Our team is here to assist you.',
+    'Have a question about today’s exchange rates, remittance services, or branch locations? Drop your email and we’ll help you get the answers you need—fast.',
+  contactEmail: 'info@pakistancurrency.com',
+  inputPlaceholder: 'Email address',
+  primaryCta: 'Send enquiry',
+  findOutMoreLabel: 'Find out more',
+  findOutMoreHref: '/contact',
+  footnote:
+    'We use your details only to respond to your enquiry. Visit our contact page for branch details and other ways to reach us.',
 }
 
 export const FOOTER_COMPANY_BLURB =

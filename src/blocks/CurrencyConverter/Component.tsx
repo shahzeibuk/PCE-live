@@ -3,6 +3,7 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { getCurrencyRatesForFrontend } from '@/utilities/getCurrencyRatesForFrontend'
 
+import { HOME_INDEX_HEADING_CLASS } from '@/components/home/homeContent'
 import { Converter } from './Converter'
 
 export type CurrencyConverterProps = {
@@ -29,7 +30,7 @@ export const CurrencyConverterBlock: React.FC<CurrencyConverterProps> = async ({
     <div className={containerClasses}>
       <div className={disableInnerContainer ? '' : 'container px-4'}>
         {!disableInnerContainer && (
-          <h2 className="text-2xl md:text-3xl font-bold text-center text-slate-900 mb-10">
+          <h2 className={`text-2xl md:text-3xl text-center mb-10 ${HOME_INDEX_HEADING_CLASS}`}>
             {title || 'Currency Converter'}
           </h2>
         )}

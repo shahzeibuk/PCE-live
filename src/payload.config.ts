@@ -1,4 +1,4 @@
-import { postgresAdapter } from '@payloadcms/db-postgres'
+import { postgresAdapter, type MigrateUpArgs } from '@payloadcms/db-postgres'
 import sharp from 'sharp'
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
@@ -38,7 +38,16 @@ export default buildConfig({
     if (process.env.PAYLOAD_SEED === 'true' || process.env.NODE_ENV === 'development') {
         payload.logger.info('ONINIT: Running schema initialization from migration...');
         try {
-            await initializeSchema({ db: payload.db as any, payload, req: {} as any })
+            const adapter = payload.db as { drizzle?: unknown }
+            if (!adapter?.drizzle) {
+                payload.logger.error('ONINIT: Postgres adapter has no drizzle client; schema init skipped.')
+                return
+            }
+            await initializeSchema({
+              db: adapter.drizzle as MigrateUpArgs['db'],
+              payload,
+              req: {} as MigrateUpArgs['req'],
+            })
             payload.logger.info('ONINIT: Schema initialization complete.');
         } catch (e: any) {
             payload.logger.error(`ONINIT ERROR: ${e.message}`);

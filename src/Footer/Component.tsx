@@ -12,123 +12,198 @@ import { FOOTER_COMPANY_BLURB } from '@/components/home/homeContent'
 import { FacebookPageEmbed } from '@/components/social/FacebookPageEmbed'
 import { SOCIAL_FACEBOOK, SOCIAL_LINKEDIN, SOCIAL_TWITTER } from '@/constants/social'
 
+const REGISTERED_OFFICE = {
+  lines: [
+    'Office 7, 8, 9 Al-Rasheed Chamber',
+    'Block 6, 12/A P.E.C.H.S., Main Shahrah-e-Faisal',
+    'Karachi, Pakistan',
+  ],
+}
+
+const FOOTER_QUICK_LINKS = [
+  { href: '/currency-rates', label: 'Exchange rates' },
+  { href: '/branches', label: 'Branch locator' },
+  { href: '/services', label: 'Services' },
+  { href: '/contact', label: 'Contact' },
+  { href: '/posts', label: 'Blog' },
+] as const
+
+const linkColumnHeadingClass =
+  'text-[11px] font-bold uppercase tracking-[0.22em] text-slate-500 mb-5 md:mb-6'
+const footerLinkClass =
+  'block py-1.5 text-[15px] leading-snug text-slate-300 transition-colors hover:text-[#099546]'
+
 export async function Footer() {
   const footerData: Footer = await getCachedGlobal('footer', 1)()
 
   return (
     <>
-      {/* Partners section sits right above the footer */}
-      <div className="bg-white pt-10">
-        <p className="text-center text-sm text-slate-600 max-w-3xl mx-auto px-4 mb-2 leading-relaxed">
-          {FOOTER_COMPANY_BLURB}
-        </p>
+      <div className="bg-white pt-12 md:pt-16">
+        <PartnersCarousel />
       </div>
-      <PartnersCarousel />
 
       <FacebookPageEmbed />
-      
-      <footer className="mt-auto bg-[#099546] text-white overflow-hidden relative">
-        
-        <div className="container py-12 gap-8 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
-            {/* Logo and Head Office Info */}
-            <div className="lg:col-span-1 flex flex-col items-start gap-4">
+
+      <footer className="mt-auto overflow-hidden border-t-4 border-[#099546] bg-[#252a33] text-slate-200">
+        <div className="container relative z-10 mx-auto max-w-7xl px-4 py-16 md:py-20 lg:py-24">
+          <div className="flex flex-col gap-14 lg:flex-row lg:gap-16 xl:gap-20">
+            {/* Brand & company — Travelex-style wide first column */}
+            <div className="flex w-full shrink-0 flex-col gap-8 lg:max-w-md xl:max-w-lg">
               <Link
-                className="inline-flex items-center justify-center bg-white p-3 sm:p-3.5 rounded-lg shadow-sm ring-1 ring-black/5"
                 href="/"
+                className="inline-flex w-fit items-center justify-center p-0 transition-opacity hover:opacity-90"
               >
                 <Logo
                   loading="eager"
                   priority="high"
-                  className="h-12 w-auto max-w-[11rem] object-contain object-left sm:h-14 sm:max-w-[13rem] md:h-16 md:max-w-[15rem]"
+                  className="h-12 w-auto max-w-[12.5rem] object-contain object-left sm:h-14 sm:max-w-[14rem] md:h-16 md:max-w-[16rem]"
                 />
               </Link>
-              <div className="mt-4">
-                <p className="font-semibold text-sm uppercase tracking-wider mb-2">Head Office Timing</p>
-                <p className="text-sm">09:00 am - 05:00pm</p>
+              <p className="max-w-xl text-sm leading-relaxed text-slate-400 md:text-[15px] md:leading-relaxed">
+                {FOOTER_COMPANY_BLURB}
+              </p>
+              <div>
+                <h3 className={linkColumnHeadingClass}>Registered office</h3>
+                <address className="not-italic text-sm leading-relaxed text-slate-400 md:text-[15px]">
+                  {REGISTERED_OFFICE.lines.map((line) => (
+                    <span key={line} className="block">
+                      {line}
+                    </span>
+                  ))}
+                </address>
+              </div>
+              <div>
+                <h3 className={linkColumnHeadingClass}>Head office hours</h3>
+                <p className="text-[15px] font-medium text-slate-300">09:00 am – 05:00 pm</p>
               </div>
             </div>
 
-            {footerData?.groups?.map((group, i) => (
-              <div key={i} className="flex flex-col gap-4">
-                <h3 className="font-bold text-lg uppercase tracking-wide">{group.label}</h3>
-                <nav className="flex flex-col gap-2 text-sm text-white/90">
-                  {group.navItems?.map((item, j) => (
-                    <CMSLink
-                      key={j}
-                      {...item.link}
-                      label={null}
-                      className="hover:text-white transition-colors flex items-center gap-2"
-                    >
-                      <span className="text-xs opacity-70">›</span>
-                      <span>{item.link.label}</span>
-                    </CMSLink>
-                  ))}
-                </nav>
+            <div className="min-w-0 flex-1">
+              <div className="grid grid-cols-2 gap-x-8 gap-y-12 sm:grid-cols-3 xl:grid-cols-4">
+                {/* Quick links — static column like Travelex “Quick links” */}
+                <div>
+                  <h3 className={linkColumnHeadingClass}>Quick links</h3>
+                  <nav className="flex flex-col" aria-label="Quick links">
+                    {FOOTER_QUICK_LINKS.map(({ href, label }) => (
+                      <Link key={href} href={href} className={footerLinkClass}>
+                        {label}
+                      </Link>
+                    ))}
+                  </nav>
+                </div>
+
+                {/* CMS-driven columns */}
+                {footerData?.groups?.map((group, i) => (
+                  <div key={group.id ?? i}>
+                    <h3 className={linkColumnHeadingClass}>{group.label}</h3>
+                    <nav className="flex flex-col" aria-label={group.label}>
+                      {group.navItems?.map((item, j) => (
+                        <CMSLink
+                          key={item.id ?? j}
+                          {...item.link}
+                          label={item.link.label}
+                          className={footerLinkClass}
+                        />
+                      ))}
+                    </nav>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
 
-          <p className="text-center text-sm text-white/80 mt-10 pt-6 border-t border-white/20">
-            © {new Date().getFullYear()} Pakistan Currency Exchange. All rights reserved.
-          </p>
-
-          {/* Bottom Bar: Contact Info and CMS Links */}
-          <div className="mt-8 pt-8 border-t border-white/20 flex flex-col gap-6 md:flex-row md:justify-between md:items-center">
-            <div className="flex w-full min-w-0 max-w-full flex-col items-center gap-4 text-sm sm:flex-row sm:flex-wrap sm:justify-center md:max-w-[70%] md:items-start md:justify-start lg:max-w-none">
-              <a
-                href="tel:080013537"
-                className="flex max-w-full items-center justify-center gap-2 break-words text-center hover:text-white/90 transition-colors sm:text-left md:justify-start"
-              >
-                <Phone className="h-4 w-4 shrink-0" aria-hidden />
-                <span>Toll Free: 080013537</span>
-              </a>
-              <a
-                href="mailto:info@pakistancurrency.com"
-                className="flex max-w-full items-center justify-center gap-2 break-all text-center hover:text-white/90 transition-colors sm:break-words sm:text-left md:justify-start"
-              >
-                <Mail className="h-4 w-4 shrink-0" aria-hidden />
-                <span>info@pakistancurrency.com</span>
-              </a>
-              <a
-                href="https://wa.me/923046668810"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex max-w-full items-center justify-center gap-2 text-center hover:text-white/90 transition-colors sm:text-left md:justify-start"
-              >
-                <MessageCircle className="h-4 w-4 shrink-0" aria-hidden />
-                <span>+92 304 6668810</span>
-              </a>
+          {/* Connect — prominent row */}
+          <div className="mt-16 border-t border-white/10 pt-12 md:mt-20 md:pt-14">
+            <h3 className={`${linkColumnHeadingClass} mb-8 text-center sm:text-left`}>Connect</h3>
+            <div className="flex flex-col items-center gap-8 sm:flex-row sm:flex-wrap sm:justify-between lg:items-start">
+              <div className="flex w-full max-w-2xl flex-col gap-5 sm:flex-row sm:flex-wrap sm:gap-x-10 sm:gap-y-4 lg:max-w-none">
+                <a
+                  href="tel:080013537"
+                  className="flex items-center justify-center gap-3 text-[15px] font-medium text-slate-200 transition-colors hover:text-[#099546] sm:justify-start"
+                >
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/5 ring-1 ring-white/10">
+                    <Phone className="h-5 w-5 text-[#099546]" aria-hidden />
+                  </span>
+                  <span>Toll free: 0800-13537</span>
+                </a>
+                <a
+                  href="mailto:info@pakistancurrency.com"
+                  className="flex items-center justify-center gap-3 text-[15px] font-medium text-slate-200 transition-colors hover:text-[#099546] sm:justify-start"
+                >
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/5 ring-1 ring-white/10">
+                    <Mail className="h-5 w-5 text-[#099546]" aria-hidden />
+                  </span>
+                  <span className="break-all sm:break-normal">info@pakistancurrency.com</span>
+                </a>
+                <a
+                  href="https://wa.me/923046668810"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-3 text-[15px] font-medium text-slate-200 transition-colors hover:text-[#099546] sm:justify-start"
+                >
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/5 ring-1 ring-white/10">
+                    <MessageCircle className="h-5 w-5 text-[#099546]" aria-hidden />
+                  </span>
+                  <span>WhatsApp: +92 304 6668810</span>
+                </a>
+              </div>
+              <div className="flex items-center gap-3 sm:shrink-0">
+                <a
+                  href={SOCIAL_TWITTER}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-12 w-12 items-center justify-center rounded-full bg-white/5 text-slate-300 ring-1 ring-white/10 transition-colors hover:bg-white/10 hover:text-white"
+                  aria-label="Pakistan Currency Exchange on X (Twitter)"
+                >
+                  <Twitter className="h-5 w-5 fill-current" />
+                </a>
+                <a
+                  href={SOCIAL_LINKEDIN}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-12 w-12 items-center justify-center rounded-full bg-white/5 text-slate-300 ring-1 ring-white/10 transition-colors hover:bg-white/10 hover:text-white"
+                  aria-label="Pakistan Currency Exchange on LinkedIn"
+                >
+                  <Linkedin className="h-5 w-5 fill-current" />
+                </a>
+                <a
+                  href={SOCIAL_FACEBOOK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-12 w-12 items-center justify-center rounded-full bg-white/5 text-slate-300 ring-1 ring-white/10 transition-colors hover:bg-white/10 hover:text-white"
+                  aria-label="Pakistan Currency Exchange on Facebook"
+                >
+                  <Facebook className="h-5 w-5 fill-current" />
+                </a>
+              </div>
             </div>
-            
-            <div className="flex items-center gap-4">
-              <a
-                href={SOCIAL_TWITTER}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white/90 transition-colors"
-                aria-label="Pakistan Currency Exchange on X (Twitter)"
+          </div>
+        </div>
+
+        {/* Bottom bar — copyright + utility links (Travelex-style) */}
+        <div className="border-t border-white/10 bg-[#1a1e24]">
+          <div className="container mx-auto max-w-7xl px-4 py-8 md:py-10">
+            <div className="flex flex-col items-center gap-6 text-center md:flex-row md:items-center md:justify-between md:text-left">
+              <p className="max-w-3xl text-sm leading-relaxed text-slate-500">
+                © {new Date().getFullYear()} Pakistan Currency Exchange. All rights reserved.
+              </p>
+              <nav
+                className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-slate-500 md:justify-end"
+                aria-label="Footer utilities"
               >
-                <Twitter className="h-5 w-5 fill-current" />
-              </a>
-              <a
-                href={SOCIAL_LINKEDIN}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white/90 transition-colors"
-                aria-label="Pakistan Currency Exchange on LinkedIn"
-              >
-                <Linkedin className="h-5 w-5 fill-current" />
-              </a>
-              <a
-                href={SOCIAL_FACEBOOK}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white/90 transition-colors"
-                aria-label="Pakistan Currency Exchange on Facebook"
-              >
-                <Facebook className="h-5 w-5 fill-current" />
-              </a>
+                <Link href="/contact" className="transition-colors hover:text-[#099546]">
+                  Help & contact
+                </Link>
+                <Link href="/currency-rates" className="transition-colors hover:text-[#099546]">
+                  Rates
+                </Link>
+                <Link href="/branches" className="transition-colors hover:text-[#099546]">
+                  Branches
+                </Link>
+                <Link href="/search" className="transition-colors hover:text-[#099546]">
+                  Search
+                </Link>
+              </nav>
             </div>
           </div>
         </div>

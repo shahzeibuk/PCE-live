@@ -111,14 +111,13 @@ export const FloatingHeader = ({
       >
         <div className="flex flex-nowrap items-center justify-between gap-2 min-[480px]:gap-3">
           {/*
-            Mobile: keep logo small and reserve ~10.5rem for Rates/bank + search + menu (40px taps + gaps).
-            Too small a reserve was hiding the hamburger on narrow phones.
+            Mobile: reserve width for Get Live Rates / bank icon + search + menu (40px taps + gaps).
           */}
           <Link
             href="/"
             className={cn(
               'relative z-50 flex min-w-0 flex-1 items-center overflow-hidden',
-              'max-w-[calc(100%-10.75rem)] min-[400px]:max-w-[calc(100%-11.25rem)] sm:max-w-[calc(100%-12rem)] md:max-w-none md:flex-initial md:overflow-visible',
+              'max-w-[calc(100%-10.75rem)] min-[400px]:max-w-[calc(100%-15rem)] sm:max-w-[calc(100%-16rem)] md:max-w-none md:flex-initial md:overflow-visible',
             )}
             aria-label="Pakistan Currency Exchange — Home"
           >
@@ -127,15 +126,14 @@ export const FloatingHeader = ({
               priority="high"
               className={cn(
                 'w-full min-w-0 transition-[height,max-height,max-width] duration-300',
-                /* Base mobile: compact logo so header + hero text stay clear */
-                'max-h-7 max-w-[6.25rem]',
-                'min-[360px]:max-h-7 min-[360px]:max-w-[7rem]',
-                'min-[400px]:max-h-8 min-[400px]:max-w-[8rem]',
-                'sm:max-h-10 sm:max-w-[10.5rem]',
-                'md:max-h-14 md:max-w-[17rem] md:w-auto',
-                'lg:max-h-[4.25rem] lg:max-w-[20rem]',
+                'max-h-9 max-w-[8rem]',
+                'min-[360px]:max-h-10 min-[360px]:max-w-[9rem]',
+                'min-[400px]:max-h-11 min-[400px]:max-w-[10.25rem]',
+                'sm:max-h-[3.25rem] sm:max-w-[13rem]',
+                'md:max-h-[4.5rem] md:max-w-[21rem] md:w-auto',
+                'lg:max-h-[5.25rem] lg:max-w-[26rem]',
                 scrolled
-                  ? 'max-h-6 max-w-[5.75rem] min-[360px]:max-w-[6.5rem] min-[400px]:max-h-7 min-[400px]:max-w-[7.25rem] sm:max-h-9 sm:max-w-[9.5rem] md:max-h-12 md:max-w-[15rem] lg:max-h-[3.5rem] lg:max-w-[18rem]'
+                  ? 'max-h-8 max-w-[7.25rem] min-[360px]:max-h-9 min-[360px]:max-w-[8.25rem] min-[400px]:max-h-10 min-[400px]:max-w-[9.25rem] sm:max-h-11 sm:max-w-[11.5rem] md:max-h-[3.75rem] md:max-w-[18rem] lg:max-h-[4.5rem] lg:max-w-[22rem]'
                   : null,
               )}
             />
@@ -156,9 +154,9 @@ export const FloatingHeader = ({
           <div className="flex items-center gap-1 sm:gap-2 md:gap-3 shrink-0">
             <Button
               asChild
-              className="hidden min-[400px]:inline-flex rounded bg-[#099546] hover:bg-[#088040] text-white h-8 px-3 text-xs font-semibold sm:h-9 md:h-10 md:px-5 md:text-sm"
+              className="hidden min-[400px]:inline-flex rounded bg-[#099546] hover:bg-[#088040] text-white h-8 shrink-0 px-2.5 text-[11px] font-semibold whitespace-nowrap sm:h-9 sm:px-3.5 sm:text-xs md:h-10 md:px-5 md:text-sm"
             >
-              <Link href="/currency-rates">Rates</Link>
+              <Link href="/currency-rates">Get Live Rates</Link>
             </Button>
             <Link
               href="/currency-rates"
