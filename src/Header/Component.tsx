@@ -8,29 +8,35 @@ import { FloatingHeader } from '@/components/ui/floating-header'
 import { mergeServiceNavLinks, type ServiceNavLink } from '@/Header/serviceNav'
 
 export default async function Header() {
-  const headerData: HeaderType = await getCachedGlobal('header', 1)()
+  let headerData: HeaderType | null = null
+  let serviceNavLinks: ServiceNavLink[] = []
 
-  const payload = await getPayload({ config: configPromise })
-  const { docs: serviceDocs } = await payload.find({
-    collection: 'services',
-    limit: 100,
-    sort: 'title',
-    depth: 0,
-    overrideAccess: false,
-    select: {
-      title: true,
-      slug: true,
-    },
-  })
+  try {
+    headerData = (await getCachedGlobal('header', 2)()) as HeaderType
+    const payload = await getPayload({ config: configPromise })
+    const { docs: serviceDocs } = await payload.find({
+      collection: 'services',
+      limit: 100,
+      sort: 'title',
+      depth: 0,
+      overrideAccess: false,
+      select: {
+        title: true,
+        slug: true,
+      },
+    })
 
-  const fromCms: ServiceNavLink[] = serviceDocs
-    .filter((d) => typeof d.slug === 'string' && d.slug.length > 0)
-    .map((d) => ({
-      title: d.title,
-      href: `/services/${d.slug}`,
-    }))
+    const fromCms: ServiceNavLink[] = serviceDocs
+      .filter((d) => typeof d.slug === 'string' && d.slug.length > 0)
+      .map((d) => ({
+        title: d.title,
+        href: `/services/${d.slug}`,
+      }))
 
-  const serviceNavLinks = mergeServiceNavLinks(fromCms)
+    serviceNavLinks = mergeServiceNavLinks(fromCms)
+  } catch (err) {
+    console.error('Header CMS load failed (check DATABASE_URL & migrations):', err)
+  }
 
   return <FloatingHeader data={headerData} serviceNavLinks={serviceNavLinks} />
 }

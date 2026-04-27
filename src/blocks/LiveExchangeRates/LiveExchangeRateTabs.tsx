@@ -5,15 +5,17 @@ import { MobileCurrencyRateCards } from '@/components/currency/MobileCurrencyRat
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { currencyFlagEmoji } from '@/utilities/currencyFlags'
 
-const thCls =
-  'px-3 py-3 text-center text-sm font-bold sm:px-4 sm:py-3.5 sm:text-base md:px-5 md:py-4 md:text-lg'
-const tdCls = 'px-3 py-3 text-center sm:px-4 sm:py-3.5 md:px-5 md:py-4'
+const thCurrency =
+  'px-4 py-3 text-left text-sm font-bold uppercase tracking-wide text-white md:px-5 md:py-3.5 md:text-base'
+const thNumeric =
+  'px-4 py-3 text-right text-sm font-bold uppercase tracking-wide text-white md:px-5 md:py-3.5 md:text-base'
+const tdCls = 'px-4 py-3 md:px-5 md:py-4 align-middle border-b border-slate-200'
 
 function RatesTable({ rows, ariaLabel }: { rows: MobileCurrencyRateItem[]; ariaLabel: string }) {
   return (
     <>
       {rows.length === 0 ? (
-        <p className="md:hidden rounded-2xl border border-dashed border-slate-200 bg-slate-50/80 py-10 text-center text-sm text-slate-600">
+        <p className="md:hidden rounded-md border border-dashed border-slate-300 bg-slate-50 py-10 text-center text-sm text-slate-600">
           No rates in this group.
         </p>
       ) : (
@@ -21,52 +23,52 @@ function RatesTable({ rows, ariaLabel }: { rows: MobileCurrencyRateItem[]; ariaL
           rates={rows}
           buyLabel="Buying"
           sellLabel="Selling"
-          variant="centered"
           aria-label={`${ariaLabel} (mobile list)`}
         />
       )}
-      <div className="hidden md:block overflow-x-auto overflow-y-auto max-h-[min(70vh,32rem)] lg:max-h-[min(78vh,40rem)] rounded-2xl border border-slate-200 bg-white shadow-sm ring-1 ring-slate-100/80 max-w-4xl mx-auto [-webkit-overflow-scrolling:touch]">
-        <table className="w-full border-collapse text-center" aria-label={ariaLabel}>
-          <thead className="sticky top-0 z-10 shadow-[0_1px_0_0_rgb(226_232_240)]">
-            <tr className="bg-[#099546] text-white">
-              <th className={thCls}>Currency</th>
-              <th className={thCls}>Buying (PKR)</th>
-              <th className={thCls}>Selling (PKR)</th>
+      <div className="hidden md:block w-full overflow-x-auto overflow-y-auto max-h-[min(72vh,38rem)] lg:max-h-[min(78vh,44rem)] rounded-md border border-slate-300 bg-white [-webkit-overflow-scrolling:touch]">
+        <table className="w-full border-collapse text-left text-base md:text-lg" aria-label={ariaLabel}>
+          <thead className="sticky top-0 z-10 bg-[#099546]">
+            <tr>
+              <th className={thCurrency}>Currency</th>
+              <th className={thNumeric}>Buying (PKR)</th>
+              <th className={thNumeric}>Selling (PKR)</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="bg-white">
             {rows.length === 0 ? (
               <tr>
-                <td colSpan={3} className={`${tdCls} text-slate-500 text-base py-10`}>
+                <td colSpan={3} className={`${tdCls} py-8 text-center text-slate-500 text-base`}>
                   No rates in this group.
                 </td>
               </tr>
             ) : (
               rows.map((rate, i) => (
-                <tr
-                  key={`${rate.id}-${rate.currency_code}`}
-                  className={`border-t border-slate-200 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/90'}`}
-                >
+                <tr key={`${rate.id}-${rate.currency_code}`} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}>
                   <td className={tdCls}>
-                    <div className="flex flex-col items-center justify-center gap-1.5 text-center mx-auto max-w-[14rem]">
-                      <span className="text-xl sm:text-2xl lg:text-[1.65rem] leading-none" aria-hidden>
+                    <div className="flex items-center gap-3 md:gap-4">
+                      <span className="text-2xl md:text-3xl shrink-0 leading-none" aria-hidden>
                         {currencyFlagEmoji(rate.currency_code)}
                       </span>
-                      <span className="font-bold text-slate-900 text-sm sm:text-base lg:text-lg">{rate.currency_code}</span>
-                      {rate.currency_name ? (
-                        <span className="text-slate-500 text-xs sm:text-sm lg:text-[0.9375rem] leading-snug line-clamp-2">
-                          {rate.currency_name}
+                      <div className="min-w-0 text-left">
+                        <span className="font-semibold text-slate-900 tabular-nums text-base md:text-lg block leading-tight">
+                          {rate.currency_code}
                         </span>
-                      ) : null}
+                        {rate.currency_name ? (
+                          <span className="text-slate-600 block text-sm md:text-base leading-snug line-clamp-2 mt-0.5">
+                            {rate.currency_name}
+                          </span>
+                        ) : null}
+                      </div>
                     </div>
                   </td>
                   <td
-                    className={`${tdCls} font-mono text-sm sm:text-base lg:text-lg font-semibold text-slate-800 tabular-nums whitespace-nowrap`}
+                    className={`${tdCls} text-right font-mono text-base md:text-lg font-semibold text-slate-800 tabular-nums whitespace-nowrap`}
                   >
                     {rate.buy_rate.toFixed(2)}
                   </td>
                   <td
-                    className={`${tdCls} font-mono text-sm sm:text-base lg:text-lg font-semibold text-[#099546] tabular-nums whitespace-nowrap`}
+                    className={`${tdCls} text-right font-mono text-base md:text-lg font-semibold text-slate-900 tabular-nums whitespace-nowrap`}
                   >
                     {rate.sell_rate.toFixed(2)}
                   </td>
@@ -87,22 +89,22 @@ export type LiveExchangeRateTabsProps = {
   otherRows: MobileCurrencyRateItem[]
 }
 
-/** Travelex-style pill tabs + centered rate tables */
+/** Tabbed popular / other rate tables */
 export function LiveExchangeRateTabs({ popularLabel, otherLabel, popularRows, otherRows }: LiveExchangeRateTabsProps) {
   return (
-    <div className="w-full max-w-4xl mx-auto">
+    <div className="w-full max-w-2xl mx-auto">
       <Tabs defaultValue="popular" className="w-full">
-        <div className="flex justify-center mb-8 md:mb-10">
-          <TabsList className="inline-flex h-auto flex-wrap justify-center gap-1 rounded-full border border-slate-200/90 bg-slate-100 p-1.5 shadow-[inset_0_1px_2px_rgba(15,23,42,0.06)]">
+        <div className="flex justify-center mb-5 md:mb-6">
+          <TabsList className="inline-flex h-auto flex-wrap justify-center gap-1 rounded-md border border-slate-300 bg-slate-100 p-1">
             <TabsTrigger
               value="popular"
-              className="rounded-full px-5 py-2.5 text-sm font-semibold text-slate-600 transition-all data-[state=active]:bg-white data-[state=active]:text-[#099546] data-[state=active]:shadow-sm data-[state=active]:ring-1 data-[state=active]:ring-slate-200/90"
+              className="rounded-md px-4 py-2 text-sm font-semibold text-slate-700 data-[state=active]:bg-white data-[state=active]:text-[#099546] data-[state=active]:shadow-sm"
             >
               {popularLabel}
             </TabsTrigger>
             <TabsTrigger
               value="other"
-              className="rounded-full px-5 py-2.5 text-sm font-semibold text-slate-600 transition-all data-[state=active]:bg-white data-[state=active]:text-[#099546] data-[state=active]:shadow-sm data-[state=active]:ring-1 data-[state=active]:ring-slate-200/90"
+              className="rounded-md px-4 py-2 text-sm font-semibold text-slate-700 data-[state=active]:bg-white data-[state=active]:text-[#099546] data-[state=active]:shadow-sm"
             >
               {otherLabel}
             </TabsTrigger>

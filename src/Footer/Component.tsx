@@ -34,7 +34,12 @@ const footerLinkClass =
   'block py-1.5 text-[15px] leading-snug text-slate-300 transition-colors hover:text-[#099546]'
 
 export async function Footer() {
-  const footerData: Footer = await getCachedGlobal('footer', 1)()
+  let footerData: Footer | null = null
+  try {
+    footerData = (await getCachedGlobal('footer', 1)()) as Footer
+  } catch (err) {
+    console.error('Footer CMS load failed (check DATABASE_URL & migrations):', err)
+  }
 
   return (
     <>

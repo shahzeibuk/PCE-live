@@ -141,121 +141,117 @@ export const Converter = ({ rates }: { rates: CurrencyRate[] }) => {
           </Tooltip>
         </div>
 
-        <div className="bg-white border border-slate-200 rounded px-4 py-4 md:py-5 shadow-sm space-y-4">
-          <p className="text-xs text-slate-500 text-center md:text-left">
-            Amounts in <strong className="text-slate-700">PKR</strong> are Pakistani rupees; foreign codes use the same buy/sell PKR figures as our rate table.
-          </p>
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col sm:flex-row sm:items-end gap-3 sm:gap-4">
-              <div className="flex-1 min-w-0 space-y-1">
-                <label htmlFor="converter-amount" className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-                  Amount
-                </label>
-                <input
-                  id="converter-amount"
-                  type="number"
-                  min={0}
-                  inputMode="decimal"
-                  value={amount}
-                  onChange={(e) => setAmount(Number(e.target.value) || 0)}
-                  className="w-full min-h-12 border border-slate-200 rounded-md px-4 py-3 text-lg font-mono tabular-nums bg-white"
-                />
-              </div>
-            </div>
+        <div className="bg-white border border-slate-200 rounded-lg px-3 py-3 md:px-4 md:py-4 shadow-sm">
+          <div
+            className="flex flex-nowrap items-center gap-2 sm:gap-3 overflow-x-auto pb-1 [-webkit-overflow-scrolling:touch]"
+            role="group"
+            aria-label="Currency conversion"
+          >
+            <label htmlFor="converter-amount" className="sr-only">
+              Amount
+            </label>
+            <input
+              id="converter-amount"
+              type="number"
+              min={0}
+              inputMode="decimal"
+              value={amount}
+              onChange={(e) => setAmount(Number(e.target.value) || 0)}
+              title="Amount"
+              className="w-[5.5rem] sm:w-28 shrink-0 min-h-10 border border-slate-200 rounded-md px-2 py-2 text-base font-mono tabular-nums bg-white"
+            />
 
-            <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-3">
-              <div className="flex-1 min-w-0 space-y-1">
-                <span id="label-from" className="text-xs font-semibold uppercase tracking-wide text-slate-500 block">
-                  From (you have)
-                </span>
-                <Select value={from} onValueChange={setFrom}>
-                  <SelectTrigger
-                    className="w-full min-h-12 rounded border-slate-200 text-sm font-semibold [&_[data-slot=select-value]]:flex [&_[data-slot=select-value]]:items-center [&_[data-slot=select-value]]:gap-2"
-                    aria-labelledby="label-from"
+            <span
+              id="label-from"
+              className="text-[10px] font-bold uppercase tracking-wide text-slate-500 w-7 sm:w-9 shrink-0 text-right sm:text-left"
+            >
+              From
+            </span>
+            <Select value={from} onValueChange={setFrom}>
+              <SelectTrigger
+                className="min-w-[7.5rem] sm:min-w-[9rem] max-w-[11rem] sm:max-w-[13rem] h-10 rounded-md border-slate-200 text-sm font-semibold [&_[data-slot=select-value]]:flex [&_[data-slot=select-value]]:items-center [&_[data-slot=select-value]]:gap-1.5 [&_[data-slot=select-value]]:truncate"
+                aria-labelledby="label-from"
+              >
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent position="popper" className="max-h-72">
+                {options.map((r) => (
+                  <SelectItem
+                    key={r.currency_code}
+                    value={r.currency_code}
+                    textValue={`${r.currency_code} ${labelFor(r.currency_code)}`}
                   >
-                    <SelectValue placeholder="Currency you have" />
-                  </SelectTrigger>
-                  <SelectContent position="popper" className="max-h-72">
-                    {options.map((r) => (
-                      <SelectItem
-                        key={r.currency_code}
-                        value={r.currency_code}
-                        textValue={`${r.currency_code} ${labelFor(r.currency_code)}`}
-                      >
-                        <span className="flex items-center gap-2">
-                          <span className="text-base leading-none" aria-hidden>
-                            {currencyFlagEmoji(r.currency_code)}
-                          </span>
-                          <span>
-                            {r.currency_code} · {labelFor(r.currency_code)}
-                          </span>
-                        </span>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+                    <span className="flex items-center gap-2">
+                      <span className="text-base leading-none" aria-hidden>
+                        {currencyFlagEmoji(r.currency_code)}
+                      </span>
+                      <span>
+                        {r.currency_code} · {labelFor(r.currency_code)}
+                      </span>
+                    </span>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
 
-              <div className="flex md:flex-col items-center justify-center md:pt-5 shrink-0">
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="icon"
-                  className="h-10 w-10 rounded-full border-slate-200"
-                  onClick={swap}
-                  aria-label="Swap from and to currencies"
-                >
-                  <ArrowLeftRight className="h-4 w-4" />
-                </Button>
-              </div>
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              className="h-10 w-10 shrink-0 rounded-full border-slate-200"
+              onClick={swap}
+              aria-label="Swap from and to currencies"
+            >
+              <ArrowLeftRight className="h-4 w-4" />
+            </Button>
 
-              <div className="flex-1 min-w-0 space-y-1">
-                <span id="label-to" className="text-xs font-semibold uppercase tracking-wide text-slate-500 block">
-                  To (you want)
-                </span>
-                <Select value={to} onValueChange={setTo}>
-                  <SelectTrigger
-                    className="w-full min-h-12 rounded border-slate-200 text-sm font-semibold [&_[data-slot=select-value]]:flex [&_[data-slot=select-value]]:items-center [&_[data-slot=select-value]]:gap-2"
-                    aria-labelledby="label-to"
+            <span
+              id="label-to"
+              className="text-[10px] font-bold uppercase tracking-wide text-slate-500 w-7 sm:w-9 shrink-0 text-right sm:text-left"
+            >
+              To
+            </span>
+            <Select value={to} onValueChange={setTo}>
+              <SelectTrigger
+                className="min-w-[7.5rem] sm:min-w-[9rem] max-w-[11rem] sm:max-w-[13rem] h-10 rounded-md border-slate-200 text-sm font-semibold [&_[data-slot=select-value]]:flex [&_[data-slot=select-value]]:items-center [&_[data-slot=select-value]]:gap-1.5 [&_[data-slot=select-value]]:truncate"
+                aria-labelledby="label-to"
+              >
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent position="popper" className="max-h-72">
+                {options.map((r) => (
+                  <SelectItem
+                    key={`to-${r.currency_code}`}
+                    value={r.currency_code}
+                    textValue={`${r.currency_code} ${labelFor(r.currency_code)}`}
                   >
-                    <SelectValue placeholder="Currency you want" />
-                  </SelectTrigger>
-                  <SelectContent position="popper" className="max-h-72">
-                    {options.map((r) => (
-                      <SelectItem
-                        key={`to-${r.currency_code}`}
-                        value={r.currency_code}
-                        textValue={`${r.currency_code} ${labelFor(r.currency_code)}`}
-                      >
-                        <span className="flex items-center gap-2">
-                          <span className="text-base leading-none" aria-hidden>
-                            {currencyFlagEmoji(r.currency_code)}
-                          </span>
-                          <span>
-                            {r.currency_code} · {labelFor(r.currency_code)}
-                          </span>
-                        </span>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
+                    <span className="flex items-center gap-2">
+                      <span className="text-base leading-none" aria-hidden>
+                        {currencyFlagEmoji(r.currency_code)}
+                      </span>
+                      <span>
+                        {r.currency_code} · {labelFor(r.currency_code)}
+                      </span>
+                    </span>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
 
-            <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 pt-1 border-t border-slate-100">
-              <span className="text-sm font-semibold text-slate-600">You get about</span>
-              <span className="text-2xl sm:text-3xl font-bold text-[#099546] tabular-nums break-all">
-                {result.toLocaleString(undefined, { maximumFractionDigits: 2 })}{' '}
-                <span className="inline-flex items-baseline gap-1">
-                  <abbr title="Currency code" className="no-underline">
-                    {to}
-                  </abbr>
-                  {to === 'PKR' ? (
-                    <span className="text-sm font-semibold text-slate-500 normal-case">(Pakistani rupees)</span>
-                  ) : null}
-                </span>
-              </span>
-            </div>
+            <span className="text-slate-400 font-medium shrink-0 hidden sm:inline" aria-hidden>
+              =
+            </span>
+
+            <output
+              className="min-w-0 flex-1 text-right sm:text-left sm:flex-initial font-bold text-[#099546] tabular-nums text-base sm:text-lg whitespace-nowrap"
+              htmlFor="converter-amount"
+              aria-live="polite"
+            >
+              {result.toLocaleString(undefined, { maximumFractionDigits: 2 })}{' '}
+              <abbr title="Currency code" className="no-underline font-bold">
+                {to}
+              </abbr>
+            </output>
           </div>
         </div>
 

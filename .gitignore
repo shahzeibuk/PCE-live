@@ -3,6 +3,9 @@ dist / media
 node_modules
 .DS_Store
 .env
+# Local overrides (never commit; set secrets in Vercel project → Environment Variables)
+.env.local
+.env.*.local
 .next
 .vercel
 

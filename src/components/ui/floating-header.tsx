@@ -21,6 +21,12 @@ import {
 import { SOCIAL_FACEBOOK, SOCIAL_LINKEDIN, SOCIAL_TWITTER } from '@/constants/social'
 
 import type { Header } from '@/payload-types'
+import {
+  headerCta,
+  headerContactLines,
+  isExternalHref,
+  mediaToLogoSrc,
+} from '@/Header/headerBrand'
 import type { ServiceNavLink } from '@/Header/serviceNav'
 
 function getNavHref(link: NonNullable<Header['navItems']>[number]['link']): string | null {
@@ -60,6 +66,10 @@ export const FloatingHeader = ({
   const servicesDropdownRef = useRef<HTMLDivElement>(null)
 
   const navItems = data?.navItems ?? []
+  const contactLines = headerContactLines(data)
+  const { label: ctaLabel, url: ctaUrl } = headerCta(data)
+  const logoSrc = mediaToLogoSrc(data?.logo)
+  const logoAlt = data?.logoAlt?.trim() || undefined
 
   useEffect(() => {
     const handleScroll = () => {
@@ -122,6 +132,8 @@ export const FloatingHeader = ({
             aria-label="Pakistan Currency Exchange — Home"
           >
             <Logo
+              imageUrl={logoSrc}
+              alt={logoAlt}
               loading="eager"
               priority="high"
               className={cn(
@@ -141,30 +153,58 @@ export const FloatingHeader = ({
 
           {/* Center: toll-free + mobile (md+) */}
           <div className="hidden md:flex flex-1 items-center justify-center gap-6 lg:gap-10 text-slate-700">
-            <a href="tel:080013537" className="flex items-center gap-2 text-sm font-semibold hover:text-[#099546] transition-colors">
-              <Phone className="h-4 w-4 text-[#099546] shrink-0" />
-              <span>0800-13537</span>
-            </a>
-            <a href="tel:03046668810" className="flex items-center gap-2 text-sm font-semibold hover:text-[#099546] transition-colors">
-              <Smartphone className="h-4 w-4 text-[#099546] shrink-0" />
-              <span>0304-6668810</span>
-            </a>
+            {contactLines.map((line, i) => {
+              const Icon = line.icon === 'mobile' ? Smartphone : Phone
+              return (
+                <a
+                  key={`${line.telHref}-${i}`}
+                  href={line.telHref}
+                  className="flex items-center gap-2 text-sm font-semibold hover:text-[#099546] transition-colors"
+                >
+                  <Icon className="h-4 w-4 text-[#099546] shrink-0" />
+                  <span>{line.text}</span>
+                </a>
+              )
+            })}
           </div>
 
           <div className="flex items-center gap-1 sm:gap-2 md:gap-3 shrink-0">
-            <Button
-              asChild
-              className="hidden min-[400px]:inline-flex rounded bg-[#099546] hover:bg-[#088040] text-white h-8 shrink-0 px-2.5 text-[11px] font-semibold whitespace-nowrap sm:h-9 sm:px-3.5 sm:text-xs md:h-10 md:px-5 md:text-sm"
-            >
-              <Link href="/currency-rates">Get Live Rates</Link>
-            </Button>
-            <Link
-              href="/currency-rates"
-              aria-label="Live exchange rates"
-              className="min-[400px]:hidden flex h-10 w-10 items-center justify-center rounded-md text-[#099546] hover:bg-[#099546]/10 transition-colors"
-            >
-              <Banknote className="h-5 w-5" aria-hidden />
-            </Link>
+            {isExternalHref(ctaUrl) ? (
+              <Button
+                asChild
+                className="hidden min-[400px]:inline-flex rounded bg-[#099546] hover:bg-[#088040] text-white h-8 shrink-0 px-2.5 text-[11px] font-semibold whitespace-nowrap sm:h-9 sm:px-3.5 sm:text-xs md:h-10 md:px-5 md:text-sm"
+              >
+                <a href={ctaUrl} target="_blank" rel="noopener noreferrer">
+                  {ctaLabel}
+                </a>
+              </Button>
+            ) : (
+              <Button
+                asChild
+                className="hidden min-[400px]:inline-flex rounded bg-[#099546] hover:bg-[#088040] text-white h-8 shrink-0 px-2.5 text-[11px] font-semibold whitespace-nowrap sm:h-9 sm:px-3.5 sm:text-xs md:h-10 md:px-5 md:text-sm"
+              >
+                <Link href={ctaUrl}>{ctaLabel}</Link>
+              </Button>
+            )}
+            {isExternalHref(ctaUrl) ? (
+              <a
+                href={ctaUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={ctaLabel}
+                className="min-[400px]:hidden flex h-10 w-10 items-center justify-center rounded-md text-[#099546] hover:bg-[#099546]/10 transition-colors"
+              >
+                <Banknote className="h-5 w-5" aria-hidden />
+              </a>
+            ) : (
+              <Link
+                href={ctaUrl}
+                aria-label={ctaLabel}
+                className="min-[400px]:hidden flex h-10 w-10 items-center justify-center rounded-md text-[#099546] hover:bg-[#099546]/10 transition-colors"
+              >
+                <Banknote className="h-5 w-5" aria-hidden />
+              </Link>
+            )}
             <Link
               href="/search"
               className="flex h-10 w-10 items-center justify-center rounded-md text-slate-900 hover:bg-slate-100 hover:text-[#099546] transition-colors"
@@ -280,27 +320,38 @@ export const FloatingHeader = ({
           </button>
 
           <div className="flex flex-col gap-3 mb-8 pb-6 border-b border-slate-200">
-            <a
-              href="tel:080013537"
-              className="flex items-center gap-3 text-base font-semibold text-slate-900"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <Phone className="h-5 w-5 text-[#099546]" />
-              0800-13537
-            </a>
-            <a
-              href="tel:03046668810"
-              className="flex items-center gap-3 text-base font-semibold text-slate-900"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <Smartphone className="h-5 w-5 text-[#099546]" />
-              0304-6668810
-            </a>
-            <Button asChild className="w-full rounded bg-[#099546] hover:bg-[#088040] text-white mt-2">
-              <Link href="/currency-rates" onClick={() => setMobileMenuOpen(false)}>
-                Get Live Rates
-              </Link>
-            </Button>
+            {contactLines.map((line, i) => {
+              const Icon = line.icon === 'mobile' ? Smartphone : Phone
+              return (
+                <a
+                  key={`m-${line.telHref}-${i}`}
+                  href={line.telHref}
+                  className="flex items-center gap-3 text-base font-semibold text-slate-900"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <Icon className="h-5 w-5 text-[#099546]" />
+                  {line.text}
+                </a>
+              )
+            })}
+            {isExternalHref(ctaUrl) ? (
+              <Button asChild className="w-full rounded bg-[#099546] hover:bg-[#088040] text-white mt-2">
+                <a
+                  href={ctaUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {ctaLabel}
+                </a>
+              </Button>
+            ) : (
+              <Button asChild className="w-full rounded bg-[#099546] hover:bg-[#088040] text-white mt-2">
+                <Link href={ctaUrl} onClick={() => setMobileMenuOpen(false)}>
+                  {ctaLabel}
+                </Link>
+              </Button>
+            )}
           </div>
 
           <nav className="space-y-1">

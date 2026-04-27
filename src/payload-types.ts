@@ -128,10 +128,20 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    homeHero: HomeHero;
+    homeServices: HomeService;
+    homeWhyUs: HomeWhyUs;
+    homeFaq: HomeFaq;
+    promoBanner: PromoBanner;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    homeHero: HomeHeroSelect<false> | HomeHeroSelect<true>;
+    homeServices: HomeServicesSelect<false> | HomeServicesSelect<true>;
+    homeWhyUs: HomeWhyUsSelect<false> | HomeWhyUsSelect<true>;
+    homeFaq: HomeFaqSelect<false> | HomeFaqSelect<true>;
+    promoBanner: PromoBannerSelect<false> | PromoBannerSelect<true>;
   };
   locale: null;
   widgets: {
@@ -2088,11 +2098,42 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
+ * Top navigation links (desktop and mobile). Services dropdown still lists items from the Services collection; titles there can be overridden per link when a slug matches.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header".
  */
 export interface Header {
   id: number;
+  /**
+   * Replaces the default site logo. Use a wide PNG or SVG. Leave empty to keep the built-in asset.
+   */
+  logo?: (number | null) | Media;
+  logoAlt?: string | null;
+  /**
+   * Toll-free and mobile shown in the top bar. If you leave this empty, the current defaults (0800-13537 and 0304-6668810) are used.
+   */
+  contactLines?:
+    | {
+        /**
+         * e.g. 0800-13537
+         */
+        text: string;
+        /**
+         * Use tel: with no spaces, e.g. tel:080013537
+         */
+        telHref: string;
+        icon?: ('phone' | 'mobile') | null;
+        id?: string | null;
+      }[]
+    | null;
+  cta: {
+    label: string;
+    /**
+     * Internal path (e.g. /currency-rates) or full https:// URL.
+     */
+    url: string;
+  };
   navItems?:
     | {
         link: {
@@ -2152,10 +2193,198 @@ export interface Footer {
   createdAt?: string | null;
 }
 /**
+ * Carousel under the site header — image, headline, and text per slide. CTAs apply to all slides.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homeHero".
+ */
+export interface HomeHero {
+  id: number;
+  banners?:
+    | {
+        /**
+         * Wide hero image (e.g. 1920×900).
+         */
+        image: number | Media;
+        eyebrow?: string | null;
+        heading: string;
+        /**
+         * Shown on small screens under the headline.
+         */
+        leadShort?: string | null;
+        /**
+         * Shown from sm breakpoint upward.
+         */
+        lead?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  primaryCta: {
+    buttonLabel: string;
+    link?: {
+      type?: ('reference' | 'custom') | null;
+      newTab?: boolean | null;
+      reference?:
+        | ({
+            relationTo: 'pages';
+            value: number | Page;
+          } | null)
+        | ({
+            relationTo: 'posts';
+            value: number | Post;
+          } | null);
+      url?: string | null;
+    };
+  };
+  secondaryCta: {
+    buttonLabel: string;
+    url: string;
+    openInNewTab?: boolean | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Title, intro, and service boxes on the homepage (three across, then two). Upload an icon image for each box.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homeServices".
+ */
+export interface HomeService {
+  id: number;
+  title: string;
+  /**
+   * Short paragraph under the title (centered).
+   */
+  description?: string | null;
+  /**
+   * Add up to five for the 3+2 layout; if empty, the site uses default copy and icons.
+   */
+  boxes?:
+    | {
+        /**
+         * Square PNG/SVG/WebP (e.g. 128×128).
+         */
+        icon: number | Media;
+        title: string;
+        description: string;
+        ctaLabel: string;
+        /**
+         * Internal path (e.g. /branches) or full URL.
+         */
+        url: string;
+        openInNewTab?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * “Why Choose Pakistan Currency Exchange?” — headline, supporting copy, bullet list with icons, side image, and footer line.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homeWhyUs".
+ */
+export interface HomeWhyUs {
+  id: number;
+  heading: string;
+  subheading?: string | null;
+  /**
+   * Shown on the right on desktop. Optional until you publish — fallback image is used if empty.
+   */
+  image?: (number | null) | Media;
+  /**
+   * If empty, the site uses default bullets from code.
+   */
+  items?:
+    | {
+        icon: 'shield' | 'trending' | 'lock' | 'zap' | 'users' | 'map';
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  footer?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Frequently Asked Questions on the homepage. Only the first N items show until visitors click Show more.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homeFaq".
+ */
+export interface HomeFaq {
+  id: number;
+  heading: string;
+  subheading?: string | null;
+  /**
+   * Number of Q&A accordions shown initially (rest behind Show more).
+   */
+  initialVisibleCount: number;
+  /**
+   * If empty, default FAQs from the site template are used.
+   */
+  items?:
+    | {
+        question: string;
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Full-screen image popup for offers. Shown until the visitor dismisses it (per version).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "promoBanner".
+ */
+export interface PromoBanner {
+  id: number;
+  enabled?: boolean | null;
+  /**
+   * Required when the popup is enabled. Landscape (e.g. 1200×800) works best.
+   */
+  image?: (number | null) | Media;
+  imageAlt: string;
+  cta?: {
+    /**
+     * Internal path (e.g. /currency-rates) or full URL. Leave empty for no link.
+     */
+    url?: string | null;
+    openInNewTab?: boolean | null;
+  };
+  /**
+   * Increase this when you change the promotion so visitors who already closed the popup will see the new one.
+   */
+  dismissalVersion: number;
+  maxWidth?: ('max-w-md' | 'max-w-lg' | 'max-w-2xl' | 'max-w-3xl' | 'max-w-4xl') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
+  logo?: T;
+  logoAlt?: T;
+  contactLines?:
+    | T
+    | {
+        text?: T;
+        telHref?: T;
+        icon?: T;
+        id?: T;
+      };
+  cta?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+      };
   navItems?:
     | T
     | {
@@ -2199,6 +2428,126 @@ export interface FooterSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homeHero_select".
+ */
+export interface HomeHeroSelect<T extends boolean = true> {
+  banners?:
+    | T
+    | {
+        image?: T;
+        eyebrow?: T;
+        heading?: T;
+        leadShort?: T;
+        lead?: T;
+        id?: T;
+      };
+  primaryCta?:
+    | T
+    | {
+        buttonLabel?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+            };
+      };
+  secondaryCta?:
+    | T
+    | {
+        buttonLabel?: T;
+        url?: T;
+        openInNewTab?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homeServices_select".
+ */
+export interface HomeServicesSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  boxes?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        ctaLabel?: T;
+        url?: T;
+        openInNewTab?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homeWhyUs_select".
+ */
+export interface HomeWhyUsSelect<T extends boolean = true> {
+  heading?: T;
+  subheading?: T;
+  image?: T;
+  items?:
+    | T
+    | {
+        icon?: T;
+        text?: T;
+        id?: T;
+      };
+  footer?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homeFaq_select".
+ */
+export interface HomeFaqSelect<T extends boolean = true> {
+  heading?: T;
+  subheading?: T;
+  initialVisibleCount?: T;
+  items?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "promoBanner_select".
+ */
+export interface PromoBannerSelect<T extends boolean = true> {
+  enabled?: T;
+  image?: T;
+  imageAlt?: T;
+  cta?:
+    | T
+    | {
+        url?: T;
+        openInNewTab?: T;
+      };
+  dismissalVersion?: T;
+  maxWidth?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

@@ -1,26 +1,25 @@
 import type { Metadata } from 'next'
 import { getPayload } from 'payload'
 import configPromise from '@/payload.config'
-import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
 import { LiveExchangeRatesBlock } from '@/blocks/LiveExchangeRates/Component'
 import { CurrencyConverterBlock } from '@/blocks/CurrencyConverter/Component'
 import { getCurrencyRatesForFrontend } from '@/utilities/getCurrencyRatesForFrontend'
-import { WhatsAppCTABlock } from '@/blocks/WhatsAppCTA/Component'
-import { HeroCurrencyBackdrop } from '@/components/layout/currencyBrandSurfaces'
+import { HeroCurrencyBackdropSlider } from '@/components/layout/HeroCurrencyBackdropSlider'
 import { HomeBlogTeasers } from '@/components/HomeBlogTeasers'
-import { HOME_HERO, HOME_INDEX_HEADING_CLASS, HOME_RATES_SECTION } from '@/components/home/homeContent'
+import { HOME_INDEX_HEADING_CLASS, HOME_RATES_SECTION } from '@/components/home/homeContent'
 import {
-  HomeAboutSection,
-  HomeBranchPromoSection,
-  HomeClosingCtaSection,
   HomeContactSection,
   HomeFaqSection,
   HomeServicesOrderSection,
   HomeTrustSection,
   HomeWhyChooseSection,
 } from '@/components/home/HomeMarketingSections'
+import { homeHeroGlobalToSliderProps } from '@/utilities/getHomeHeroCarouselProps'
+import { homeServicesGlobalToSectionProps } from '@/utilities/getHomeServicesSectionProps'
+import { homeWhyUsGlobalToSectionProps } from '@/utilities/getHomeWhyUsSectionProps'
+import { homeFaqGlobalToSectionProps } from '@/utilities/getHomeFaqSectionProps'
 import { getServerSideURL } from '@/utilities/getURL'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 
@@ -42,12 +41,66 @@ export const metadata: Metadata = {
   }),
 }
 
+function HomeCmsUnavailable() {
+  return (
+    <div className="container max-w-2xl px-4 py-20 md:py-28">
+      <h1 className="text-2xl font-black text-slate-900 md:text-3xl">Connect the database to view the full site</h1>
+      <p className="mt-4 text-slate-600 leading-relaxed">
+        Payload could not reach your database. Copy <code className="rounded bg-slate-100 px-1.5 py-0.5 text-sm">.env.example</code> to{' '}
+        <code className="rounded bg-slate-100 px-1.5 py-0.5 text-sm">.env</code>, set <strong>DATABASE_URL</strong> and{' '}
+        <strong>PAYLOAD_SECRET</strong>, then run <code className="rounded bg-slate-100 px-1.5 py-0.5 text-sm">pnpm payload migrate</code>.
+      </p>
+      <p className="mt-6 text-sm text-slate-500">
+        Dev server URL: <strong>http://127.0.0.1:3001</strong> (use this host if localhost shows errors).
+      </p>
+    </div>
+  )
+}
+
 export default async function HomePage() {
-  const payload = await getPayload({ config: configPromise })
+  let payload: Awaited<ReturnType<typeof getPayload>>
+  try {
+    payload = await getPayload({ config: configPromise })
+  } catch (err) {
+    console.error('HomePage getPayload failed:', err)
+    return <HomeCmsUnavailable />
+  }
 
   let rates: any[] = []
   let news: any[] = []
   let blogPosts: any[] = []
+  let heroSliderProps = homeHeroGlobalToSliderProps(null)
+  let homeServicesSection = homeServicesGlobalToSectionProps(null)
+  let homeWhyUsSection = homeWhyUsGlobalToSectionProps(null)
+  let homeFaqSection = homeFaqGlobalToSectionProps(null)
+
+  try {
+    const homeHero = await payload.findGlobal({ slug: 'homeHero', depth: 2 })
+    heroSliderProps = homeHeroGlobalToSliderProps(homeHero)
+  } catch (err) {
+    console.error('Home hero global fetch failed:', err)
+  }
+
+  try {
+    const homeServices = await payload.findGlobal({ slug: 'homeServices', depth: 2 })
+    homeServicesSection = homeServicesGlobalToSectionProps(homeServices)
+  } catch (err) {
+    console.error('Home services global fetch failed:', err)
+  }
+
+  try {
+    const homeWhyUs = await payload.findGlobal({ slug: 'homeWhyUs', depth: 2 })
+    homeWhyUsSection = homeWhyUsGlobalToSectionProps(homeWhyUs)
+  } catch (err) {
+    console.error('Home Why Us global fetch failed:', err)
+  }
+
+  try {
+    const homeFaq = await payload.findGlobal({ slug: 'homeFaq', depth: 1 })
+    homeFaqSection = homeFaqGlobalToSectionProps(homeFaq)
+  } catch (err) {
+    console.error('Home FAQ global fetch failed:', err)
+  }
 
   try {
     rates = await getCurrencyRatesForFrontend(payload, { limit: 24 })
@@ -91,49 +144,15 @@ export default async function HomePage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
       <div className="flex flex-col gap-0 overflow-x-hidden flush-under-site-header">
-        <section className="relative overflow-hidden">
-          <HeroCurrencyBackdrop
-            minHeightClassName="min-h-[min(88vh,540px)] sm:min-h-[min(82vh,500px)] md:min-h-[min(78vh,560px)]"
-            className="pb-12 md:pb-16 lg:pb-20"
+        <section className="relative overflow-x-hidden">
+          <HeroCurrencyBackdropSlider
+            slides={heroSliderProps.slides}
+            primaryCta={heroSliderProps.primaryCta}
+            secondaryCta={heroSliderProps.secondaryCta}
+            minHeightClassName="min-h-[min(92vh,640px)] sm:min-h-[min(88vh,600px)] md:min-h-[min(84vh,720px)]"
             priority
-          >
-            <div className="hero-below-nav container flex flex-1 flex-col justify-center pb-12 md:pb-16 lg:pb-20">
-              <div className="max-w-2xl space-y-0">
-                <p className="text-xs font-semibold uppercase tracking-wider text-[#099546] sm:text-sm">
-                  {HOME_HERO.eyebrow}
-                </p>
-                <h1 className="text-pretty mt-4 text-3xl font-black leading-[1.12] tracking-tight text-white sm:mt-5 sm:text-4xl sm:leading-[1.1] md:mt-6 md:text-5xl lg:mt-7 lg:text-6xl">
-                  {HOME_HERO.h1}
-                </h1>
-                <p className="mt-5 max-w-xl text-sm leading-relaxed text-slate-200 sm:mt-6 sm:hidden">
-                  {HOME_HERO.leadShort}
-                </p>
-                <p className="mt-5 max-w-xl hidden text-base leading-relaxed text-slate-200 sm:mt-6 sm:block md:text-lg md:leading-relaxed lg:mt-7 lg:text-xl lg:leading-relaxed">
-                  {HOME_HERO.lead}
-                </p>
-                <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 md:mt-12">
-                  <Button
-                    asChild
-                    className="min-h-12 rounded bg-[#099546] px-6 font-semibold text-white hover:bg-[#088040]"
-                  >
-                    <Link href="/currency-rates">Check Today's Rates</Link>
-                  </Button>
-                  <Button
-                    asChild
-                    variant="outline"
-                    className="min-h-12 rounded border-2 border-white bg-transparent px-6 font-semibold text-white shadow-none hover:bg-white/10 hover:text-white"
-                  >
-                    <Link href="https://wa.me/923046668810" target="_blank" rel="noopener noreferrer">
-                      WhatsApp for Best Rate
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </HeroCurrencyBackdrop>
+          />
         </section>
-
-        <HomeAboutSection />
 
         <section className="bg-white border-t border-slate-200">
           <LiveExchangeRatesBlock
@@ -141,8 +160,7 @@ export default async function HomePage() {
             disableInnerContainer={false}
             containerClassName="container px-4 py-14 md:py-20"
             title={HOME_RATES_SECTION.title}
-            intro={HOME_RATES_SECTION.paragraph}
-            supportingText={HOME_RATES_SECTION.supporting}
+            intro={HOME_RATES_SECTION.description}
             ctaLabel={HOME_RATES_SECTION.ctaLabel}
             popularTitle={HOME_RATES_SECTION.popularTabLabel}
             popularTabLabel={HOME_RATES_SECTION.popularTabLabel}
@@ -152,19 +170,13 @@ export default async function HomePage() {
 
         <CurrencyConverterBlock rates={rates as any} disableInnerContainer={false} />
 
-        <HomeServicesOrderSection />
+        <HomeServicesOrderSection {...homeServicesSection} />
 
-        <HomeClosingCtaSection />
-
-        <HomeWhyChooseSection />
-
-        <HomeBranchPromoSection />
-
-        <HomeTrustSection />
+        <HomeWhyChooseSection {...homeWhyUsSection} />
 
         <HomeContactSection />
 
-        <HomeFaqSection />
+        <HomeFaqSection {...homeFaqSection} />
 
         {news.length > 0 && (
           <section className="bg-slate-100 py-16 md:py-20 border-t border-slate-200">
@@ -199,14 +211,7 @@ export default async function HomePage() {
 
         <HomeBlogTeasers posts={blogPosts} />
 
-        <section className="border-t border-slate-200 bg-slate-50 py-14 md:py-20">
-          <WhatsAppCTABlock
-            disableInnerContainer={false}
-            phoneNumber="923046668810"
-            body="Need the Best Exchange Rates? Chat with us on WhatsApp for fast instant updates!"
-            buttonText="WhatsApp Now"
-          />
-        </section>
+        <HomeTrustSection />
       </div>
     </>
   )

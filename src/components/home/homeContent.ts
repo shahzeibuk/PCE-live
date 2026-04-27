@@ -12,24 +12,74 @@ export const HOME_HERO = {
   lead: 'Check live USD, SAR, AED, EUR and GBP to PKR open-market rates, currency exchange, and trusted remittance services across our branch network.',
 }
 
-/** Full company intro lives on `/about`; homepage keeps a short CTA only. */
-export const HOME_ABOUT = {
-  heading: 'Your Trusted Currency Exchange & Remittance Partner in Pakistan',
-  /** Shown in the about band next to copy (under `public/hero/`) */
-  imageSrc: '/hero/about-ingo.png',
-  paragraphs: [
-    'Pakistan Currency Exchange is committed to providing secure, transparent, and reliable foreign currency exchange and remittance services across Pakistan. Whether you want to buy or sell foreign currency, receive funds from overseas, or check the latest open market forex rates, we are here to serve you with professionalism and trust. Whether you need to buy or sell foreign currency, check today’s open market exchange rates, or receive funds sent from abroad, Pakistan Currency Exchange is here to serve you with professionalism and care. We believe in customer trust, competitive market rates, and efficient service. By offering updated forex information and reliable remittance solutions, we help our customers manage their financial needs with confidence.',
-  ],
-  ctaLabel: 'Read our full story',
-  ctaHref: '/about',
+/** One homepage hero slide (image + copy move together in the header carousel). */
+export type HomeHeroCarouselSlide = {
+  imageSrc: string
+  eyebrow: string
+  h1: string
+  leadShort: string
+  lead: string
 }
+
+/** Homepage hero under the header: light panel + synced slides (`image-bg-001` first, then banknote art). */
+export const HOME_HERO_CAROUSEL = {
+  primaryCta: { label: "Check Today's Rates", href: '/currency-rates' as const },
+  secondaryCta: {
+    label: 'WhatsApp for Best Rate',
+    href: 'https://wa.me/923046668810' as const,
+    external: true as const,
+  },
+  slides: [
+    {
+      imageSrc: '/hero/image-bg-001.png',
+      eyebrow: HOME_HERO.eyebrow,
+      h1: HOME_HERO.h1,
+      leadShort: HOME_HERO.leadShort,
+      lead: HOME_HERO.lead,
+    },
+    {
+      imageSrc: '/hero/W6qgc.jpg',
+      eyebrow: HOME_HERO.eyebrow,
+      h1: 'Trusted currency exchange & remittance',
+      leadShort:
+        'Buy and sell major currencies with competitive open-market rates at branches across Pakistan.',
+      lead: 'From USD and SAR to EUR and GBP, we help you plan travel, transfers, and everyday FX with professional in-branch support.',
+    },
+    {
+      imageSrc: '/hero/wLlhs.jpg',
+      eyebrow: HOME_HERO.eyebrow,
+      h1: '150+ branches nationwide',
+      leadShort: 'Walk in for rates, documentation help, and remittance collection wherever you are in Pakistan.',
+      lead: 'Our network is built for convenience—same-day service on many requests, with guidance from trained staff at every step.',
+    },
+    {
+      imageSrc: '/hero/HFel9.jpg',
+      eyebrow: HOME_HERO.eyebrow,
+      h1: 'Live rates. Transparent service.',
+      leadShort: 'See popular PKR pairs online before you visit—USD, SAR, AED, EUR, GBP and more.',
+      lead: 'Figures are for reference; confirm at your nearest branch before you transact. We focus on clarity and fair dealing.',
+    },
+    {
+      imageSrc: '/hero/i82qk.jpg',
+      eyebrow: HOME_HERO.eyebrow,
+      h1: 'Travel, study, Hajj & Umrah',
+      leadShort: 'Currency for pilgrimage, education abroad, and personal travel—talk to us about the right product.',
+      lead: 'Whether you need riyals, dollars, or support for international study payments, we will walk you through the options.',
+    },
+    {
+      imageSrc: '/hero/LHopV.jpg',
+      eyebrow: HOME_HERO.eyebrow,
+      h1: 'Message us for today’s best rate',
+      leadShort: 'Quick answers on WhatsApp—ask about pairs, branches, or what to bring for your visit.',
+      lead: 'Our team replies during business hours so you can compare and plan before you head to a Pakistan Currency Exchange outlet.',
+    },
+  ] satisfies readonly HomeHeroCarouselSlide[],
+} as const
 
 export const HOME_RATES_SECTION = {
   title: 'Today’s Open Market Currency Rates in Pakistan',
-  paragraph:
-    'Stay informed with the latest currency exchange rates in Pakistan. Check updated buy and sell rates for major international currencies including USD to PKR, SAR to PKR, AED to PKR, EUR to PKR, and GBP to PKR.',
-  supporting:
-    'Our live forex rates help you make better financial decisions for travel, Hajj, Umrah, study abroad, remittance, and personal exchange needs.',
+  description:
+    'Stay informed with the latest buy and sell rates for major currencies (USD, SAR, AED, EUR, GBP to PKR and more). Figures are for reference—confirm at your branch before transacting.',
   ctaLabel: 'View Full Rate List',
   /** Tab labels (Travelex-style “Popular foreign currency rates”) */
   popularTabLabel: 'Popular Forex Rates',
@@ -38,60 +88,49 @@ export const HOME_RATES_SECTION = {
 
 export const HOME_POPULAR_RATES_TITLE = 'Popular Forex Rates'
 
-/** Travelex-style “Order your travel money online in minutes” section — three icon columns */
+/** Homepage service boxes: three across, then two centered (md+). Fallback when CMS global is empty. */
 export const HOME_SERVICES_ORDER_SECTION = {
-  heading: 'Choose how you want to use our services',
-  intro:
-    'From branch visits to live rates online, Pakistan Currency Exchange makes currency exchange and remittance straightforward—wherever you start.',
-  /** Header band: right column image (`public/hero/`) */
-  imageSrc: '/hero/our-services.png',
-  cards: [
+  heading: 'Our services',
+  description:
+    'Currency exchange, live rates, remittance, and support—online and at branches across Pakistan.',
+  boxes: [
     {
-      icon: 'branch' as const,
+      imageSrc: '/service-icons/branch.svg',
       title: 'Visit a branch',
-      description:
-        'Walk in to buy or sell major currencies, collect home remittance, and get in-person guidance from our team across Pakistan.',
-      benefits: [
-        'Competitive open-market buying and selling rates',
-        '150+ branches for exchange and remittance support',
-        'Same-day service for many requests',
-      ],
+      description: 'Buy and sell currency, collect remittance, and get in-person help at 150+ locations across Pakistan.',
       href: '/branches',
       ctaLabel: 'Locate branches',
     },
     {
-      icon: 'rates' as const,
-      title: 'Check rates online',
-      description:
-        'See today’s USD, SAR, AED, EUR, GBP and other PKR pairs before you visit—so you can plan travel, Hajj, Umrah, or transfers with confidence.',
-      benefits: [
-        'Updated open-market buy and sell figures',
-        'Popular pairs highlighted for quick scanning',
-        'Figures for reference—confirm at the branch before transacting',
-      ],
+      imageSrc: '/service-icons/rates.svg',
+      title: 'Live exchange rates',
+      description: 'Check today’s open-market buy and sell figures for USD, SAR, AED, EUR, GBP and more against PKR.',
       href: '/currency-rates',
-      ctaLabel: 'View live rates',
+      ctaLabel: 'View rates',
     },
     {
-      icon: 'support' as const,
-      title: 'Help & specialist services',
-      description:
-        'Ask about transfers, documentation, or the best way to send or receive funds. We also support telegraphic transfers for education and business.',
-      benefits: [
-        'WhatsApp and phone support for quick answers',
-        'Guidance on remittance and FX paperwork',
-        'International TT for eligible overseas payments',
-      ],
+      imageSrc: '/service-icons/services.svg',
+      title: 'What we offer',
+      description: 'Explore currency exchange, remittance, telegraphic transfers, and other solutions we provide.',
+      href: '/services',
+      ctaLabel: 'Browse services',
+    },
+    {
+      imageSrc: '/service-icons/remittance.svg',
+      title: 'Home remittance',
+      description: 'Receive funds from abroad safely through our branch network with clear guidance at every step.',
+      href: '/contact',
+      ctaLabel: 'Learn more',
+    },
+    {
+      imageSrc: '/service-icons/support.svg',
+      title: 'Help & contact',
+      description: 'Questions about rates, paperwork, or transfers? Reach our team by phone, email, or WhatsApp.',
       href: '/contact',
       ctaLabel: 'Contact us',
     },
   ],
 } as const
-
-export const HOME_CLOSING_CTA = {
-  heading: 'Need Help with Currency Exchange or Remittance?',
-  text: 'Visit your nearest branch or contact Pakistan Currency Exchange today for reliable financial services.',
-}
 
 /** Travelex-style “Money Card” band: headline + tagline + icon list + image */
 export const HOME_WHY_US = {
@@ -108,13 +147,6 @@ export const HOME_WHY_US = {
   ],
   footer:
     'We are dedicated to making your currency exchange and remittance experience smooth, secure, and hassle-free.',
-}
-
-export const HOME_BRANCH = {
-  heading: 'Find Your Nearest Branch',
-  supporting: 'Our team is ready to help you with fast, secure, and professional service.',
-  ctaLabel: 'Locate Branches',
-  ctaHref: '/branches',
 }
 
 /** Travelex-style “Trusted travel money” band: headline, tagline, large stat tiles */
@@ -144,6 +176,12 @@ export const HOME_CONTACT = {
   findOutMoreHref: '/contact',
   footnote:
     'We use your details only to respond to your enquiry. Visit our contact page for branch details and other ways to reach us.',
+  /** Shown under “Or reach us directly” on the homepage contact section */
+  reachUsDirect: [
+    { label: 'Find near branch', href: '/branches' },
+    { label: 'WhatsApp us', href: 'https://wa.me/923046668810', external: true as const },
+    { label: 'Submit a complaint', href: '/complaints-feedback' },
+  ] as const,
 }
 
 export const FOOTER_COMPANY_BLURB =

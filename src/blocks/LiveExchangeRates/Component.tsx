@@ -16,7 +16,6 @@ import { LiveExchangeRateTabs } from '@/blocks/LiveExchangeRates/LiveExchangeRat
 export type LiveExchangeRatesProps = {
   title?: string
   intro?: string
-  supportingText?: string
   ctaLabel?: string
   /** When set with data, shows Travelex-style tabbed popular / other tables */
   popularTitle?: string
@@ -28,13 +27,15 @@ export type LiveExchangeRatesProps = {
   containerClassName?: string
 }
 
-const thCls = 'px-3 py-3 text-sm font-bold sm:px-4 sm:py-3.5 sm:text-base md:px-5 md:py-4 md:text-lg'
-const tdCls = 'px-3 py-3 sm:px-4 sm:py-3.5 md:px-5 md:py-4'
+const thCurrency =
+  'px-4 py-3 text-left text-sm font-bold uppercase tracking-wide text-white md:px-5 md:py-3.5 md:text-base'
+const thNumeric =
+  'px-4 py-3 text-right text-sm font-bold uppercase tracking-wide text-white md:px-5 md:py-3.5 md:text-base'
+const tdCls = 'px-4 py-3 md:px-5 md:py-4 align-middle border-b border-slate-200'
 
 export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
   title,
   intro,
-  supportingText,
   ctaLabel,
   popularTitle,
   popularTabLabel = 'Popular Forex Rates',
@@ -62,7 +63,7 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
     : (containerClassName ?? 'container px-4 py-16')
 
   const renderSimpleTable = (rows: CurrencyRate[], ariaLabel: string) => (
-    <div className="space-y-2 max-w-3xl mx-auto">
+    <div className="space-y-2 max-w-2xl mx-auto w-full">
       {rows.length === 0 ? (
         <p className="md:hidden rounded-lg border border-dashed border-slate-200 bg-slate-50 py-8 text-center text-sm text-slate-600">
           No rates available.
@@ -75,19 +76,19 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
           aria-label={`${ariaLabel} (mobile list)`}
         />
       )}
-      <div className="hidden md:block overflow-x-auto overflow-y-auto max-h-[min(70vh,32rem)] lg:max-h-none rounded border border-slate-200 bg-white shadow-sm [-webkit-overflow-scrolling:touch]">
-        <table className="w-full border-collapse text-left" aria-label={ariaLabel}>
-          <thead className="sticky top-0 z-10 shadow-[0_1px_0_0_rgb(226_232_240)]">
-            <tr className="bg-[#099546] text-white">
-              <th className={`${thCls} text-left`}>Currency</th>
-              <th className={`${thCls} text-center`}>Buying</th>
-              <th className={`${thCls} text-center`}>Selling</th>
+      <div className="hidden md:block overflow-x-auto overflow-y-auto max-h-[min(72vh,38rem)] lg:max-h-none rounded-md border border-slate-300 bg-white [-webkit-overflow-scrolling:touch] w-full">
+        <table className="w-full border-collapse text-left text-base md:text-lg" aria-label={ariaLabel}>
+          <thead className="sticky top-0 z-10 bg-[#099546]">
+            <tr>
+              <th className={thCurrency}>Currency</th>
+              <th className={thNumeric}>Buying (PKR)</th>
+              <th className={thNumeric}>Selling (PKR)</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="bg-white">
             {rows.length === 0 ? (
               <tr>
-                <td colSpan={3} className={`${tdCls} text-center text-slate-500 text-base`}>
+                <td colSpan={3} className={`${tdCls} py-8 text-center text-slate-500 text-base`}>
                   No rates available.
                 </td>
               </tr>
@@ -95,26 +96,32 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
               rows.map((rate, i) => (
                 <tr
                   key={`${rate.id}-${rate.currency_code}`}
-                  className={`border-t border-slate-200 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-100'}`}
+                  className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}
                 >
                   <td className={tdCls}>
-                    <div className="flex items-center gap-3">
-                      <span className="text-xl sm:text-2xl lg:text-[1.75rem]" aria-hidden>
+                    <div className="flex items-center gap-3 md:gap-4">
+                      <span className="text-2xl md:text-3xl shrink-0 leading-none" aria-hidden>
                         {currencyFlagEmoji(rate.currency_code)}
                       </span>
                       <div className="min-w-0 text-left">
-                        <span className="font-bold text-slate-900 text-sm sm:text-base lg:text-lg">{rate.currency_code}</span>
-                        <span className="text-slate-500 block text-xs sm:text-sm lg:text-base line-clamp-2">{rate.currency_name}</span>
+                        <span className="font-semibold text-slate-900 tabular-nums text-base md:text-lg block leading-tight">
+                          {rate.currency_code}
+                        </span>
+                        {rate.currency_name ? (
+                          <span className="text-slate-600 block text-sm md:text-base leading-snug line-clamp-2 mt-0.5">
+                            {rate.currency_name}
+                          </span>
+                        ) : null}
                       </div>
                     </div>
                   </td>
                   <td
-                    className={`${tdCls} text-center font-mono text-sm sm:text-base lg:text-lg font-semibold text-slate-800 tabular-nums whitespace-nowrap`}
+                    className={`${tdCls} text-right font-mono text-base md:text-lg font-semibold text-slate-800 tabular-nums whitespace-nowrap`}
                   >
                     {Number(rate.buy_rate ?? 0).toFixed(2)}
                   </td>
                   <td
-                    className={`${tdCls} text-center font-mono text-sm sm:text-base lg:text-lg font-semibold text-[#099546] tabular-nums whitespace-nowrap`}
+                    className={`${tdCls} text-right font-mono text-base md:text-lg font-semibold text-slate-900 tabular-nums whitespace-nowrap`}
                   >
                     {Number(rate.sell_rate ?? 0).toFixed(2)}
                   </td>
@@ -130,22 +137,19 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
   return (
     <div className={containerClasses}>
       {!disableInnerContainer && (
-        <div className="max-w-4xl mx-auto text-center mb-10 md:mb-12">
+        <div className="max-w-2xl mx-auto text-center mb-10 md:mb-12">
           <h2 className={`text-2xl md:text-3xl lg:text-4xl mb-3 md:mb-4 ${HOME_INDEX_HEADING_CLASS}`}>
             {title || 'Live Exchange Rates'}
           </h2>
           {intro ? (
-            <p className="text-slate-600 text-base md:text-lg leading-relaxed max-w-3xl mx-auto mb-3">
+            <p className="text-slate-600 text-base md:text-lg leading-relaxed">
               {intro}
             </p>
-          ) : null}
-          {supportingText ? (
-            <p className="text-slate-500 text-base leading-relaxed max-w-2xl mx-auto">{supportingText}</p>
           ) : null}
         </div>
       )}
 
-      <div className="max-w-6xl mx-auto space-y-10 md:space-y-12">
+      <div className="max-w-2xl mx-auto w-full space-y-8 md:space-y-10">
         {popularTitle && fullList.length > 0 ? (
           <LiveExchangeRateTabs
             popularLabel={popularTabLabel}
@@ -170,8 +174,8 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
                 <ChevronDown className="h-4 w-4" aria-hidden />
               </Link>
             </Button>
-            <CurrencyNoteSurface className="p-4 md:p-5 max-w-3xl mx-auto">
-              <p className="text-sm md:text-base text-slate-600 text-center leading-relaxed">
+            <CurrencyNoteSurface className="p-3 md:p-4 max-w-2xl mx-auto">
+              <p className="text-xs md:text-sm text-slate-600 text-center leading-relaxed">
                 Open-market figures for reference — confirm live rates at your branch before transacting.
               </p>
             </CurrencyNoteSurface>

@@ -5,12 +5,20 @@ import { Inter } from 'next/font/google'
 import React from 'react'
 
 import { AdminBar } from '@/components/AdminBar'
+import { SitePopupBanner } from '@/components/SitePopupBanner'
 import { Footer } from '@/Footer/Component'
 import Header from '@/Header/Component'
 import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
+import {
+  promoBannerGlobalToClientProps,
+  type PromoBannerClientProps,
+} from '@/utilities/getPromoBannerProps'
 import { draftMode } from 'next/headers'
+import { unstable_noStore as noStore } from 'next/cache'
+import { getPayload } from 'payload'
+import configPromise from '@payload-config'
 
 import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
@@ -21,7 +29,17 @@ const inter = Inter({
 })
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  noStore()
   const { isEnabled } = await draftMode()
+
+  let promoBannerData: PromoBannerClientProps | null = null
+  try {
+    const payload = await getPayload({ config: configPromise })
+    const promo = await payload.findGlobal({ slug: 'promoBanner', depth: 2 })
+    promoBannerData = promoBannerGlobalToClientProps(promo)
+  } catch (err) {
+    console.error('Promo banner global load failed:', err)
+  }
 
   return (
     <html
@@ -42,6 +60,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               preview: isEnabled,
             }}
           />
+          <SitePopupBanner data={promoBannerData} />
 
           <Header />
           <main className="site-main flex min-h-0 min-w-0 flex-1 flex-col overflow-x-clip bg-white">

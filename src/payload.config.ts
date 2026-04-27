@@ -19,6 +19,11 @@ import { Partners } from './collections/Partners'
 import { Testimonials } from './collections/Testimonials'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
+import { HomeHero } from './HomeHero/config'
+import { HomeServices } from './HomeServices/config'
+import { HomeWhyUs } from './HomeWhyUs/config'
+import { HomeFaq } from './HomeFaq/config'
+import { PromoBanner } from './PromoBanner/config'
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
@@ -121,7 +126,7 @@ export default buildConfig({
     Testimonials,
   ],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer],
+  globals: [Header, Footer, HomeHero, HomeServices, HomeWhyUs, HomeFaq, PromoBanner],
   plugins,
   secret: process.env.PAYLOAD_SECRET,
   sharp,
