@@ -9,6 +9,11 @@ declare global {
       VERCEL_PROJECT_PRODUCTION_URL: string
       /** Vercel Blob — enables @payloadcms/storage-vercel-blob for Media */
       BLOB_READ_WRITE_TOKEN?: string
+      /**
+       * Must match the Blob store’s access in Vercel. Use `private` if the store is private
+       * (default UI for new stores). Omitted or any other value → public (direct URLs).
+       */
+      BLOB_STORE_ACCESS?: 'public' | 'private'
       /** Set to `true` for large uploads on Vercel (see Payload Vercel Blob client uploads) */
       VERCEL_BLOB_CLIENT_UPLOADS?: string
     }
