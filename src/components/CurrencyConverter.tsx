@@ -14,7 +14,6 @@ import {
   Info,
   ChevronRight,
   RefreshCw,
-  ArrowUpDown,
 } from 'lucide-react'
 import { cn } from '@/utilities/ui'
 
