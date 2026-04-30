@@ -44,9 +44,13 @@ export function HomeContactEmailCTA({ placeholder, ctaLabel, mailTo }: Props) {
       />
       <Button
         type="submit"
-        className="h-12 shrink-0 rounded-full bg-[#099546] px-8 font-semibold text-white hover:bg-[#088040] sm:px-10"
+        className="group relative h-12 shrink-0 overflow-hidden rounded-full border-2 border-[#099546] bg-[#099546] px-8 font-semibold text-white transition-colors sm:px-10"
       >
-        {ctaLabel}
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-0 origin-bottom scale-y-0 bg-[#088040] transition-transform duration-500 ease-out group-hover:scale-y-100"
+        />
+        <span className="relative z-10">{ctaLabel}</span>
       </Button>
     </form>
   )

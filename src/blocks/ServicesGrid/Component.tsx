@@ -56,18 +56,22 @@ export const ServicesGridBlock: React.FC<ServicesGridProps> = async ({
           <Link
             key={service.id}
             href={`/services/${service.slug}`}
-            className="group bg-slate-100 border border-slate-200 rounded-lg p-6 md:p-8 flex flex-col items-center text-center hover:border-[#099546]/60 hover:shadow-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#099546] focus-visible:ring-offset-2 h-full min-h-[13rem]"
+            className="group relative overflow-hidden bg-slate-100 border border-slate-200 rounded-lg p-6 md:p-8 flex flex-col items-center text-center hover:border-[#099546]/60 hover:shadow-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#099546] focus-visible:ring-offset-2 h-full min-h-[13rem]"
           >
-            <div className="mb-4">
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-0 z-0 origin-bottom scale-y-0 bg-[#099546] transition-transform duration-500 ease-out group-hover:scale-y-100"
+            />
+            <div className="relative z-10 mb-4 text-[#099546] transition-colors duration-300 group-hover:text-white">
               <ServiceListingIcon service={service} className="mx-auto" />
             </div>
-            <h3 className="text-base md:text-lg font-bold text-slate-900 mb-2 group-hover:text-[#099546] transition-colors">
+            <h3 className="relative z-10 text-base md:text-lg font-bold text-slate-900 mb-2 transition-colors duration-300 group-hover:text-white">
               {service.title}
             </h3>
-            <p className="text-sm md:text-base text-slate-600 leading-relaxed line-clamp-3 flex-1 min-h-0 w-full">
+            <p className="relative z-10 text-sm md:text-base text-slate-600 leading-relaxed line-clamp-3 flex-1 min-h-0 w-full transition-colors duration-300 group-hover:text-white/95">
               {service.short_description || service.description}
             </p>
-            <span className="mt-5 inline-flex w-full max-w-[16rem] items-center justify-center gap-2 rounded-md border-2 border-[#099546] bg-white px-4 py-2.5 text-sm font-semibold text-[#099546] group-hover:bg-[#099546] group-hover:text-white transition-colors">
+            <span className="relative z-10 mt-5 inline-flex w-full max-w-[16rem] items-center justify-center gap-2 rounded-md border-2 border-[#099546] bg-white px-4 py-2.5 text-sm font-semibold text-[#099546] transition-colors group-hover:border-white group-hover:bg-white/15 group-hover:text-white">
               Learn more
               <ArrowRight className="h-4 w-4 shrink-0" aria-hidden />
             </span>

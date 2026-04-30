@@ -168,10 +168,19 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
 
         {!disableInnerContainer && (
           <div className="text-center mt-8 md:mt-10 space-y-5">
-            <Button asChild className="rounded bg-[#099546] hover:bg-[#088040] text-white h-12 px-8 font-semibold">
-              <Link href="/currency-rates" className="inline-flex items-center gap-2">
-                {ctaLabel || 'View Full Forex Rates'}
-                <ChevronDown className="h-4 w-4" aria-hidden />
+            <Button asChild className="h-12 rounded p-0">
+              <Link
+                href="/currency-rates"
+                className="group relative inline-flex h-12 items-center gap-2 overflow-hidden rounded bg-[#099546] px-8 font-semibold text-white"
+              >
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 origin-bottom scale-y-0 bg-[#088040] transition-transform duration-500 ease-out group-hover:scale-y-100"
+                />
+                <span className="relative z-10 inline-flex items-center gap-2">
+                  {ctaLabel || 'View Full Forex Rates'}
+                  <ChevronDown className="h-4 w-4" aria-hidden />
+                </span>
               </Link>
             </Button>
             <CurrencyNoteSurface className="p-3 md:p-4 max-w-2xl mx-auto">

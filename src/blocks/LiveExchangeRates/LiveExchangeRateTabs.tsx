@@ -98,15 +98,23 @@ export function LiveExchangeRateTabs({ popularLabel, otherLabel, popularRows, ot
           <TabsList className="inline-flex h-auto flex-wrap justify-center gap-1 rounded-md border border-slate-300 bg-slate-100 p-1">
             <TabsTrigger
               value="popular"
-              className="rounded-md px-4 py-2 text-sm font-semibold text-slate-700 data-[state=active]:bg-white data-[state=active]:text-[#099546] data-[state=active]:shadow-sm"
+              className="group/tab relative overflow-hidden rounded-md px-4 py-2 text-sm font-semibold text-slate-700 transition-colors data-[state=active]:bg-white data-[state=active]:text-[#099546] data-[state=active]:shadow-sm"
             >
-              {popularLabel}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 origin-bottom scale-y-0 bg-[#099546]/12 transition-transform duration-500 ease-out group-hover/tab:scale-y-100 data-[state=active]:hidden"
+              />
+              <span className="relative z-10">{popularLabel}</span>
             </TabsTrigger>
             <TabsTrigger
               value="other"
-              className="rounded-md px-4 py-2 text-sm font-semibold text-slate-700 data-[state=active]:bg-white data-[state=active]:text-[#099546] data-[state=active]:shadow-sm"
+              className="group/tab relative overflow-hidden rounded-md px-4 py-2 text-sm font-semibold text-slate-700 transition-colors data-[state=active]:bg-white data-[state=active]:text-[#099546] data-[state=active]:shadow-sm"
             >
-              {otherLabel}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 origin-bottom scale-y-0 bg-[#099546]/12 transition-transform duration-500 ease-out group-hover/tab:scale-y-100 data-[state=active]:hidden"
+              />
+              <span className="relative z-10">{otherLabel}</span>
             </TabsTrigger>
           </TabsList>
         </div>

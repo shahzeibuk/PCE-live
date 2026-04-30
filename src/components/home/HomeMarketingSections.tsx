@@ -58,9 +58,13 @@ export function HomeServicesOrderSection({ title, description, boxes }: HomeServ
   const renderBox = (card: HomeServicesSectionProps['boxes'][number], index: number) => (
     <article
       key={`${card.title}-${index}`}
-      className="flex flex-col items-center text-center rounded-xl border border-slate-200 bg-white p-5 md:p-6 shadow-sm ring-1 ring-slate-100/80 h-full"
+      className="group relative isolate flex h-full flex-col items-center overflow-hidden rounded-xl border border-slate-200 bg-white p-5 text-center shadow-sm ring-1 ring-slate-100/80 transition-all duration-300 hover:border-[#099546]/65 hover:shadow-md md:p-6"
     >
-      <div className="mb-4 shrink-0" aria-hidden>
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-0 origin-bottom scale-y-0 bg-[#099546] transition-transform duration-500 ease-out group-hover:scale-y-100"
+      />
+      <div className="relative z-10 mb-4 shrink-0" aria-hidden>
         <Image
           src={card.imageSrc}
           alt=""
@@ -70,11 +74,17 @@ export function HomeServicesOrderSection({ title, description, boxes }: HomeServ
           unoptimized={card.imageSrc.endsWith('.svg')}
         />
       </div>
-      <h3 className={`text-base md:text-lg mb-2 leading-snug ${HOME_INDEX_HEADING_CLASS}`}>{card.title}</h3>
-      <p className="text-sm text-slate-600 leading-relaxed flex-1 max-w-sm">{card.description}</p>
+      <h3
+        className={`relative z-10 mb-2 text-base leading-snug transition-colors duration-300 group-hover:text-white md:text-lg ${HOME_INDEX_HEADING_CLASS}`}
+      >
+        {card.title}
+      </h3>
+      <p className="relative z-10 flex-1 max-w-sm text-sm leading-relaxed text-slate-600 transition-colors duration-300 group-hover:text-white/95">
+        {card.description}
+      </p>
       <Link
         href={card.href}
-        className="mt-5 inline-flex items-center justify-center gap-1 text-sm font-semibold text-[#099546] hover:underline"
+        className="relative z-10 mt-5 inline-flex items-center justify-center gap-1 text-sm font-semibold text-[#099546] transition-colors duration-300 hover:underline group-hover:text-white"
         {...serviceBoxLinkAttrs(card.href, card.openInNewTab)}
       >
         {card.ctaLabel}
@@ -192,17 +202,7 @@ export function HomeTrustSection() {
 
 /** Travelex “Upgrade your travel money” style: headline, pitch, email + CTA, find out more, footnote */
 export function HomeContactSection() {
-  const {
-    heading,
-    paragraph,
-    contactEmail,
-    inputPlaceholder,
-    primaryCta,
-    findOutMoreLabel,
-    findOutMoreHref,
-    footnote,
-    reachUsDirect,
-  } = HOME_CONTACT
+  const { heading, contactEmail, inputPlaceholder, primaryCta, reachUsDirect } = HOME_CONTACT
 
   return (
     <section
@@ -216,20 +216,11 @@ export function HomeContactSection() {
         >
           {heading}
         </h2>
-        <p className="text-slate-600 text-base md:text-lg leading-relaxed max-w-xl mx-auto">{paragraph}</p>
+        <p className="text-slate-600 text-base md:text-lg leading-relaxed max-w-xl mx-auto">
+          Have a question about today&apos;s exchange rates, remittance services, or branch locations?
+        </p>
 
         <HomeContactEmailCTA placeholder={inputPlaceholder} ctaLabel={primaryCta} mailTo={contactEmail} />
-
-        <div className="mt-6 md:mt-7">
-          <Link
-            href={findOutMoreHref}
-            className="inline-flex items-center justify-center text-sm font-semibold text-[#099546] hover:text-[#088040] hover:underline underline-offset-4"
-          >
-            {findOutMoreLabel}
-          </Link>
-        </div>
-
-        <p className="mt-8 md:mt-10 text-xs md:text-sm text-slate-500 leading-relaxed max-w-lg mx-auto">{footnote}</p>
 
         <div className="mt-10 md:mt-12 pt-8 md:pt-10 border-t border-slate-200/80">
           <p className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-4">Or reach us directly</p>
@@ -240,12 +231,22 @@ export function HomeContactSection() {
               const Icon = isFirst ? MapPin : isWa ? MessageCircle : FileText
               const isGreen = isFirst || isWa
               const className = isGreen
-                ? 'rounded-full border-2 border-[#099546] text-[#099546] h-11 px-6 font-semibold hover:bg-[#099546]/5'
-                : 'rounded-full border-2 border-slate-300 text-slate-800 h-11 px-6 font-semibold hover:bg-slate-50'
+                ? 'group relative overflow-hidden rounded-full border-2 border-[#099546] text-[#099546] h-11 px-6 font-semibold transition-colors hover:text-white'
+                : 'group relative overflow-hidden rounded-full border-2 border-slate-300 text-slate-800 h-11 px-6 font-semibold transition-colors hover:text-slate-900'
               const inner = (
                 <>
-                  <Icon className="h-4 w-4 shrink-0" />
-                  {action.label}
+                  <span
+                    aria-hidden
+                    className={
+                      isGreen
+                        ? 'pointer-events-none absolute inset-0 origin-bottom scale-y-0 bg-[#099546] transition-transform duration-500 ease-out group-hover:scale-y-100'
+                        : 'pointer-events-none absolute inset-0 origin-bottom scale-y-0 bg-slate-100 transition-transform duration-500 ease-out group-hover:scale-y-100'
+                    }
+                  />
+                  <span className="relative z-10 inline-flex items-center gap-2">
+                    <Icon className="h-4 w-4 shrink-0" />
+                    {action.label}
+                  </span>
                 </>
               )
               if (isWa) {

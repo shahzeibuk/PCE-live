@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo, useEffect } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
-import { MapPin, Phone, Building2, PhoneCall } from 'lucide-react'
+import { MapPin, Phone, Building2, PhoneCall, Navigation } from 'lucide-react'
 import Link from 'next/link'
 import { Input } from '@/components/ui/input'
 import {
@@ -15,6 +15,13 @@ import {
 
 function telHref(num: string) {
   return `tel:${String(num).replace(/\s/g, '')}`
+}
+
+function getDirectionsHref(branch: any) {
+  const link = branch.google_map_link?.trim()
+  if (link) return link
+  const q = encodeURIComponent([branch.address, branch.city, 'Pakistan'].filter(Boolean).join(', '))
+  return `https://www.google.com/maps/search/?api=1&query=${q}`
 }
 
 export function BranchLocator({ branches }: { branches: any[] }) {
@@ -114,6 +121,16 @@ export function BranchLocator({ branches }: { branches: any[] }) {
                     <MapPin className="w-4 h-4 shrink-0 mt-0.5 text-slate-400" aria-hidden />
                     <p className="text-sm leading-snug">{branch.address}</p>
                   </div>
+
+                  <a
+                    href={getDirectionsHref(branch)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 rounded-lg bg-slate-100 px-3 py-3 text-slate-800 font-semibold text-sm hover:bg-[#099546]/12 hover:text-[#099546] transition-colors min-h-12 border border-slate-200 hover:border-[#099546]/30"
+                  >
+                    <Navigation className="w-5 h-5 shrink-0" aria-hidden />
+                    <span>Get directions</span>
+                  </a>
 
                   {phone ? (
                     <a

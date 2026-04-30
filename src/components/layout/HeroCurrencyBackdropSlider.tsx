@@ -34,7 +34,12 @@ export function HeroCurrencyBackdropSlider({
   const n = slides.length
   const [index, setIndex] = useState(0)
   const [reduceMotion, setReduceMotion] = useState(false)
+  const [isPointerDragging, setIsPointerDragging] = useState(false)
+  const [dragOffsetPx, setDragOffsetPx] = useState(0)
   const touchStartX = useRef<number | null>(null)
+  const pointerStartX = useRef<number | null>(null)
+  const activePointerId = useRef<number | null>(null)
+  const viewportRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -79,6 +84,14 @@ export function HeroCurrencyBackdropSlider({
     return () => window.removeEventListener('keydown', onKey)
   }, [goPrev, goNext, n])
 
+  useEffect(() => {
+    if (n < 2 || reduceMotion || isPointerDragging) return
+    const interval = window.setInterval(() => {
+      setIndex((prev) => (prev + 1) % n)
+    }, 5000)
+    return () => window.clearInterval(interval)
+  }, [n, reduceMotion, isPointerDragging])
+
   const onTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0]?.clientX ?? null
   }
@@ -93,6 +106,52 @@ export function HeroCurrencyBackdropSlider({
     else if (delta < -SWIPE_PX) goNext()
   }
 
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (n < 2 || !e.isPrimary || e.button !== 0) return
+    pointerStartX.current = e.clientX
+    activePointerId.current = e.pointerId
+    setIsPointerDragging(true)
+    setDragOffsetPx(0)
+    e.currentTarget.setPointerCapture(e.pointerId)
+  }
+
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (
+      pointerStartX.current === null ||
+      activePointerId.current === null ||
+      e.pointerId !== activePointerId.current ||
+      n < 2
+    ) {
+      return
+    }
+    setDragOffsetPx(e.clientX - pointerStartX.current)
+  }
+
+  const onPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (
+      pointerStartX.current === null ||
+      activePointerId.current === null ||
+      e.pointerId !== activePointerId.current ||
+      n < 2
+    ) {
+      return
+    }
+    const delta = e.clientX - pointerStartX.current
+    pointerStartX.current = null
+    activePointerId.current = null
+    setIsPointerDragging(false)
+    setDragOffsetPx(0)
+    if (delta > SWIPE_PX) goPrev()
+    else if (delta < -SWIPE_PX) goNext()
+  }
+
+  const onPointerCancel = () => {
+    pointerStartX.current = null
+    activePointerId.current = null
+    setIsPointerDragging(false)
+    setDragOffsetPx(0)
+  }
+
   return (
     <div
       className={cn('group/hero-slider relative overflow-x-hidden bg-slate-100', className)}
@@ -101,16 +160,32 @@ export function HeroCurrencyBackdropSlider({
       aria-label="Homepage highlights"
     >
       <div
-        className="overflow-hidden"
+        ref={viewportRef}
+        className={cn(
+          'overflow-hidden touch-pan-y select-none',
+          isPointerDragging ? 'cursor-grabbing' : 'cursor-grab',
+        )}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerCancel}
       >
         <div
           className={cn(
             'flex items-stretch',
-            !reduceMotion && 'transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)]',
+            !reduceMotion &&
+              !isPointerDragging &&
+              'transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)]',
           )}
-          style={{ transform: `translate3d(-${index * 100}%, 0, 0)` }}
+          style={{
+            transform: `translate3d(calc(-${index * 100}% + ${
+              viewportRef.current && viewportRef.current.clientWidth > 0
+                ? `${(dragOffsetPx / viewportRef.current.clientWidth) * 100}%`
+                : '0px'
+            }), 0, 0)`,
+          }}
         >
           {slides.map((slide, i) => (
             <div
@@ -162,27 +237,58 @@ export function HeroCurrencyBackdropSlider({
                     <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 md:mt-10">
                       <Button
                         asChild
-                        className="min-h-12 w-full rounded bg-[#099546] px-6 font-semibold text-white hover:bg-[#088040] sm:w-auto"
+                        className="min-h-12 w-full rounded p-0 sm:w-auto"
                       >
-                        <Link href={primaryCta.href}>{primaryCta.label}</Link>
+                        <Link
+                          href={primaryCta.href}
+                          className="group/hero-btn relative inline-flex min-h-12 w-full items-center justify-center overflow-hidden rounded bg-[#099546] px-6 font-semibold text-white sm:w-auto"
+                        >
+                          <span
+                            aria-hidden
+                            className="pointer-events-none absolute inset-0 origin-bottom scale-y-0 bg-[#088040] transition-transform duration-500 ease-out group-hover/hero-btn:scale-y-100"
+                          />
+                          <span className="relative z-10">{primaryCta.label}</span>
+                        </Link>
                       </Button>
                       {secondaryCta.external ? (
                         <Button
                           asChild
                           variant="outline"
-                          className="min-h-12 w-full rounded border-2 border-slate-800 bg-white/80 px-6 font-semibold text-slate-900 shadow-sm backdrop-blur-sm hover:bg-white hover:text-slate-900 sm:w-auto"
+                          className="min-h-12 w-full rounded border-2 border-slate-800 bg-white/80 p-0 font-semibold text-slate-900 shadow-sm backdrop-blur-sm sm:w-auto"
                         >
-                          <a href={secondaryCta.href} target="_blank" rel="noopener noreferrer">
-                            {secondaryCta.label}
+                          <a
+                            href={secondaryCta.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group/hero-btn relative inline-flex min-h-12 w-full items-center justify-center overflow-hidden rounded px-6 text-slate-900 sm:w-auto"
+                          >
+                            <span
+                              aria-hidden
+                              className="pointer-events-none absolute inset-0 origin-bottom scale-y-0 bg-[#099546] transition-transform duration-500 ease-out group-hover/hero-btn:scale-y-100"
+                            />
+                            <span className="relative z-10 transition-colors duration-300 group-hover/hero-btn:text-white">
+                              {secondaryCta.label}
+                            </span>
                           </a>
                         </Button>
                       ) : (
                         <Button
                           asChild
                           variant="outline"
-                          className="min-h-12 w-full rounded border-2 border-slate-800 bg-white/80 px-6 font-semibold text-slate-900 shadow-sm backdrop-blur-sm hover:bg-white hover:text-slate-900 sm:w-auto"
+                          className="min-h-12 w-full rounded border-2 border-slate-800 bg-white/80 p-0 font-semibold text-slate-900 shadow-sm backdrop-blur-sm sm:w-auto"
                         >
-                          <Link href={secondaryCta.href}>{secondaryCta.label}</Link>
+                          <Link
+                            href={secondaryCta.href}
+                            className="group/hero-btn relative inline-flex min-h-12 w-full items-center justify-center overflow-hidden rounded px-6 text-slate-900 sm:w-auto"
+                          >
+                            <span
+                              aria-hidden
+                              className="pointer-events-none absolute inset-0 origin-bottom scale-y-0 bg-[#099546] transition-transform duration-500 ease-out group-hover/hero-btn:scale-y-100"
+                            />
+                            <span className="relative z-10 transition-colors duration-300 group-hover/hero-btn:text-white">
+                              {secondaryCta.label}
+                            </span>
+                          </Link>
                         </Button>
                       )}
                     </div>

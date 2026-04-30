@@ -119,11 +119,17 @@ export const Converter = ({ rates }: { rates: CurrencyRate[] }) => {
             <TooltipTrigger asChild>
               <button
                 type="button"
-                className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm hover:border-[#099546]/40 hover:text-[#099546]"
+                className="group relative inline-flex items-center gap-1.5 overflow-hidden rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm transition-colors hover:border-[#099546]/40 hover:text-[#099546]"
                 aria-label="How this converter works"
               >
-                <CircleHelp className="h-4 w-4 shrink-0" aria-hidden />
-                How it works
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 origin-bottom scale-y-0 bg-[#099546]/10 transition-transform duration-500 ease-out group-hover:scale-y-100"
+                />
+                <span className="relative z-10 inline-flex items-center gap-1.5">
+                  <CircleHelp className="h-4 w-4 shrink-0" aria-hidden />
+                  How it works
+                </span>
               </button>
             </TooltipTrigger>
             <TooltipContent side="bottom" className="max-w-sm text-left leading-relaxed">
@@ -245,9 +251,18 @@ export const Converter = ({ rates }: { rates: CurrencyRate[] }) => {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <Button
             asChild
-            className="rounded bg-[#099546] hover:bg-[#088040] text-white h-11 px-8 font-semibold w-full sm:w-auto"
+            className="h-11 w-full rounded p-0 sm:w-auto"
           >
-            <Link href="/currency-rates">View full rate table</Link>
+            <Link
+              href="/currency-rates"
+              className="group relative inline-flex h-11 w-full items-center justify-center overflow-hidden rounded bg-[#099546] px-8 font-semibold text-white sm:w-auto"
+            >
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 origin-bottom scale-y-0 bg-[#088040] transition-transform duration-500 ease-out group-hover:scale-y-100"
+              />
+              <span className="relative z-10">View full rate table</span>
+            </Link>
           </Button>
         </div>
 
