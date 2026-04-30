@@ -1,4 +1,6 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 
 const DEFAULT_PAGE = 'https://www.facebook.com/pkcurrency'
 
@@ -7,6 +9,7 @@ const DEFAULT_PAGE = 'https://www.facebook.com/pkcurrency'
  * Override with `NEXT_PUBLIC_FACEBOOK_PAGE_URL` (full page URL).
  */
 export function FacebookPageEmbed() {
+  const [showEmbed, setShowEmbed] = useState(false)
   const href = (
     process.env.NEXT_PUBLIC_FACEBOOK_PAGE_URL?.trim() || DEFAULT_PAGE
   ).replace(/\/$/, '')
@@ -29,16 +32,31 @@ export function FacebookPageEmbed() {
         </p>
         <div className="mx-auto flex w-full max-w-full justify-center">
           <div className="w-full max-w-[500px] min-h-[min(480px,70vh)] min-w-0 rounded-lg border border-slate-200 bg-white shadow-sm overflow-hidden">
-            <iframe
-              title="Pakistan Currency Exchange on Facebook"
-              src={src}
-              className="block h-[min(480px,70vh)] w-full max-w-full border-0 bg-white"
-              style={{ maxWidth: '100%' }}
-              loading="lazy"
-              scrolling="no"
-              allow="encrypted-media"
-              referrerPolicy="strict-origin-when-cross-origin"
-            />
+            {showEmbed ? (
+              <iframe
+                title="Pakistan Currency Exchange on Facebook"
+                src={src}
+                className="block h-[min(480px,70vh)] w-full max-w-full border-0 bg-white"
+                style={{ maxWidth: '100%' }}
+                loading="lazy"
+                scrolling="no"
+                allow="encrypted-media"
+                referrerPolicy="strict-origin-when-cross-origin"
+              />
+            ) : (
+              <div className="flex h-[min(480px,70vh)] w-full flex-col items-center justify-center gap-4 bg-white px-6 text-center">
+                <p className="text-sm text-slate-600">
+                  Facebook feed is blocked by some browsers, ad blockers, and privacy settings.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setShowEmbed(true)}
+                  className="inline-flex items-center justify-center rounded-md bg-[#099546] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#088040]"
+                >
+                  Load Facebook feed
+                </button>
+              </div>
+            )}
           </div>
         </div>
         <p className="text-center mt-6 text-sm text-slate-600">

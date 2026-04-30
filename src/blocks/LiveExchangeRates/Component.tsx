@@ -9,7 +9,7 @@ import { ChevronDown } from 'lucide-react'
 import { CurrencyNoteSurface } from '@/components/layout/currencyBrandSurfaces'
 import { POPULAR_FOREX_CODES, isPopularForexCode } from '@/constants/popularCurrencyCodes'
 import { MobileCurrencyRateCards, ratesToMobileItems } from '@/components/currency/MobileCurrencyRateCards'
-import { currencyFlagEmoji } from '@/utilities/currencyFlags'
+import { CurrencyFlag } from '@/components/currency/CurrencyFlag'
 import { HOME_INDEX_HEADING_CLASS } from '@/components/home/homeContent'
 import { LiveExchangeRateTabs } from '@/blocks/LiveExchangeRates/LiveExchangeRateTabs'
 
@@ -100,9 +100,7 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
                 >
                   <td className={tdCls}>
                     <div className="flex items-center gap-3 md:gap-4">
-                      <span className="text-2xl md:text-3xl shrink-0 leading-none" aria-hidden>
-                        {currencyFlagEmoji(rate.currency_code)}
-                      </span>
+                      <CurrencyFlag currencyCode={rate.currency_code} className="h-6 w-6 shrink-0 md:h-7 md:w-7" />
                       <div className="min-w-0 text-left">
                         <span className="font-semibold text-slate-900 tabular-nums text-base md:text-lg block leading-tight">
                           {rate.currency_code}

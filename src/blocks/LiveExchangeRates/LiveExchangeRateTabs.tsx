@@ -2,8 +2,8 @@
 
 import type { MobileCurrencyRateItem } from '@/components/currency/MobileCurrencyRateCards'
 import { MobileCurrencyRateCards } from '@/components/currency/MobileCurrencyRateCards'
+import { CurrencyFlag } from '@/components/currency/CurrencyFlag'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { currencyFlagEmoji } from '@/utilities/currencyFlags'
 
 const thCurrency =
   'px-4 py-3 text-left text-sm font-bold uppercase tracking-wide text-white md:px-5 md:py-3.5 md:text-base'
@@ -47,9 +47,7 @@ function RatesTable({ rows, ariaLabel }: { rows: MobileCurrencyRateItem[]; ariaL
                 <tr key={`${rate.id}-${rate.currency_code}`} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}>
                   <td className={tdCls}>
                     <div className="flex items-center gap-3 md:gap-4">
-                      <span className="text-2xl md:text-3xl shrink-0 leading-none" aria-hidden>
-                        {currencyFlagEmoji(rate.currency_code)}
-                      </span>
+                      <CurrencyFlag currencyCode={rate.currency_code} className="h-6 w-6 shrink-0 md:h-7 md:w-7" />
                       <div className="min-w-0 text-left">
                         <span className="font-semibold text-slate-900 tabular-nums text-base md:text-lg block leading-tight">
                           {rate.currency_code}

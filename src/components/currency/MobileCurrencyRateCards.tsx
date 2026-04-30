@@ -1,4 +1,4 @@
-import { currencyFlagEmoji } from '@/utilities/currencyFlags'
+import { CurrencyFlag } from '@/components/currency/CurrencyFlag'
 import { cn } from '@/utilities/ui'
 
 export type MobileCurrencyRateItem = {
@@ -58,9 +58,10 @@ export function MobileCurrencyRateCards({
           {variant === 'centered' ? (
             <div className={cn('flex flex-col items-center text-center py-1', compact ? 'gap-2' : 'gap-3')}>
               <div className="flex flex-col items-center gap-1">
-                <span className={cn('leading-none', compact ? 'text-xl' : 'text-2xl')} aria-hidden>
-                  {currencyFlagEmoji(rate.currency_code)}
-                </span>
+                <CurrencyFlag
+                  currencyCode={rate.currency_code}
+                  className={cn('leading-none', compact ? 'h-5 w-5' : 'h-6 w-6')}
+                />
                 <div
                   className={cn('font-bold text-slate-900 tabular-nums', compact ? 'text-xs' : 'text-sm')}
                 >
@@ -103,12 +104,10 @@ export function MobileCurrencyRateCards({
           ) : (
             <div className={cn('flex items-start justify-between', compact ? 'gap-2' : 'gap-3')}>
               <div className={cn('flex min-w-0 flex-1 items-center', compact ? 'gap-2' : 'gap-2.5')}>
-                <span
-                  className={cn('leading-none shrink-0', compact ? 'text-lg' : 'text-xl md:text-2xl')}
-                  aria-hidden
-                >
-                  {currencyFlagEmoji(rate.currency_code)}
-                </span>
+                <CurrencyFlag
+                  currencyCode={rate.currency_code}
+                  className={cn('leading-none shrink-0', compact ? 'h-[18px] w-[18px]' : 'h-5 w-5 md:h-6 md:w-6')}
+                />
                 <div className="min-w-0">
                   <div
                     className={cn('font-bold text-slate-900 tabular-nums', compact ? 'text-xs' : 'text-sm')}

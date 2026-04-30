@@ -6,8 +6,8 @@ import { CircleHelp } from 'lucide-react'
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
+import { CurrencyFlag } from '@/components/currency/CurrencyFlag'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
-import { currencyFlagEmoji } from '@/utilities/currencyFlags'
 import type { CurrencyRate } from '@/payload-types'
 
 type RateRow = Pick<CurrencyRate, 'currency_code' | 'currency_name' | 'buy_rate' | 'sell_rate'> & {
@@ -183,9 +183,7 @@ export const Converter = ({ rates }: { rates: CurrencyRate[] }) => {
                     textValue={`${r.currency_code} ${labelFor(r.currency_code)}`}
                   >
                     <span className="flex items-center gap-2">
-                      <span className="text-base leading-none" aria-hidden>
-                        {currencyFlagEmoji(r.currency_code)}
-                      </span>
+                      <CurrencyFlag currencyCode={r.currency_code} className="h-4 w-4 shrink-0" />
                       <span>
                         {r.currency_code} · {labelFor(r.currency_code)}
                       </span>
@@ -219,9 +217,7 @@ export const Converter = ({ rates }: { rates: CurrencyRate[] }) => {
                     textValue={`${r.currency_code} ${labelFor(r.currency_code)}`}
                   >
                     <span className="flex items-center gap-2">
-                      <span className="text-base leading-none" aria-hidden>
-                        {currencyFlagEmoji(r.currency_code)}
-                      </span>
+                      <CurrencyFlag currencyCode={r.currency_code} className="h-4 w-4 shrink-0" />
                       <span>
                         {r.currency_code} · {labelFor(r.currency_code)}
                       </span>

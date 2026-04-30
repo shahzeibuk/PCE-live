@@ -164,3 +164,13 @@ export function currencyFlagEmoji(code: string): string {
   if (!upper) return '🏳️'
   return CODE_TO_FLAG[upper] ?? '🏳️'
 }
+
+export function currencyFlagCountryCode(code: string): string | null {
+  const emoji = currencyFlagEmoji(code)
+  const points = Array.from(emoji).map((c) => c.codePointAt(0) ?? 0)
+  if (points.length !== 2) return null
+  const a = points[0] - 0x1f1e6
+  const b = points[1] - 0x1f1e6
+  if (a < 0 || a > 25 || b < 0 || b > 25) return null
+  return String.fromCharCode(65 + a, 65 + b).toLowerCase()
+}

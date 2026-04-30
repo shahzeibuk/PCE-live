@@ -14,7 +14,7 @@ import {
 } from '@/utilities/getCurrencyRatesForFrontend'
 import { MobileCurrencyRateCards, ratesToMobileItems } from '@/components/currency/MobileCurrencyRateCards'
 import { CurrencyNoteSurface } from '@/components/layout/currencyBrandSurfaces'
-import { currencyFlagEmoji } from '@/utilities/currencyFlags'
+import { CurrencyFlag } from '@/components/currency/CurrencyFlag'
 import { getRatesSyncMeta } from '@/utilities/currencyRatesDisplay'
 
 type Props = {
@@ -85,9 +85,10 @@ export const CurrencyTable = async ({ rates: providedRates }: Props = {}) => {
               >
                 <TableCell className="py-3 md:py-5">
                   <div className="flex min-w-0 items-center gap-2 md:gap-3">
-                    <span className="text-xl shrink-0 md:text-2xl lg:text-[1.75rem] grayscale-0 group-hover:grayscale-0 transition-all duration-300">
-                      {currencyFlagEmoji(rate.currency_code)}
-                    </span>
+                    <CurrencyFlag
+                      currencyCode={rate.currency_code}
+                      className="h-6 w-6 shrink-0 md:h-7 md:w-7 grayscale-0 group-hover:grayscale-0 transition-all duration-300"
+                    />
                     <div className="min-w-0">
                       <div className="font-bold text-slate-900 text-sm md:text-base lg:text-lg">{rate.currency_code}</div>
                       <div className="text-[10px] uppercase tracking-tight text-muted-foreground font-medium md:text-xs line-clamp-2">

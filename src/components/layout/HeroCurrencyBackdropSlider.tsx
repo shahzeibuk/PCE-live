@@ -36,7 +36,6 @@ export function HeroCurrencyBackdropSlider({
   const [reduceMotion, setReduceMotion] = useState(false)
   const [isPointerDragging, setIsPointerDragging] = useState(false)
   const [dragOffsetPx, setDragOffsetPx] = useState(0)
-  const touchStartX = useRef<number | null>(null)
   const pointerStartX = useRef<number | null>(null)
   const activePointerId = useRef<number | null>(null)
   const viewportRef = useRef<HTMLDivElement | null>(null)
@@ -92,22 +91,9 @@ export function HeroCurrencyBackdropSlider({
     return () => window.clearInterval(interval)
   }, [n, reduceMotion, isPointerDragging])
 
-  const onTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0]?.clientX ?? null
-  }
-
-  const onTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null || n < 2) return
-    const endX = e.changedTouches[0]?.clientX
-    if (endX === undefined) return
-    const delta = endX - touchStartX.current
-    touchStartX.current = null
-    if (delta > SWIPE_PX) goPrev()
-    else if (delta < -SWIPE_PX) goNext()
-  }
-
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (n < 2 || !e.isPrimary || e.button !== 0) return
+    if (n < 2 || !e.isPrimary) return
+    if (e.pointerType === 'mouse' && e.button !== 0) return
     pointerStartX.current = e.clientX
     activePointerId.current = e.pointerId
     setIsPointerDragging(true)
@@ -165,8 +151,6 @@ export function HeroCurrencyBackdropSlider({
           'overflow-hidden touch-pan-y select-none',
           isPointerDragging ? 'cursor-grabbing' : 'cursor-grab',
         )}
-        onTouchStart={onTouchStart}
-        onTouchEnd={onTouchEnd}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
