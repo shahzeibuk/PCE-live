@@ -11,7 +11,8 @@ import { fileURLToPath } from 'node:url'
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 
 if (!String(process.env.BLOB_READ_WRITE_TOKEN ?? '').trim()) {
-  process.env.BLOB_READ_WRITE_TOKEN = 'vercel_blob_rw_abc123def456_0123456789abcdef'
+  process.env.BLOB_READ_WRITE_TOKEN =
+    'vercel_blob_rw_importmap_placeholder_0123456789abcdef0123456789abcd'
 }
 
 const env = {

@@ -20,6 +20,15 @@ type HeroCurrencyBackdropSliderProps = {
 
 const SWIPE_PX = 50
 
+function isInteractiveTarget(target: EventTarget | null): boolean {
+  if (!(target instanceof Element)) return false
+  return Boolean(
+    target.closest(
+      'a[href], button, input, textarea, select, [role="button"], [role="link"], [role="tab"], label',
+    ),
+  )
+}
+
 /**
  * Homepage hero carousel: CSS translate — arrows mid left/right, dots along the bottom of the hero image.
  */
@@ -94,6 +103,8 @@ export function HeroCurrencyBackdropSlider({
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (n < 2 || !e.isPrimary) return
     if (e.pointerType === 'mouse' && e.button !== 0) return
+    // Avoid pointer capture on CTAs / controls — it prevents click navigation on desktop.
+    if (isInteractiveTarget(e.target)) return
     pointerStartX.current = e.clientX
     activePointerId.current = e.pointerId
     setIsPointerDragging(true)
@@ -288,7 +299,7 @@ export function HeroCurrencyBackdropSlider({
         <>
           {/* Dots: bottom center of slider */}
           <div
-            className="pointer-events-none absolute inset-x-0 bottom-0 z-[55] flex justify-center px-4 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-1 sm:pb-3 sm:pt-0 md:pb-4"
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-center px-4 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-1 sm:pb-3 sm:pt-0 md:pb-4"
             aria-label="Slide indicators"
           >
             <div className="pointer-events-auto flex items-center justify-center gap-2 rounded-full border border-white/40 bg-slate-900/25 px-3 py-1.5 backdrop-blur-sm sm:gap-2.5 sm:px-4 sm:py-2">
@@ -314,7 +325,7 @@ export function HeroCurrencyBackdropSlider({
           <button
             type="button"
             aria-label="Previous slide"
-            className="absolute left-2 top-1/2 z-[55] flex h-10 w-10 -translate-y-1/2 touch-manipulation items-center justify-center rounded-full border border-white/35 bg-slate-900/35 text-white shadow-md backdrop-blur-sm transition-colors hover:bg-slate-900/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-white sm:left-3 sm:h-11 sm:w-11 md:left-4 md:h-12 md:w-12"
+            className="absolute left-2 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 touch-manipulation items-center justify-center rounded-full border border-white/35 bg-slate-900/35 text-white shadow-md backdrop-blur-sm transition-colors hover:bg-slate-900/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-white sm:left-3 sm:h-11 sm:w-11 md:left-4 md:h-12 md:w-12"
             onClick={goPrev}
           >
             <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden />
@@ -322,7 +333,7 @@ export function HeroCurrencyBackdropSlider({
           <button
             type="button"
             aria-label="Next slide"
-            className="absolute right-2 top-1/2 z-[55] flex h-10 w-10 -translate-y-1/2 touch-manipulation items-center justify-center rounded-full border border-white/35 bg-slate-900/35 text-white shadow-md backdrop-blur-sm transition-colors hover:bg-slate-900/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-white sm:right-3 sm:h-11 sm:w-11 md:right-4 md:h-12 md:w-12"
+            className="absolute right-2 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 touch-manipulation items-center justify-center rounded-full border border-white/35 bg-slate-900/35 text-white shadow-md backdrop-blur-sm transition-colors hover:bg-slate-900/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-white sm:right-3 sm:h-11 sm:w-11 md:right-4 md:h-12 md:w-12"
             onClick={goNext}
           >
             <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden />

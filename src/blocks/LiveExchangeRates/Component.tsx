@@ -11,13 +11,12 @@ import { POPULAR_FOREX_CODES, isPopularForexCode } from '@/constants/popularCurr
 import { MobileCurrencyRateCards, ratesToMobileItems } from '@/components/currency/MobileCurrencyRateCards'
 import { CurrencyFlag } from '@/components/currency/CurrencyFlag'
 import { HOME_INDEX_HEADING_CLASS } from '@/components/home/homeContent'
-import { LiveExchangeRateTabs } from '@/blocks/LiveExchangeRates/LiveExchangeRateTabs'
 
 export type LiveExchangeRatesProps = {
   title?: string
   intro?: string
   ctaLabel?: string
-  /** When set with data, shows Travelex-style tabbed popular / other tables */
+  /** @deprecated Tabs removed — all rates render in one table. Kept for block/CMS compatibility. */
   popularTitle?: string
   popularTabLabel?: string
   otherTabLabel?: string
@@ -33,13 +32,21 @@ const thNumeric =
   'px-4 py-3 text-right text-sm font-bold uppercase tracking-wide text-white md:px-5 md:py-3.5 md:text-base'
 const tdCls = 'px-4 py-3 md:px-5 md:py-4 align-middle border-b border-slate-200'
 
+function orderRatesForDisplay(fullList: CurrencyRate[]): CurrencyRate[] {
+  const popularOrdered = POPULAR_FOREX_CODES.map((code) =>
+    fullList.find((r) => r.currency_code === code),
+  ).filter((r): r is CurrencyRate => Boolean(r))
+  const others = fullList
+    .filter((r) => !isPopularForexCode(r.currency_code))
+    .slice()
+    .sort((a, b) => a.currency_code.localeCompare(b.currency_code))
+  return [...popularOrdered, ...others]
+}
+
 export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
   title,
   intro,
   ctaLabel,
-  popularTitle,
-  popularTabLabel = 'Popular Forex Rates',
-  otherTabLabel = 'Other quoted rates',
   rates: providedRates,
   disableInnerContainer = false,
   containerClassName,
@@ -48,22 +55,17 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
 
   if (!rates) {
     const payload = await getPayload({ config: configPromise })
-    rates = (await getCurrencyRatesForFrontend(payload, { limit: 24 })) as unknown as CurrencyRate[]
+    rates = (await getCurrencyRatesForFrontend(payload, { limit: 100 })) as unknown as CurrencyRate[]
   }
 
-  const fullList = rates ?? []
-  const popularList = POPULAR_FOREX_CODES.map((code) =>
-    fullList.find((r) => r.currency_code === code),
-  ).filter((r): r is CurrencyRate => Boolean(r))
-
-  const otherList = fullList.filter((r) => !isPopularForexCode(r.currency_code))
+  const fullList = orderRatesForDisplay(rates ?? [])
 
   const containerClasses = disableInnerContainer
     ? ''
     : (containerClassName ?? 'container px-4 py-16')
 
-  const renderSimpleTable = (rows: CurrencyRate[], ariaLabel: string) => (
-    <div className="space-y-2 max-w-2xl mx-auto w-full">
+  const renderFullTable = (rows: CurrencyRate[], ariaLabel: string) => (
+    <div className="space-y-2 w-full max-w-4xl mx-auto">
       {rows.length === 0 ? (
         <p className="md:hidden rounded-lg border border-dashed border-slate-200 bg-slate-50 py-8 text-center text-sm text-slate-600">
           No rates available.
@@ -135,7 +137,7 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
   return (
     <div className={containerClasses}>
       {!disableInnerContainer && (
-        <div className="max-w-2xl mx-auto text-center mb-10 md:mb-12">
+        <div className="max-w-4xl mx-auto text-center mb-10 md:mb-12">
           <h2 className={`text-2xl md:text-3xl lg:text-4xl mb-3 md:mb-4 ${HOME_INDEX_HEADING_CLASS}`}>
             {title || 'Live Exchange Rates'}
           </h2>
@@ -147,48 +149,32 @@ export const LiveExchangeRatesBlock: React.FC<LiveExchangeRatesProps> = async ({
         </div>
       )}
 
-      <div className="max-w-2xl mx-auto w-full space-y-8 md:space-y-10">
-        {popularTitle && fullList.length > 0 ? (
-          <LiveExchangeRateTabs
-            popularLabel={popularTabLabel}
-            otherLabel={otherTabLabel}
-            popularRows={ratesToMobileItems(popularList)}
-            otherRows={ratesToMobileItems(otherList)}
-          />
-        ) : (
-          <div>
-            {popularTitle ? (
-              <h3 className={`text-lg md:text-xl mb-4 text-center ${HOME_INDEX_HEADING_CLASS}`}>{popularTitle}</h3>
-            ) : null}
-            {renderSimpleTable(fullList, 'Open market currency rates')}
-          </div>
-        )}
+      {renderFullTable(fullList, 'Open market currency rates')}
 
-        {!disableInnerContainer && (
-          <div className="text-center mt-8 md:mt-10 space-y-5">
-            <Button asChild className="h-12 rounded p-0">
-              <Link
-                href="/currency-rates"
-                className="group relative inline-flex h-12 items-center gap-2 overflow-hidden rounded bg-[#099546] px-8 font-semibold text-white"
-              >
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 origin-bottom scale-y-0 bg-[#088040] transition-transform duration-500 ease-out group-hover:scale-y-100"
-                />
-                <span className="relative z-10 inline-flex items-center gap-2">
-                  {ctaLabel || 'View Full Forex Rates'}
-                  <ChevronDown className="h-4 w-4" aria-hidden />
-                </span>
-              </Link>
-            </Button>
-            <CurrencyNoteSurface className="p-3 md:p-4 max-w-2xl mx-auto">
-              <p className="text-xs md:text-sm text-slate-600 text-center leading-relaxed">
-                Open-market figures for reference — confirm live rates at your branch before transacting.
-              </p>
-            </CurrencyNoteSurface>
-          </div>
-        )}
-      </div>
+      {!disableInnerContainer && (
+        <div className="max-w-4xl mx-auto text-center mt-8 md:mt-10 space-y-5">
+          <Button asChild className="h-12 rounded p-0">
+            <Link
+              href="/currency-rates"
+              className="group relative inline-flex h-12 items-center gap-2 overflow-hidden rounded bg-[#099546] px-8 font-semibold text-white"
+            >
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 origin-bottom scale-y-0 bg-[#088040] transition-transform duration-500 ease-out group-hover:scale-y-100"
+              />
+              <span className="relative z-10 inline-flex items-center gap-2">
+                {ctaLabel || 'View Full Forex Rates'}
+                <ChevronDown className="h-4 w-4" aria-hidden />
+              </span>
+            </Link>
+          </Button>
+          <CurrencyNoteSurface className="p-3 md:p-4 max-w-4xl mx-auto">
+            <p className="text-xs md:text-sm text-slate-600 text-center leading-relaxed">
+              Open-market figures for reference — confirm live rates at your branch before transacting.
+            </p>
+          </CurrencyNoteSurface>
+        </div>
+      )}
     </div>
   )
 }

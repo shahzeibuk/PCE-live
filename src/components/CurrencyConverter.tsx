@@ -1,20 +1,11 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Card, CardContent } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select'
-import {
-  ChevronDown,
-  ArrowRight,
-  Lock,
-  Zap,
-  Info,
-  ChevronRight,
-  RefreshCw,
-} from 'lucide-react'
+import { Lock, ChevronRight, RefreshCw } from 'lucide-react'
 import { cn } from '@/utilities/ui'
 
 interface Rate {
@@ -37,11 +28,38 @@ const FLAG_MAP: Record<string, string> = {
   AUD: '🇦🇺',
 }
 
+const DEFAULT_SEND_AMOUNT = '1,000.00'
+const DEFAULT_FROM = 'USD'
+const DEFAULT_TO = 'PKR'
+
+function computeConversion(
+  rates: Rate[],
+  rawAmount: number,
+  fromCurrency: string,
+  toCurrency: string,
+): number {
+  let result = 0
+  const fromRate = rates.find((r) => r.currency_code === fromCurrency)
+  const toRate = rates.find((r) => r.currency_code === toCurrency)
+
+  if (fromCurrency === 'PKR') {
+    if (toRate) result = rawAmount / toRate.sell_rate
+  } else if (toCurrency === 'PKR') {
+    if (fromRate) result = rawAmount * fromRate.buy_rate
+  } else if (fromRate && toRate) {
+    const amountInPKR = rawAmount * fromRate.buy_rate
+    result = amountInPKR / toRate.sell_rate
+  }
+  return result
+}
+
 export const CurrencyConverter = ({ rates }: { rates: Rate[] }) => {
-  const [sendAmount, setSendAmount] = useState<string>('1,000.00')
-  const [fromCurrency, setFromCurrency] = useState<string>('USD')
-  const [toCurrency, setToCurrency] = useState<string>('PKR')
+  const [sendAmount, setSendAmount] = useState<string>(DEFAULT_SEND_AMOUNT)
+  const [fromCurrency, setFromCurrency] = useState<string>(DEFAULT_FROM)
+  const [toCurrency, setToCurrency] = useState<string>(DEFAULT_TO)
   const [receiveAmount, setReceiveAmount] = useState<string>('')
+  /** When set, "Recipient gets" shows `receiveAmount` only if it matches current inputs (after Convert). */
+  const [committedKey, setCommittedKey] = useState<string | null>(null)
   const [isSyncing, setIsSyncing] = useState<boolean>(false)
   const router = useRouter()
 
@@ -55,28 +73,57 @@ export const CurrencyConverter = ({ rates }: { rates: Rate[] }) => {
       : currentRate.buy_rate
     : 279.313
 
-  useEffect(() => {
-    const rawAmount = parseFloat(sendAmount.replace(/,/g, ''))
-    if (isNaN(rawAmount)) return
+  const normalizedSendAmount = (): number | null => {
+    const raw = parseFloat(sendAmount.replace(/,/g, ''))
+    if (Number.isNaN(raw) || raw <= 0) return null
+    return raw
+  }
 
-    let result = 0
-    const fromRate = rates.find((r) => r.currency_code === fromCurrency)
-    const toRate = rates.find((r) => r.currency_code === toCurrency)
+  const buildCommitKey = (): string | null => {
+    const raw = normalizedSendAmount()
+    if (raw === null) return null
+    return `${fromCurrency}|${toCurrency}|${raw}`
+  }
 
-    if (fromCurrency === 'PKR') {
-      if (toRate) result = rawAmount / toRate.sell_rate
-    } else if (toCurrency === 'PKR') {
-      if (fromRate) result = rawAmount * fromRate.buy_rate
-    } else {
-      if (fromRate && toRate) {
-        const amountInPKR = rawAmount * fromRate.buy_rate
-        result = amountInPKR / toRate.sell_rate
+  const applyConversion = useCallback(
+    (rawAmount: number, from: string, to: string, sendDisplay: string) => {
+      const result = computeConversion(rates, rawAmount, from, to)
+      const formatted = result.toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })
+      setReceiveAmount(formatted)
+      const raw = parseFloat(sendDisplay.replace(/,/g, ''))
+      if (!Number.isNaN(raw) && raw > 0) {
+        setCommittedKey(`${from}|${to}|${raw}`)
+      } else {
+        setCommittedKey(null)
       }
+    },
+    [rates],
+  )
+
+  const handleConvert = () => {
+    const rawAmount = normalizedSendAmount()
+    if (rawAmount === null) {
+      setReceiveAmount('')
+      setCommittedKey(null)
+      return
     }
-    setReceiveAmount(
-      result.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
-    )
-  }, [sendAmount, fromCurrency, toCurrency, rates])
+    applyConversion(rawAmount, fromCurrency, toCurrency, sendAmount)
+  }
+
+  const defaultsSeededRef = useRef(false)
+  useEffect(() => {
+    if (defaultsSeededRef.current || rates.length === 0) return
+    defaultsSeededRef.current = true
+    const raw = parseFloat(DEFAULT_SEND_AMOUNT.replace(/,/g, ''))
+    if (Number.isNaN(raw) || raw <= 0) return
+    applyConversion(raw, DEFAULT_FROM, DEFAULT_TO, DEFAULT_SEND_AMOUNT)
+  }, [rates, applyConversion])
+
+  const showConverted =
+    committedKey !== null && committedKey === buildCommitKey() && receiveAmount !== ''
 
   const formatNumber = (val: string) => {
     const numericValue = val.replace(/[^0-9.]/g, '')
@@ -220,49 +267,24 @@ export const CurrencyConverter = ({ rates }: { rates: Rate[] }) => {
               </SelectContent>
             </Select>
             <div
-              className="flex min-h-12 w-full min-w-0 flex-1 items-center justify-end text-right text-2xl font-black tracking-tighter text-gray-900 min-[420px]:text-3xl sm:text-4xl break-all sm:break-normal"
+              className={cn(
+                'flex min-h-12 w-full min-w-0 flex-1 items-center justify-end text-right text-2xl font-black tracking-tighter min-[420px]:text-3xl sm:text-4xl break-all sm:break-normal',
+                showConverted ? 'text-gray-900' : 'text-gray-300',
+              )}
               aria-label={`Converted amount in ${toCurrency}`}
             >
-              {receiveAmount}
+              {showConverted ? receiveAmount : '—'}
             </div>
           </div>
         </div>
 
         <div className="h-px bg-gray-100 w-full" />
 
-        {/* Details Section */}
-        <div className="space-y-4">
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex min-w-0 items-center gap-2 sm:gap-3">
-              <div className="size-9 shrink-0 rounded-full border border-gray-100 flex items-center justify-center bg-white shadow-sm sm:size-10">
-                <Zap className="size-4 fill-gray-900 text-gray-900 sm:size-5" aria-hidden />
-              </div>
-              <div className="min-w-0">
-                <p className="text-xs font-semibold text-gray-500 sm:text-sm">Arrives</p>
-                <p className="text-sm font-bold text-gray-900 sm:text-base">Today — instantly</p>
-              </div>
-            </div>
-          </div>
-
-          {/* <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                    <div className="size-10 rounded-full border border-gray-100 flex items-center justify-center bg-white shadow-sm">
-                        <Lock className="size-5 text-gray-900" />
-                    </div>
-                    <div>
-                        <p className="text-sm font-semibold text-gray-500">Total fees</p>
-                        <p className="font-bold text-gray-900">Included in {fromCurrency} amount</p>
-                    </div>
-                </div>
-                <div className="flex items-center gap-1 text-blue-600 font-bold hover:underline cursor-pointer">
-                    <span>8.59 {fromCurrency}</span>
-                    <ChevronRight className="size-4" />
-                </div>
-            </div> */}
-        </div>
-
-        {/* CTA — presentational; conversion updates live above */}
-        <Button type="button" className="h-14 w-full rounded-full text-base font-bold transition-opacity sm:h-16 sm:text-lg md:text-xl">
+        <Button
+          type="button"
+          onClick={handleConvert}
+          className="h-14 w-full rounded-full text-base font-bold sm:h-16 sm:text-lg md:text-xl"
+        >
           Convert
         </Button>
       </CardContent>

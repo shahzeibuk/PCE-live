@@ -103,7 +103,7 @@ export default async function HomePage() {
   }
 
   try {
-    rates = await getCurrencyRatesForFrontend(payload, { limit: 24 })
+    rates = await getCurrencyRatesForFrontend(payload, { limit: 100 })
 
     const newsResult = await payload.find({ collection: 'news', limit: 3, sort: '-published_date' })
     news = (newsResult.docs ?? []) as any[]
@@ -162,9 +162,6 @@ export default async function HomePage() {
             title={HOME_RATES_SECTION.title}
             intro={HOME_RATES_SECTION.description}
             ctaLabel={HOME_RATES_SECTION.ctaLabel}
-            popularTitle={HOME_RATES_SECTION.popularTabLabel}
-            popularTabLabel={HOME_RATES_SECTION.popularTabLabel}
-            otherTabLabel={HOME_RATES_SECTION.otherTabLabel}
           />
         </section>
 

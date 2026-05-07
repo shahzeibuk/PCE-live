@@ -115,41 +115,54 @@ export const FloatingHeader = ({
       <div
         className={cn(
           /* Match globals `.container` horizontal padding only — no extra px so hero/text align with nav */
-          'container mx-auto transition-all duration-300',
+          'container mx-auto transition-all duration-300 max-lg:bg-white',
           scrolled ? 'py-2.5' : 'py-3 md:py-4'
         )}
       >
-        <div className="flex flex-nowrap items-center justify-between gap-2 min-[480px]:gap-3">
+        <div
+          className={cn(
+            'flex flex-nowrap items-center justify-between gap-2 min-[480px]:gap-3',
+            /* Mobile: one solid white bar for logo + burger/search (esp. when menu sheet is open behind). */
+            'max-lg:-mx-4 max-lg:px-4 max-lg:bg-white max-lg:py-2.5',
+            mobileMenuOpen && 'max-lg:shadow-[0_8px_24px_-4px_rgba(15,23,42,0.12)]',
+          )}
+        >
           {/*
-            Mobile: reserve width for Get Live Rates / bank icon + search + menu (40px taps + gaps).
+            Desktop: padded white plate behind logo; mobile strip is handled by parent row.
           */}
-          <Link
-            href="/"
+          <div
             className={cn(
-              'relative z-50 flex min-w-0 flex-1 items-center overflow-hidden',
-              'max-w-[calc(100%-10.75rem)] min-[400px]:max-w-[calc(100%-15rem)] sm:max-w-[calc(100%-16rem)] md:max-w-none md:flex-initial md:overflow-visible',
+              'flex min-w-0 flex-1 items-center',
+              'lg:bg-white lg:flex-initial lg:w-auto lg:max-w-fit lg:rounded-lg',
             )}
-            aria-label="Pakistan Currency Exchange — Home"
           >
-            <Logo
-              imageUrl={logoSrc}
-              alt={logoAlt}
-              loading="eager"
-              priority="high"
+            <Link
+              href="/"
               className={cn(
-                'w-full min-w-0 transition-[height,max-height,max-width] duration-300',
-                'max-h-9 max-w-[8rem]',
-                'min-[360px]:max-h-10 min-[360px]:max-w-[9rem]',
-                'min-[400px]:max-h-11 min-[400px]:max-w-[10.25rem]',
-                'sm:max-h-[3.25rem] sm:max-w-[13rem]',
-                'md:max-h-[4.5rem] md:max-w-[21rem] md:w-auto',
-                'lg:max-h-[5.25rem] lg:max-w-[26rem]',
-                scrolled
-                  ? 'max-h-8 max-w-[7.25rem] min-[360px]:max-h-9 min-[360px]:max-w-[8.25rem] min-[400px]:max-h-10 min-[400px]:max-w-[9.25rem] sm:max-h-11 sm:max-w-[11.5rem] md:max-h-[3.75rem] md:max-w-[18rem] lg:max-h-[4.5rem] lg:max-w-[22rem]'
-                  : null,
+                'relative z-50 flex min-w-0 flex-1 items-center overflow-hidden',
+                'max-lg:max-w-full',
+                'lg:flex-initial lg:max-w-none lg:overflow-visible',
               )}
-            />
-          </Link>
+              aria-label="Pakistan Currency Exchange — Home"
+            >
+              <Logo
+                imageUrl={logoSrc}
+                alt={logoAlt}
+                loading="eager"
+                priority="high"
+                className={cn(
+                  'w-full min-w-0 object-contain object-left transition-[height,max-height,max-width] duration-300',
+                  /* Solid backing for transparent logo assets on the header mark */
+                  'bg-white',
+                  /* <lg: logo strip is full container width; width caps only from lg */
+                  'max-lg:max-w-full',
+                  scrolled
+                    ? 'max-h-8 min-[360px]:max-h-9 min-[400px]:max-h-10 sm:max-h-11 md:max-h-[3.75rem] lg:max-h-[4.5rem] lg:max-w-[22rem] lg:w-auto'
+                    : 'max-h-9 min-[360px]:max-h-10 min-[400px]:max-h-11 sm:max-h-[3.25rem] md:max-h-[4.5rem] lg:max-h-[5.25rem] lg:max-w-[26rem] lg:w-auto',
+                )}
+              />
+            </Link>
+          </div>
 
           {/* Center: toll-free + mobile (md+) */}
           <div className="hidden md:flex flex-1 items-center justify-center gap-6 lg:gap-10 text-slate-700">
@@ -240,7 +253,7 @@ export const FloatingHeader = ({
                     type="button"
                     className={cn(
                       navLinkClass,
-                      'inline-flex items-center gap-0.5 rounded-sm',
+                      'inline-flex cursor-pointer items-center gap-0.5 rounded-sm',
                       servicesOpen && 'text-[#099546]',
                     )}
                     aria-expanded={servicesOpen}

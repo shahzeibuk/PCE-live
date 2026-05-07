@@ -1,12 +1,10 @@
 'use client'
 
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import { POPULAR_FOREX_CODES, isPopularForexCode } from '@/constants/popularCurrencyCodes'
 import type { FrontendCurrencyRate } from '@/utilities/getCurrencyRatesForFrontend'
 import { MobileCurrencyRateCards, ratesToMobileItems } from '@/components/currency/MobileCurrencyRateCards'
 import { CurrencyFlag } from '@/components/currency/CurrencyFlag'
-import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 
 function RatesTable({
   rates,
@@ -34,7 +32,7 @@ function RatesTable({
   if (rates.length === 0) {
     return (
       <p className="rounded-lg border border-dashed border-slate-200 bg-slate-50 py-8 text-center text-sm text-slate-600">
-        No rows in this group.
+        No rates available.
       </p>
     )
   }
@@ -55,28 +53,28 @@ function RatesTable({
             </tr>
           </thead>
           <tbody>
-          {rates.map((rate, i) => (
-            <tr
-              key={`${rate.id}-${rate.currency_code}`}
-              className={`border-t border-slate-200 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/80'}`}
-            >
-              <td className={td}>
-                <div className="flex min-w-0 items-center gap-2 sm:gap-3">
-                  <CurrencyFlag currencyCode={rate.currency_code} className="h-6 w-6 shrink-0 sm:h-7 sm:w-7" />
-                  <div className="min-w-0">
-                    <div className={codeCls}>{rate.currency_code}</div>
-                    <div className={`${nameCls} line-clamp-2`}>{rate.currency_name}</div>
+            {rates.map((rate, i) => (
+              <tr
+                key={`${rate.id}-${rate.currency_code}`}
+                className={`border-t border-slate-200 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/80'}`}
+              >
+                <td className={td}>
+                  <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+                    <CurrencyFlag currencyCode={rate.currency_code} className="h-6 w-6 shrink-0 sm:h-7 sm:w-7" />
+                    <div className="min-w-0">
+                      <div className={codeCls}>{rate.currency_code}</div>
+                      <div className={`${nameCls} line-clamp-2`}>{rate.currency_name}</div>
+                    </div>
                   </div>
-                </div>
-              </td>
-              <td className={`${td} ${numCls} text-slate-800 whitespace-nowrap`}>
-                {Number(rate.buy_rate).toFixed(2)}
-              </td>
-              <td className={`${td} ${numCls} text-emerald-700 whitespace-nowrap`}>
-                {Number(rate.sell_rate).toFixed(2)}
-              </td>
-            </tr>
-          ))}
+                </td>
+                <td className={`${td} ${numCls} text-slate-800 whitespace-nowrap`}>
+                  {Number(rate.buy_rate).toFixed(2)}
+                </td>
+                <td className={`${td} ${numCls} text-emerald-700 whitespace-nowrap`}>
+                  {Number(rate.sell_rate).toFixed(2)}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
@@ -88,106 +86,22 @@ type Props = {
   rates: FrontendCurrencyRate[]
 }
 
+/** Single table: major pairs first (same order as before), then other codes A–Z. */
 export function CurrencyRatesDualSection({ rates }: Props) {
-  const [dialogOpen, setDialogOpen] = useState(false)
-  const [dialogMode, setDialogMode] = useState<'all' | 'other'>('all')
-
-  const popularOrdered = useMemo(() => {
-    return POPULAR_FOREX_CODES.map((code) => rates.find((r) => r.currency_code === code)).filter(
+  const allRatesOrdered = useMemo(() => {
+    const popularOrdered = POPULAR_FOREX_CODES.map((code) => rates.find((r) => r.currency_code === code)).filter(
       (r): r is FrontendCurrencyRate => Boolean(r),
     )
+    const others = rates
+      .filter((r) => !isPopularForexCode(r.currency_code))
+      .slice()
+      .sort((a, b) => a.currency_code.localeCompare(b.currency_code))
+    return [...popularOrdered, ...others]
   }, [rates])
 
-  const otherRates = useMemo(
-    () => rates.filter((r) => !isPopularForexCode(r.currency_code)),
-    [rates],
-  )
-
-  const showDual = popularOrdered.length > 0 && otherRates.length > 0
-  const mobileOtherPreview = otherRates.slice(0, 6)
-  const hasMoreOther = otherRates.length > mobileOtherPreview.length
-
-  const openFullList = () => {
-    setDialogMode('all')
-    setDialogOpen(true)
-  }
-
-  const openOtherOnly = () => {
-    setDialogMode('other')
-    setDialogOpen(true)
-  }
-
-  const dialogRates = dialogMode === 'other' ? otherRates : rates
-
   return (
-    <div className="w-full space-y-6">
-      {showDual ? (
-        <>
-          <div className="hidden lg:grid lg:grid-cols-2 lg:gap-8 lg:items-start">
-            <div>
-              <h2 className="text-lg md:text-xl font-bold text-slate-900 mb-4">Major open market pairs</h2>
-              <RatesTable rates={popularOrdered} aria-label="Major currency buy and sell rates" />
-            </div>
-            <div>
-              <h2 className="text-lg md:text-xl font-bold text-slate-900 mb-4">All other quoted rates</h2>
-              <RatesTable rates={otherRates} aria-label="Additional currency buy and sell rates" />
-            </div>
-          </div>
-
-          <div className="lg:hidden space-y-6">
-            <div>
-              <h2 className="text-lg font-bold text-slate-900 mb-3">Major open market pairs</h2>
-              <RatesTable rates={popularOrdered} compact aria-label="Major currency rates" />
-            </div>
-            <div>
-              <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
-                <h2 className="text-lg font-bold text-slate-900">More quoted rates</h2>
-                {hasMoreOther ? (
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="w-full shrink-0 border-[#099546] font-semibold text-[#099546] hover:bg-[#099546]/5 sm:w-auto"
-                    onClick={openOtherOnly}
-                  >
-                    All quoted rates ({otherRates.length})
-                  </Button>
-                ) : null}
-              </div>
-              <RatesTable rates={mobileOtherPreview} compact aria-label="Additional currency rates preview" />
-              {hasMoreOther ? (
-                <p className="mt-3 text-sm text-slate-600 text-center">
-                  Showing {mobileOtherPreview.length} of {otherRates.length}. Tap <strong>All quoted rates</strong>{' '}
-                  for the full list.
-                </p>
-              ) : null}
-            </div>
-          </div>
-
-          <div className="flex justify-center px-0 pt-2 lg:hidden">
-            <Button
-              type="button"
-              variant="outline"
-              className="h-12 min-h-12 w-full max-w-lg border-2 border-[#099546] px-4 font-semibold text-[#099546] hover:bg-[#099546]/5 sm:w-auto sm:max-w-none sm:px-8"
-              onClick={openFullList}
-            >
-              All quoted rates in one view ({rates.length})
-            </Button>
-          </div>
-        </>
-      ) : (
-        <RatesTable rates={rates} aria-label="Currency buy and sell rates" />
-      )}
-
-      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-h-[min(90vh,900px)] w-[calc(100vw-1.25rem)] max-w-4xl gap-3 overflow-y-auto p-4 sm:p-6">
-          <DialogHeader>
-            <DialogTitle>
-              {dialogMode === 'other' ? 'All additional quoted rates' : 'Complete rate list'}
-            </DialogTitle>
-          </DialogHeader>
-          <RatesTable rates={dialogRates} aria-label="Full currency rate list" />
-        </DialogContent>
-      </Dialog>
+    <div className="w-full">
+      <RatesTable rates={allRatesOrdered} aria-label="Open market currency buy and sell rates" />
     </div>
   )
 }
