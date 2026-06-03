@@ -64,6 +64,27 @@ export const FloatingHeader = ({
   const [servicesOpen, setServicesOpen] = useState(false)
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false)
   const servicesDropdownRef = useRef<HTMLDivElement>(null)
+  const headerRef = useRef<HTMLElement>(null)
+
+  /** Keep --site-header-height in sync with the real fixed header (hero offset, mobile menu, sticky sidebars). */
+  useEffect(() => {
+    const el = headerRef.current
+    if (!el) return
+
+    const syncHeaderHeight = () => {
+      document.documentElement.style.setProperty('--site-header-height', `${el.offsetHeight}px`)
+    }
+
+    syncHeaderHeight()
+    const observer = new ResizeObserver(syncHeaderHeight)
+    observer.observe(el)
+    window.addEventListener('resize', syncHeaderHeight)
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', syncHeaderHeight)
+    }
+  }, [scrolled, mobileMenuOpen, servicesOpen])
 
   const navItems = data?.navItems ?? []
   const contactLines = headerContactLines(data)
@@ -111,7 +132,10 @@ export const FloatingHeader = ({
   }, [servicesOpen])
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white border-b border-slate-200">
+    <header
+      ref={headerRef}
+      className="fixed top-0 left-0 right-0 z-50 w-full bg-white border-b border-slate-200"
+    >
       <div
         className={cn(
           /* Match globals `.container` horizontal padding only — no extra px so hero/text align with nav */

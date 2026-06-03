@@ -13,6 +13,8 @@ type HeroCurrencyBackdropSliderProps = {
   slides: readonly HomeHeroCarouselSlide[]
   primaryCta: { label: string; href: string }
   secondaryCta: { label: string; href: string; external?: boolean }
+  /** Live rates panel — fixed on the right on large screens (server component slot). */
+  ratesAside?: React.ReactNode
   className?: string
   minHeightClassName?: string
   priority?: boolean
@@ -36,6 +38,7 @@ export function HeroCurrencyBackdropSlider({
   slides,
   primaryCta,
   secondaryCta,
+  ratesAside,
   className,
   minHeightClassName,
   priority = false,
@@ -151,15 +154,17 @@ export function HeroCurrencyBackdropSlider({
 
   return (
     <div
-      className={cn('group/hero-slider relative overflow-x-hidden bg-slate-100', className)}
+      className={cn('group/hero-slider relative flex flex-col overflow-x-hidden bg-slate-100', className)}
       role="region"
       aria-roledescription="carousel"
       aria-label="Homepage highlights"
     >
+      <div className={cn('relative min-h-0 flex-1', ratesAside && minHeightClassName)}>
       <div
         ref={viewportRef}
         className={cn(
           'overflow-hidden touch-pan-y select-none',
+          ratesAside && 'lg:pr-[min(22rem,36vw)] xl:pr-[28rem]',
           isPointerDragging ? 'cursor-grabbing' : 'cursor-grab',
         )}
         onPointerDown={onPointerDown}
@@ -212,31 +217,31 @@ export function HeroCurrencyBackdropSlider({
               <div className="hero-below-nav relative z-10 flex w-full flex-col justify-center max-sm:justify-start">
                 <div
                   className={cn(
-                    'container px-4 pb-4 pt-2 sm:pb-5 sm:pt-4 md:pb-6 md:pt-5 lg:pb-6 lg:pt-6',
-                    n > 1 && 'pb-12 sm:pb-14',
+                    'container px-4 pb-3 pt-1 sm:pb-5 sm:pt-4 md:pb-6 md:pt-5 lg:pb-6 lg:pt-6',
+                    n > 1 && 'pb-10 sm:pb-14',
                   )}
                 >
                   <div className="max-w-2xl space-y-0 break-words">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-[#099546] sm:text-sm">
+                    <p className="text-[11px] font-semibold uppercase tracking-wider text-[#099546] sm:text-sm">
                       {slide.eyebrow}
                     </p>
-                    <h1 className="text-pretty mt-3 text-3xl font-black leading-[1.15] tracking-tight text-[#2a313c] sm:mt-4 sm:text-4xl sm:leading-[1.12] md:mt-5 md:text-5xl lg:mt-6 lg:text-6xl lg:leading-[1.1]">
+                    <h1 className="text-pretty mt-2 text-2xl font-black leading-[1.15] tracking-tight text-[#2a313c] sm:mt-4 sm:text-4xl sm:leading-[1.12] md:mt-5 md:text-5xl lg:mt-6 lg:text-6xl lg:leading-[1.1]">
                       {slide.h1}
                     </h1>
-                    <p className="mt-4 max-w-xl text-sm leading-relaxed text-slate-700 sm:mt-5 sm:hidden">
+                    <p className="mt-2 max-w-xl text-sm leading-snug text-slate-700 sm:mt-5 sm:hidden md:leading-relaxed">
                       {slide.leadShort}
                     </p>
                     <p className="mt-4 max-w-xl hidden text-base leading-relaxed text-slate-700 sm:mt-5 sm:block md:mt-6 md:text-lg md:leading-relaxed lg:text-xl lg:leading-relaxed">
                       {slide.lead}
                     </p>
-                    <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 md:mt-10">
+                    <div className="mt-4 flex flex-col gap-2 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 md:mt-10">
                       <Button
                         asChild
-                        className="min-h-12 w-full rounded p-0 sm:w-auto"
+                        className="min-h-11 w-full rounded p-0 sm:min-h-12 sm:w-auto"
                       >
                         <Link
                           href={primaryCta.href}
-                          className="group/hero-btn relative inline-flex min-h-12 w-full items-center justify-center overflow-hidden rounded bg-[#099546] px-6 font-semibold text-white sm:w-auto"
+                          className="group/hero-btn relative inline-flex min-h-11 w-full items-center justify-center overflow-hidden rounded bg-[#099546] px-5 text-sm font-semibold text-white sm:min-h-12 sm:px-6 sm:w-auto"
                         >
                           <span
                             aria-hidden
@@ -249,13 +254,13 @@ export function HeroCurrencyBackdropSlider({
                         <Button
                           asChild
                           variant="outline"
-                          className="min-h-12 w-full rounded border-2 border-slate-800 bg-white/80 p-0 font-semibold text-slate-900 shadow-sm backdrop-blur-sm sm:w-auto"
+                          className="min-h-11 w-full rounded border-2 border-slate-800 bg-white/80 p-0 text-sm font-semibold text-slate-900 shadow-sm backdrop-blur-sm sm:min-h-12 sm:w-auto"
                         >
                           <a
                             href={secondaryCta.href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group/hero-btn relative inline-flex min-h-12 w-full items-center justify-center overflow-hidden rounded px-6 text-slate-900 sm:w-auto"
+                            className="group/hero-btn relative inline-flex min-h-11 w-full items-center justify-center overflow-hidden rounded px-5 text-sm text-slate-900 sm:min-h-12 sm:px-6 sm:w-auto"
                           >
                             <span
                               aria-hidden
@@ -270,11 +275,11 @@ export function HeroCurrencyBackdropSlider({
                         <Button
                           asChild
                           variant="outline"
-                          className="min-h-12 w-full rounded border-2 border-slate-800 bg-white/80 p-0 font-semibold text-slate-900 shadow-sm backdrop-blur-sm sm:w-auto"
+                          className="min-h-11 w-full rounded border-2 border-slate-800 bg-white/80 p-0 text-sm font-semibold text-slate-900 shadow-sm backdrop-blur-sm sm:min-h-12 sm:w-auto"
                         >
                           <Link
                             href={secondaryCta.href}
-                            className="group/hero-btn relative inline-flex min-h-12 w-full items-center justify-center overflow-hidden rounded px-6 text-slate-900 sm:w-auto"
+                            className="group/hero-btn relative inline-flex min-h-11 w-full items-center justify-center overflow-hidden rounded px-5 text-sm text-slate-900 sm:min-h-12 sm:px-6 sm:w-auto"
                           >
                             <span
                               aria-hidden
@@ -294,6 +299,15 @@ export function HeroCurrencyBackdropSlider({
           ))}
         </div>
       </div>
+
+      {ratesAside ? (
+        <aside
+          className="pointer-events-none absolute bottom-0 right-0 top-[var(--site-header-height)] z-20 hidden w-[min(100%,22rem)] lg:flex lg:flex-col xl:w-[28rem]"
+          aria-label="Live exchange rates"
+        >
+          <div className="pointer-events-auto flex h-full min-h-0 w-full flex-col">{ratesAside}</div>
+        </aside>
+      ) : null}
 
       {n > 1 ? (
         <>
@@ -333,12 +347,20 @@ export function HeroCurrencyBackdropSlider({
           <button
             type="button"
             aria-label="Next slide"
-            className="absolute right-2 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 touch-manipulation items-center justify-center rounded-full border border-white/35 bg-slate-900/35 text-white shadow-md backdrop-blur-sm transition-colors hover:bg-slate-900/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-white sm:right-3 sm:h-11 sm:w-11 md:right-4 md:h-12 md:w-12"
+            className={cn(
+              'absolute top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 touch-manipulation items-center justify-center rounded-full border border-white/35 bg-slate-900/35 text-white shadow-md backdrop-blur-sm transition-colors hover:bg-slate-900/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-white sm:h-11 sm:w-11 md:h-12 md:w-12',
+              ratesAside ? 'right-2 sm:right-3 lg:right-[min(22rem,36vw)] xl:right-[28rem]' : 'right-2 sm:right-3 md:right-4',
+            )}
             onClick={goNext}
           >
             <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden />
           </button>
         </>
+      ) : null}
+      </div>
+
+      {ratesAside ? (
+        <div className="border-t border-slate-200 bg-white px-4 py-4 lg:hidden">{ratesAside}</div>
       ) : null}
     </div>
   )

@@ -10,6 +10,7 @@
     "build": "cross-env CI=true NODE_OPTIONS=--no-deprecation next build",
     "postbuild": "next-sitemap --config next-sitemap.config.cjs",
     "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev --hostname 127.0.0.1 --port 3001",
+    "dev:lan": "node scripts/dev-lan.mjs",
     "dev:clean": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev --hostname 127.0.0.1 --port 3001",
     "deps:reset": "rm -rf node_modules .next && pnpm install",
     "dev:prod": "cross-env NODE_OPTIONS=--no-deprecation rm -rf .next && pnpm build && pnpm start",

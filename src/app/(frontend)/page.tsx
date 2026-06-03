@@ -3,12 +3,12 @@ import { getPayload } from 'payload'
 import configPromise from '@/payload.config'
 import Link from 'next/link'
 
-import { LiveExchangeRatesBlock } from '@/blocks/LiveExchangeRates/Component'
 import { CurrencyConverterBlock } from '@/blocks/CurrencyConverter/Component'
 import { getCurrencyRatesForFrontend } from '@/utilities/getCurrencyRatesForFrontend'
+import { CurrencyTable } from '@/components/CurrencyTable'
 import { HeroCurrencyBackdropSlider } from '@/components/layout/HeroCurrencyBackdropSlider'
 import { HomeBlogTeasers } from '@/components/HomeBlogTeasers'
-import { HOME_INDEX_HEADING_CLASS, HOME_RATES_SECTION } from '@/components/home/homeContent'
+import { HOME_INDEX_HEADING_CLASS } from '@/components/home/homeContent'
 import {
   HomeContactSection,
   HomeFaqSection,
@@ -149,19 +149,9 @@ export default async function HomePage() {
             slides={heroSliderProps.slides}
             primaryCta={heroSliderProps.primaryCta}
             secondaryCta={heroSliderProps.secondaryCta}
-            minHeightClassName="min-h-[min(92vh,640px)] sm:min-h-[min(88vh,600px)] md:min-h-[min(84vh,720px)]"
+            minHeightClassName="min-h-[min(48vh,360px)] sm:min-h-[min(72vh,520px)] md:min-h-[min(84vh,720px)]"
             priority
-          />
-        </section>
-
-        <section className="bg-white border-t border-slate-200">
-          <LiveExchangeRatesBlock
-            rates={rates as any}
-            disableInnerContainer={false}
-            containerClassName="container px-4 py-14 md:py-20"
-            title={HOME_RATES_SECTION.title}
-            intro={HOME_RATES_SECTION.description}
-            ctaLabel={HOME_RATES_SECTION.ctaLabel}
+            ratesAside={<CurrencyTable rates={rates as any} variant="hero" />}
           />
         </section>
 

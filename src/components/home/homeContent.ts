@@ -80,7 +80,7 @@ export const HOME_RATES_SECTION = {
   title: 'Today’s Open Market Currency Rates in Pakistan',
   description:
     'Stay informed with the latest buy and sell rates for major currencies (USD, SAR, AED, EUR, GBP to PKR and more). Figures are for reference—confirm at your branch before transacting.',
-  ctaLabel: 'View Full Rate List',
+  ctaLabel: 'View Full Price List',
   /** Tab labels (Travelex-style “Popular foreign currency rates”) */
   popularTabLabel: 'Popular Forex Rates',
   otherTabLabel: 'Other quoted rates',
