@@ -31,8 +31,11 @@ function isInteractiveTarget(target: EventTarget | null): boolean {
   )
 }
 
+const heroNavBtnClass =
+  'flex h-9 w-9 shrink-0 touch-manipulation items-center justify-center rounded-full text-slate-600 transition-colors hover:bg-[#099546]/10 hover:text-[#099546] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#099546] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-35 sm:h-10 sm:w-10'
+
 /**
- * Homepage hero carousel: CSS translate — arrows mid left/right, dots along the bottom of the hero image.
+ * Homepage hero carousel: unified bottom nav (prev · dots · next) aligned to site container.
  */
 export function HeroCurrencyBackdropSlider({
   slides,
@@ -164,7 +167,6 @@ export function HeroCurrencyBackdropSlider({
         ref={viewportRef}
         className={cn(
           'overflow-hidden touch-pan-y select-none',
-          ratesAside && 'lg:pr-[min(22rem,36vw)] xl:pr-[28rem]',
           isPointerDragging ? 'cursor-grabbing' : 'cursor-grab',
         )}
         onPointerDown={onPointerDown}
@@ -218,7 +220,7 @@ export function HeroCurrencyBackdropSlider({
                 <div
                   className={cn(
                     'container px-4 pb-3 pt-1 sm:pb-5 sm:pt-4 md:pb-6 md:pt-5 lg:pb-6 lg:pt-6',
-                    n > 1 && 'pb-10 sm:pb-14',
+                    n > 1 && 'pb-[4.5rem] sm:pb-20 lg:pb-[4.75rem]',
                   )}
                 >
                   <div className="max-w-2xl space-y-0 break-words">
@@ -301,61 +303,68 @@ export function HeroCurrencyBackdropSlider({
       </div>
 
       {ratesAside ? (
-        <aside
-          className="pointer-events-none absolute bottom-0 right-0 top-[var(--site-header-height)] z-20 hidden w-[min(100%,22rem)] lg:flex lg:flex-col xl:w-[28rem]"
-          aria-label="Live exchange rates"
-        >
-          <div className="pointer-events-auto flex h-full min-h-0 w-full flex-col">{ratesAside}</div>
-        </aside>
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 top-[var(--site-header-height)] z-30 hidden lg:block">
+          <div className="container mx-auto h-full px-4">
+            <div className="relative flex h-full justify-end py-4 md:py-5 lg:py-6">
+              <aside
+                className="pointer-events-auto flex h-full min-h-0 w-full max-w-[22rem] flex-col xl:max-w-[28rem]"
+                aria-label="Live exchange rates"
+              >
+                <div className="flex h-full min-h-0 w-full flex-col rounded-md shadow-lg shadow-slate-900/10">
+                  {ratesAside}
+                </div>
+              </aside>
+            </div>
+          </div>
+        </div>
       ) : null}
 
       {n > 1 ? (
-        <>
-          {/* Dots: bottom center of slider */}
-          <div
-            className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-center px-4 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-1 sm:pb-3 sm:pt-0 md:pb-4"
-            aria-label="Slide indicators"
-          >
-            <div className="pointer-events-auto flex items-center justify-center gap-2 rounded-full border border-white/40 bg-slate-900/25 px-3 py-1.5 backdrop-blur-sm sm:gap-2.5 sm:px-4 sm:py-2">
-              {slides.map((s, i) => (
-                <button
-                  key={s.imageSrc}
-                  type="button"
-                  aria-label={`Go to slide ${i + 1}`}
-                  aria-current={i === index}
-                  className={cn(
-                    'h-2 rounded-full transition-[width,background-color] duration-300',
-                    i === index
-                      ? 'w-8 bg-white shadow-sm'
-                      : 'w-2 bg-white/55 hover:bg-white/85',
-                  )}
-                  onClick={() => goTo(i)}
-                />
-              ))}
-            </div>
-          </div>
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-40 flex justify-center px-4 pb-3 sm:pb-4 md:pb-5 lg:pb-6">
+          <nav
+            className="pointer-events-auto inline-flex max-w-full items-center gap-0.5 rounded-full border border-slate-200/90 bg-white/95 p-1 shadow-md shadow-slate-900/10 backdrop-blur-sm"
+              aria-label="Carousel navigation"
+            >
+              <button
+                type="button"
+                aria-label="Previous slide"
+                className={heroNavBtnClass}
+                onClick={goPrev}
+              >
+                <ChevronLeft className="h-5 w-5" aria-hidden />
+              </button>
 
-          {/* Arrows: vertical center, left & right */}
-          <button
-            type="button"
-            aria-label="Previous slide"
-            className="absolute left-2 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 touch-manipulation items-center justify-center rounded-full border border-white/35 bg-slate-900/35 text-white shadow-md backdrop-blur-sm transition-colors hover:bg-slate-900/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-white sm:left-3 sm:h-11 sm:w-11 md:left-4 md:h-12 md:w-12"
-            onClick={goPrev}
-          >
-            <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden />
-          </button>
-          <button
-            type="button"
-            aria-label="Next slide"
-            className={cn(
-              'absolute top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 touch-manipulation items-center justify-center rounded-full border border-white/35 bg-slate-900/35 text-white shadow-md backdrop-blur-sm transition-colors hover:bg-slate-900/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-white sm:h-11 sm:w-11 md:h-12 md:w-12',
-              ratesAside ? 'right-2 sm:right-3 lg:right-[min(22rem,36vw)] xl:right-[28rem]' : 'right-2 sm:right-3 md:right-4',
-            )}
-            onClick={goNext}
-          >
-            <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden />
-          </button>
-        </>
+              <div
+                className="flex min-w-0 items-center justify-center gap-1.5 px-2 sm:gap-2 sm:px-3"
+                aria-label="Slide indicators"
+              >
+                {slides.map((s, i) => (
+                  <button
+                    key={s.imageSrc}
+                    type="button"
+                    aria-label={`Go to slide ${i + 1}`}
+                    aria-current={i === index ? 'true' : undefined}
+                    className={cn(
+                      'rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#099546] focus-visible:ring-offset-2',
+                      i === index
+                        ? 'h-2 w-7 bg-[#099546] shadow-sm'
+                        : 'h-2 w-2 bg-slate-300 hover:bg-slate-400',
+                    )}
+                    onClick={() => goTo(i)}
+                  />
+                ))}
+              </div>
+
+              <button
+                type="button"
+                aria-label="Next slide"
+                className={heroNavBtnClass}
+                onClick={goNext}
+              >
+                <ChevronRight className="h-5 w-5" aria-hidden />
+              </button>
+            </nav>
+        </div>
       ) : null}
       </div>
 

@@ -61,7 +61,7 @@ export const CurrencyTable = async ({ rates: providedRates, variant = 'default' 
       className={cn(
         'w-full',
         isHero
-          ? 'flex flex-col space-y-3 border-t border-slate-200 bg-white p-4 lg:h-full lg:space-y-0 lg:border-t-0 lg:border-l lg:p-0'
+          ? 'flex flex-col space-y-3 border-t border-slate-200 bg-white p-4 lg:h-full lg:space-y-0 lg:rounded-md lg:border lg:border-slate-200/90 lg:bg-white/80 lg:p-0 lg:backdrop-blur-md'
           : 'space-y-4',
       )}
     >
@@ -123,7 +123,7 @@ export const CurrencyTable = async ({ rates: providedRates, variant = 'default' 
           'overflow-x-auto overflow-y-auto [-webkit-overflow-scrolling:touch]',
           isHero ? 'hidden lg:flex lg:min-h-0 lg:flex-1 lg:flex-col' : 'hidden md:block',
           isHero
-            ? 'lg:rounded-none lg:border-0 lg:bg-white'
+            ? 'lg:rounded-none lg:border-0 lg:bg-transparent'
             : 'max-h-[min(70vh,32rem)] lg:max-h-none rounded-2xl border bg-white shadow-sm',
         )}
       >
@@ -223,7 +223,7 @@ export const CurrencyTable = async ({ rates: providedRates, variant = 'default' 
       </div>
 
       {isHero ? (
-        <div className="shrink-0 border-t border-slate-200 bg-white p-3 lg:p-3">
+        <div className="shrink-0 border-t border-slate-200 bg-white p-3 lg:bg-transparent lg:p-3">
           <Button asChild className="h-11 w-full rounded bg-[#099546] font-semibold text-white hover:bg-[#088040]">
             <Link href="/currency-rates">{HOME_RATES_SECTION.ctaLabel}</Link>
           </Button>

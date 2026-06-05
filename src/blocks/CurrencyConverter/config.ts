@@ -8,7 +8,7 @@ export const CurrencyConverter: Block = {
       name: 'title',
       type: 'text',
       required: true,
-      defaultValue: 'Currency Converter',
+      defaultValue: 'Currency Booking',
     },
   ],
 }

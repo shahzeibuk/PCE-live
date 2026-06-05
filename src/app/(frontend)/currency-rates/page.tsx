@@ -1,7 +1,7 @@
 import React from 'react'
 import { CurrencyRatesDualSection } from '@/components/currency/CurrencyRatesDualSection'
 import { CurrencyRatesLiveHeader } from '@/components/currency/CurrencyRatesLiveHeader'
-import { CurrencyConverter } from '@/components/CurrencyConverter'
+import { CurrencyBooking } from '@/components/currency/CurrencyBooking'
 import { getPayload } from 'payload'
 import configPromise from '@/payload.config'
 import { getCurrencyRatesForFrontend } from '@/utilities/getCurrencyRatesForFrontend'
@@ -12,20 +12,25 @@ export const dynamic = 'force-dynamic'
 
 export default async function RatesPage() {
   let rates: any[] = []
+  let branches: { id: string | number; branch_name: string; city: string }[] = []
   try {
     const payload = await getPayload({ config: configPromise })
     rates = await getCurrencyRatesForFrontend(payload, { limit: 100 })
+    const { docs } = await payload.find({
+      collection: 'branches',
+      limit: 50,
+      sort: 'branch_name',
+      depth: 0,
+      select: { branch_name: true, city: true },
+    })
+    branches = docs.map((b) => ({
+      id: b.id,
+      branch_name: b.branch_name,
+      city: b.city,
+    }))
   } catch (error) {
     console.error('Error fetching currency rates:', error)
   }
-
-  const converterRates = rates.map((r: any) => ({
-    id: r.id,
-    currency_name: r.currency_name,
-    currency_code: r.currency_code,
-    buy_rate: r.buy_rate,
-    sell_rate: r.sell_rate,
-  }))
 
   return (
     <div className="pb-16 md:pb-24 flush-under-site-header">
@@ -50,7 +55,10 @@ export default async function RatesPage() {
         </div>
 
         <aside className="min-w-0 space-y-6 lg:sticky lg:top-[calc(var(--site-header-height)+0.75rem)] lg:self-start xl:top-[calc(var(--site-header-height)+1rem)]">
-          <CurrencyConverter rates={converterRates} />
+          <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+            <h3 className="text-lg font-bold text-slate-900 mb-4">Book currency</h3>
+            <CurrencyBooking rates={rates} branches={branches} layout="sidebar" />
+          </div>
 
           <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6 md:p-8">
             <h3 className="text-lg font-bold text-slate-900 mb-3">Bulk or treasury rates</h3>
