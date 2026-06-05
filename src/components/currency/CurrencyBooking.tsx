@@ -220,9 +220,24 @@ export function CurrencyBooking({ rates, branches = [], layout = 'default' }: Cu
   }
 
   const fieldH = 'h-10'
-  const selectTrigger = cn(fieldH, 'shrink-0 rounded-md border-slate-200 text-sm font-semibold')
-  const rowClass = 'flex flex-wrap items-center gap-2 md:flex-nowrap'
-  const navRowClass = 'mt-2 flex flex-wrap items-center gap-2 md:flex-nowrap'
+  const selectTrigger = cn(
+    fieldH,
+    'min-w-0 rounded-md border-slate-200 text-xs font-semibold sm:text-sm',
+  )
+  /** Mobile: two field rows. Desktop: one field row. */
+  const fieldRowClass = 'flex min-w-0 flex-nowrap items-center gap-1.5 sm:gap-2'
+  const fieldsMobileClass = 'flex flex-col gap-2 md:hidden'
+  const fieldsDesktopClass = 'hidden min-w-0 flex-nowrap items-center gap-2 md:flex'
+  /** Line 3 on mobile, line 2 on desktop: dots + actions. */
+  const navRowClass = 'mt-2 flex min-w-0 flex-nowrap items-center gap-1.5 sm:gap-2'
+
+  const fieldLabelClass =
+    'w-7 shrink-0 text-[9px] font-bold uppercase tracking-wide text-slate-500 sm:w-9 sm:text-[10px]'
+  const amountInputClass = cn(
+    fieldH,
+    'shrink-0 rounded-md border border-slate-200 bg-white px-2 font-mono text-xs tabular-nums sm:text-sm',
+    'w-[4.5rem] sm:w-24',
+  )
 
   const summaryLine = `${formatMoney(amount)} ${fromCurrency} → ${formatMoney(result)} ${toCurrency}`
 
@@ -250,7 +265,8 @@ export function CurrencyBooking({ rates, branches = [], layout = 'default' }: Cu
       <SelectTrigger
         className={cn(
           selectTrigger,
-          'min-w-[6.5rem] max-w-[9rem] flex-1 md:min-w-[7rem] md:max-w-[10rem] md:flex-initial',
+          'w-0 min-w-[4.25rem] flex-1 sm:min-w-[5.5rem] md:max-w-[10rem] md:flex-initial',
+          '[&_[data-slot=select-value]]:truncate',
         )}
         aria-labelledby={`label-${id}`}
       >
@@ -273,7 +289,7 @@ export function CurrencyBooking({ rates, branches = [], layout = 'default' }: Cu
     <div className={cn('mx-auto w-full', isSidebar ? 'max-w-none' : 'max-w-4xl')}>
       <div
         className={cn(
-          'rounded-lg border border-slate-200 bg-white px-3 py-3 shadow-sm',
+          'min-w-0 overflow-hidden rounded-lg border border-slate-200 bg-white px-2 py-3 shadow-sm sm:px-3',
           !isSidebar && 'md:px-4',
         )}
         aria-label={`Currency booking step ${step + 1} of ${STEP_COUNT}`}
@@ -281,7 +297,42 @@ export function CurrencyBooking({ rates, branches = [], layout = 'default' }: Cu
         {/* ── Step 0: Currency ── */}
         {step === 0 && (
           <>
-            <div className={rowClass} role="group" aria-label="Amount and currencies">
+            {/* Mobile: line 1 + line 2 fields */}
+            <div className={fieldsMobileClass} role="group" aria-label="Amount and currencies">
+              <div className={fieldRowClass}>
+                <label htmlFor="booking-amount-mobile" className="sr-only">
+                  Amount
+                </label>
+                <input
+                  id="booking-amount-mobile"
+                  type="number"
+                  min={0}
+                  inputMode="decimal"
+                  value={amount}
+                  onChange={(e) => setAmount(Number(e.target.value) || 0)}
+                  className={amountInputClass}
+                />
+                <span className={fieldLabelClass}>From</span>
+                {currencySelect(fromCurrency, handleFromChange, 'from-mobile', 'From currency')}
+              </div>
+              <div className={fieldRowClass}>
+                <span className={fieldLabelClass}>To</span>
+                {currencySelect(toCurrency, handleToChange, 'to-mobile', 'To currency')}
+                <span className="shrink-0 text-sm text-slate-400" aria-hidden>
+                  =
+                </span>
+                <output
+                  className="min-w-0 flex-1 truncate text-right text-xs font-bold tabular-nums text-[#099546] sm:text-sm"
+                  htmlFor="booking-amount-mobile"
+                  aria-live="polite"
+                >
+                  {formatMoney(result)} {toCurrency}
+                </output>
+              </div>
+            </div>
+
+            {/* Desktop: single field row */}
+            <div className={fieldsDesktopClass} role="group" aria-label="Amount and currencies">
               <label htmlFor="booking-amount" className="sr-only">
                 Amount
               </label>
@@ -292,30 +343,17 @@ export function CurrencyBooking({ rates, branches = [], layout = 'default' }: Cu
                 inputMode="decimal"
                 value={amount}
                 onChange={(e) => setAmount(Number(e.target.value) || 0)}
-                className={cn(
-                  fieldH,
-                  'w-[5.5rem] shrink-0 rounded-md border border-slate-200 bg-white px-2 font-mono text-sm tabular-nums sm:w-24',
-                )}
+                className={amountInputClass}
               />
-
-              <span className="w-7 shrink-0 text-right text-[10px] font-bold uppercase tracking-wide text-slate-500 sm:w-9">
-                From
-              </span>
+              <span className={fieldLabelClass}>From</span>
               {currencySelect(fromCurrency, handleFromChange, 'from', 'From currency')}
-
-              <div className="h-0 w-full basis-full md:hidden" aria-hidden />
-
-              <span className="w-7 shrink-0 text-right text-[10px] font-bold uppercase tracking-wide text-slate-500 sm:w-9">
-                To
-              </span>
+              <span className={fieldLabelClass}>To</span>
               {currencySelect(toCurrency, handleToChange, 'to', 'To currency')}
-
-              <span className="shrink-0 text-slate-400" aria-hidden>
+              <span className="shrink-0 text-sm text-slate-400" aria-hidden>
                 =
               </span>
-
               <output
-                className="min-w-0 flex-1 text-right text-sm font-bold tabular-nums text-[#099546] md:flex-initial md:whitespace-nowrap"
+                className="min-w-0 flex-1 truncate text-right text-sm font-bold tabular-nums text-[#099546]"
                 htmlFor="booking-amount"
                 aria-live="polite"
               >
@@ -325,7 +363,7 @@ export function CurrencyBooking({ rates, branches = [], layout = 'default' }: Cu
 
             <div className={navRowClass}>
               <StepDots step={step} />
-              <span className="min-w-0 flex-1 truncate text-xs text-slate-500">
+              <span className="hidden min-w-0 flex-1 truncate text-xs text-slate-500 md:inline">
                 {transactionHint} (indicative)
               </span>
               <Button
@@ -333,7 +371,7 @@ export function CurrencyBooking({ rates, branches = [], layout = 'default' }: Cu
                 size="sm"
                 onClick={goNext}
                 disabled={!canGoNext}
-                className={cn(fieldH, 'bg-[#099546] px-4 text-white hover:bg-[#088040]')}
+                className={cn(fieldH, 'ml-auto shrink-0 bg-[#099546] px-3 text-white hover:bg-[#088040] sm:px-4')}
               >
                 Next
                 <ArrowRight className="ml-1 h-4 w-4" />
@@ -345,23 +383,56 @@ export function CurrencyBooking({ rates, branches = [], layout = 'default' }: Cu
         {/* ── Step 1: Contact ── */}
         {step === 1 && (
           <>
-            <div className={rowClass} role="group" aria-label="Your details">
+            <div className={fieldsMobileClass} role="group" aria-label="Your details">
+              <div className={fieldRowClass}>
+                <Input
+                  id="booking-name-mobile"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Full name"
+                  autoComplete="name"
+                  className={cn(fieldH, 'min-w-0 w-0 flex-1 text-xs sm:text-sm')}
+                />
+                <Input
+                  id="booking-phone-mobile"
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="03XX XXXXXXX"
+                  autoComplete="tel"
+                  className={cn(fieldH, 'min-w-0 w-0 flex-1 text-xs sm:text-sm')}
+                />
+              </div>
+              <div className={fieldRowClass}>
+                <Input
+                  id="booking-email-mobile"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Email address"
+                  autoComplete="email"
+                  className={cn(fieldH, 'w-full text-xs sm:text-sm')}
+                />
+              </div>
+            </div>
+
+            <div className={fieldsDesktopClass} role="group" aria-label="Your details">
               <Input
                 id="booking-name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Full name"
+                placeholder="Name"
                 autoComplete="name"
-                className={cn(fieldH, 'min-w-[6rem] flex-1 text-sm md:max-w-[10rem] md:flex-initial')}
+                className={cn(fieldH, 'min-w-0 w-0 flex-1 text-sm')}
               />
               <Input
                 id="booking-phone"
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                placeholder="03XX XXXXXXX"
+                placeholder="Phone"
                 autoComplete="tel"
-                className={cn(fieldH, 'min-w-[7rem] flex-1 text-sm md:max-w-[10rem] md:flex-initial')}
+                className={cn(fieldH, 'min-w-0 w-0 flex-1 text-sm')}
               />
               <Input
                 id="booking-email"
@@ -370,22 +441,28 @@ export function CurrencyBooking({ rates, branches = [], layout = 'default' }: Cu
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
                 autoComplete="email"
-                className={cn(fieldH, 'min-w-0 flex-1 text-sm')}
+                className={cn(fieldH, 'min-w-0 w-0 flex-1 text-sm')}
               />
             </div>
 
             <div className={navRowClass}>
               <StepDots step={step} />
-              <Button type="button" variant="outline" size="sm" onClick={goBack} className={fieldH}>
-                <ArrowLeft className="mr-1 h-4 w-4" />
-                Back
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={goBack}
+                className={cn(fieldH, 'shrink-0 px-2 sm:px-3')}
+              >
+                <ArrowLeft className="h-4 w-4 sm:mr-1" />
+                <span className="hidden sm:inline">Back</span>
               </Button>
               <Button
                 type="button"
                 size="sm"
                 onClick={goNext}
                 disabled={!canGoNext}
-                className={cn(fieldH, 'ml-auto bg-[#099546] px-4 text-white hover:bg-[#088040]')}
+                className={cn(fieldH, 'ml-auto shrink-0 bg-[#099546] px-3 text-white hover:bg-[#088040] sm:px-4')}
               >
                 Next
                 <ArrowRight className="ml-1 h-4 w-4" />
@@ -397,11 +474,61 @@ export function CurrencyBooking({ rates, branches = [], layout = 'default' }: Cu
         {/* ── Step 2: Branch & date ── */}
         {step === 2 && (
           <>
-            <div className={rowClass} role="group" aria-label="Visit details">
+            <div className={fieldsMobileClass} role="group" aria-label="Visit details">
+              <div className={fieldRowClass}>
+                {branches.length > 0 ? (
+                  <Select value={branchId} onValueChange={setBranchId}>
+                    <SelectTrigger
+                      className={cn(
+                        fieldH,
+                        'min-w-0 w-0 flex-1 text-xs sm:text-sm [&_[data-slot=select-value]]:truncate',
+                      )}
+                      aria-label="Branch"
+                    >
+                      <SelectValue placeholder="Branch" />
+                    </SelectTrigger>
+                    <SelectContent position="popper">
+                      {branches.map((b) => (
+                        <SelectItem key={b.id} value={String(b.id)}>
+                          {b.branch_name}, {b.city}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                ) : (
+                  <span className="min-w-0 flex-1 truncate text-xs text-slate-600 sm:text-sm">
+                    Any branch
+                  </span>
+                )}
+                <Input
+                  id="booking-date-mobile"
+                  type="date"
+                  min={minDate}
+                  value={preferredDate}
+                  onChange={(e) => setPreferredDate(e.target.value)}
+                  className={cn(fieldH, 'w-[6.75rem] shrink-0 px-1.5 text-xs sm:w-[9.5rem] sm:px-3 sm:text-sm')}
+                  aria-label="Preferred date"
+                />
+              </div>
+              <div className={fieldRowClass}>
+                <Input
+                  id="booking-notes-mobile"
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  placeholder="Notes (optional)"
+                  className={cn(fieldH, 'w-full text-xs sm:text-sm')}
+                />
+              </div>
+            </div>
+
+            <div className={fieldsDesktopClass} role="group" aria-label="Visit details">
               {branches.length > 0 ? (
                 <Select value={branchId} onValueChange={setBranchId}>
                   <SelectTrigger
-                    className={cn(fieldH, 'min-w-0 flex-1 text-sm md:max-w-[14rem] md:flex-initial')}
+                    className={cn(
+                      fieldH,
+                      'min-w-0 w-0 flex-1 text-sm [&_[data-slot=select-value]]:truncate md:max-w-[14rem] md:flex-initial',
+                    )}
                     aria-label="Branch"
                   >
                     <SelectValue placeholder="Branch" />
@@ -415,7 +542,7 @@ export function CurrencyBooking({ rates, branches = [], layout = 'default' }: Cu
                   </SelectContent>
                 </Select>
               ) : (
-                <span className="text-sm text-slate-600">Any branch — we will suggest nearest</span>
+                <span className="min-w-0 flex-1 truncate text-sm text-slate-600">Any branch</span>
               )}
               <Input
                 id="booking-date"
@@ -430,23 +557,29 @@ export function CurrencyBooking({ rates, branches = [], layout = 'default' }: Cu
                 id="booking-notes"
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                placeholder="Notes (optional)"
-                className={cn(fieldH, 'min-w-0 flex-1 text-sm')}
+                placeholder="Notes"
+                className={cn(fieldH, 'min-w-0 w-0 flex-1 text-sm')}
               />
             </div>
 
             <div className={navRowClass}>
               <StepDots step={step} />
-              <Button type="button" variant="outline" size="sm" onClick={goBack} className={fieldH}>
-                <ArrowLeft className="mr-1 h-4 w-4" />
-                Back
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={goBack}
+                className={cn(fieldH, 'shrink-0 px-2 sm:px-3')}
+              >
+                <ArrowLeft className="h-4 w-4 sm:mr-1" />
+                <span className="hidden sm:inline">Back</span>
               </Button>
               <Button
                 type="button"
                 size="sm"
                 onClick={goNext}
                 disabled={!canGoNext}
-                className={cn(fieldH, 'ml-auto bg-[#099546] px-4 text-white hover:bg-[#088040]')}
+                className={cn(fieldH, 'ml-auto shrink-0 bg-[#099546] px-3 text-white hover:bg-[#088040] sm:px-4')}
               >
                 Review
                 <ArrowRight className="ml-1 h-4 w-4" />
@@ -458,11 +591,36 @@ export function CurrencyBooking({ rates, branches = [], layout = 'default' }: Cu
         {/* ── Step 3: Confirm ── */}
         {step === 3 && (
           <>
-            <div className={rowClass} role="group" aria-label="Booking summary">
-              <p className="min-w-0 flex-1 truncate text-sm font-medium text-slate-800" title={summaryLine}>
+            <div className={fieldsMobileClass} role="group" aria-label="Booking summary">
+              <div className={fieldRowClass}>
+                <p
+                  className="min-w-0 w-full truncate text-xs font-medium text-slate-800 sm:text-sm"
+                  title={summaryLine}
+                >
+                  {summaryLine}
+                </p>
+              </div>
+              <div className={fieldRowClass}>
+                <p
+                  className="min-w-0 w-full truncate text-xs text-slate-600 sm:text-sm"
+                  title={`${name} · ${branchLabel}`}
+                >
+                  {name} · {branchLabel}
+                </p>
+              </div>
+            </div>
+
+            <div className={fieldsDesktopClass} role="group" aria-label="Booking summary">
+              <p
+                className="min-w-0 flex-1 truncate text-sm font-medium text-slate-800"
+                title={summaryLine}
+              >
                 {summaryLine}
               </p>
-              <p className="shrink-0 truncate text-sm text-slate-600 max-w-[40%] md:max-w-none" title={name}>
+              <p
+                className="min-w-0 max-w-[40%] truncate text-sm text-slate-600 md:max-w-none"
+                title={`${name} · ${branchLabel}`}
+              >
                 {name} · {branchLabel}
               </p>
             </div>
@@ -477,18 +635,18 @@ export function CurrencyBooking({ rates, branches = [], layout = 'default' }: Cu
                     size="sm"
                     onClick={goBack}
                     disabled={submitState === 'loading'}
-                    className={fieldH}
+                    className={cn(fieldH, 'shrink-0 px-2 sm:px-3')}
                   >
-                    <ArrowLeft className="mr-1 h-4 w-4" />
-                    Back
+                    <ArrowLeft className="h-4 w-4 sm:mr-1" />
+                    <span className="hidden sm:inline">Back</span>
                   </Button>
-                  <div className="ml-auto flex items-center gap-2">
+                  <div className="ml-auto flex shrink-0 items-center gap-1.5 sm:gap-2">
                     <Button
                       type="button"
                       variant="outline"
                       size="sm"
                       asChild
-                      className={cn(fieldH, 'border-[#099546] px-3 text-[#099546] hover:bg-[#099546]/5')}
+                      className={cn(fieldH, 'border-[#099546] px-2.5 text-[#099546] hover:bg-[#099546]/5 sm:px-3')}
                     >
                       <a href={whatsappHref} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
                         <MessageCircle className="h-4 w-4" />
@@ -499,7 +657,7 @@ export function CurrencyBooking({ rates, branches = [], layout = 'default' }: Cu
                       size="sm"
                       onClick={handleSubmit}
                       disabled={submitState === 'loading'}
-                      className={cn(fieldH, 'bg-[#099546] px-4 text-white hover:bg-[#088040]')}
+                      className={cn(fieldH, 'bg-[#099546] px-3 text-white hover:bg-[#088040] sm:px-4')}
                     >
                       {submitState === 'loading' ? (
                         <Loader2 className="h-4 w-4 animate-spin" />
@@ -510,9 +668,9 @@ export function CurrencyBooking({ rates, branches = [], layout = 'default' }: Cu
                   </div>
                 </>
               ) : (
-                <p className="ml-auto flex items-center gap-1 text-sm font-medium text-[#099546]">
-                  <Check className="h-4 w-4" />
-                  Booking sent — we will contact you
+                <p className="ml-auto flex min-w-0 items-center gap-1 truncate text-xs font-medium text-[#099546] sm:text-sm">
+                  <Check className="h-4 w-4 shrink-0" />
+                  <span className="truncate">Booking sent</span>
                 </p>
               )}
             </div>
