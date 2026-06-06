@@ -5,6 +5,7 @@ import { Inter } from 'next/font/google'
 import React from 'react'
 
 import { AdminBar } from '@/components/AdminBar'
+import { ChatWidget } from '@/components/chat/ChatWidget'
 import { SitePopupBanner } from '@/components/SitePopupBanner'
 import { Footer } from '@/Footer/Component'
 import Header from '@/Header/Component'
@@ -67,6 +68,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             {children}
           </main>
           <Footer />
+          <ChatWidget />
         </Providers>
       </body>
     </html>

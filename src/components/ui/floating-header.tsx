@@ -356,41 +356,6 @@ export const FloatingHeader = ({
             <span className="text-sm font-semibold uppercase tracking-wider">Back</span>
           </button>
 
-          <div className="flex flex-col gap-3 mb-8 pb-6 border-b border-slate-200">
-            {contactLines.map((line, i) => {
-              const Icon = line.icon === 'mobile' ? Smartphone : Phone
-              return (
-                <a
-                  key={`m-${line.telHref}-${i}`}
-                  href={line.telHref}
-                  className="flex items-center gap-3 text-base font-semibold text-slate-900"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <Icon className="h-5 w-5 text-[#099546]" />
-                  {line.text}
-                </a>
-              )
-            })}
-            {isExternalHref(ctaUrl) ? (
-              <Button asChild className="w-full rounded bg-[#099546] hover:bg-[#088040] text-white mt-2">
-                <a
-                  href={ctaUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {ctaLabel}
-                </a>
-              </Button>
-            ) : (
-              <Button asChild className="w-full rounded bg-[#099546] hover:bg-[#088040] text-white mt-2">
-                <Link href={ctaUrl} onClick={() => setMobileMenuOpen(false)}>
-                  {ctaLabel}
-                </Link>
-              </Button>
-            )}
-          </div>
-
           <nav className="space-y-1">
             {navItems.map(({ link }, i) => {
               const href = getNavHref(link)
@@ -458,6 +423,44 @@ export const FloatingHeader = ({
               )
             })}
           </nav>
+
+          <div className="mt-6">
+            {isExternalHref(ctaUrl) ? (
+              <Button asChild className="w-full rounded bg-[#099546] hover:bg-[#088040] text-white">
+                <a
+                  href={ctaUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {ctaLabel}
+                </a>
+              </Button>
+            ) : (
+              <Button asChild className="w-full rounded bg-[#099546] hover:bg-[#088040] text-white">
+                <Link href={ctaUrl} onClick={() => setMobileMenuOpen(false)}>
+                  {ctaLabel}
+                </Link>
+              </Button>
+            )}
+          </div>
+
+          <div className="mt-6 flex flex-col gap-3 border-t border-slate-200 pt-6">
+            {contactLines.map((line, i) => {
+              const Icon = line.icon === 'mobile' ? Smartphone : Phone
+              return (
+                <a
+                  key={`m-${line.telHref}-${i}`}
+                  href={line.telHref}
+                  className="flex items-center gap-3 text-base font-semibold text-slate-900"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <Icon className="h-5 w-5 text-[#099546]" />
+                  {line.text}
+                </a>
+              )
+            })}
+          </div>
 
           <div className="mt-auto pt-8 pb-10 flex flex-wrap gap-4">
             <a

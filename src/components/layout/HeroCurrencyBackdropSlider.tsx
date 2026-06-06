@@ -34,6 +34,105 @@ function isInteractiveTarget(target: EventTarget | null): boolean {
 const heroNavBtnClass =
   'flex h-9 w-9 shrink-0 touch-manipulation items-center justify-center rounded-full text-slate-600 transition-colors hover:bg-[#099546]/10 hover:text-[#099546] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#099546] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-35 sm:h-10 sm:w-10'
 
+/** Desktop grid: copy column shrinks; rates column scales between breakpoints. */
+const heroDesktopGridClass =
+  'lg:grid lg:grid-cols-[minmax(0,1fr)_clamp(15rem,34vw,22rem)] lg:gap-x-5 xl:grid-cols-[minmax(0,1fr)_clamp(17rem,30vw,28rem)] xl:gap-x-6 2xl:gap-x-8'
+
+type HeroSlideCopyProps = {
+  slide: HomeHeroCarouselSlide
+  primaryCta: { label: string; href: string }
+  secondaryCta: { label: string; href: string; external?: boolean }
+  hasNav: boolean
+  withRatesColumn: boolean
+}
+
+function HeroSlideCopy({
+  slide,
+  primaryCta,
+  secondaryCta,
+  hasNav,
+  withRatesColumn,
+}: HeroSlideCopyProps) {
+  return (
+    <div
+      className={cn(
+        'min-w-0 space-y-0 break-words pb-3 pt-1 sm:pb-5 sm:pt-4 md:pb-6 md:pt-5 lg:pb-6 lg:pt-6',
+        hasNav && 'pb-[4.5rem] sm:pb-20 lg:pb-[4.75rem]',
+      )}
+    >
+      <div className={cn('min-w-0 max-w-2xl', withRatesColumn && 'lg:max-w-none')}>
+        <p className="text-[11px] font-semibold uppercase tracking-wider text-[#099546] sm:text-sm">
+          {slide.eyebrow}
+        </p>
+        <h1 className="text-pretty mt-2 text-2xl font-black leading-[1.15] tracking-tight text-[#2a313c] sm:mt-4 sm:text-4xl sm:leading-[1.12] md:mt-5 md:text-5xl lg:mt-5 lg:text-[2.65rem] lg:leading-[1.12] xl:mt-6 xl:text-5xl 2xl:text-6xl 2xl:leading-[1.1]">
+          {slide.h1}
+        </h1>
+        <p className="mt-2 max-w-xl text-sm leading-snug text-slate-700 sm:mt-5 sm:hidden md:leading-relaxed">
+          {slide.leadShort}
+        </p>
+        <p className="mt-4 max-w-xl hidden text-base leading-relaxed text-slate-700 sm:mt-5 sm:block md:mt-6 md:text-lg lg:max-w-none lg:text-base lg:leading-relaxed xl:text-lg xl:leading-relaxed 2xl:text-xl 2xl:leading-relaxed">
+          {slide.lead}
+        </p>
+        <div className="mt-4 flex flex-col gap-2 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 md:mt-10">
+          <Button asChild className="min-h-11 w-full rounded p-0 sm:min-h-12 sm:w-auto">
+            <Link
+              href={primaryCta.href}
+              className="group/hero-btn relative inline-flex min-h-11 w-full items-center justify-center overflow-hidden rounded bg-[#099546] px-5 text-sm font-semibold text-white sm:min-h-12 sm:px-6 sm:w-auto"
+            >
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 origin-bottom scale-y-0 bg-[#088040] transition-transform duration-500 ease-out group-hover/hero-btn:scale-y-100"
+              />
+              <span className="relative z-10">{primaryCta.label}</span>
+            </Link>
+          </Button>
+          {secondaryCta.external ? (
+            <Button
+              asChild
+              variant="outline"
+              className="min-h-11 w-full rounded border-2 border-slate-800 bg-white/80 p-0 text-sm font-semibold text-slate-900 shadow-sm backdrop-blur-sm sm:min-h-12 sm:w-auto"
+            >
+              <a
+                href={secondaryCta.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group/hero-btn relative inline-flex min-h-11 w-full items-center justify-center overflow-hidden rounded px-5 text-sm text-slate-900 sm:min-h-12 sm:px-6 sm:w-auto"
+              >
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 origin-bottom scale-y-0 bg-[#099546] transition-transform duration-500 ease-out group-hover/hero-btn:scale-y-100"
+                />
+                <span className="relative z-10 transition-colors duration-300 group-hover/hero-btn:text-white">
+                  {secondaryCta.label}
+                </span>
+              </a>
+            </Button>
+          ) : (
+            <Button
+              asChild
+              variant="outline"
+              className="min-h-11 w-full rounded border-2 border-slate-800 bg-white/80 p-0 text-sm font-semibold text-slate-900 shadow-sm backdrop-blur-sm sm:min-h-12 sm:w-auto"
+            >
+              <Link
+                href={secondaryCta.href}
+                className="group/hero-btn relative inline-flex min-h-11 w-full items-center justify-center overflow-hidden rounded px-5 text-sm text-slate-900 sm:min-h-12 sm:px-6 sm:w-auto"
+              >
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 origin-bottom scale-y-0 bg-[#099546] transition-transform duration-500 ease-out group-hover/hero-btn:scale-y-100"
+                />
+                <span className="relative z-10 transition-colors duration-300 group-hover/hero-btn:text-white">
+                  {secondaryCta.label}
+                </span>
+              </Link>
+            </Button>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 /**
  * Homepage hero carousel: unified bottom nav (prev · dots · next) aligned to site container.
  */
@@ -53,7 +152,20 @@ export function HeroCurrencyBackdropSlider({
   const [dragOffsetPx, setDragOffsetPx] = useState(0)
   const pointerStartX = useRef<number | null>(null)
   const activePointerId = useRef<number | null>(null)
-  const viewportRef = useRef<HTMLDivElement | null>(null)
+  const bgViewportRef = useRef<HTMLDivElement | null>(null)
+  const textViewportRef = useRef<HTMLDivElement | null>(null)
+
+  const slideTransform = (viewportEl: HTMLDivElement | null) =>
+    `translate3d(calc(-${index * 100}% + ${
+      viewportEl && viewportEl.clientWidth > 0
+        ? `${(dragOffsetPx / viewportEl.clientWidth) * 100}%`
+        : '0px'
+    }), 0, 0)`
+
+  const trackTransition =
+    !reduceMotion && !isPointerDragging
+      ? 'transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)]'
+      : undefined
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -162,46 +274,30 @@ export function HeroCurrencyBackdropSlider({
       aria-roledescription="carousel"
       aria-label="Homepage highlights"
     >
-      <div className={cn('relative min-h-0 flex-1', ratesAside && minHeightClassName)}>
       <div
-        ref={viewportRef}
         className={cn(
-          'overflow-hidden touch-pan-y select-none',
-          isPointerDragging ? 'cursor-grabbing' : 'cursor-grab',
+          'relative isolate min-h-0 flex-1',
+          ratesAside && minHeightClassName,
         )}
-        onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
-        onPointerUp={onPointerUp}
-        onPointerCancel={onPointerCancel}
       >
+        {/* Full-bleed background carousel */}
         <div
-          className={cn(
-            'flex items-stretch',
-            !reduceMotion &&
-              !isPointerDragging &&
-              'transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)]',
-          )}
-          style={{
-            transform: `translate3d(calc(-${index * 100}% + ${
-              viewportRef.current && viewportRef.current.clientWidth > 0
-                ? `${(dragOffsetPx / viewportRef.current.clientWidth) * 100}%`
-                : '0px'
-            }), 0, 0)`,
-          }}
+          ref={bgViewportRef}
+          className="absolute inset-0 z-0 overflow-hidden"
+          aria-hidden
         >
-          {slides.map((slide, i) => (
-            <div
-              key={slide.imageSrc}
-              className={cn(
-                'relative isolate w-full min-w-0 shrink-0 grow-0 basis-full',
-                minHeightClassName,
-              )}
-              role="group"
-              aria-roledescription="slide"
-              aria-label={`${i + 1} of ${n}`}
-              {...(i !== index ? { inert: true as const } : {})}
-            >
-              <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
+          <div
+            className={cn('flex h-full items-stretch', trackTransition)}
+            style={{ transform: slideTransform(bgViewportRef.current) }}
+          >
+            {slides.map((slide, i) => (
+              <div
+                key={`bg-${slide.imageSrc}`}
+                className={cn(
+                  'relative h-full w-full min-w-0 shrink-0 grow-0 basis-full',
+                  minHeightClassName,
+                )}
+              >
                 <Image
                   src={slide.imageSrc}
                   alt=""
@@ -211,113 +307,84 @@ export function HeroCurrencyBackdropSlider({
                   priority={priority && i === 0}
                 />
                 <div
-                  className="absolute inset-0 bg-gradient-to-b from-white/93 via-white/78 to-white/55 sm:bg-gradient-to-r sm:from-white/94 sm:via-white/72 sm:to-transparent md:from-white/[0.93] md:via-white/60"
-                  aria-hidden
+                  className={cn(
+                    'absolute inset-0 bg-gradient-to-b from-white/93 via-white/78 to-white/55',
+                    'sm:bg-gradient-to-r sm:from-white/94 sm:via-white/72 sm:to-transparent',
+                    ratesAside
+                      ? 'md:from-white/[0.93] md:via-white/65 lg:via-white/58 xl:via-white/52'
+                      : 'md:from-white/[0.93] md:via-white/60',
+                  )}
                 />
               </div>
+            ))}
+          </div>
+        </div>
 
-              <div className="hero-below-nav relative z-10 flex w-full flex-col justify-center max-sm:justify-start">
-                <div
-                  className={cn(
-                    'container px-4 pb-3 pt-1 sm:pb-5 sm:pt-4 md:pb-6 md:pt-5 lg:pb-6 lg:pt-6',
-                    n > 1 && 'pb-[4.5rem] sm:pb-20 lg:pb-[4.75rem]',
-                  )}
-                >
-                  <div className="max-w-2xl space-y-0 break-words">
-                    <p className="text-[11px] font-semibold uppercase tracking-wider text-[#099546] sm:text-sm">
-                      {slide.eyebrow}
-                    </p>
-                    <h1 className="text-pretty mt-2 text-2xl font-black leading-[1.15] tracking-tight text-[#2a313c] sm:mt-4 sm:text-4xl sm:leading-[1.12] md:mt-5 md:text-5xl lg:mt-6 lg:text-6xl lg:leading-[1.1]">
-                      {slide.h1}
-                    </h1>
-                    <p className="mt-2 max-w-xl text-sm leading-snug text-slate-700 sm:mt-5 sm:hidden md:leading-relaxed">
-                      {slide.leadShort}
-                    </p>
-                    <p className="mt-4 max-w-xl hidden text-base leading-relaxed text-slate-700 sm:mt-5 sm:block md:mt-6 md:text-lg md:leading-relaxed lg:text-xl lg:leading-relaxed">
-                      {slide.lead}
-                    </p>
-                    <div className="mt-4 flex flex-col gap-2 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 md:mt-10">
-                      <Button
-                        asChild
-                        className="min-h-11 w-full rounded p-0 sm:min-h-12 sm:w-auto"
-                      >
-                        <Link
-                          href={primaryCta.href}
-                          className="group/hero-btn relative inline-flex min-h-11 w-full items-center justify-center overflow-hidden rounded bg-[#099546] px-5 text-sm font-semibold text-white sm:min-h-12 sm:px-6 sm:w-auto"
-                        >
-                          <span
-                            aria-hidden
-                            className="pointer-events-none absolute inset-0 origin-bottom scale-y-0 bg-[#088040] transition-transform duration-500 ease-out group-hover/hero-btn:scale-y-100"
-                          />
-                          <span className="relative z-10">{primaryCta.label}</span>
-                        </Link>
-                      </Button>
-                      {secondaryCta.external ? (
-                        <Button
-                          asChild
-                          variant="outline"
-                          className="min-h-11 w-full rounded border-2 border-slate-800 bg-white/80 p-0 text-sm font-semibold text-slate-900 shadow-sm backdrop-blur-sm sm:min-h-12 sm:w-auto"
-                        >
-                          <a
-                            href={secondaryCta.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group/hero-btn relative inline-flex min-h-11 w-full items-center justify-center overflow-hidden rounded px-5 text-sm text-slate-900 sm:min-h-12 sm:px-6 sm:w-auto"
-                          >
-                            <span
-                              aria-hidden
-                              className="pointer-events-none absolute inset-0 origin-bottom scale-y-0 bg-[#099546] transition-transform duration-500 ease-out group-hover/hero-btn:scale-y-100"
-                            />
-                            <span className="relative z-10 transition-colors duration-300 group-hover/hero-btn:text-white">
-                              {secondaryCta.label}
-                            </span>
-                          </a>
-                        </Button>
-                      ) : (
-                        <Button
-                          asChild
-                          variant="outline"
-                          className="min-h-11 w-full rounded border-2 border-slate-800 bg-white/80 p-0 text-sm font-semibold text-slate-900 shadow-sm backdrop-blur-sm sm:min-h-12 sm:w-auto"
-                        >
-                          <Link
-                            href={secondaryCta.href}
-                            className="group/hero-btn relative inline-flex min-h-11 w-full items-center justify-center overflow-hidden rounded px-5 text-sm text-slate-900 sm:min-h-12 sm:px-6 sm:w-auto"
-                          >
-                            <span
-                              aria-hidden
-                              className="pointer-events-none absolute inset-0 origin-bottom scale-y-0 bg-[#099546] transition-transform duration-500 ease-out group-hover/hero-btn:scale-y-100"
-                            />
-                            <span className="relative z-10 transition-colors duration-300 group-hover/hero-btn:text-white">
-                              {secondaryCta.label}
-                            </span>
-                          </Link>
-                        </Button>
-                      )}
-                    </div>
+        {/* Swipe layer (full hero; skips links/buttons) */}
+        <div
+          className={cn(
+            'absolute inset-0 z-[5] touch-pan-y select-none',
+            n > 1 && (isPointerDragging ? 'cursor-grabbing' : 'cursor-grab'),
+          )}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={onPointerUp}
+          onPointerCancel={onPointerCancel}
+          aria-hidden
+        />
+
+        {/* Foreground: grid keeps copy and rates in separate columns on desktop */}
+        <div className="hero-below-nav relative z-10 flex min-h-full w-full flex-col justify-center max-sm:justify-start pointer-events-none">
+          <div
+            className={cn(
+              'container mx-auto w-full px-4 pointer-events-auto',
+              ratesAside && heroDesktopGridClass,
+            )}
+          >
+            <div
+              ref={textViewportRef}
+              className="min-w-0 overflow-hidden"
+              role="region"
+              aria-roledescription="carousel"
+              aria-label="Homepage slide copy"
+            >
+              <div
+                className={cn('flex items-stretch', trackTransition)}
+                style={{ transform: slideTransform(textViewportRef.current) }}
+              >
+                {slides.map((slide, i) => (
+                  <div
+                    key={`copy-${slide.imageSrc}`}
+                    className="w-full min-w-0 shrink-0 grow-0 basis-full"
+                    role="group"
+                    aria-roledescription="slide"
+                    aria-label={`${i + 1} of ${n}`}
+                    {...(i !== index ? { inert: true as const } : {})}
+                  >
+                    <HeroSlideCopy
+                      slide={slide}
+                      primaryCta={primaryCta}
+                      secondaryCta={secondaryCta}
+                      hasNav={n > 1}
+                      withRatesColumn={Boolean(ratesAside)}
+                    />
                   </div>
-                </div>
+                ))}
               </div>
             </div>
-          ))}
-        </div>
-      </div>
 
-      {ratesAside ? (
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 top-[var(--site-header-height)] z-30 hidden lg:block">
-          <div className="container mx-auto h-full px-4">
-            <div className="relative flex h-full justify-end py-4 md:py-5 lg:py-6">
+            {ratesAside ? (
               <aside
-                className="pointer-events-auto flex h-full min-h-0 w-full max-w-[22rem] flex-col xl:max-w-[28rem]"
+                className="hidden min-h-0 min-w-0 flex-col self-stretch py-4 md:py-5 lg:flex lg:py-6"
                 aria-label="Live exchange rates"
               >
                 <div className="flex h-full min-h-0 w-full flex-col rounded-md shadow-lg shadow-slate-900/10">
                   {ratesAside}
                 </div>
               </aside>
-            </div>
+            ) : null}
           </div>
         </div>
-      ) : null}
 
       {n > 1 ? (
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-40 flex justify-center px-4 pb-3 sm:pb-4 md:pb-5 lg:pb-6">

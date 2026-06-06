@@ -32,6 +32,8 @@
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
   },
   "dependencies": {
+    "@ai-sdk/gateway": "^3.0.125",
+    "@ai-sdk/react": "^3.0.199",
     "@payloadcms/admin-bar": "3.79.0",
     "@payloadcms/db-postgres": "3.79.0",
     "@payloadcms/live-preview-react": "3.79.0",
@@ -55,6 +57,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.1.13",
     "@radix-ui/react-tooltip": "^1.2.8",
+    "ai": "^6.0.197",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
