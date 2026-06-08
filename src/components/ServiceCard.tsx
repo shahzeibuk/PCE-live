@@ -29,7 +29,7 @@ export const ServiceCard = ({ title, description, slug, hero_image, icon }: Serv
         <div className="flex justify-center mb-3">
           <ServiceListingIcon service={{ title, slug, icon, hero_image }} />
         </div>
-        <CardTitle className="text-2xl capitalize font-bold tracking-tight group-hover:text-primary transition-colors">
+        <CardTitle className="text-2xl font-bold tracking-tight group-hover:text-primary transition-colors">
           {title}
         </CardTitle>
       </CardHeader>

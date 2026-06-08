@@ -378,7 +378,7 @@ export function HeroCurrencyBackdropSlider({
                 className="hidden min-h-0 min-w-0 flex-col self-stretch py-4 md:py-5 lg:flex lg:py-6"
                 aria-label="Live exchange rates"
               >
-                <div className="flex h-full min-h-0 w-full flex-col rounded-md shadow-lg shadow-slate-900/10">
+                <div className="flex h-full min-h-0 w-full flex-col rounded-md border-2 border-[#099546] shadow-2xl shadow-slate-900/35">
                   {ratesAside}
                 </div>
               </aside>

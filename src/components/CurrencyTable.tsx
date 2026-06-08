@@ -61,7 +61,7 @@ export const CurrencyTable = async ({ rates: providedRates, variant = 'default' 
       className={cn(
         'w-full',
         isHero
-          ? 'flex flex-col space-y-3 border-t border-slate-200 bg-white p-4 shadow-md shadow-slate-900/10 lg:h-full lg:space-y-0 lg:rounded-md lg:border lg:border-slate-200/90 lg:bg-white/80 lg:p-0 lg:shadow-lg lg:shadow-slate-900/15 lg:backdrop-blur-md'
+          ? 'flex flex-col space-y-3 border-t border-slate-200 bg-white p-4 shadow-md shadow-slate-900/10 lg:h-full lg:space-y-0 lg:rounded-md lg:border-0 lg:bg-white/80 lg:p-0 lg:shadow-none lg:backdrop-blur-md'
           : 'space-y-4',
       )}
     >
@@ -124,7 +124,7 @@ export const CurrencyTable = async ({ rates: providedRates, variant = 'default' 
           isHero ? 'hidden lg:flex lg:min-h-0 lg:flex-1 lg:flex-col' : 'hidden md:block',
           isHero
             ? 'lg:rounded-none lg:border-0 lg:bg-transparent'
-            : 'max-h-[min(70vh,32rem)] lg:max-h-none rounded-2xl border bg-white shadow-lg shadow-slate-900/10',
+            : 'max-h-[min(70vh,32rem)] lg:max-h-none rounded-2xl border border-slate-200 bg-white shadow-lg shadow-slate-900/10 lg:border-2 lg:border-[#099546] lg:shadow-2xl lg:shadow-slate-900/35',
         )}
       >
         <Table className={cn('w-full min-w-0', isHero && 'lg:h-full lg:table-fixed')}>
