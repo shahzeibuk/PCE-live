@@ -82,14 +82,19 @@ const AdminDashboard: React.FC<Props> = async ({ payload, user }) => {
       href: '/admin/globals/homeHero',
     },
     {
-      title: 'Navigation & footer',
-      description: 'Manage header links and footer groups.',
-      href: '/admin/globals/header',
+      title: 'Homepage services',
+      description: 'Edit service boxes on the homepage.',
+      href: '/admin/globals/homeServices',
     },
     {
-      title: 'Promotion popup',
-      description: 'Configure site-wide promotional banner.',
-      href: '/admin/globals/promoBanner',
+      title: 'Why choose us',
+      description: 'Headline, bullets, and side image.',
+      href: '/admin/globals/homeWhyUs',
+    },
+    {
+      title: 'Homepage FAQs',
+      description: 'Questions and answers on the homepage.',
+      href: '/admin/globals/homeFaq',
     },
   ] as const
 
