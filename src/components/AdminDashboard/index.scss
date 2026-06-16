@@ -1,0 +1,193 @@
+.admin-dashboard {
+  margin-bottom: calc(var(--base) * 1.5);
+
+  &__hero {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--base);
+    padding: calc(var(--base) * 1.75);
+    border-radius: var(--border-radius-l);
+    background: linear-gradient(135deg, #099546 0%, #067a38 55%, #055f2c 100%);
+    color: #fff;
+    box-shadow: 0 12px 32px -8px rgb(9 149 70 / 35%);
+  }
+
+  &__hero-text {
+  }
+
+  &__eyebrow {
+    margin: 0 0 calc(var(--base) * 0.35);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.9;
+  }
+
+  &__title {
+    margin: 0 0 calc(var(--base) * 0.35);
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  &__subtitle {
+    margin: 0;
+    max-width: 36rem;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    opacity: 0.92;
+  }
+
+  &__hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: calc(var(--base) * 0.5);
+    align-items: center;
+  }
+
+  &__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.25rem;
+    padding: 0 calc(var(--base) * 0.85);
+    border-radius: var(--border-radius-m);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      background 0.15s ease,
+      color 0.15s ease,
+      border-color 0.15s ease;
+
+    &--primary {
+      border: 1px solid rgb(255 255 255 / 25%);
+      background: #fff;
+      color: #067a38;
+
+      &:hover {
+        background: #f0fdf4;
+      }
+    }
+
+    &--ghost {
+      border: 1px solid rgb(255 255 255 / 35%);
+      background: rgb(255 255 255 / 12%);
+      color: #fff;
+
+      &:hover {
+        background: rgb(255 255 255 / 20%);
+      }
+    }
+  }
+
+  &__section-title {
+    margin: calc(var(--base) * 1.25) 0 calc(var(--base) * 0.75);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--theme-elevation-600);
+  }
+
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: calc(var(--base) * 0.75);
+
+    @media (min-width: 640px) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+  }
+
+  &__stat {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--base) * 0.25);
+    padding: calc(var(--base) * 0.85);
+    border: 1px solid var(--theme-elevation-150);
+    border-radius: var(--border-radius-m);
+    background: var(--theme-elevation-50);
+    text-decoration: none;
+    color: inherit;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease,
+      transform 0.15s ease;
+
+    &:hover {
+      border-color: rgb(9 149 70 / 45%);
+      box-shadow: 0 4px 14px -6px rgb(9 149 70 / 25%);
+      transform: translateY(-1px);
+    }
+  }
+
+  &__stat-value {
+    font-size: 1.375rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--theme-text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__stat-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--theme-elevation-600);
+  }
+
+  &__actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: calc(var(--base) * 0.65);
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (min-width: 1200px) {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  &__action {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--base) * 0.35);
+    padding: calc(var(--base) * 0.9);
+    border: 1px solid var(--theme-elevation-150);
+    border-radius: var(--border-radius-m);
+    background: var(--theme-elevation-0);
+    text-decoration: none;
+    color: inherit;
+    transition:
+      border-color 0.15s ease,
+      background 0.15s ease;
+
+    &:hover {
+      border-color: rgb(9 149 70 / 40%);
+      background: var(--theme-elevation-50);
+    }
+  }
+
+  &__action-title {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--theme-text);
+  }
+
+  &__action-desc {
+    margin: 0;
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    color: var(--theme-elevation-600);
+  }
+}

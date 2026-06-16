@@ -24,6 +24,7 @@ import { HomeServices } from './HomeServices/config'
 import { HomeWhyUs } from './HomeWhyUs/config'
 import { HomeFaq } from './HomeFaq/config'
 import { PromoBanner } from './PromoBanner/config'
+// Uploads: Vercel Blob (token + public store) or S3 — configured in `src/plugins/index.ts` and `src/plugins/vercelBlobStorage.ts`
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
@@ -66,7 +67,7 @@ export default buildConfig({
         Icon: '@/components/Logo/PayloadLogo#PayloadIcon',
       },
       beforeLogin: ['@/components/BeforeLogin'],
-      beforeDashboard: ['@/components/BeforeDashboard'],
+      beforeDashboard: ['@/components/AdminDashboard'],
     },
     importMap: {
       baseDir: path.resolve(dirname),
