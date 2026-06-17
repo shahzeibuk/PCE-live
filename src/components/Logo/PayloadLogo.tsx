@@ -12,8 +12,12 @@ export const PayloadLogo = () => {
 
 export const PayloadIcon = () => {
   return (
-    <div className="flex items-center justify-center p-1 bg-[#099546] rounded-md">
-      <span className="font-bold text-white text-sm">PCE</span>
-    </div>
+    <img
+      src="/favicon.svg"
+      alt="Pakistan Currency Exchange"
+      width={28}
+      height={28}
+      className="block h-7 w-7 rounded-md object-contain"
+    />
   )
 }

@@ -40,6 +40,7 @@ import { up as initializeSchema } from './migrations/20260319_013549_init_collec
 import { migrations } from './migrations'
 
 export default buildConfig({
+  serverURL: getServerSideURL(),
   onInit: async (payload) => {
     if (process.env.PAYLOAD_SEED === 'true' || process.env.NODE_ENV === 'development') {
         payload.logger.info('ONINIT: Running schema initialization from migration...');
@@ -61,6 +62,37 @@ export default buildConfig({
     }
   },
   admin: {
+    meta: {
+      title: 'Pakistan Currency Exchange',
+      description:
+        'Manage exchange rates, content, branches, and site settings for Pakistan Currency Exchange.',
+      titleSuffix: ' | PCE Admin',
+      defaultOGImageType: 'off',
+      icons: [
+        {
+          rel: 'icon',
+          type: 'image/x-icon',
+          url: '/favicon.ico',
+          sizes: '32x32',
+        },
+        {
+          rel: 'icon',
+          type: 'image/svg+xml',
+          url: '/favicon.svg',
+        },
+        {
+          rel: 'apple-touch-icon',
+          type: 'image/png',
+          url: '/favicon.ico',
+        },
+      ],
+      openGraph: {
+        siteName: 'Pakistan Currency Exchange Admin',
+        title: 'PCE Admin',
+        description:
+          'Admin panel for Pakistan Currency Exchange — rates, content, and site configuration.',
+      },
+    },
     components: {
       graphics: {
         Logo: '@/components/Logo/PayloadLogo#PayloadLogo',
