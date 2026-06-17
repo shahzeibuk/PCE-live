@@ -4,6 +4,7 @@ import type { Media, Page, Post, Config } from '../payload-types'
 
 import { mergeOpenGraph } from './mergeOpenGraph'
 import { getServerSideURL } from './getURL'
+import { normalizeStoredMediaPath } from './normalizeStoredMediaPath'
 
 const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
   const serverUrl = getServerSideURL()
@@ -12,8 +13,15 @@ const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
 
   if (image && typeof image === 'object' && 'url' in image) {
     const ogUrl = image.sizes?.og?.url
+    const mediaPath = ogUrl || image.url
 
-    url = ogUrl ? serverUrl + ogUrl : serverUrl + image.url
+    if (mediaPath) {
+      const normalized = normalizeStoredMediaPath(mediaPath)
+      url =
+        normalized.startsWith('http://') || normalized.startsWith('https://')
+          ? normalized
+          : `${serverUrl}${normalized}`
+    }
   }
 
   return url

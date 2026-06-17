@@ -4,6 +4,7 @@ import {
   type HomeHeroCarouselSlide,
 } from '@/components/home/homeContent'
 import type { HomeHero, Media } from '@/payload-types'
+import { resolveMediaResourceUrl } from '@/utilities/normalizeStoredMediaPath'
 
 export type HomeHeroSliderProps = {
   slides: HomeHeroCarouselSlide[]
@@ -12,11 +13,7 @@ export type HomeHeroSliderProps = {
 }
 
 function mediaToImageSrc(image: number | Media | null | undefined): string | null {
-  if (image === null || image === undefined || typeof image === 'number') return null
-  const u = image.url
-  if (!u) return null
-  if (u.startsWith('http://') || u.startsWith('https://')) return u
-  return u.startsWith('/') ? u : `/${u}`
+  return resolveMediaResourceUrl(image)
 }
 
 function primaryHref(link: HomeHero['primaryCta']['link'] | undefined): string {

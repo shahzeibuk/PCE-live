@@ -1,12 +1,13 @@
 import type { Media, SiteBranding } from '@/payload-types'
 
+import { normalizeStoredMediaPath } from './normalizeStoredMediaPath'
 import { getServerSideURL } from './getURL'
 
 type MediaRef = number | Media | null | undefined
 
 function resolveMediaPath(media: MediaRef, fallback: string): string {
   if (media && typeof media === 'object' && typeof media.url === 'string' && media.url) {
-    return media.url.startsWith('/') ? media.url : `/${media.url}`
+    return normalizeStoredMediaPath(media.url)
   }
 
   return fallback

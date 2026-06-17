@@ -1,4 +1,5 @@
 import type { Media, PromoBanner } from '@/payload-types'
+import { resolveMediaResourceUrl } from '@/utilities/normalizeStoredMediaPath'
 
 export type PromoBannerClientProps = {
   imageSrc: string
@@ -10,11 +11,7 @@ export type PromoBannerClientProps = {
 }
 
 function mediaToImageSrc(image: number | Media | null | undefined): string | null {
-  if (image === null || image === undefined || typeof image === 'number') return null
-  const u = image.url
-  if (!u) return null
-  if (u.startsWith('http://') || u.startsWith('https://')) return u
-  return u.startsWith('/') ? u : `/${u}`
+  return resolveMediaResourceUrl(image)
 }
 
 /** Maps Payload `promoBanner` global to client popup props, or `null` when the popup should not show. */

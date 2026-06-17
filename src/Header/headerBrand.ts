@@ -1,4 +1,5 @@
-import type { Header, Media } from '@/payload-types'
+import type { Header } from '@/payload-types'
+import { resolveMediaResourceUrl } from '@/utilities/normalizeStoredMediaPath'
 
 export const DEFAULT_HEADER_CONTACTS: {
   text: string
@@ -10,11 +11,7 @@ export const DEFAULT_HEADER_CONTACTS: {
 ]
 
 export function mediaToLogoSrc(logo: Header['logo']): string | null {
-  if (logo === null || logo === undefined || typeof logo === 'number') return null
-  const u = (logo as Media).url
-  if (!u) return null
-  if (u.startsWith('http://') || u.startsWith('https://')) return u
-  return u.startsWith('/') ? u : `/${u}`
+  return resolveMediaResourceUrl(logo)
 }
 
 export function headerContactLines(data: Header | null): typeof DEFAULT_HEADER_CONTACTS {

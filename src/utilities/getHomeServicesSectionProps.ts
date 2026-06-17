@@ -1,5 +1,6 @@
 import { HOME_SERVICES_ORDER_SECTION } from '@/components/home/homeContent'
 import type { HomeService, Media } from '@/payload-types'
+import { resolveMediaResourceUrl } from '@/utilities/normalizeStoredMediaPath'
 
 export type HomeServicesBoxProps = {
   imageSrc: string
@@ -17,11 +18,7 @@ export type HomeServicesSectionProps = {
 }
 
 function mediaToImageSrc(image: number | Media | null | undefined): string | null {
-  if (image === null || image === undefined || typeof image === 'number') return null
-  const u = image.url
-  if (!u) return null
-  if (u.startsWith('http://') || u.startsWith('https://')) return u
-  return u.startsWith('/') ? u : `/${u}`
+  return resolveMediaResourceUrl(image)
 }
 
 function normalizeHref(url: string): string {

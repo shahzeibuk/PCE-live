@@ -1,5 +1,6 @@
 import { HOME_WHY_US } from '@/components/home/homeContent'
 import type { HomeWhyUs, Media } from '@/payload-types'
+import { resolveMediaResourceUrl } from '@/utilities/normalizeStoredMediaPath'
 
 export type WhyChooseIconKind = 'shield' | 'trending' | 'lock' | 'zap' | 'users' | 'map'
 
@@ -17,11 +18,7 @@ export type HomeWhyUsSectionProps = {
 }
 
 function mediaToImageSrc(image: number | Media | null | undefined): string | null {
-  if (image === null || image === undefined || typeof image === 'number') return null
-  const u = image.url
-  if (!u) return null
-  if (u.startsWith('http://') || u.startsWith('https://')) return u
-  return u.startsWith('/') ? u : `/${u}`
+  return resolveMediaResourceUrl(image)
 }
 
 function fallbackSection(): HomeWhyUsSectionProps {
