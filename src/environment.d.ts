@@ -4,6 +4,9 @@ declare global {
       PAYLOAD_SECRET: string
       DATABASE_URL: string
       NEXT_PUBLIC_SERVER_URL: string
+      /** Production marketing site URL (admin “view live site”, external links). */
+      NEXT_PUBLIC_LIVE_SITE_URL?: string
+      LIVE_SITE_URL?: string
       /** Facebook Page Plugin href override (defaults to official PK Currency page). */
       NEXT_PUBLIC_FACEBOOK_PAGE_URL?: string
       VERCEL_PROJECT_PRODUCTION_URL: string

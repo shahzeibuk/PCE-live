@@ -2,7 +2,7 @@ import type { Payload } from 'payload'
 import type { User } from '@/payload-types'
 import React from 'react'
 
-import { getServerSideURL } from '@/utilities/getURL'
+import { getLiveSiteURL } from '@/utilities/getURL'
 
 import './index.scss'
 
@@ -58,7 +58,7 @@ const AdminDashboard: React.FC<Props> = async ({ payload, user }) => {
     getCollectionCount(payload, 'contact-submissions'),
   ])
 
-  const siteUrl = getServerSideURL().replace(/\/$/, '')
+  const siteUrl = getLiveSiteURL()
   const displayName = getDisplayName(user)
 
   const stats = [
