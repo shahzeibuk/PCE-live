@@ -24,6 +24,7 @@ import { HomeServices } from './HomeServices/config'
 import { HomeWhyUs } from './HomeWhyUs/config'
 import { HomeFaq } from './HomeFaq/config'
 import { PromoBanner } from './PromoBanner/config'
+import { SiteBranding } from './SiteBranding/config'
 // Uploads: Vercel Blob (token + public store) or S3 — configured in `src/plugins/index.ts` and `src/plugins/vercelBlobStorage.ts`
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
@@ -72,18 +73,18 @@ export default buildConfig({
         {
           rel: 'icon',
           type: 'image/x-icon',
-          url: '/favicon.ico',
+          url: '/api/branding/favicon?variant=ico',
           sizes: '32x32',
         },
         {
           rel: 'icon',
           type: 'image/svg+xml',
-          url: '/favicon.svg',
+          url: '/api/branding/favicon?variant=svg',
         },
         {
           rel: 'apple-touch-icon',
           type: 'image/png',
-          url: '/favicon.ico',
+          url: '/api/branding/favicon?variant=ico',
         },
       ],
       openGraph: {
@@ -159,7 +160,7 @@ export default buildConfig({
     Testimonials,
   ],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer, HomeHero, HomeServices, HomeWhyUs, HomeFaq, PromoBanner],
+  globals: [SiteBranding, Header, Footer, HomeHero, HomeServices, HomeWhyUs, HomeFaq, PromoBanner],
   plugins,
   secret: process.env.PAYLOAD_SECRET,
   sharp,

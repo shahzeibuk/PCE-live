@@ -1,4 +1,8 @@
+import type { Payload } from 'payload'
 import React from 'react'
+
+import { getSiteBrandingFaviconPaths } from '@/utilities/siteBrandingFavicons'
+
 import { Logo } from './Logo'
 
 export const PayloadLogo = () => {
@@ -10,10 +14,28 @@ export const PayloadLogo = () => {
   )
 }
 
-export const PayloadIcon = () => {
+type PayloadIconProps = {
+  payload?: Payload
+}
+
+export const PayloadIcon = async ({ payload }: PayloadIconProps) => {
+  let src = '/favicon.svg'
+
+  if (payload) {
+    try {
+      const branding = await payload.findGlobal({
+        slug: 'siteBranding',
+        depth: 1,
+      })
+      src = getSiteBrandingFaviconPaths(branding).svg
+    } catch {
+      src = '/favicon.svg'
+    }
+  }
+
   return (
     <img
-      src="/favicon.svg"
+      src={src}
       alt="Pakistan Currency Exchange"
       width={28}
       height={28}

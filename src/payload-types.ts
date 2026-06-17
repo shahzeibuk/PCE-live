@@ -126,6 +126,7 @@ export interface Config {
   };
   fallbackLocale: null;
   globals: {
+    siteBranding: SiteBranding;
     header: Header;
     footer: Footer;
     homeHero: HomeHero;
@@ -135,6 +136,7 @@ export interface Config {
     promoBanner: PromoBanner;
   };
   globalsSelect: {
+    siteBranding: SiteBrandingSelect<false> | SiteBrandingSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     homeHero: HomeHeroSelect<false> | HomeHeroSelect<true>;
@@ -2098,6 +2100,25 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
+ * Favicon and browser tab icons for the public website and admin panel. Leave empty to use the built-in defaults.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "siteBranding".
+ */
+export interface SiteBranding {
+  id: number;
+  /**
+   * Square icon for browser tabs (32×32 or 48×48 recommended). Used on the website and admin panel.
+   */
+  favicon?: (number | null) | Media;
+  /**
+   * Optional SVG version for sharper icons in modern browsers.
+   */
+  faviconSvg?: (number | null) | Media;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * Top navigation links (desktop and mobile). Services dropdown still lists items from the Services collection; titles there can be overridden per link when a slug matches.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2363,6 +2384,17 @@ export interface PromoBanner {
   maxWidth?: ('max-w-md' | 'max-w-lg' | 'max-w-2xl' | 'max-w-3xl' | 'max-w-4xl') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "siteBranding_select".
+ */
+export interface SiteBrandingSelect<T extends boolean = true> {
+  favicon?: T;
+  faviconSvg?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

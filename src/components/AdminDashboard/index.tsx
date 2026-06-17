@@ -77,6 +77,11 @@ const AdminDashboard: React.FC<Props> = async ({ payload, user }) => {
       href: '/admin/collections/currency-rates',
     },
     {
+      title: 'Site branding',
+      description: 'Upload favicon icons for the website and admin panel.',
+      href: '/admin/globals/siteBranding',
+    },
+    {
       title: 'Homepage hero',
       description: 'Edit carousel slides and hero messaging.',
       href: '/admin/globals/homeHero',

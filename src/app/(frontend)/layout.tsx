@@ -5,6 +5,7 @@ import { Inter } from 'next/font/google'
 import React from 'react'
 
 import { AdminBar } from '@/components/AdminBar'
+import { SiteFaviconLinks } from '@/components/SiteFaviconLinks'
 import { TawkToWidget } from '@/components/chat/TawkToWidget'
 import { SitePopupBanner } from '@/components/SitePopupBanner'
 import { Footer } from '@/Footer/Component'
@@ -51,8 +52,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     >
       <head>
         <InitTheme />
-        <link href="/favicon.ico" rel="icon" sizes="32x32" />
-        <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
+        <SiteFaviconLinks />
       </head>
       <body>
         <Providers>
