@@ -3,6 +3,7 @@ import type { User } from '@/payload-types'
 import React from 'react'
 
 import { getLiveSiteURL } from '@/utilities/getURL'
+import { getUserRole } from '@/access/roles'
 
 import './index.scss'
 
@@ -49,17 +50,64 @@ function getDisplayName(user?: User | null): string {
 }
 
 const AdminDashboard: React.FC<Props> = async ({ payload, user }) => {
-  const [pages, posts, rates, branches, services, submissions] = await Promise.all([
+  const role = getUserRole(user)
+  const isRatesEditor = role === 'rates-editor'
+
+  const rates = await getCollectionCount(payload, 'currency-rates')
+
+  const siteUrl = getLiveSiteURL()
+  const displayName = getDisplayName(user)
+
+  if (isRatesEditor) {
+    return (
+      <div className={baseClass}>
+        <section className={`${baseClass}__hero`}>
+          <div className={`${baseClass}__hero-text`}>
+            <p className={`${baseClass}__eyebrow`}>Pakistan Currency Exchange</p>
+            <h1 className={`${baseClass}__title`}>
+              {getGreeting()}, {displayName}
+            </h1>
+            <p className={`${baseClass}__subtitle`}>
+              You can update buy and sell exchange rates here. Changes appear on the live website
+              when you save.
+            </p>
+          </div>
+          <div className={`${baseClass}__hero-actions`}>
+            <a
+              className={`${baseClass}__btn ${baseClass}__btn--primary`}
+              href="/admin/collections/currency-rates"
+            >
+              Open currency rates
+            </a>
+            <a
+              className={`${baseClass}__btn ${baseClass}__btn--ghost`}
+              href={siteUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View live site
+            </a>
+          </div>
+        </section>
+
+        <h2 className={`${baseClass}__section-title`}>Overview</h2>
+        <div className={`${baseClass}__stats`}>
+          <a className={`${baseClass}__stat`} href="/admin/collections/currency-rates">
+            <span className={`${baseClass}__stat-value`}>{rates.toLocaleString()}</span>
+            <span className={`${baseClass}__stat-label`}>Exchange rates</span>
+          </a>
+        </div>
+      </div>
+    )
+  }
+
+  const [pages, posts, branches, services, submissions] = await Promise.all([
     getCollectionCount(payload, 'pages'),
     getCollectionCount(payload, 'posts'),
-    getCollectionCount(payload, 'currency-rates'),
     getCollectionCount(payload, 'branches'),
     getCollectionCount(payload, 'services'),
     getCollectionCount(payload, 'contact-submissions'),
   ])
-
-  const siteUrl = getLiveSiteURL()
-  const displayName = getDisplayName(user)
 
   const stats = [
     { label: 'Exchange rates', value: rates, href: '/admin/collections/currency-rates' },

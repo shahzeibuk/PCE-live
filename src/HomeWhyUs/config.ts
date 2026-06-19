@@ -1,16 +1,19 @@
 import type { GlobalConfig } from 'payload'
 
+import { isAdmin, hideFromNonAdmin } from '@/access/roles'
 import { revalidateHomeWhyUs } from './hooks/revalidateHomeWhyUs'
 
 export const HomeWhyUs: GlobalConfig = {
   slug: 'homeWhyUs',
   label: 'Homepage — Why choose us',
   admin: {
+    hidden: hideFromNonAdmin,
     description:
       '“Why Choose Pakistan Currency Exchange?” — headline, supporting copy, bullet list with icons, side image, and footer line.',
   },
   access: {
     read: () => true,
+    update: isAdmin,
   },
   fields: [
     {

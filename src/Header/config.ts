@@ -1,6 +1,6 @@
 import type { GlobalConfig } from 'payload'
 
-import { authenticated } from '@/access/authenticated'
+import { isAdmin, hideFromNonAdmin } from '@/access/roles'
 import { link } from '@/fields/link'
 import { revalidateHeader } from './hooks/revalidateHeader'
 
@@ -8,12 +8,13 @@ export const Header: GlobalConfig = {
   slug: 'header',
   label: 'Site header',
   admin: {
+    hidden: hideFromNonAdmin,
     description:
       'Top navigation links (desktop and mobile). Services dropdown still lists items from the Services collection; titles there can be overridden per link when a slug matches.',
   },
   access: {
     read: () => true,
-    update: authenticated,
+    update: isAdmin,
   },
   fields: [
     {

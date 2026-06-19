@@ -1,16 +1,19 @@
 import type { GlobalConfig } from 'payload'
 
+import { isAdmin, hideFromNonAdmin } from '@/access/roles'
 import { revalidateHomeFaq } from './hooks/revalidateHomeFaq'
 
 export const HomeFaq: GlobalConfig = {
   slug: 'homeFaq',
   label: 'Homepage — FAQs',
   admin: {
+    hidden: hideFromNonAdmin,
     description:
       'Frequently Asked Questions on the homepage. Only the first N items show until visitors click Show more.',
   },
   access: {
     read: () => true,
+    update: isAdmin,
   },
   fields: [
     {

@@ -1,18 +1,19 @@
 import type { GlobalConfig } from 'payload'
 
-import { authenticated } from '@/access/authenticated'
+import { isAdmin, hideFromNonAdmin } from '@/access/roles'
 import { revalidateSiteBranding } from './hooks/revalidateSiteBranding'
 
 export const SiteBranding: GlobalConfig = {
   slug: 'siteBranding',
   label: 'Site branding',
   admin: {
+    hidden: hideFromNonAdmin,
     description:
       'Favicon and browser tab icons for the public website and admin panel. Leave empty to use the built-in defaults.',
   },
   access: {
     read: () => true,
-    update: authenticated,
+    update: isAdmin,
   },
   fields: [
     {

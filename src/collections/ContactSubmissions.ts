@@ -1,5 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
+import { isAdmin } from '../access/roles'
+
 export const ContactSubmissions: CollectionConfig = {
   slug: 'contact-submissions',
   admin: {
@@ -7,10 +9,11 @@ export const ContactSubmissions: CollectionConfig = {
     defaultColumns: ['name', 'email', 'submitted_at'],
   },
   access: {
+    admin: isAdmin,
     create: () => true, // Allow anyone to submit
-    read: ({ req: { user } }) => !!user, // Only admins can read
+    read: isAdmin,
     update: () => false,
-    delete: ({ req: { user } }) => !!user,
+    delete: isAdmin,
   },
   fields: [
     {

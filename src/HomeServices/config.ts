@@ -1,16 +1,19 @@
 import type { GlobalConfig } from 'payload'
 
+import { isAdmin, hideFromNonAdmin } from '@/access/roles'
 import { revalidateHomeServices } from './hooks/revalidateHomeServices'
 
 export const HomeServices: GlobalConfig = {
   slug: 'homeServices',
   label: 'Homepage services (boxes)',
   admin: {
+    hidden: hideFromNonAdmin,
     description:
       'Title, intro, and service boxes on the homepage (three across, then two). Upload an icon image for each box.',
   },
   access: {
     read: () => true,
+    update: isAdmin,
   },
   fields: [
     {

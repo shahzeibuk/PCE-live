@@ -1,5 +1,6 @@
 import type { GlobalConfig } from 'payload'
 
+import { isAdmin, hideFromNonAdmin } from '@/access/roles'
 import { link } from '@/fields/link'
 import { revalidateHomeHero } from './hooks/revalidateHomeHero'
 
@@ -7,10 +8,12 @@ export const HomeHero: GlobalConfig = {
   slug: 'homeHero',
   label: 'Homepage hero (banners)',
   admin: {
+    hidden: hideFromNonAdmin,
     description: 'Carousel under the site header — image, headline, and text per slide. CTAs apply to all slides.',
   },
   access: {
     read: () => true,
+    update: isAdmin,
   },
   fields: [
     {

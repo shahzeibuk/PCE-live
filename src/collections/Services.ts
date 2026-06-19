@@ -2,16 +2,17 @@ import type { CollectionConfig } from 'payload'
 import { slugField } from 'payload'
 
 import { anyone } from '../access/anyone'
-import { authenticated } from '../access/authenticated'
+import { isAdmin } from '../access/roles'
 import { revalidateService, revalidateServiceDelete } from '../hooks/revalidateService'
 
 export const Services: CollectionConfig = {
   slug: 'services',
   access: {
-    create: authenticated,
-    delete: authenticated,
+    admin: isAdmin,
+    create: isAdmin,
+    delete: isAdmin,
     read: anyone,
-    update: authenticated,
+    update: isAdmin,
   },
   admin: {
     useAsTitle: 'title',

@@ -5,6 +5,7 @@ import { seoPlugin } from '@payloadcms/plugin-seo'
 import { searchPlugin } from '@payloadcms/plugin-search'
 import { Plugin } from 'payload'
 import { revalidateRedirects } from '@/hooks/revalidateRedirects'
+import { isAdmin } from '@/access/roles'
 import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
 import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import { searchFields } from '@/search/fieldOverrides'
@@ -33,11 +34,20 @@ const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
 
 const optionalStorage = pickUploadStoragePlugin()
 
+const adminOnlyAccess = {
+  admin: isAdmin,
+  create: isAdmin,
+  read: isAdmin,
+  update: isAdmin,
+  delete: isAdmin,
+}
+
 export const plugins: Plugin[] = [
   ...(optionalStorage ? [optionalStorage] : []),
   redirectsPlugin({
     collections: ['pages', 'posts'],
     overrides: {
+      access: adminOnlyAccess,
       // @ts-expect-error - This is a valid override, mapped fields don't resolve to the same type
       fields: ({ defaultFields }) => {
         return defaultFields.map((field) => {
@@ -70,6 +80,7 @@ export const plugins: Plugin[] = [
       payment: false,
     },
     formOverrides: {
+      access: adminOnlyAccess,
       fields: ({ defaultFields }) => {
         return defaultFields.map((field) => {
           if ('name' in field && field.name === 'confirmationMessage') {
@@ -90,11 +101,21 @@ export const plugins: Plugin[] = [
         })
       },
     },
+    formSubmissionOverrides: {
+      access: {
+        admin: isAdmin,
+        create: () => true,
+        read: isAdmin,
+        update: isAdmin,
+        delete: isAdmin,
+      },
+    },
   }),
   searchPlugin({
     collections: ['posts'],
     beforeSync: beforeSyncWithSearch,
     searchOverrides: {
+      access: adminOnlyAccess,
       fields: ({ defaultFields }) => {
         return [...defaultFields, ...searchFields]
       },

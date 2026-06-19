@@ -457,12 +457,18 @@ export interface Category {
   createdAt: string;
 }
 /**
+ * Create admin accounts or rates-only editors who can update currency exchange rates.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
   id: number;
   name?: string | null;
+  /**
+   * Admins manage all site content. Rates editors only see and edit Currency Rates in the admin panel.
+   */
+  role: 'admin' | 'rates-editor';
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -1690,6 +1696,7 @@ export interface CategoriesSelect<T extends boolean = true> {
  */
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
+  role?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;

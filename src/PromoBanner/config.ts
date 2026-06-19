@@ -1,17 +1,18 @@
 import type { GlobalConfig } from 'payload'
 
-import { authenticated } from '@/access/authenticated'
+import { isAdmin, hideFromNonAdmin } from '@/access/roles'
 import { revalidatePromoBanner } from './hooks/revalidatePromoBanner'
 
 export const PromoBanner: GlobalConfig = {
   slug: 'promoBanner',
   label: 'Promotion popup',
   admin: {
+    hidden: hideFromNonAdmin,
     description: 'Full-screen image popup for offers. Shown until the visitor dismisses it (per version).',
   },
   access: {
     read: () => true,
-    update: authenticated,
+    update: isAdmin,
   },
   fields: [
     {

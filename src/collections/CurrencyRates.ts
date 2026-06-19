@@ -3,22 +3,28 @@ import type { CollectionConfig } from 'payload'
 import { revalidatePath } from 'next/cache'
 
 import { anyone } from '../access/anyone'
-import { authenticated } from '../access/authenticated'
+import { canManageRates, canUserManageRates } from '../access/roles'
 import { runCurrencyRatesSync } from '../utilities/syncCurrencyRates'
+import { APIError } from 'payload'
 
 export const CurrencyRates: CollectionConfig = {
   slug: 'currency-rates',
   access: {
-    create: authenticated,
-    delete: authenticated,
+    admin: canManageRates,
+    create: canManageRates,
+    delete: canManageRates,
     read: anyone,
-    update: authenticated,
+    update: canManageRates,
   },
   endpoints: [
     {
       path: '/sync',
       method: 'post',
       handler: async (req) => {
+        if (!canUserManageRates(req.user)) {
+          throw new APIError('Unauthorized', 401)
+        }
+
         const result = await runCurrencyRatesSync(req.payload, req)
         if (!result.ok) {
           return Response.json({ error: result.error }, { status: 500 })
