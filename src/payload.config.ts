@@ -28,7 +28,7 @@ import { SiteBranding } from './SiteBranding/config'
 // Uploads: Vercel Blob (token + public store) or S3 — configured in `src/plugins/index.ts` and `src/plugins/vercelBlobStorage.ts`
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
-import { getLiveSiteURL, getServerSideURL } from './utilities/getURL'
+import { getCorsOrigins, getServerSideURL } from './utilities/getURL'
 import { seedHandler } from './endpoints/seed'
 import { seedNavHandler } from './endpoints/seedNav'
 import { seedBranches } from './scripts/seed_branches'
@@ -159,9 +159,8 @@ export default buildConfig({
     Partners,
     Testimonials,
   ],
-  cors: [...new Set([getServerSideURL(), getLiveSiteURL()].map((url) => url.replace(/\/$/, '')))].filter(
-    Boolean,
-  ),
+  cors: getCorsOrigins(),
+  csrf: getCorsOrigins(),
   globals: [SiteBranding, Header, Footer, HomeHero, HomeServices, HomeWhyUs, HomeFaq, PromoBanner],
   plugins,
   secret: process.env.PAYLOAD_SECRET,

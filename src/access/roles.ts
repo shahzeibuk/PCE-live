@@ -5,25 +5,27 @@ import type { User } from '@/payload-types'
 export const USER_ROLES = ['admin', 'rates-editor'] as const
 export type UserRole = (typeof USER_ROLES)[number]
 
-export function getUserRole(user: User | null | undefined): UserRole | null {
-  if (!user) return null
-  // Accounts created before roles existed (or old JWTs without role): keep full admin access.
-  if (!user.role) return 'admin'
-  return user.role as UserRole
+export function getUserRole(user: User | null | undefined): UserRole {
+  if (!user) return 'admin'
+  // Only explicitly assigned rates editors are restricted; everyone else keeps full admin access.
+  if (user.role === 'rates-editor') return 'rates-editor'
+  return 'admin'
 }
 
 export function canUserManageRates(user: User | null | undefined): boolean {
+  if (!user) return false
   const role = getUserRole(user)
   return role === 'admin' || role === 'rates-editor'
 }
 
 /** Full access to all collections, globals, and user management. */
-export const isAdmin: Access<User> = ({ req: { user } }) => getUserRole(user) === 'admin'
+export const isAdmin: Access<User> = ({ req: { user } }) => Boolean(user) && getUserRole(user) === 'admin'
 
 /** Admins manage all users; others can only read/update their own account (required for logout). */
 export const adminOrSelf: Access<User> = ({ req: { user } }) => {
+  if (!user) return false
   if (getUserRole(user) === 'admin') return true
-  if (user?.id) return { id: { equals: user.id } }
+  if (user.id) return { id: { equals: user.id } }
   return false
 }
 

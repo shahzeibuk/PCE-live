@@ -18,6 +18,16 @@ export const Users: CollectionConfig = {
     description: 'Create admin accounts or rates-only editors who can update currency exchange rates.',
   },
   auth: true,
+  hooks: {
+    afterRead: [
+      ({ doc }) => {
+        if (doc && !doc.role) {
+          doc.role = 'admin'
+        }
+        return doc
+      },
+    ],
+  },
   fields: [
     {
       name: 'name',
