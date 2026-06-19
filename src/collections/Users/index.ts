@@ -1,17 +1,19 @@
 import type { CollectionConfig } from 'payload'
 
-import { adminOrSelf, isAdmin } from '../../access/roles'
+import { adminOrSelf, canAccessAdminPanel, hideFromNonAdmin, isAdmin } from '../../access/roles'
 
 export const Users: CollectionConfig = {
   slug: 'users',
   access: {
-    admin: isAdmin,
+    // Auth collection must allow admin panel entry for every logged-in user.
+    admin: canAccessAdminPanel,
     create: isAdmin,
     delete: isAdmin,
     read: adminOrSelf,
     update: adminOrSelf,
   },
   admin: {
+    hidden: hideFromNonAdmin,
     defaultColumns: ['name', 'email', 'role'],
     useAsTitle: 'name',
     group: 'Settings',

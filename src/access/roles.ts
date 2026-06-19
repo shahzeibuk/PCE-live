@@ -18,6 +18,9 @@ export function canUserManageRates(user: User | null | undefined): boolean {
   return role === 'admin' || role === 'rates-editor'
 }
 
+/** Any logged-in user (required for Payload admin panel entry on the auth collection). */
+export const canAccessAdminPanel: Access<User> = ({ req: { user } }) => Boolean(user)
+
 /** Full access to all collections, globals, and user management. */
 export const isAdmin: Access<User> = ({ req: { user } }) => Boolean(user) && getUserRole(user) === 'admin'
 
