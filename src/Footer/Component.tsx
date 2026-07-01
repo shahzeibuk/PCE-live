@@ -24,6 +24,7 @@ const FOOTER_QUICK_LINKS = [
   { href: '/currency-rates', label: 'Exchange rates' },
   { href: '/branches', label: 'Branch locator' },
   { href: '/services', label: 'Services' },
+  { href: '/financial-reports', label: 'Financial reports' },
   { href: '/contact', label: 'Contact' },
   { href: '/posts', label: 'Blog' },
 ] as const

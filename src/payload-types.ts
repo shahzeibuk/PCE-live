@@ -76,6 +76,7 @@ export interface Config {
     branches: Branch;
     services: Service;
     news: News;
+    'financial-reports': FinancialReport;
     gallery: Gallery;
     'contact-submissions': ContactSubmission;
     partners: Partner;
@@ -106,6 +107,7 @@ export interface Config {
     branches: BranchesSelect<false> | BranchesSelect<true>;
     services: ServicesSelect<false> | ServicesSelect<true>;
     news: NewsSelect<false> | NewsSelect<true>;
+    'financial-reports': FinancialReportsSelect<false> | FinancialReportsSelect<true>;
     gallery: GallerySelect<false> | GallerySelect<true>;
     'contact-submissions': ContactSubmissionsSelect<false> | ContactSubmissionsSelect<true>;
     partners: PartnersSelect<false> | PartnersSelect<true>;
@@ -1021,6 +1023,33 @@ export interface Branch {
   createdAt: string;
 }
 /**
+ * Upload PDF reports with a title and description. They appear on /financial-reports and in the footer quick links.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "financial-reports".
+ */
+export interface FinancialReport {
+  id: number;
+  /**
+   * Shown on the report box (e.g. Annual Report 2024).
+   */
+  title: string;
+  /**
+   * Short summary shown inside each report box on the website.
+   */
+  description: string;
+  /**
+   * Upload the report as a PDF. Only PDF files are accepted.
+   */
+  report_file: number | Media;
+  /**
+   * Used to sort reports (newest first).
+   */
+  published_date?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "contact-submissions".
  */
@@ -1288,6 +1317,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'news';
         value: number | News;
+      } | null)
+    | ({
+        relationTo: 'financial-reports';
+        value: number | FinancialReport;
       } | null)
     | ({
         relationTo: 'gallery';
@@ -1780,6 +1813,18 @@ export interface NewsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   content?: T;
+  published_date?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "financial-reports_select".
+ */
+export interface FinancialReportsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  report_file?: T;
   published_date?: T;
   updatedAt?: T;
   createdAt?: T;

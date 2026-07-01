@@ -13,6 +13,7 @@ import { CurrencyRates } from './collections/CurrencyRates'
 import { Branches } from './collections/Branches'
 import { Services } from './collections/Services'
 import { News } from './collections/News'
+import { FinancialReports } from './collections/FinancialReports'
 import { Gallery } from './collections/Gallery'
 import { ContactSubmissions } from './collections/ContactSubmissions'
 import { Partners } from './collections/Partners'
@@ -154,6 +155,7 @@ export default buildConfig({
     Branches,
     Services,
     News,
+    FinancialReports,
     Gallery,
     ContactSubmissions,
     Partners,

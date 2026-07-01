@@ -8,6 +8,7 @@ import * as migration_20260427_020353 from './20260427_020353';
 import * as migration_20260427_022032 from './20260427_022032';
 import * as migration_20260608_120000_site_branding from './20260608_120000_site_branding';
 import * as migration_20260608_140000_user_roles from './20260608_140000_user_roles';
+import * as migration_20260701_095141_financial_reports from './20260701_095141_financial_reports';
 
 export const migrations = [
   {
@@ -48,7 +49,7 @@ export const migrations = [
   {
     up: migration_20260427_022032.up,
     down: migration_20260427_022032.down,
-    name: '20260427_022032'
+    name: '20260427_022032',
   },
   {
     up: migration_20260608_120000_site_branding.up,
@@ -59,5 +60,10 @@ export const migrations = [
     up: migration_20260608_140000_user_roles.up,
     down: migration_20260608_140000_user_roles.down,
     name: '20260608_140000_user_roles',
+  },
+  {
+    up: migration_20260701_095141_financial_reports.up,
+    down: migration_20260701_095141_financial_reports.down,
+    name: '20260701_095141_financial_reports'
   },
 ];
