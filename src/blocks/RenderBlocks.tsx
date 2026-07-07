@@ -26,8 +26,9 @@ const blockComponents = {
 
 export const RenderBlocks: React.FC<{
   blocks: Page['layout'][0][]
+  pageSlug?: string
 }> = (props) => {
-  const { blocks } = props
+  const { blocks, pageSlug } = props
 
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0
 
@@ -41,10 +42,15 @@ export const RenderBlocks: React.FC<{
             const Block = blockComponents[blockType]
 
             if (Block) {
+              const blockProps =
+                blockType === 'servicesGrid' && pageSlug === 'about'
+                  ? { ...block, disableInnerContainer: true, iconSize: 'large' as const }
+                  : { ...block, disableInnerContainer: true }
+
               return (
                 <div className="my-16" key={index}>
                   {/* @ts-expect-error there may be some mismatch between the expected types here */}
-                  <Block {...block} disableInnerContainer />
+                  <Block {...blockProps} />
                 </div>
               )
             }

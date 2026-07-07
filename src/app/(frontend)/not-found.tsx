@@ -1,6 +1,10 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Search, Home, ArrowLeft } from 'lucide-react'
+import { getNotFoundMetadata } from '@/utilities/siteMetadata'
+
+export const metadata: Metadata = getNotFoundMetadata()
 
 export default function NotFound() {
   return (

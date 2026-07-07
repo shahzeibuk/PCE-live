@@ -5,6 +5,7 @@ import type { Media, Page, Post, Config } from '../payload-types'
 import { mergeOpenGraph } from './mergeOpenGraph'
 import { getServerSideURL } from './getURL'
 import { normalizeStoredMediaPath } from './normalizeStoredMediaPath'
+import { formatPageTitle, getNotFoundMetadata } from './siteMetadata'
 
 const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
   const serverUrl = getServerSideURL()
@@ -32,11 +33,12 @@ export const generateMeta = async (args: {
 }): Promise<Metadata> => {
   const { doc } = args
 
-  const ogImage = getImageURL(doc?.meta?.image)
+  if (!doc) {
+    return getNotFoundMetadata()
+  }
 
-  const title = doc?.meta?.title
-    ? doc?.meta?.title + ' | Payload Website Template'
-    : 'Payload Website Template'
+  const ogImage = getImageURL(doc?.meta?.image)
+  const title = formatPageTitle(doc?.meta?.title)
 
   return {
     description: doc?.meta?.description,

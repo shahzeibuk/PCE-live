@@ -10,12 +10,14 @@ export type ServicesGridProps = {
   title?: string
   services?: any[]
   disableInnerContainer?: boolean
+  iconSize?: 'default' | 'large'
 }
 
 export const ServicesGridBlock: React.FC<ServicesGridProps> = async ({
   title,
   services: providedServices,
   disableInnerContainer = false,
+  iconSize = 'default',
 }) => {
   let services = providedServices
 
@@ -56,14 +58,16 @@ export const ServicesGridBlock: React.FC<ServicesGridProps> = async ({
           <Link
             key={service.id}
             href={`/services/${service.slug}`}
-            className="group relative overflow-hidden bg-slate-100 border border-slate-200 rounded-lg p-6 md:p-8 flex flex-col items-center text-center hover:border-[#099546]/60 hover:shadow-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#099546] focus-visible:ring-offset-2 h-full min-h-[13rem]"
+            className={`group relative overflow-hidden bg-slate-100 border border-slate-200 rounded-lg p-6 md:p-8 flex flex-col items-center text-center hover:border-[#099546]/60 hover:shadow-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#099546] focus-visible:ring-offset-2 h-full ${iconSize === 'large' ? 'min-h-[15rem] md:min-h-[16rem]' : 'min-h-[13rem]'}`}
           >
             <span
               aria-hidden
               className="pointer-events-none absolute inset-0 z-0 origin-bottom scale-y-0 bg-[#099546] transition-transform duration-500 ease-out group-hover:scale-y-100"
             />
-            <div className="relative z-10 mb-4 text-[#099546] transition-colors duration-300 group-hover:text-white">
-              <ServiceListingIcon service={service} className="mx-auto" />
+            <div
+              className={`relative z-10 text-[#099546] transition-colors duration-300 group-hover:text-white ${iconSize === 'large' ? 'mb-5 md:mb-6' : 'mb-4'}`}
+            >
+              <ServiceListingIcon service={service} className="mx-auto" size={iconSize} />
             </div>
             <h3 className="relative z-10 text-base md:text-lg font-bold text-slate-900 mb-2 transition-colors duration-300 group-hover:text-white">
               {service.title}
