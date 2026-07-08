@@ -1,4 +1,4 @@
-import type { CollectionBeforeValidateHook, CollectionConfig } from 'payload'
+import type { CollectionBeforeChangeHook, CollectionBeforeValidateHook, CollectionConfig } from 'payload'
 
 import { revalidatePath } from 'next/cache'
 
@@ -80,6 +80,13 @@ const validateUniqueRateCategory: CollectionBeforeValidateHook = async ({ data, 
   return data
 }
 
+const setLastUpdatedDefault: CollectionBeforeChangeHook = ({ data }) => {
+  if (!data.last_updated) {
+    data.last_updated = new Date().toISOString()
+  }
+  return data
+}
+
 export const CurrencyRates: CollectionConfig = {
   slug: 'currency-rates',
   access: {
@@ -117,6 +124,7 @@ export const CurrencyRates: CollectionConfig = {
   },
   hooks: {
     beforeValidate: [ensureInterbankDefaults, validateUniqueRateCategory],
+    beforeChange: [setLastUpdatedDefault],
     afterChange: [revalidateCurrencyRates],
     afterDelete: [revalidateCurrencyRatesDelete],
   },
@@ -167,8 +175,8 @@ export const CurrencyRates: CollectionConfig = {
       type: 'date',
       admin: {
         position: 'sidebar',
+        description: 'Defaults to today when left empty.',
       },
-      defaultValue: () => new Date(),
     },
   ],
 }

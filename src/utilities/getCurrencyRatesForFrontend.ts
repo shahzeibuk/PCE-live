@@ -70,6 +70,46 @@ function isStale(docs: { last_updated?: string | null }[], staleHours: number): 
   return Date.now() - newest > thresholdMs
 }
 
+function filterOpenMarketDocs<T extends { rate_category?: string | null }>(docs: T[]): T[] {
+  return docs.filter((d) => !isInterbankRateCategory(d.rate_category))
+}
+
+async function findCurrencyRateDocs(
+  payload: Payload,
+  opts: { limit: number; rateCategory: CurrencyRateCategory | 'all' },
+) {
+  const base = {
+    collection: 'currency-rates' as const,
+    limit: opts.limit,
+    sort: 'currency_name' as const,
+    pagination: false as const,
+    depth: 0 as const,
+    overrideAccess: false as const,
+  }
+
+  const where = rateCategoryWhere(opts.rateCategory)
+  if (!where) {
+    return payload.find({ ...base })
+  }
+
+  try {
+    return await payload.find({ ...base, where })
+  } catch (error) {
+    console.error('currency-rates filtered query failed, falling back:', error)
+    const fallback = await payload.find({ ...base })
+    if (opts.rateCategory === 'open_market') {
+      return { ...fallback, docs: filterOpenMarketDocs(fallback.docs) }
+    }
+    if (opts.rateCategory === INTERBANK_RATE_CATEGORY) {
+      return {
+        ...fallback,
+        docs: fallback.docs.filter((d) => isInterbankRateCategory(d.rate_category)),
+      }
+    }
+    return fallback
+  }
+}
+
 /**
  * Rates for public pages: CMS `currency-rates` when present; otherwise a one-shot fetch from
  * the same API used by sync so the site isn't empty before seed runs.
@@ -85,17 +125,8 @@ export async function getCurrencyRatesForFrontend(
   const limit = opts?.limit ?? 200
   const rateCategory = opts?.rateCategory ?? 'open_market'
   const staleHours = getAutoSyncStaleHours()
-  const where = rateCategoryWhere(rateCategory)
 
-  let result = await payload.find({
-    collection: 'currency-rates',
-    where,
-    limit,
-    sort: 'currency_name',
-    pagination: false,
-    depth: 0,
-    overrideAccess: false,
-  })
+  let result = await findCurrencyRateDocs(payload, { limit, rateCategory })
 
   const maybeSync = rateCategory === 'open_market' && staleHours > 0 && isStale(result.docs, staleHours)
 
@@ -104,15 +135,7 @@ export async function getCurrencyRatesForFrontend(
     if (sync.ok) {
       safeRevalidatePath('/')
       safeRevalidatePath('/currency-rates')
-      result = await payload.find({
-        collection: 'currency-rates',
-        where,
-        limit,
-        sort: 'currency_name',
-        pagination: false,
-        depth: 0,
-        overrideAccess: false,
-      })
+      result = await findCurrencyRateDocs(payload, { limit, rateCategory })
     }
   }
 

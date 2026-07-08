@@ -13,6 +13,7 @@ import * as migration_20260707_122500_currency_rates_interbank from './20260707_
 import * as migration_20260707_173000_currency_rates_rate_type from './20260707_173000_currency_rates_rate_type';
 import * as migration_20260707_174500_currency_rates_rate_category from './20260707_174500_currency_rates_rate_category';
 import * as migration_20260707_181000_campaigns from './20260707_181000_campaigns';
+import * as migration_20260708_073000_currency_rates_rate_category_fix from './20260708_073000_currency_rates_rate_category_fix';
 
 export const migrations = [
   {
@@ -89,5 +90,10 @@ export const migrations = [
     up: migration_20260707_181000_campaigns.up,
     down: migration_20260707_181000_campaigns.down,
     name: '20260707_181000_campaigns',
+  },
+  {
+    up: migration_20260708_073000_currency_rates_rate_category_fix.up,
+    down: migration_20260708_073000_currency_rates_rate_category_fix.down,
+    name: '20260708_073000_currency_rates_rate_category_fix',
   },
 ];

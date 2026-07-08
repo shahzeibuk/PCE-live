@@ -38,9 +38,7 @@ export async function runCurrencyRatesSync(
       depth: 0,
     })
 
-    const openMarketDocs = existingCurrencies.docs.filter(
-      (d) => !isInterbankRateCategory(d.rate_category),
-    )
+    const openMarketDocs = filterOpenMarketDocs(existingCurrencies.docs)
 
     const knownCodes = new Set(openMarketDocs.map((d) => d.currency_code as string))
 
