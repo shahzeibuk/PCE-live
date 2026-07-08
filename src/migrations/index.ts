@@ -9,6 +9,10 @@ import * as migration_20260427_022032 from './20260427_022032';
 import * as migration_20260608_120000_site_branding from './20260608_120000_site_branding';
 import * as migration_20260608_140000_user_roles from './20260608_140000_user_roles';
 import * as migration_20260701_095141_financial_reports from './20260701_095141_financial_reports';
+import * as migration_20260707_122500_currency_rates_interbank from './20260707_122500_currency_rates_interbank';
+import * as migration_20260707_173000_currency_rates_rate_type from './20260707_173000_currency_rates_rate_type';
+import * as migration_20260707_174500_currency_rates_rate_category from './20260707_174500_currency_rates_rate_category';
+import * as migration_20260707_181000_campaigns from './20260707_181000_campaigns';
 
 export const migrations = [
   {
@@ -65,5 +69,25 @@ export const migrations = [
     up: migration_20260701_095141_financial_reports.up,
     down: migration_20260701_095141_financial_reports.down,
     name: '20260701_095141_financial_reports'
+  },
+  {
+    up: migration_20260707_122500_currency_rates_interbank.up,
+    down: migration_20260707_122500_currency_rates_interbank.down,
+    name: '20260707_122500_currency_rates_interbank',
+  },
+  {
+    up: migration_20260707_173000_currency_rates_rate_type.up,
+    down: migration_20260707_173000_currency_rates_rate_type.down,
+    name: '20260707_173000_currency_rates_rate_type',
+  },
+  {
+    up: migration_20260707_174500_currency_rates_rate_category.up,
+    down: migration_20260707_174500_currency_rates_rate_category.down,
+    name: '20260707_174500_currency_rates_rate_category',
+  },
+  {
+    up: migration_20260707_181000_campaigns.up,
+    down: migration_20260707_181000_campaigns.down,
+    name: '20260707_181000_campaigns',
   },
 ];

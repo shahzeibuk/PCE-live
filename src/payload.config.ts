@@ -14,6 +14,7 @@ import { Branches } from './collections/Branches'
 import { Services } from './collections/Services'
 import { News } from './collections/News'
 import { FinancialReports } from './collections/FinancialReports'
+import { Campaigns } from './collections/Campaigns'
 import { Gallery } from './collections/Gallery'
 import { ContactSubmissions } from './collections/ContactSubmissions'
 import { Partners } from './collections/Partners'
@@ -156,6 +157,7 @@ export default buildConfig({
     Services,
     News,
     FinancialReports,
+    Campaigns,
     Gallery,
     ContactSubmissions,
     Partners,

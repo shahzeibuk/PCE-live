@@ -1,7 +1,7 @@
 import type { Payload } from 'payload'
 import type { PayloadRequest } from 'payload'
 
-import { STANDARD_CURRENCY_ROWS, buySellFromPkrQuote } from './currencyRatesShared'
+import { STANDARD_CURRENCY_ROWS, buySellFromPkrQuote, isInterbankRateCategory } from './currencyRatesShared'
 
 export type CurrencySyncResult =
   | { ok: true; updated: string[]; source: string }
@@ -38,11 +38,15 @@ export async function runCurrencyRatesSync(
       depth: 0,
     })
 
-    const knownCodes = new Set(existingCurrencies.docs.map((d) => d.currency_code as string))
+    const openMarketDocs = existingCurrencies.docs.filter(
+      (d) => !isInterbankRateCategory(d.rate_category),
+    )
+
+    const knownCodes = new Set(openMarketDocs.map((d) => d.currency_code as string))
 
     const updated: string[] = []
 
-    for (const doc of existingCurrencies.docs) {
+    for (const doc of openMarketDocs) {
       if (doc.currency_code === 'PKR') continue
 
       const rateAgainstPkr = rates[doc.currency_code as string]
@@ -77,6 +81,7 @@ export async function runCurrencyRatesSync(
         data: {
           currency_name,
           currency_code,
+          rate_category: 'open_market',
           buy_rate,
           sell_rate,
           last_updated: new Date().toISOString(),

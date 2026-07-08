@@ -1,8 +1,10 @@
 import type { CollectionConfig } from 'payload'
 
 import { anyone } from '../access/anyone'
-import { isAdmin } from '../access/roles'
+import { getUserRole, isAdmin } from '../access/roles'
 import { revalidateBranch, revalidateBranchDelete } from '../hooks/revalidateBranch'
+import { importBranchesFromCsv } from '../utilities/importBranchesFromCsv'
+import { addDataAndFileToRequest, APIError } from 'payload'
 
 export const Branches: CollectionConfig = {
   slug: 'branches',
@@ -18,8 +20,43 @@ export const Branches: CollectionConfig = {
     group: 'Website',
     defaultColumns: ['branch_name', 'city', 'phone', 'updatedAt'],
     description:
-      'Branch locations only (name, address, contact, map link). Exchange rates are managed under Currency Rates, not here.',
+      'Branch locations only (name, address, contact, map link). Upload many at once from CSV on this list page.',
+    components: {
+      beforeList: ['@/components/admin/BranchCsvImport'],
+    },
   },
+  endpoints: [
+    {
+      path: '/import-csv',
+      method: 'post',
+      handler: async (req) => {
+        if (!req.user || getUserRole(req.user) !== 'admin') {
+          throw new APIError('Unauthorized', 401)
+        }
+
+        await addDataAndFileToRequest(req)
+
+        const file = req.file
+        if (!file?.data) {
+          throw new APIError('CSV file is required.', 400)
+        }
+
+        const replace =
+          req.data?.replace === true ||
+          req.data?.replace === 'true' ||
+          req.data?.replace === 1 ||
+          req.data?.replace === '1'
+
+        const csvText = Buffer.isBuffer(file.data)
+          ? file.data.toString('utf-8')
+          : String(file.data)
+
+        const result = await importBranchesFromCsv(req.payload, csvText, { replace })
+
+        return Response.json(result)
+      },
+    },
+  ],
   hooks: {
     afterChange: [revalidateBranch],
     afterDelete: [revalidateBranchDelete],

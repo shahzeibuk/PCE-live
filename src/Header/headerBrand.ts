@@ -1,12 +1,14 @@
 import type { Header } from '@/payload-types'
 import { resolveMediaResourceUrl } from '@/utilities/normalizeStoredMediaPath'
+import { TOLL_FREE_NUMBER, TOLL_FREE_TEL_HREF, UAN_NUMBER, UAN_TEL_HREF } from '@/constants/contact'
 
 export const DEFAULT_HEADER_CONTACTS: {
   text: string
   telHref: string
   icon: 'phone' | 'mobile'
 }[] = [
-  { text: '0800-13537', telHref: 'tel:080013537', icon: 'phone' },
+  { text: UAN_NUMBER, telHref: UAN_TEL_HREF, icon: 'phone' },
+  { text: TOLL_FREE_NUMBER, telHref: TOLL_FREE_TEL_HREF, icon: 'phone' },
   { text: '0304-6668810', telHref: 'tel:03046668810', icon: 'mobile' },
 ]
 

@@ -1,6 +1,12 @@
-import type { Payload } from 'payload'
+import type { Payload, Where } from 'payload'
 
-import { STANDARD_CURRENCY_ROWS, buySellFromPkrQuote } from './currencyRatesShared'
+import {
+  STANDARD_CURRENCY_ROWS,
+  buySellFromPkrQuote,
+  INTERBANK_RATE_CATEGORY,
+  isInterbankRateCategory,
+  type CurrencyRateCategory,
+} from './currencyRatesShared'
 import { safeRevalidatePath } from './safeRevalidatePath'
 import { runCurrencyRatesSync } from './syncCurrencyRates'
 
@@ -10,21 +16,36 @@ export type FrontendCurrencyRate = {
   currency_code: string
   buy_rate: number
   sell_rate: number
+  rate_category?: CurrencyRateCategory
   last_updated?: string | null
   /** Set when DB has no rows — figures from open.er-api.com (indicative). */
   isLiveFallback?: boolean
 }
 
-function mapDocs(docs: { id: unknown; currency_name: string; currency_code: string; buy_rate: number; sell_rate: number; last_updated?: string | null }[]): FrontendCurrencyRate[] {
+function mapDocs(docs: {
+  id: unknown
+  currency_name: string
+  currency_code: string
+  buy_rate: number
+  sell_rate: number
+  rate_category?: CurrencyRateCategory | null
+  last_updated?: string | null
+}[]): FrontendCurrencyRate[] {
   return docs.map((d) => ({
     id: typeof d.id === 'number' ? d.id : Number(d.id),
     currency_name: d.currency_name,
     currency_code: d.currency_code,
     buy_rate: d.buy_rate,
     sell_rate: d.sell_rate,
+    rate_category: isInterbankRateCategory(d.rate_category) ? INTERBANK_RATE_CATEGORY : 'open_market',
     last_updated: d.last_updated ?? null,
     isLiveFallback: false,
   }))
+}
+
+function rateCategoryWhere(rateCategory?: CurrencyRateCategory | 'all'): Where | undefined {
+  if (!rateCategory || rateCategory === 'all') return undefined
+  return { rate_category: { equals: rateCategory } }
 }
 
 /** Hours; if set (>0), traffic to pages that load rates may trigger a sync when data is older. */
@@ -59,13 +80,16 @@ function isStale(docs: { last_updated?: string | null }[], staleHours: number): 
  */
 export async function getCurrencyRatesForFrontend(
   payload: Payload,
-  opts?: { limit?: number },
+  opts?: { limit?: number; rateCategory?: CurrencyRateCategory | 'all' },
 ): Promise<FrontendCurrencyRate[]> {
   const limit = opts?.limit ?? 200
+  const rateCategory = opts?.rateCategory ?? 'open_market'
   const staleHours = getAutoSyncStaleHours()
+  const where = rateCategoryWhere(rateCategory)
 
   let result = await payload.find({
     collection: 'currency-rates',
+    where,
     limit,
     sort: 'currency_name',
     pagination: false,
@@ -73,7 +97,7 @@ export async function getCurrencyRatesForFrontend(
     overrideAccess: false,
   })
 
-  const maybeSync = staleHours > 0 && isStale(result.docs, staleHours)
+  const maybeSync = rateCategory === 'open_market' && staleHours > 0 && isStale(result.docs, staleHours)
 
   if (maybeSync) {
     const sync = await runCurrencyRatesSync(payload)
@@ -82,6 +106,7 @@ export async function getCurrencyRatesForFrontend(
       safeRevalidatePath('/currency-rates')
       result = await payload.find({
         collection: 'currency-rates',
+        where,
         limit,
         sort: 'currency_name',
         pagination: false,
@@ -95,7 +120,18 @@ export async function getCurrencyRatesForFrontend(
     return mapDocs(result.docs)
   }
 
+  if (rateCategory === INTERBANK_RATE_CATEGORY) {
+    return []
+  }
+
   return fetchLiveRatesDisplay()
+}
+
+export async function getInterbankUsdRateForFrontend(
+  payload: Payload,
+): Promise<FrontendCurrencyRate | null> {
+  const rates = await getCurrencyRatesForFrontend(payload, { rateCategory: INTERBANK_RATE_CATEGORY, limit: 5 })
+  return rates.find((r) => r.currency_code?.toUpperCase() === 'USD') ?? rates[0] ?? null
 }
 
 async function fetchLiveRatesDisplay(): Promise<FrontendCurrencyRate[]> {
@@ -124,6 +160,7 @@ async function fetchLiveRatesDisplay(): Promise<FrontendCurrencyRate[]> {
         currency_code: row.currency_code,
         buy_rate,
         sell_rate,
+        rate_category: 'open_market',
         last_updated: now,
         isLiveFallback: true,
       })

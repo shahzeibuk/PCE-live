@@ -77,6 +77,7 @@ export interface Config {
     services: Service;
     news: News;
     'financial-reports': FinancialReport;
+    campaigns: Campaign;
     gallery: Gallery;
     'contact-submissions': ContactSubmission;
     partners: Partner;
@@ -108,6 +109,7 @@ export interface Config {
     services: ServicesSelect<false> | ServicesSelect<true>;
     news: NewsSelect<false> | NewsSelect<true>;
     'financial-reports': FinancialReportsSelect<false> | FinancialReportsSelect<true>;
+    campaigns: CampaignsSelect<false> | CampaignsSelect<true>;
     gallery: GallerySelect<false> | GallerySelect<true>;
     'contact-submissions': ContactSubmissionsSelect<false> | ContactSubmissionsSelect<true>;
     partners: PartnersSelect<false> | PartnersSelect<true>;
@@ -983,15 +985,25 @@ export interface WhatsAppCTABlock {
   blockType: 'whatsappCTA';
 }
 /**
- * Global FX listings only — not stored on branch records. Powers the homepage table, /currency-rates, and the converter. Sync fills from the live API; cron can refresh on a schedule.
+ * Manage open-market FX rows and a separate USD to PKR Interbank row. Open-market sync updates API rates only; Interbank buy/sell are edited manually in admin.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "currency-rates".
  */
 export interface CurrencyRate {
   id: number;
-  currency_name: string;
-  currency_code: string;
+  /**
+   * Choose Open Market for the main rates table, or USD to PKR Interbank for the homepage Interbank panel.
+   */
+  rate_category: 'open_market' | 'sbp';
+  /**
+   * Display name for open-market rows (e.g. US Dollar). For USD to PKR Interbank, this is set automatically on save.
+   */
+  currency_name?: string | null;
+  /**
+   * ISO code for open-market rows (e.g. USD, EUR). For USD to PKR Interbank, USD is set automatically on save.
+   */
+  currency_code?: string | null;
   buy_rate: number;
   sell_rate: number;
   last_updated?: string | null;
@@ -999,7 +1011,7 @@ export interface CurrencyRate {
   createdAt: string;
 }
 /**
- * Branch locations only (name, address, contact, map link). Exchange rates are managed under Currency Rates, not here.
+ * Branch locations only (name, address, contact, map link). Upload many at once from CSV on this list page.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "branches".
@@ -1044,6 +1056,34 @@ export interface FinancialReport {
   report_file: number | Media;
   /**
    * Used to sort reports (newest first).
+   */
+  published_date?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Upload campaign banners with title and description. They appear on /campaign.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "campaigns".
+ */
+export interface Campaign {
+  id: number;
+  title: string;
+  /**
+   * Short summary shown below the campaign image on the website.
+   */
+  description?: string | null;
+  /**
+   * Banner or promotional image for this campaign.
+   */
+  image: number | Media;
+  /**
+   * Optional. External or internal link when visitors click the campaign (e.g. /contact or https://…).
+   */
+  link_url?: string | null;
+  /**
+   * Used to sort campaigns (newest first).
    */
   published_date?: string | null;
   updatedAt: string;
@@ -1321,6 +1361,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'financial-reports';
         value: number | FinancialReport;
+      } | null)
+    | ({
+        relationTo: 'campaigns';
+        value: number | Campaign;
       } | null)
     | ({
         relationTo: 'gallery';
@@ -1752,6 +1796,7 @@ export interface UsersSelect<T extends boolean = true> {
  * via the `definition` "currency-rates_select".
  */
 export interface CurrencyRatesSelect<T extends boolean = true> {
+  rate_category?: T;
   currency_name?: T;
   currency_code?: T;
   buy_rate?: T;
@@ -1825,6 +1870,19 @@ export interface FinancialReportsSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   report_file?: T;
+  published_date?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "campaigns_select".
+ */
+export interface CampaignsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  image?: T;
+  link_url?: T;
   published_date?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -2184,7 +2242,7 @@ export interface Header {
   logo?: (number | null) | Media;
   logoAlt?: string | null;
   /**
-   * Toll-free and mobile shown in the top bar. If you leave this empty, the current defaults (0800-13537 and 0304-6668810) are used.
+   * Contact numbers in the top bar. If empty, defaults are used (UAN 111-242-242, toll-free 0800-13537, mobile 0304-6668810).
    */
   contactLines?:
     | {

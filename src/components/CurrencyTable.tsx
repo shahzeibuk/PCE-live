@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { CircleAlert } from 'lucide-react'
 import {
   Table,
   TableBody,
@@ -13,6 +14,7 @@ import { getPayload } from 'payload'
 import configPromise from '@/payload.config'
 import {
   getCurrencyRatesForFrontend,
+  getInterbankUsdRateForFrontend,
   type FrontendCurrencyRate,
 } from '@/utilities/getCurrencyRatesForFrontend'
 import { MobileCurrencyRateCards, ratesToMobileItems } from '@/components/currency/MobileCurrencyRateCards'
@@ -27,6 +29,31 @@ type Props = {
   rates?: FrontendCurrencyRate[]
   /** Compact panel for homepage hero (popular pairs, desktop table). */
   variant?: 'default' | 'hero'
+}
+
+function UsdInterbankRatesPanel({ rate }: { rate: FrontendCurrencyRate | null }) {
+  const buy = rate ? Number(rate.buy_rate).toFixed(2) : '—'
+  const sell = rate ? Number(rate.sell_rate).toFixed(2) : '—'
+
+  return (
+    <div className="shrink-0 m-[5px] overflow-hidden rounded-[10px] bg-[#099546] text-white">
+      <Table className="w-full min-w-0 table-fixed">
+        <TableBody>
+          <TableRow className="border-0 hover:bg-white/5">
+            <TableCell className="px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-white/95 sm:text-xs">
+              USD to PKR Interbank
+            </TableCell>
+            <TableCell className="px-3 py-2.5 text-right font-mono text-sm font-bold tabular-nums text-white">
+              {buy}
+            </TableCell>
+            <TableCell className="px-3 py-2.5 text-right font-mono text-sm font-bold tabular-nums text-emerald-200">
+              {sell}
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </div>
+  )
 }
 
 function orderHeroRates(rates: FrontendCurrencyRate[]): FrontendCurrencyRate[] {
@@ -55,6 +82,16 @@ export const CurrencyTable = async ({ rates: providedRates, variant = 'default' 
 
   const displayRates = isHero ? orderHeroRates(rates) : rates
   const { isFallback, syncLabel } = getRatesSyncMeta(rates)
+
+  let interbankUsd: FrontendCurrencyRate | null = null
+  if (isHero) {
+    try {
+      const payload = await getPayload({ config: configPromise })
+      interbankUsd = await getInterbankUsdRateForFrontend(payload)
+    } catch (error) {
+      console.error('Error fetching InterBank USD rate for hero:', error)
+    }
+  }
 
   return (
     <div
@@ -223,11 +260,18 @@ export const CurrencyTable = async ({ rates: providedRates, variant = 'default' 
       </div>
 
       {isHero ? (
-        <div className="shrink-0 border-t border-slate-200 bg-white p-3 lg:bg-transparent lg:p-3">
-          <Button asChild className="h-11 w-full rounded bg-[#099546] font-semibold text-white hover:bg-[#088040]">
-            <Link href="/currency-rates">{HOME_RATES_SECTION.ctaLabel}</Link>
-          </Button>
-        </div>
+        <>
+          <UsdInterbankRatesPanel rate={interbankUsd} />
+          <div className="shrink-0 border-t border-slate-200 bg-white p-3 lg:bg-transparent lg:p-3">
+            <p className="mb-2 flex items-center justify-center gap-1.5 text-center text-[10px] leading-snug text-slate-500 sm:text-xs">
+              <CircleAlert className="size-3.5 shrink-0 text-amber-600" aria-hidden />
+              <span>Interbank rates are for reference only.</span>
+            </p>
+            <Button asChild className="h-11 w-full rounded bg-[#099546] font-semibold text-white hover:bg-[#088040]">
+              <Link href="/currency-rates">{HOME_RATES_SECTION.ctaLabel}</Link>
+            </Button>
+          </div>
+        </>
       ) : null}
     </div>
   )

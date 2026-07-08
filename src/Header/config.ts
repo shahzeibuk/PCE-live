@@ -39,7 +39,7 @@ export const Header: GlobalConfig = {
       minRows: 0,
       maxRows: 4,
       admin: {
-        description: 'Toll-free and mobile shown in the top bar. If you leave this empty, the current defaults (0800-13537 and 0304-6668810) are used.',
+        description: 'Contact numbers in the top bar. If empty, defaults are used (UAN 111-242-242, toll-free 0800-13537, mobile 0304-6668810).',
         initCollapsed: false,
       },
       labels: { singular: 'Line', plural: 'Lines' },

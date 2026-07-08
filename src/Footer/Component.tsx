@@ -11,6 +11,7 @@ import { Facebook, Linkedin, Twitter, Mail, Phone, MessageCircle } from 'lucide-
 import { FOOTER_COMPANY_BLURB } from '@/components/home/homeContent'
 import { FacebookPageEmbed } from '@/components/social/FacebookPageEmbed'
 import { SOCIAL_FACEBOOK, SOCIAL_LINKEDIN, SOCIAL_TWITTER } from '@/constants/social'
+import { TOLL_FREE_NUMBER, TOLL_FREE_TEL_HREF, UAN_NUMBER, UAN_TEL_HREF } from '@/constants/contact'
 
 const REGISTERED_OFFICE = {
   lines: [
@@ -25,6 +26,7 @@ const FOOTER_QUICK_LINKS = [
   { href: '/branches', label: 'Branch locator' },
   { href: '/services', label: 'Services' },
   { href: '/financial-reports', label: 'Financial reports' },
+  { href: '/campaign', label: 'Campaign' },
   { href: '/contact', label: 'Contact' },
   { href: '/posts', label: 'Blog' },
 ] as const
@@ -124,13 +126,22 @@ export async function Footer() {
             <div className="flex flex-col items-center gap-8 sm:flex-row sm:flex-wrap sm:justify-between lg:items-start">
               <div className="flex w-full max-w-2xl flex-col gap-5 sm:flex-row sm:flex-wrap sm:gap-x-10 sm:gap-y-4 lg:max-w-none">
                 <a
-                  href="tel:080013537"
+                  href={UAN_TEL_HREF}
                   className="flex items-center justify-center gap-3 text-[15px] font-medium text-slate-200 transition-colors hover:text-[#099546] sm:justify-start"
                 >
                   <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/5 ring-1 ring-white/10">
                     <Phone className="h-5 w-5 text-[#099546]" aria-hidden />
                   </span>
-                  <span>Toll free: 0800-13537</span>
+                  <span>UAN: {UAN_NUMBER}</span>
+                </a>
+                <a
+                  href={TOLL_FREE_TEL_HREF}
+                  className="flex items-center justify-center gap-3 text-[15px] font-medium text-slate-200 transition-colors hover:text-[#099546] sm:justify-start"
+                >
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/5 ring-1 ring-white/10">
+                    <Phone className="h-5 w-5 text-[#099546]" aria-hidden />
+                  </span>
+                  <span>Toll free: {TOLL_FREE_NUMBER}</span>
                 </a>
                 <a
                   href="mailto:info@pakistancurrency.com"
