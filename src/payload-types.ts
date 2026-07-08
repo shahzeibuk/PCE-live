@@ -1006,6 +1006,9 @@ export interface CurrencyRate {
   currency_code?: string | null;
   buy_rate: number;
   sell_rate: number;
+  /**
+   * Defaults to today when left empty.
+   */
   last_updated?: string | null;
   updatedAt: string;
   createdAt: string;
