@@ -45,7 +45,12 @@ const ensureInterbankDefaults: CollectionBeforeValidateHook = ({ data }) => {
   return data
 }
 
-const validateUniqueRateCategory: CollectionBeforeValidateHook = async ({ data, req, operation, id }) => {
+const validateUniqueRateCategory: CollectionBeforeValidateHook = async ({
+  data,
+  req,
+  operation,
+  originalDoc,
+}) => {
   const rateCategory = normalizeRateCategory(data?.rate_category)
   const currencyCode = normalizeCurrencyCode(data?.currency_code)
 
@@ -53,13 +58,15 @@ const validateUniqueRateCategory: CollectionBeforeValidateHook = async ({ data, 
     throw new APIError('Currency code is required.', 400)
   }
 
+  const currentId = originalDoc?.id
+
   const existing = await req.payload.find({
     collection: 'currency-rates',
     where: {
       and: [
         { currency_code: { equals: currencyCode } },
         { rate_category: { equals: rateCategory } },
-        ...(operation === 'update' && id != null ? [{ id: { not_equals: id } }] : []),
+        ...(operation === 'update' && currentId != null ? [{ id: { not_equals: currentId } }] : []),
       ],
     },
     limit: 1,
@@ -67,10 +74,15 @@ const validateUniqueRateCategory: CollectionBeforeValidateHook = async ({ data, 
   })
 
   if (existing.docs.length > 0) {
+    const existingId = existing.docs[0]?.id
     const label = isInterbankRateCategory(rateCategory)
       ? INTERBANK_RATE_LABEL
       : `${currencyCode} open market rate`
-    throw new APIError(`A ${label} entry already exists. Edit the existing row instead.`, 400)
+    const editHint =
+      existingId != null
+        ? ` Edit the existing row instead: /admin/collections/currency-rates/${existingId}`
+        : ' Edit the existing row instead.'
+    throw new APIError(`A ${label} entry already exists.${editHint}`, 400)
   }
 
   if (isInterbankRateCategory(rateCategory) && currencyCode !== INTERBANK_CURRENCY_CODE) {
