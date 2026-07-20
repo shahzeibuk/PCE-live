@@ -54,6 +54,7 @@ export function PartnersCarousel() {
                     width={260}
                     height={130}
                     className="max-h-20 md:max-h-24 w-auto max-w-full object-contain"
+                    unoptimized
                   />
                 </Link>
               </div>

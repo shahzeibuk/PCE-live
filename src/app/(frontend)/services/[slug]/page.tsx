@@ -54,6 +54,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
                   height={80}
                   className="max-h-14 md:max-h-16 w-auto max-w-[11rem] md:max-w-[14rem] object-contain"
                   priority
+                  unoptimized
                 />
               </div>
             ) : (

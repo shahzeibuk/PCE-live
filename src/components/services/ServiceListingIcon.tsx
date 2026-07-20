@@ -60,9 +60,18 @@ const sizeClasses: Record<
   },
 }
 
+function cmsMediaHasUrl(resource: unknown): boolean {
+  return (
+    typeof resource === 'object' &&
+    resource !== null &&
+    typeof (resource as { url?: unknown }).url === 'string' &&
+    Boolean((resource as { url: string }).url)
+  )
+}
+
 /**
- * Prefer CMS upload; otherwise use “Our Valued Partners” logos by slug;
- * then Lucide / legacy assets by theme.
+ * Prefer static “Our Valued Partners” logos from `public/partners/` (ship with the deploy).
+ * CMS Media icons are a fallback only — uploads often break on serverless without S3.
  */
 export function ServiceListingIcon({ service, className, size = 'default' }: Props) {
   const title = (service.title ?? '').toLowerCase()
@@ -84,7 +93,21 @@ export function ServiceListingIcon({ service, className, size = 'default' }: Pro
     </div>
   )
 
-  if (service.icon && typeof service.icon === 'object') {
+  // Static partner files are reliable on production (part of the Next.js deploy).
+  if (partner) {
+    return wrap(
+      <Image
+        src={partner.src}
+        alt={partner.name}
+        width={s.partner.width}
+        height={s.partner.height}
+        className={s.partner.className}
+        unoptimized
+      />,
+    )
+  }
+
+  if (cmsMediaHasUrl(service.icon)) {
     return wrap(
       <Media
         resource={service.icon as never}
@@ -94,19 +117,7 @@ export function ServiceListingIcon({ service, className, size = 'default' }: Pro
     )
   }
 
-  if (partner) {
-    return wrap(
-      <Image
-        src={partner.src}
-        alt={partner.name}
-        width={s.partner.width}
-        height={s.partner.height}
-        className={s.partner.className}
-      />,
-    )
-  }
-
-  if (service.hero_image && typeof service.hero_image === 'object') {
+  if (cmsMediaHasUrl(service.hero_image)) {
     return wrap(
       <Media
         resource={service.hero_image as never}
