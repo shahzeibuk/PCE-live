@@ -1,76 +1,49 @@
 /**
  * Partner logos in `public/partners/`. Paths are encoded for safe URLs (`&`, spaces).
- * Each logo links to its service page.
+ * Each logo links to its service page. `file` is the on-disk name used by migrations.
  */
 export type PartnerLogo = {
   name: string
+  /** Filename under `public/partners/` (may include spaces / &). */
+  file: string
   /** Encoded path served from `public/partners/` */
   src: string
   href: string
+  /** Matching services collection slug */
+  serviceSlug: string
 }
 
 function partnerFile(file: string): string {
   return `/partners/${encodeURIComponent(file)}`
 }
 
+function partner(name: string, file: string, serviceSlug: string): PartnerLogo {
+  return {
+    name,
+    file,
+    src: partnerFile(file),
+    href: `/services/${serviceSlug}`,
+    serviceSlug,
+  }
+}
+
 export const PARTNER_LOGOS: PartnerLogo[] = [
-  {
-    name: 'Western Union',
-    src: partnerFile('WU logo 2023.png'),
-    href: '/services/western-union',
-  },
-  {
-    name: 'MoneyGram',
-    src: partnerFile('MoneyGram_Logo.png'),
-    href: '/services/moneygram',
-  },
-  {
-    name: 'Ria Money Transfer',
-    src: partnerFile('Ria update logo.png'),
-    href: '/services/ria-money-transfer',
-  },
-  {
-    name: 'IME',
-    src: partnerFile('IME Logo.png'),
-    href: '/services/ime',
-  },
-  {
-    name: 'URemit',
-    src: partnerFile('URemit Logo.png'),
-    href: '/services/uremit',
-  },
-  {
-    name: 'Speed Remit',
-    src: partnerFile('Speed Remit Logo.png'),
-    href: '/services/speed-remit',
-  },
-  {
-    name: 'HelloPaisa',
-    src: partnerFile('HelloPaisa LOGO.jpg'),
-    href: '/services/hellopaisa',
-  },
-  {
-    name: 'Aussie Forex & Finance',
-    src: partnerFile('Aussie Forex&Finance.png'),
-    href: '/services/aussie-forex-finance',
-  },
-  {
-    name: 'ARY Exchange',
-    src: partnerFile('ARY EXCHANGE LOGO.jpg_page-0001.jpg'),
-    href: '/services/ary-exchange',
-  },
-  {
-    name: 'PRI (Pakistan Remittance Initiative)',
-    src: partnerFile('PRI Logo.jpg'),
-    href: '/services/pakistan-remittance-initiative',
-  },
+  partner('Western Union', 'WU logo 2023.png', 'western-union'),
+  partner('MoneyGram', 'MoneyGram_Logo.png', 'moneygram'),
+  partner('Ria Money Transfer', 'Ria update logo.png', 'ria-money-transfer'),
+  partner('IME', 'IME Logo.png', 'ime'),
+  partner('URemit', 'URemit Logo.png', 'uremit'),
+  partner('Speed Remit', 'Speed Remit Logo.png', 'speed-remit'),
+  partner('HelloPaisa', 'HelloPaisa LOGO.jpg', 'hellopaisa'),
+  partner('Aussie Forex & Finance', 'Aussie Forex&Finance.png', 'aussie-forex-finance'),
+  partner('ARY Exchange', 'ARY EXCHANGE LOGO.jpg_page-0001.jpg', 'ary-exchange'),
+  partner('PRI (Pakistan Remittance Initiative)', 'PRI Logo.jpg', 'pakistan-remittance-initiative'),
 ]
 
 /** Lookup partner logo used on “Our Valued Partners” for a service slug. */
 export function partnerLogoForServiceSlug(slug: string | null | undefined): PartnerLogo | null {
   if (!slug) return null
-  const href = `/services/${slug}`
-  return PARTNER_LOGOS.find((p) => p.href === href) ?? null
+  return PARTNER_LOGOS.find((p) => p.serviceSlug === slug) ?? null
 }
 
 /** Duplicate list for carousels that need extra slides for smooth looping. */

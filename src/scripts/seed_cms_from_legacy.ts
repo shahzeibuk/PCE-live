@@ -9,13 +9,10 @@ import type { Payload } from 'payload'
 import { getPayload } from 'payload'
 
 import config from '../payload.config'
-import { contactForm as contactFormSeed } from '../endpoints/seed/contact-form'
-import {
-  ABOUT_COPY,
-  CONTACT_COPY,
-  FOOTER_GROUPS,
-  HEADER_NAV,
-} from './legacyCmsCopy'
+import { ABOUT_COPY, FOOTER_GROUPS, HEADER_NAV } from './legacyCmsCopy'
+import { ensureContactNavLink, upsertContactPage } from './upsertContactPage'
+import { upsertServicePartnerIcons } from './upsertServicePartnerIcons'
+import { upsertServicePages } from './upsertServicePages'
 
 const ctx = { disableRevalidate: true }
 
@@ -78,20 +75,6 @@ function buildAboutBodyLexical() {
   return lexicalRoot(children)
 }
 
-function buildContactInfoLexical() {
-  return lexicalRoot([
-    heading('h2', 'Get in touch'),
-    pText(CONTACT_COPY.intro),
-    heading('h3', 'Head office'),
-    pText(CONTACT_COPY.addressLine),
-    heading('h3', 'Phone'),
-    pText(`${CONTACT_COPY.phone} (UAN) · Toll-free ${CONTACT_COPY.tollFree}`),
-    heading('h3', 'Email'),
-    pText(CONTACT_COPY.email),
-    pText('For branch-specific numbers and maps, use the Branches page.'),
-  ])
-}
-
 async function upsertPublishedPage(payload: Payload, data: Record<string, unknown>) {
   const { docs } = await payload.find({
     collection: 'pages',
@@ -122,41 +105,11 @@ async function upsertPublishedPage(payload: Payload, data: Record<string, unknow
   }
 }
 
-async function upsertContactForm(payload: Payload): Promise<number> {
-  const { docs } = await payload.find({
-    collection: 'forms',
-    where: { title: { equals: 'Contact Form' } },
-    limit: 1,
-    depth: 0,
-  })
-
-  const data = {
-    ...contactFormSeed,
-  } as Record<string, unknown>
-  delete data.createdAt
-  delete data.updatedAt
-
-  if (docs[0]) {
-    const updated = await payload.update({
-      collection: 'forms',
-      id: docs[0].id,
-      data: data as typeof contactFormSeed,
-      context: ctx,
-    })
-    return updated.id as number
-  }
-
-  const created = await payload.create({
-    collection: 'forms',
-    data: data as typeof contactFormSeed,
-    context: ctx,
-  })
-  return created.id as number
-}
-
 export async function seedCmsFromLegacy(payload: Payload): Promise<void> {
-  console.log('→ CMS: contact form')
-  const formId = await upsertContactForm(payload)
+  console.log('→ CMS: Contact page (/contact) + form')
+  const contact = await upsertContactPage(payload)
+  console.log(`  contact page ${contact.created ? 'created' : 'updated'} (id ${contact.pageId})`)
+  await ensureContactNavLink(payload)
 
   console.log('→ CMS: About page (/about)')
   await upsertPublishedPage(payload, {
@@ -209,58 +162,6 @@ export async function seedCmsFromLegacy(payload: Payload): Promise<void> {
     ],
   })
 
-  console.log('→ CMS: Contact page (/contact)')
-  await upsertPublishedPage(payload, {
-    title: 'Contact',
-    slug: 'contact',
-    meta: {
-      title: CONTACT_COPY.metaTitle,
-      description: CONTACT_COPY.metaDescription,
-    },
-    hero: {
-      type: 'lowImpact',
-      richText: lexicalRoot([
-        heading('h1', CONTACT_COPY.heroTitle),
-        pText(CONTACT_COPY.intro),
-      ]),
-      links: [
-        {
-          link: {
-            type: 'custom',
-            url: '/branches',
-            label: 'Branch locator',
-            newTab: false,
-          },
-        },
-        {
-          link: {
-            type: 'custom',
-            url: `tel:${CONTACT_COPY.tollFree.replace(/\D/g, '')}`,
-            label: `Call ${CONTACT_COPY.tollFree}`,
-            newTab: false,
-          },
-        },
-      ],
-    },
-    layout: [
-      {
-        blockType: 'content',
-        columns: [
-          {
-            size: 'full',
-            richText: buildContactInfoLexical(),
-            enableLink: false,
-          },
-        ],
-      },
-      {
-        blockType: 'formBlock',
-        form: formId,
-        enableIntro: false,
-      },
-    ],
-  })
-
   console.log('→ CMS: Header navigation')
   await payload.updateGlobal({
     slug: 'header',
@@ -291,10 +192,13 @@ export async function seedCmsFromLegacy(payload: Payload): Promise<void> {
     context: ctx,
   })
 
-  console.log('→ CMS: Service detail pages (create/update with two-paragraph content)')
-  const { upsertServicePages } = await import('./upsertServicePages')
+  console.log('→ CMS: Service detail pages')
   const { created, updated } = await upsertServicePages(payload)
   console.log(`  services: ${created} created, ${updated} updated`)
+
+  console.log('→ CMS: Service partner icons from public/partners')
+  const icons = await upsertServicePartnerIcons(payload)
+  console.log(`  icons: ${icons.iconsAssigned} assigned, ${icons.skipped} skipped`)
 }
 
 async function main() {

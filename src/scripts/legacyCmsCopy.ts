@@ -59,9 +59,9 @@ export const CONTACT_COPY = {
   metaTitle: 'Contact Us | Pakistan Currency Exchange',
   metaDescription:
     'Contact Pakistan Currency Exchange — head office on Main Shahrah-e-Faisal, Karachi. Phone 111-242-242, email info@pakistancurrency.com, toll-free 0800-13537.',
-  heroTitle: 'Contact us',
+  heroTitle: 'Contact Us',
   intro:
-    'For any information, reach out through the form below, call us, or visit a branch. We also recommend our branch locator for the nearest outlet.',
+    'Have a question about rates, remittances, or branch support? Reach us by phone, email, or the form below—or visit a Pakistan Currency Exchange outlet near you.',
   addressLine:
     'Office 7, 8, 9 Al-Rasheed Chamber, Block 6, 12/A P.E.C.H.S., Main Shahrah-e-Faisal, Karachi.',
   phone: '111 242 242',
