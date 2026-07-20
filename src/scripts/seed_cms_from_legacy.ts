@@ -15,7 +15,6 @@ import {
   CONTACT_COPY,
   FOOTER_GROUPS,
   HEADER_NAV,
-  SERVICE_DETAIL_PARAGRAPHS,
 } from './legacyCmsCopy'
 
 const ctx = { disableRevalidate: true }
@@ -292,34 +291,10 @@ export async function seedCmsFromLegacy(payload: Payload): Promise<void> {
     context: ctx,
   })
 
-  console.log('→ CMS: Service detail bodies (richtext from legacy site)')
-  for (const [slug, paragraphs] of Object.entries(SERVICE_DETAIL_PARAGRAPHS)) {
-    const { docs } = await payload.find({
-      collection: 'services',
-      where: { slug: { equals: slug } },
-      limit: 1,
-      depth: 0,
-    })
-    if (!docs[0]) {
-      console.warn(`  skip service (not in DB): ${slug}`)
-      continue
-    }
-
-    const children: Record<string, unknown>[] = paragraphs.map((text) => pText(text))
-    const description =
-      paragraphs[0].length > 320 ? `${paragraphs[0].slice(0, 317)}…` : paragraphs[0]
-
-    await payload.update({
-      collection: 'services',
-      id: docs[0].id,
-      data: {
-        description,
-        content: lexicalRoot(children),
-      },
-      context: ctx,
-    })
-    console.log(`  updated service: ${slug}`)
-  }
+  console.log('→ CMS: Service detail pages (create/update with two-paragraph content)')
+  const { upsertServicePages } = await import('./upsertServicePages')
+  const { created, updated } = await upsertServicePages(payload)
+  console.log(`  services: ${created} created, ${updated} updated`)
 }
 
 async function main() {

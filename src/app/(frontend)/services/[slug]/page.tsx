@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import { getPayload } from 'payload'
 import configPromise from '@/payload.config'
 import { notFound } from 'next/navigation'
@@ -6,6 +7,8 @@ import RichText from '@/components/RichText'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { HeroCurrencyBackdrop } from '@/components/layout/currencyBrandSurfaces'
+import { ServiceListingIcon } from '@/components/services/ServiceListingIcon'
+import { partnerLogoForServiceSlug } from '@/constants/partnerLogos'
 
 export const dynamic = 'force-dynamic'
 
@@ -32,6 +35,8 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
     return notFound()
   }
 
+  const partnerLogo = partnerLogoForServiceSlug(service.slug)
+
   return (
     <div className="pb-20 md:pb-28 flush-under-site-header">
       <HeroCurrencyBackdrop
@@ -40,6 +45,22 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
       >
         <div className="hero-below-nav container flex w-full min-h-[inherit] flex-col justify-center py-8 text-white md:py-12">
           <div className="max-w-3xl">
+            {partnerLogo ? (
+              <div className="mb-6 inline-flex items-center justify-center rounded-lg border border-white/20 bg-white px-4 py-3 shadow-sm">
+                <Image
+                  src={partnerLogo.src}
+                  alt={partnerLogo.name}
+                  width={200}
+                  height={80}
+                  className="max-h-14 md:max-h-16 w-auto max-w-[11rem] md:max-w-[14rem] object-contain"
+                  priority
+                />
+              </div>
+            ) : (
+              <div className="mb-6">
+                <ServiceListingIcon service={service} size="large" />
+              </div>
+            )}
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 md:mb-6">
               {service.title}
             </h1>

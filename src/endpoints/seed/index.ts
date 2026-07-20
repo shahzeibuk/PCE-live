@@ -5,6 +5,7 @@ import { home } from './home'
 import { post1 } from './post-1'
 import { post2 } from './post-2'
 import { post3 } from './post-3'
+import { upsertServicePages } from '../../scripts/upsertServicePages'
 
 const collections: CollectionSlug[] = [
   'categories',
@@ -101,28 +102,13 @@ export const seed = async ({
 
   payload.logger.info(`— Seeding services...`)
 
-  const serviceItems = [
-    { title: 'Currency Exchange', slug: 'currency-exchange' },
-    { title: 'Remittance', slug: 'remittance' },
-    { title: 'Western Union', slug: 'western-union' },
-    { title: 'Demand Draft', slug: 'demand-draft' },
-    { title: 'Telegraphic Transfer', slug: 'telegraphic-transfer' },
-    { title: 'RIA', slug: 'ria' },
-    { title: 'Money Gram', slug: 'moneygram' },
-  ]
-
-  const serviceDocs = await Promise.all(
-    serviceItems.map((item) =>
-      payload.create({
-        collection: 'services',
-        data: {
-          title: item.title,
-          slug: item.slug,
-          description: `Our professional ${item.title} services ensure secure and efficient transactions.`,
-        },
-      }),
-    )
-  )
+  await upsertServicePages(payload, req)
+  const { docs: serviceDocs } = await payload.find({
+    collection: 'services',
+    limit: 100,
+    depth: 0,
+    sort: 'title',
+  })
 
   payload.logger.info(`— Seeding news...`)
 

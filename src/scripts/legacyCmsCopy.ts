@@ -3,6 +3,8 @@
  * (company profile, product pages, contact). Stored via Payload seed — not scraped at runtime.
  */
 
+import { SERVICE_PAGES_SEED } from './servicesPagesSeed'
+
 export const ABOUT_COPY = {
   metaTitle: 'About Us | Pakistan Currency Exchange',
   metaDescription:
@@ -67,74 +69,10 @@ export const CONTACT_COPY = {
   email: 'info@pakistancurrency.com',
 }
 
-/** Service slug → body paragraphs (legacy product pages, lorem and duplicates removed). */
-export const SERVICE_DETAIL_PARAGRAPHS: Record<string, string[]> = {
-  'western-union': [
-    'Pakistan Currency Exchange offers Western Union send and receive services at branches nationwide—one of the most recognised ways to move money globally.',
-    "Western Union's goal is to make cross-border money movement easier for people and businesses, with a network spanning a large number of countries. PCE helps you send or receive at a convenient location, with staff to guide you through ID and compliance steps.",
-    'Western Union has served millions of customers for many years. As a major agent network in Pakistan, PCE focuses on safe handling of your transaction and clear communication so funds reach the right beneficiary.',
-  ],
-  moneygram: [
-    'MoneyGram is a global provider of fund transfer and payment services, built around speed and security for people who support family and friends abroad.',
-    'Customers worldwide rely on MoneyGram for quick transfers. The company invests heavily in security and compliance so services are used for legitimate purposes—and Pakistan Currency Exchange brings that channel to our counters with trained staff.',
-    'MoneyGram emphasises a straightforward experience: fewer complications, fast service, and reliability at retail partner locations—including PCE branches across Pakistan.',
-  ],
-  'ria-money-transfer': [
-    'Ria helps you receive money from abroad with broad global coverage, built around the idea that transfers matter as much as the relationships behind them.',
-    'Ria offers digital and cash payout options in many corridors. Visit a Pakistan Currency Exchange branch for send or receive, subject to ID and regulatory requirements.',
-    'Founded in 1987 and part of Euronet Worldwide, Ria operates a large international network of payout locations so beneficiaries can collect funds with PIN and valid ID where cash pickup is available.',
-  ],
-  'currency-exchange': [
-    'Whether you travel for business or leisure, Pakistan Currency Exchange buys and sells major currencies with transparent, competitive open-market pricing.',
-    'We deal in Saudi Riyal, UAE Dirham, US Dollar, Pound, Euro, and many other currencies. Our nationwide outlet network is built to serve you quickly and professionally.',
-    'We aim for a hassle-free transaction: authenticate notes, confirm rates, complete KYC as required, and settle with clear documentation—so your experience is smooth and dependable.',
-  ],
-  'telegraphic-transfer': [
-    'Telegraphic transfer (TT) is a secure way to send funds to an overseas bank account—for education fees, family support, invoices, or other approved purposes.',
-    'PCE uses electronic banking channels with correspondent partners. Limits and documentation follow State Bank of Pakistan rules; our staff explain requirements before you book a transfer.',
-    'TT suits customers who need bank-to-bank settlement with traceable instructions. Ask any branch for cut-off timings, charges, and beneficiary details format.',
-  ],
-  'demand-draft': [
-    'Demand drafts help pay university and institutional fees abroad when the beneficiary requires a guaranteed bank instrument.',
-    'Pakistan Currency Exchange works with correspondent banks so you can issue drafts in supported currencies, with guidance on beneficiary name, amount, and delivery or courier.',
-    'We aim to reduce confusion: bring valid ID and institution instructions, and our team will walk you through issuance timelines and charges.',
-  ],
-  'pakistan-remittance-initiative': [
-    'Pakistan Currency Exchange supports formal remittance flows that align with national initiatives encouraging documented inflows and consumer protection.',
-    'Use authorised channels and licensed partners so your transfer is recorded appropriately and beneficiaries receive funds safely.',
-    'Visit any branch for product options (cash pickup, account credit where available) and compliance steps for your corridor.',
-  ],
-  ime: [
-    'IME remittance services let beneficiaries collect funds at supported Pakistan Currency Exchange branches with valid ID and transaction details.',
-    'Ask locally whether IME receive is available and what reference information you need before visiting the counter.',
-    'Our staff follow applicable rules for verification and payout.',
-  ],
-  uremit: [
-    'URemit supports convenient remittance flows; Pakistan Currency Exchange assists eligible beneficiaries at participating locations.',
-    'Bring your reference and CNIC; we will guide you through the collection process step by step.',
-    'Availability may vary by branch and corridor — contact us to confirm.',
-  ],
-  'speed-remit': [
-    'Speed Remit is designed for efficient international transfers; collect at eligible PCE outlets when your sender uses supported channels.',
-    'Present PIN, ID, and any partner requirements requested at the branch.',
-    'We focus on a quick, compliant desk experience.',
-  ],
-  hellopaisa: [
-    'HelloPaisa beneficiaries may receive supported transactions at Pakistan Currency Exchange branches where the product is enabled.',
-    'Confirm with your branch before visiting so you have the correct documents and reference.',
-    'We prioritise clear communication at payout.',
-  ],
-  'aussie-forex-finance': [
-    'Aussie Forex & Finance-linked services may be available at selected branches alongside our standard exchange and remittance desk.',
-    'Contact your nearest outlet for corridor-specific guidance.',
-    'Documentation and limits follow partner and regulatory rules.',
-  ],
-  'ary-exchange': [
-    'ARY Exchange remittances can be received at supported Pakistan Currency Exchange locations nationwide.',
-    'Valid ID and transaction information are required for payout.',
-    'Our network aims to make collection straightforward and secure.',
-  ],
-}
+/** Service slug → two body paragraphs (sourced from servicesPagesSeed). */
+export const SERVICE_DETAIL_PARAGRAPHS: Record<string, string[]> = Object.fromEntries(
+  SERVICE_PAGES_SEED.map((s) => [s.slug, [...s.paragraphs]]),
+)
 
 export const HEADER_NAV: { url: string; label: string }[] = [
   { url: '/', label: 'Home' },

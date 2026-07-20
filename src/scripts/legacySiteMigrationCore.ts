@@ -1,33 +1,11 @@
 import type { Payload } from 'payload'
 
-import {
-  LEGACY_SERVICES,
-  LEGACY_TESTIMONIALS,
-  lexicalParagraph,
-} from './legacySiteSeedData'
+import { LEGACY_TESTIMONIALS } from './legacySiteSeedData'
+import { upsertServicePages } from './upsertServicePages'
 
 export async function replaceLegacyServices(payload: Payload): Promise<void> {
-  await payload.delete({
-    collection: 'services',
-    where: { id: { exists: true } },
-  })
-  for (const s of LEGACY_SERVICES) {
-    await payload.create({
-      collection: 'services',
-      data: {
-        title: s.title,
-        slug: s.slug,
-        short_description: s.short_description,
-        description: s.description,
-        process_steps: s.process_steps,
-        benefits: s.benefits,
-        content: lexicalParagraph(s.body),
-        cta_text: 'Contact us',
-        cta_link: '/contact',
-      },
-    })
-    console.log(`  created service: ${s.slug}`)
-  }
+  const { created, updated } = await upsertServicePages(payload)
+  console.log(`  services upserted: ${created} created, ${updated} updated`)
 }
 
 export async function replaceLegacyTestimonials(payload: Payload): Promise<void> {

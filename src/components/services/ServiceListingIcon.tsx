@@ -12,6 +12,7 @@ import {
 } from 'lucide-react'
 
 import { Media } from '@/components/Media'
+import { partnerLogoForServiceSlug } from '@/constants/partnerLogos'
 import { cn } from '@/utilities/ui'
 
 type ServiceLike = {
@@ -31,24 +32,37 @@ type Props = {
 
 const sizeClasses: Record<
   IconSize,
-  { wrap: string; media: string; lucide: string; image: { width: number; height: number; className: string } }
+  {
+    wrap: string
+    media: string
+    lucide: string
+    image: { width: number; height: number; className: string }
+    partner: { width: number; height: number; className: string }
+  }
 > = {
   default: {
     wrap: 'w-16 h-16',
     media: 'relative h-10 w-10',
     lucide: 'w-10 h-10',
     image: { width: 40, height: 40, className: 'object-contain' },
+    partner: { width: 56, height: 40, className: 'max-h-10 w-auto max-w-[3.25rem] object-contain' },
   },
   large: {
     wrap: 'w-24 h-24 md:w-28 md:h-28',
     media: 'relative h-16 w-16 md:h-20 md:w-20',
     lucide: 'w-16 h-16 md:w-20 md:h-20',
     image: { width: 80, height: 80, className: 'object-contain h-16 w-16 md:h-20 md:w-20' },
+    partner: {
+      width: 112,
+      height: 72,
+      className: 'max-h-16 md:max-h-20 w-auto max-w-[5.5rem] md:max-w-[6.5rem] object-contain',
+    },
   },
 }
 
 /**
- * CMS upload first; otherwise keyword → MoneyGram asset / Lucide by service theme.
+ * Prefer CMS upload; otherwise use “Our Valued Partners” logos by slug;
+ * then Lucide / legacy assets by theme.
  */
 export function ServiceListingIcon({ service, className, size = 'default' }: Props) {
   const title = (service.title ?? '').toLowerCase()
@@ -56,11 +70,12 @@ export function ServiceListingIcon({ service, className, size = 'default' }: Pro
   const key = `${slug} ${title}`
   const s = sizeClasses[size]
   const lucideClass = cn(s.lucide, 'text-[#099546]')
+  const partner = partnerLogoForServiceSlug(service.slug)
 
   const wrap = (children: ReactNode) => (
     <div
       className={cn(
-        'shrink-0 rounded border bg-white border-slate-200 flex items-center justify-center',
+        'shrink-0 rounded border bg-white border-slate-200 flex items-center justify-center p-1.5',
         s.wrap,
         className,
       )}
@@ -75,6 +90,18 @@ export function ServiceListingIcon({ service, className, size = 'default' }: Pro
         resource={service.icon as never}
         className={s.media}
         imgClassName="h-full w-full object-contain"
+      />,
+    )
+  }
+
+  if (partner) {
+    return wrap(
+      <Image
+        src={partner.src}
+        alt={partner.name}
+        width={s.partner.width}
+        height={s.partner.height}
+        className={s.partner.className}
       />,
     )
   }

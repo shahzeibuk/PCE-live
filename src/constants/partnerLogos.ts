@@ -35,6 +35,11 @@ export const PARTNER_LOGOS: PartnerLogo[] = [
     href: '/services/ime',
   },
   {
+    name: 'URemit',
+    src: partnerFile('URemit Logo.png'),
+    href: '/services/uremit',
+  },
+  {
     name: 'Speed Remit',
     src: partnerFile('Speed Remit Logo.png'),
     href: '/services/speed-remit',
@@ -54,7 +59,19 @@ export const PARTNER_LOGOS: PartnerLogo[] = [
     src: partnerFile('ARY EXCHANGE LOGO.jpg_page-0001.jpg'),
     href: '/services/ary-exchange',
   },
+  {
+    name: 'PRI (Pakistan Remittance Initiative)',
+    src: partnerFile('PRI Logo.jpg'),
+    href: '/services/pakistan-remittance-initiative',
+  },
 ]
+
+/** Lookup partner logo used on “Our Valued Partners” for a service slug. */
+export function partnerLogoForServiceSlug(slug: string | null | undefined): PartnerLogo | null {
+  if (!slug) return null
+  const href = `/services/${slug}`
+  return PARTNER_LOGOS.find((p) => p.href === href) ?? null
+}
 
 /** Duplicate list for carousels that need extra slides for smooth looping. */
 export function partnerLogosForCarouselLoop(): PartnerLogo[] {
