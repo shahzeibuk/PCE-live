@@ -7,6 +7,10 @@ export type CurrencySyncResult =
   | { ok: true; updated: string[]; source: string }
   | { ok: false; error: string }
 
+function filterOpenMarketDocs<T extends { rate_category?: string | null }>(docs: T[]): T[] {
+  return docs.filter((d) => !isInterbankRateCategory(d.rate_category))
+}
+
 /**
  * Fetches PKR-based FX from open.er-api.com, updates existing `currency-rates` rows,
  * and creates any missing rows for {@link STANDARD_CURRENCY_ROWS} when the API lists them.
@@ -36,6 +40,7 @@ export async function runCurrencyRatesSync(
       limit: 200,
       pagination: false,
       depth: 0,
+      ...(req ? { req } : {}),
     })
 
     const openMarketDocs = filterOpenMarketDocs(existingCurrencies.docs)
@@ -60,6 +65,7 @@ export async function runCurrencyRatesSync(
           sell_rate,
           last_updated: new Date().toISOString(),
         },
+        context: { disableRevalidate: true },
         ...(req ? { req } : {}),
       })
 
@@ -84,6 +90,7 @@ export async function runCurrencyRatesSync(
           sell_rate,
           last_updated: new Date().toISOString(),
         },
+        context: { disableRevalidate: true },
         ...(req ? { req } : {}),
       })
 

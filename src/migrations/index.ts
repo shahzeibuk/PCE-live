@@ -17,6 +17,7 @@ import * as migration_20260708_073000_currency_rates_rate_category_fix from './2
 import * as migration_20260720_120000_seed_services_pages from './20260720_120000_seed_services_pages';
 import * as migration_20260720_130000_seed_service_icons_and_contact from './20260720_130000_seed_service_icons_and_contact';
 import * as migration_20260720_140000_use_static_partner_service_icons from './20260720_140000_use_static_partner_service_icons';
+import * as migration_20260720_150000_seed_currency_rates from './20260720_150000_seed_currency_rates';
 
 export const migrations = [
   {
@@ -113,5 +114,10 @@ export const migrations = [
     up: migration_20260720_140000_use_static_partner_service_icons.up,
     down: migration_20260720_140000_use_static_partner_service_icons.down,
     name: '20260720_140000_use_static_partner_service_icons',
+  },
+  {
+    up: migration_20260720_150000_seed_currency_rates.up,
+    down: migration_20260720_150000_seed_currency_rates.down,
+    name: '20260720_150000_seed_currency_rates',
   },
 ];
