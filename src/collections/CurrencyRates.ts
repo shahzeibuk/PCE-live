@@ -6,6 +6,10 @@ import { anyone } from '../access/anyone'
 import { canManageRates, canUserManageRates } from '../access/roles'
 import { revalidateCurrencyRates, revalidateCurrencyRatesDelete } from '../hooks/revalidateCurrencyRates'
 import {
+  createActivityLogAfterChange,
+  createActivityLogAfterDelete,
+} from '../hooks/logUserActivity'
+import {
   CURRENCY_RATE_CATEGORY_OPTIONS,
   INTERBANK_CURRENCY_CODE,
   INTERBANK_RATE_CATEGORY,
@@ -92,8 +96,12 @@ const validateUniqueRateCategory: CollectionBeforeValidateHook = async ({
   return data
 }
 
-const setLastUpdatedDefault: CollectionBeforeChangeHook = ({ data }) => {
-  if (!data.last_updated) {
+/**
+ * Always stamp `last_updated` on create/update so the public “Last updated”
+ * label moves whenever an admin saves a rate (buy/sell or any other field).
+ */
+const setLastUpdatedOnRateEdit: CollectionBeforeChangeHook = ({ data, operation }) => {
+  if (operation === 'create' || operation === 'update') {
     data.last_updated = new Date().toISOString()
   }
   return data
@@ -119,7 +127,10 @@ export const CurrencyRates: CollectionConfig = {
 
         const result = await runCurrencyRatesSync(req.payload, req)
         if (!result.ok) {
-          return Response.json({ error: result.error }, { status: 500 })
+          return Response.json(
+            { error: result.error, disabled: Boolean(result.disabled) },
+            { status: result.disabled ? 403 : 500 },
+          )
         }
         revalidatePath('/')
         revalidatePath('/currency-rates')
@@ -132,13 +143,13 @@ export const CurrencyRates: CollectionConfig = {
     group: 'Website',
     defaultColumns: ['rate_category', 'currency_name', 'currency_code', 'buy_rate', 'sell_rate', 'last_updated'],
     description:
-      'Manage open-market FX rows and a separate USD to PKR Interbank row. Open-market sync updates API rates only; Interbank buy/sell are edited manually in admin.',
+      'Manage open-market FX rows and a separate USD to PKR Interbank row. Open-market sync uses the live API only when enabled under Website → Currency API settings. Interbank buy/sell are edited manually.',
   },
   hooks: {
     beforeValidate: [ensureInterbankDefaults, validateUniqueRateCategory],
-    beforeChange: [setLastUpdatedDefault],
-    afterChange: [revalidateCurrencyRates],
-    afterDelete: [revalidateCurrencyRatesDelete],
+    beforeChange: [setLastUpdatedOnRateEdit],
+    afterChange: [revalidateCurrencyRates, createActivityLogAfterChange('currency-rates')],
+    afterDelete: [revalidateCurrencyRatesDelete, createActivityLogAfterDelete('currency-rates')],
   },
   fields: [
     {
@@ -187,7 +198,11 @@ export const CurrencyRates: CollectionConfig = {
       type: 'date',
       admin: {
         position: 'sidebar',
-        description: 'Defaults to today when left empty.',
+        date: {
+          pickerAppearance: 'dayAndTime',
+        },
+        description:
+          'Shown on the site as “Last updated”. Automatically set to the current date/time every time you save this rate.',
       },
     },
   ],

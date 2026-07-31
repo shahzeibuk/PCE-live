@@ -17,6 +17,10 @@ import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { populateAuthors } from './hooks/populateAuthors'
 import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
+import {
+  createActivityLogAfterChange,
+  createActivityLogAfterDelete,
+} from '../../hooks/logUserActivity'
 
 import {
   MetaDescriptionField,
@@ -222,9 +226,9 @@ export const Posts: CollectionConfig<'posts'> = {
     slugField(),
   ],
   hooks: {
-    afterChange: [revalidatePost],
+    afterChange: [revalidatePost, createActivityLogAfterChange('posts')],
     afterRead: [populateAuthors],
-    afterDelete: [revalidateDelete],
+    afterDelete: [revalidateDelete, createActivityLogAfterDelete('posts')],
   },
   versions: {
     drafts: {

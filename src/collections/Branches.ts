@@ -3,6 +3,10 @@ import type { CollectionConfig } from 'payload'
 import { anyone } from '../access/anyone'
 import { getUserRole, isAdmin } from '../access/roles'
 import { revalidateBranch, revalidateBranchDelete } from '../hooks/revalidateBranch'
+import {
+  createActivityLogAfterChange,
+  createActivityLogAfterDelete,
+} from '../hooks/logUserActivity'
 import { importBranchesFromCsv } from '../utilities/importBranchesFromCsv'
 import { addDataAndFileToRequest, APIError } from 'payload'
 
@@ -58,8 +62,8 @@ export const Branches: CollectionConfig = {
     },
   ],
   hooks: {
-    afterChange: [revalidateBranch],
-    afterDelete: [revalidateBranchDelete],
+    afterChange: [revalidateBranch, createActivityLogAfterChange('branches')],
+    afterDelete: [revalidateBranchDelete, createActivityLogAfterDelete('branches')],
   },
   fields: [
     {

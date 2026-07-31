@@ -7,6 +7,7 @@ import {
   isInterbankRateCategory,
   type CurrencyRateCategory,
 } from './currencyRatesShared'
+import { isCurrencyApiEnabled } from './isCurrencyApiEnabled'
 import { safeRevalidatePath } from './safeRevalidatePath'
 import { runCurrencyRatesSync } from './syncCurrencyRates'
 
@@ -18,8 +19,23 @@ export type FrontendCurrencyRate = {
   sell_rate: number
   rate_category?: CurrencyRateCategory
   last_updated?: string | null
+  updatedAt?: string | null
   /** Set when DB has no rows — figures from open.er-api.com (indicative). */
   isLiveFallback?: boolean
+}
+
+function newestTimestamp(...values: Array<string | null | undefined>): string | null {
+  let best = 0
+  let bestIso: string | null = null
+  for (const value of values) {
+    if (!value) continue
+    const t = new Date(value).getTime()
+    if (Number.isFinite(t) && t > best) {
+      best = t
+      bestIso = new Date(t).toISOString()
+    }
+  }
+  return bestIso
 }
 
 function mapDocs(docs: {
@@ -30,6 +46,7 @@ function mapDocs(docs: {
   sell_rate: number
   rate_category?: CurrencyRateCategory | null
   last_updated?: string | null
+  updatedAt?: string | null
 }[]): FrontendCurrencyRate[] {
   return docs.map((d) => ({
     id: typeof d.id === 'number' ? d.id : Number(d.id),
@@ -38,7 +55,9 @@ function mapDocs(docs: {
     buy_rate: d.buy_rate,
     sell_rate: d.sell_rate,
     rate_category: isInterbankRateCategory(d.rate_category) ? INTERBANK_RATE_CATEGORY : 'open_market',
-    last_updated: d.last_updated ?? null,
+    // Prefer explicit last_updated, but never show older than the document save time.
+    last_updated: newestTimestamp(d.last_updated, d.updatedAt),
+    updatedAt: d.updatedAt ?? null,
     isLiveFallback: false,
   }))
 }
@@ -127,8 +146,10 @@ export async function getCurrencyRatesForFrontend(
   const staleHours = getAutoSyncStaleHours()
 
   let result = await findCurrencyRateDocs(payload, { limit, rateCategory })
+  const apiEnabled = await isCurrencyApiEnabled(payload)
 
-  const maybeSync = rateCategory === 'open_market' && staleHours > 0 && isStale(result.docs, staleHours)
+  const maybeSync =
+    apiEnabled && rateCategory === 'open_market' && staleHours > 0 && isStale(result.docs, staleHours)
 
   if (maybeSync) {
     const sync = await runCurrencyRatesSync(payload)
@@ -144,6 +165,11 @@ export async function getCurrencyRatesForFrontend(
   }
 
   if (rateCategory === INTERBANK_RATE_CATEGORY) {
+    return []
+  }
+
+  // Empty CMS + API disabled → no external fetch; show empty rather than live fallback.
+  if (!apiEnabled) {
     return []
   }
 

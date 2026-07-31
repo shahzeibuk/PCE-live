@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select'
 import { Lock, ChevronRight, RefreshCw } from 'lucide-react'
 import { cn } from '@/utilities/ui'
+import { getRatesSyncMeta } from '@/utilities/currencyRatesDisplay'
 
 interface Rate {
   id: string | number
@@ -14,6 +15,8 @@ interface Rate {
   currency_code: string
   buy_rate: number
   sell_rate: number
+  last_updated?: string | null
+  isLiveFallback?: boolean | null
 }
 
 // Helper for flags (using simple emoji for reliability, can be replaced with SVG icons)
@@ -62,6 +65,7 @@ export const CurrencyConverter = ({ rates }: { rates: Rate[] }) => {
   const [committedKey, setCommittedKey] = useState<string | null>(null)
   const [isSyncing, setIsSyncing] = useState<boolean>(false)
   const router = useRouter()
+  const { syncLabel } = getRatesSyncMeta(rates)
 
   // Current rate display
   const currentRate = rates.find(
@@ -137,35 +141,42 @@ export const CurrencyConverter = ({ rates }: { rates: Rate[] }) => {
     <Card className="w-full max-w-full bg-card border border-slate-200 shadow-sm rounded-2xl sm:rounded-3xl overflow-hidden mx-auto lg:mx-0">
       <CardContent className="p-4 sm:p-6 md:p-8 space-y-5 sm:space-y-6">
         {/* Rate Pill & Sync */}
-        <div className="flex flex-wrap items-center justify-center gap-2">
-          <div className="inline-flex max-w-full min-w-0 items-center gap-2 px-3 py-1.5 sm:px-4 bg-gray-100 rounded-full text-xs font-semibold text-gray-700 sm:text-sm">
-            <Lock className="size-3 shrink-0 text-gray-400" aria-hidden />
-            <span className="truncate tabular-nums">
-              1 {fromCurrency} = {rateValue.toFixed(3)} {toCurrency}
-            </span>
-            <ChevronRight className="size-4 shrink-0 text-gray-400 hidden sm:inline" aria-hidden />
-          </div>
+        <div className="space-y-2">
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <div className="inline-flex max-w-full min-w-0 items-center gap-2 px-3 py-1.5 sm:px-4 bg-gray-100 rounded-full text-xs font-semibold text-gray-700 sm:text-sm">
+              <Lock className="size-3 shrink-0 text-gray-400" aria-hidden />
+              <span className="truncate tabular-nums">
+                1 {fromCurrency} = {rateValue.toFixed(3)} {toCurrency}
+              </span>
+              <ChevronRight className="size-4 shrink-0 text-gray-400 hidden sm:inline" aria-hidden />
+            </div>
 
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={async () => {
-              setIsSyncing(true)
-              try {
-                await fetch('/api/currency-rates/sync', { method: 'POST' })
-                router.refresh()
-              } catch (e) {
-                console.error(e)
-              } finally {
-                setIsSyncing(false)
-              }
-            }}
-            disabled={isSyncing}
-            title="Sync Live Exchange Rates"
-            className="rounded-full size-8 shrink-0 p-0 bg-gray-100 hover:bg-gray-200 text-gray-700"
-          >
-            <RefreshCw className={cn('size-4', isSyncing && 'animate-spin')} />
-          </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={async () => {
+                setIsSyncing(true)
+                try {
+                  await fetch('/api/currency-rates/sync', { method: 'POST' })
+                  router.refresh()
+                } catch (e) {
+                  console.error(e)
+                } finally {
+                  setIsSyncing(false)
+                }
+              }}
+              disabled={isSyncing}
+              title="Sync Live Exchange Rates"
+              className="rounded-full size-8 shrink-0 p-0 bg-gray-100 hover:bg-gray-200 text-gray-700"
+            >
+              <RefreshCw className={cn('size-4', isSyncing && 'animate-spin')} />
+            </Button>
+          </div>
+          {syncLabel !== '—' ? (
+            <p className="text-center text-[11px] font-medium text-slate-500 sm:text-xs" aria-live="polite">
+              {syncLabel}
+            </p>
+          ) : null}
         </div>
 
         {/* You Send Section */}

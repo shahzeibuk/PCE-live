@@ -38,10 +38,13 @@ export async function GET(req: NextRequest) {
   const result = await runCurrencyRatesSync(payload)
 
   if (!result.ok) {
-    return new Response(JSON.stringify({ error: result.error }), {
-      status: 500,
-      headers: { 'content-type': 'application/json' },
-    })
+    return new Response(
+      JSON.stringify({ error: result.error, disabled: Boolean(result.disabled) }),
+      {
+        status: result.disabled ? 403 : 500,
+        headers: { 'content-type': 'application/json' },
+      },
+    )
   }
 
   revalidatePath('/')

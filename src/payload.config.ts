@@ -10,6 +10,7 @@ import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
 import { CurrencyRates } from './collections/CurrencyRates'
+import { ActivityLogs } from './collections/ActivityLogs'
 import { Branches } from './collections/Branches'
 import { Services } from './collections/Services'
 import { News } from './collections/News'
@@ -26,6 +27,7 @@ import { HomeServices } from './HomeServices/config'
 import { HomeWhyUs } from './HomeWhyUs/config'
 import { HomeFaq } from './HomeFaq/config'
 import { PromoBanner } from './PromoBanner/config'
+import { CurrencyRatesSettings } from './CurrencyRatesSettings/config'
 import { SiteBranding } from './SiteBranding/config'
 // Uploads: Vercel Blob (token + public store) or S3 — configured in `src/plugins/index.ts` and `src/plugins/vercelBlobStorage.ts`
 import { plugins } from './plugins'
@@ -153,6 +155,7 @@ export default buildConfig({
     Categories,
     Users,
     CurrencyRates,
+    ActivityLogs,
     Branches,
     Services,
     News,
@@ -165,7 +168,17 @@ export default buildConfig({
   ],
   cors: getCorsOrigins(),
   csrf: getCorsOrigins(),
-  globals: [SiteBranding, Header, Footer, HomeHero, HomeServices, HomeWhyUs, HomeFaq, PromoBanner],
+  globals: [
+    SiteBranding,
+    Header,
+    Footer,
+    HomeHero,
+    HomeServices,
+    HomeWhyUs,
+    HomeFaq,
+    PromoBanner,
+    CurrencyRatesSettings,
+  ],
   plugins,
   secret: process.env.PAYLOAD_SECRET,
   sharp,

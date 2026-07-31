@@ -18,6 +18,8 @@ import * as migration_20260720_120000_seed_services_pages from './20260720_12000
 import * as migration_20260720_130000_seed_service_icons_and_contact from './20260720_130000_seed_service_icons_and_contact';
 import * as migration_20260720_140000_use_static_partner_service_icons from './20260720_140000_use_static_partner_service_icons';
 import * as migration_20260720_150000_seed_currency_rates from './20260720_150000_seed_currency_rates';
+import * as migration_20260731_060000_currency_rates_settings from './20260731_060000_currency_rates_settings';
+import * as migration_20260731_061500_activity_logs from './20260731_061500_activity_logs';
 
 export const migrations = [
   {
@@ -119,5 +121,15 @@ export const migrations = [
     up: migration_20260720_150000_seed_currency_rates.up,
     down: migration_20260720_150000_seed_currency_rates.down,
     name: '20260720_150000_seed_currency_rates',
+  },
+  {
+    up: migration_20260731_060000_currency_rates_settings.up,
+    down: migration_20260731_060000_currency_rates_settings.down,
+    name: '20260731_060000_currency_rates_settings',
+  },
+  {
+    up: migration_20260731_061500_activity_logs.up,
+    down: migration_20260731_061500_activity_logs.down,
+    name: '20260731_061500_activity_logs',
   },
 ];

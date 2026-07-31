@@ -1,15 +1,28 @@
-import type { FrontendCurrencyRate } from '@/utilities/getCurrencyRatesForFrontend'
+type RateTimestampRow = {
+  last_updated?: string | null
+  updatedAt?: string | null
+  isLiveFallback?: boolean | null
+}
 
-export function getRatesSyncMeta(rates: FrontendCurrencyRate[]): {
+function rowTimestamp(row: RateTimestampRow): number {
+  let best = 0
+  for (const value of [row.last_updated, row.updatedAt]) {
+    if (!value) continue
+    const t = new Date(value).getTime()
+    if (Number.isFinite(t) && t > best) best = t
+  }
+  return best
+}
+
+export function getRatesSyncMeta(rates: RateTimestampRow[]): {
   isFallback: boolean
   syncLabel: string
+  latestUpdatedAt: string | null
 } {
-  const isFallback = rates.some((r) => r.isLiveFallback)
-  const latestTs = rates.reduce((max, r) => {
-    if (!r.last_updated) return max
-    const t = new Date(r.last_updated).getTime()
-    return Number.isFinite(t) && t > max ? t : max
-  }, 0)
+  const isFallback = rates.some((r) => Boolean(r.isLiveFallback))
+  const latestTs = rates.reduce((max, r) => Math.max(max, rowTimestamp(r)), 0)
+
+  const latestUpdatedAt = latestTs > 0 ? new Date(latestTs).toISOString() : null
 
   const syncLabel = isFallback
     ? 'Indicative · open market API'
@@ -17,5 +30,5 @@ export function getRatesSyncMeta(rates: FrontendCurrencyRate[]): {
       ? `Last updated ${new Date(latestTs).toLocaleString()}`
       : '—'
 
-  return { isFallback, syncLabel }
+  return { isFallback, syncLabel, latestUpdatedAt }
 }

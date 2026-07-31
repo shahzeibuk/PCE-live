@@ -2,10 +2,11 @@ import type { Payload } from 'payload'
 import type { PayloadRequest } from 'payload'
 
 import { STANDARD_CURRENCY_ROWS, buySellFromPkrQuote, isInterbankRateCategory } from './currencyRatesShared'
+import { isCurrencyApiEnabled } from './isCurrencyApiEnabled'
 
 export type CurrencySyncResult =
   | { ok: true; updated: string[]; source: string }
-  | { ok: false; error: string }
+  | { ok: false; error: string; disabled?: boolean }
 
 function filterOpenMarketDocs<T extends { rate_category?: string | null }>(docs: T[]): T[] {
   return docs.filter((d) => !isInterbankRateCategory(d.rate_category))
@@ -15,12 +16,22 @@ function filterOpenMarketDocs<T extends { rate_category?: string | null }>(docs:
  * Fetches PKR-based FX from open.er-api.com, updates existing `currency-rates` rows,
  * and creates any missing rows for {@link STANDARD_CURRENCY_ROWS} when the API lists them.
  * Branch documents are never touched — rates live only in `currency-rates`.
+ * No-ops when Currency API settings → “Enable live currency API” is off.
  */
 export async function runCurrencyRatesSync(
   payload: Payload,
   req?: PayloadRequest,
 ): Promise<CurrencySyncResult> {
   try {
+    if (!(await isCurrencyApiEnabled(payload, req))) {
+      return {
+        ok: false,
+        disabled: true,
+        error:
+          'Live currency API is disabled in Admin → Currency API settings. Enable it to sync, or edit rates manually.',
+      }
+    }
+
     const res = await fetch('https://open.er-api.com/v6/latest/PKR', {
       cache: 'no-store',
     })

@@ -73,6 +73,7 @@ export interface Config {
     categories: Category;
     users: User;
     'currency-rates': CurrencyRate;
+    'activity-logs': ActivityLog;
     branches: Branch;
     services: Service;
     news: News;
@@ -105,6 +106,7 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'currency-rates': CurrencyRatesSelect<false> | CurrencyRatesSelect<true>;
+    'activity-logs': ActivityLogsSelect<false> | ActivityLogsSelect<true>;
     branches: BranchesSelect<false> | BranchesSelect<true>;
     services: ServicesSelect<false> | ServicesSelect<true>;
     news: NewsSelect<false> | NewsSelect<true>;
@@ -138,6 +140,7 @@ export interface Config {
     homeWhyUs: HomeWhyUs;
     homeFaq: HomeFaq;
     promoBanner: PromoBanner;
+    'currency-rates-settings': CurrencyRatesSetting;
   };
   globalsSelect: {
     siteBranding: SiteBrandingSelect<false> | SiteBrandingSelect<true>;
@@ -148,6 +151,7 @@ export interface Config {
     homeWhyUs: HomeWhyUsSelect<false> | HomeWhyUsSelect<true>;
     homeFaq: HomeFaqSelect<false> | HomeFaqSelect<true>;
     promoBanner: PromoBannerSelect<false> | PromoBannerSelect<true>;
+    'currency-rates-settings': CurrencyRatesSettingsSelect<false> | CurrencyRatesSettingsSelect<true>;
   };
   locale: null;
   widgets: {
@@ -985,7 +989,7 @@ export interface WhatsAppCTABlock {
   blockType: 'whatsappCTA';
 }
 /**
- * Manage open-market FX rows and a separate USD to PKR Interbank row. Open-market sync updates API rates only; Interbank buy/sell are edited manually in admin.
+ * Manage open-market FX rows and a separate USD to PKR Interbank row. Open-market sync uses the live API only when enabled under Website → Currency API settings. Interbank buy/sell are edited manually.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "currency-rates".
@@ -1007,9 +1011,37 @@ export interface CurrencyRate {
   buy_rate: number;
   sell_rate: number;
   /**
-   * Defaults to today when left empty.
+   * Shown on the site as “Last updated”. Automatically set to the current date/time every time you save this rate.
    */
   last_updated?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Who changed which page or content, and when. Written automatically when admins save — not editable.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "activity-logs".
+ */
+export interface ActivityLog {
+  id: number;
+  summary: string;
+  user?: (number | null) | User;
+  /**
+   * Stored even if the user account is later removed.
+   */
+  userEmail?: string | null;
+  action: 'create' | 'update' | 'delete';
+  /**
+   * Collection or global slug (e.g. pages, currency-rates).
+   */
+  resource: string;
+  documentId?: string | null;
+  documentTitle?: string | null;
+  /**
+   * Frontend path when the resource is a page (e.g. /about, /contact).
+   */
+  pagePath?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1348,6 +1380,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'currency-rates';
         value: number | CurrencyRate;
+      } | null)
+    | ({
+        relationTo: 'activity-logs';
+        value: number | ActivityLog;
       } | null)
     | ({
         relationTo: 'branches';
@@ -1805,6 +1841,22 @@ export interface CurrencyRatesSelect<T extends boolean = true> {
   buy_rate?: T;
   sell_rate?: T;
   last_updated?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "activity-logs_select".
+ */
+export interface ActivityLogsSelect<T extends boolean = true> {
+  summary?: T;
+  user?: T;
+  userEmail?: T;
+  action?: T;
+  resource?: T;
+  documentId?: T;
+  documentTitle?: T;
+  pagePath?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -2499,6 +2551,21 @@ export interface PromoBanner {
   createdAt?: string | null;
 }
 /**
+ * Turn the live currency exchange API on or off. Manual buy/sell values in Currency Rates are always used when the API is disabled.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "currency-rates-settings".
+ */
+export interface CurrencyRatesSetting {
+  id: number;
+  /**
+   * When enabled, open-market rates can sync from the external FX API (admin Sync, cron, and stale auto-refresh). When disabled, only CMS-stored rates are used — no external API calls.
+   */
+  apiEnabled?: boolean | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "siteBranding_select".
  */
@@ -2693,6 +2760,16 @@ export interface PromoBannerSelect<T extends boolean = true> {
       };
   dismissalVersion?: T;
   maxWidth?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "currency-rates-settings_select".
+ */
+export interface CurrencyRatesSettingsSelect<T extends boolean = true> {
+  apiEnabled?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

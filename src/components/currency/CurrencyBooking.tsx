@@ -15,6 +15,7 @@ import {
   normalizeCurrencyOptions,
   type RateRow,
 } from '@/utilities/currencyConversion'
+import { getRatesSyncMeta } from '@/utilities/currencyRatesDisplay'
 import type { CurrencyRate } from '@/payload-types'
 
 const WHATSAPP_URL = 'https://wa.me/923046668810'
@@ -91,9 +92,14 @@ export function CurrencyBooking({ rates, branches = [], layout = 'default' }: Cu
   const isSidebar = layout === 'sidebar'
 
   const ratesKey = useMemo(
-    () => (rates ?? []).map((r) => `${r.currency_code}:${r.buy_rate}:${r.sell_rate}`).join('|'),
+    () =>
+      (rates ?? [])
+        .map((r) => `${r.currency_code}:${r.buy_rate}:${r.sell_rate}:${r.last_updated ?? ''}`)
+        .join('|'),
     [rates],
   )
+
+  const { syncLabel } = useMemo(() => getRatesSyncMeta(rates ?? []), [rates])
 
   const options = useMemo(() => normalizeCurrencyOptions((rates ?? []) as RateRow[]), [rates])
   const codes = useMemo(() => options.map((o) => o.currency_code), [options])
@@ -294,6 +300,11 @@ export function CurrencyBooking({ rates, branches = [], layout = 'default' }: Cu
         )}
         aria-label={`Currency booking step ${step + 1} of ${STEP_COUNT}`}
       >
+        {syncLabel !== '—' ? (
+          <p className="mb-2 px-0.5 text-[11px] font-medium text-slate-500 sm:text-xs" aria-live="polite">
+            {syncLabel}
+          </p>
+        ) : null}
         {/* ── Step 0: Currency ── */}
         {step === 0 && (
           <>

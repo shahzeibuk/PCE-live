@@ -4,6 +4,10 @@ import { slugField } from 'payload'
 import { anyone } from '../access/anyone'
 import { isAdmin } from '../access/roles'
 import { revalidateService, revalidateServiceDelete } from '../hooks/revalidateService'
+import {
+  createActivityLogAfterChange,
+  createActivityLogAfterDelete,
+} from '../hooks/logUserActivity'
 
 export const Services: CollectionConfig = {
   slug: 'services',
@@ -22,8 +26,8 @@ export const Services: CollectionConfig = {
       'Service offerings for the homepage grid, /services listing, and detail pages. Slug is generated from the title — you can edit it in the sidebar.',
   },
   hooks: {
-    afterChange: [revalidateService],
-    afterDelete: [revalidateServiceDelete],
+    afterChange: [revalidateService, createActivityLogAfterChange('services')],
+    afterDelete: [revalidateServiceDelete, createActivityLogAfterDelete('services')],
   },
   fields: [
     {
